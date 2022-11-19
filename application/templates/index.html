@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="full-page row d-flex flex-column flex-md-row m-0">
+
+        <a class="col-12 col-md-3 p-3 d-flex flex-md-column justify-content-center align-items-center login-col" href="/admin/login">
+            
+            <h1 class="text-center me-auto me-md-0 entity-title">Administrator</h1>
+            <img class="mt-md-auto img-fluid" src="{{url_for("static", filename= "global/img/admin.png")}}" alt="admin-img">
+        
+        </a>
+        <a class="col-12 col-md-3 d-flex flex-md-column py-3 align-items-center login-col" href="/doctor/login" id="login-col-doctor">
+            <h1 class="text-center order-2 order-md-1 entity-title">Doctor</h1>
+            <img class="mt-md-auto me-auto me-md-0 img-fluid order-1" src="{{url_for("static", filename= "global/img/doctor.png")}}" alt="doctor-img" >
+        </a>
+
+        <a class="col-12 col-md-3 d-flex flex-md-column py-3 align-items-center login-col" href="/patient/login">
+            <h1 class="text-center me-auto me-md-0 entity-title">Patient</h1>
+            <img class="mt-md-auto img-fluid" src="{{url_for("static", filename= "global/img/patient.png")}}" alt="patient-img">
+        </a>
+
+        <a class="col-12 col-md-3 d-flex flex-md-column py-3 align-items-center login-col" href="/secretary/login">
+            <h1 class="text-center me-auto me-md-0 entity-title">Secretary</h1>
+            <img class="mt-md-auto img-fluid" src="{{url_for("static", filename= "global/img/secretary.png")}}" alt="secretary-img">
+        </a>
+    </section>
+</body>
+
+<!-- TESTING: FOR CLEARING LOCAL STORAGE -->
+<script>
+    localStorage.clear()
+</script>
+{% endblock %}

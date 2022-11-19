@@ -1,0 +1,260 @@
+<!-- <form class = "rosNeurological">
+
+    <div  class = "row mt-2">
+      <h3 class = "default-label col-12">ROS - Neurological</h3>
+      </div>
+
+      <div  class = "row">
+        <label class = "default-label col-1 mt-4">Yes</label>
+        <label class = "default-label col-1 mt-4">No</label>
+      </div>
+      
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="tinglingorNumbnessYes" name="tinglingorNumbness" value="Yes" aria-label="tinglingorNumbnessYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="tinglingorNumbnessNo" name="tinglingorNumbness" value="No" aria-label="tinglingorNumbnessNo" checked> 
+        </div>
+
+        <label class="default-label col-4">Tingling or Numbness</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="seizuresYes" name="seizures" value="Yes" aria-label="seizuresYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="seizuresNo" name="seizures" value="No" aria-label="seizuresNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Seizures</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="frequentHeadacheYes" name="frequentHeadache" value="Yes" aria-label="frequentHeadacheYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="frequentHeadacheNo" name="frequentHeadache" value="No" aria-label="frequentHeadacheNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Frequent Headaches</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="lightheadedOrDizzyYes" name="lightheadedOrDizzy" value="Yes" aria-label="lightheadedOrDizzyYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="lightheadedOrDizzyNo" name="lightheadedOrDizzy" value="No" aria-label="lightheadedOrDizzyNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Lightheaded or Dizzy</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="moodinessYes" name="moodiness" value="Yes" aria-label="moodinessYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="moodinessNo" name="moodiness" value="No" aria-label="moodinessNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Moodiness</label>
+
+      </div>
+
+      <div class="row mt-3">
+        <div class="form-group col-12">
+        <label for="neurologicalROSNotes" class = "form-label" id =  "neurologicalROSNotesLabel">Notes</label>
+        <textarea class="form-control" id="neurologicalROSNotes" name = "neurologicalROSNotes" rows="5"></textarea>
+        </div>    
+        </div>
+
+</form> -->
+
+<form class="rosNeurological" data-form-target="EMR">
+  <div class="row mt-2">
+    <h3 class="default-label col-12">ROS - Neurological</h3>
+  </div>
+
+  <table class="table table-borderless" id="ros-neurological-table">
+    <thead>
+      <tr align="middle">
+        <th scope="col" width="10%">Yes</th>
+        <th scope="col" width="10%">No</th>
+        <th scope="col" width="50%">Condition</th>
+      </tr>
+    </thead>
+
+    <tbody align="middle">
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="tinglingorNumbnessYes"
+            name="tinglingorNumbness"
+            value="yes"
+            aria-label="tinglingorNumbnessYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="tinglingorNumbnessNo"
+            name="tinglingorNumbness"
+            value="no"
+            aria-label="tinglingorNumbnessNo"
+            checked
+          />
+        </td>
+        <td>Tinglling or Numbness</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="seizuresYes"
+            name="seizures"
+            value="yes"
+            aria-label="seizuresYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="seizuresNo"
+            name="seizures"
+            value="yes"
+            aria-label="seizuresNo"
+            checked
+          />
+        </td>
+        <td>Seizures</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="frequentHeadacheYes"
+            name="frequentHeadache"
+            value="yes"
+            aria-label="frequentHeadacheYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="frequentHeadacheNo"
+            name="frequentHeadache"
+            value="yes"
+            aria-label="frequentHeadacheNo"
+            checked
+          />
+        </td>
+        <td>Frequent Headaches</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="lightheadedOrDizzyYes"
+            name="lightheadedOrDizzy"
+            value="yes"
+            aria-label="lightheadedOrDizzyYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="lightheadedOrDizzyNo"
+            name="lightheadedOrDizzy"
+            value="yes"
+            aria-label="lightheadedOrDizzyNo"
+            checked
+          />
+        </td>
+        <td>Lightheaded or Dizzy</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="neuroMoodinessYes"
+            name="neuroMoodiness"
+            value="yes"
+            aria-label="neuroMoodinessYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="neuroMoodinessNo"
+            name="neuroMoodiness"
+            value="yes"
+            aria-label="neuroMoodinessNo"
+            checked
+          />
+        </td>
+        <td>Moodiness</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row mt-3">
+    <div class="form-group col-12">
+      <label
+        for="neurologicalNotes"
+        class="form-label"
+        id="neurologicalNotesLabel"
+        >Notes</label
+      >
+      <textarea
+        class="form-control"
+        id="neurologicalNotes"
+        name="neurologicalNotes"
+        rows="5"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="ros-skin"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="ros-musculoskeletal"
+    />
+  </div>
+</form>

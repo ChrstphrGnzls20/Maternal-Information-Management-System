@@ -1,0 +1,284 @@
+<form id="referralDetails" data-form-target="EMR">
+  <div
+    class="d-flex flex-column flex-md-row justify-content-between align-items-md-center"
+  >
+    <h3 class="default-label">Laboratory</h3>
+
+    <p class="fs-6 text-black mt-2" id="laboratory-date">
+      Date: <span id="date-value"></span>
+    </p>
+  </div>
+
+  <!-- <div class="row row-cols-1 row-cols-md-2 gx-4 gy-2">
+    <div class="form-group">
+      <label for="medicineName" class="form-label">Lab Test</label>
+      <input
+        type="text"
+        class="form-control col-md-4"
+        id="medicineName"
+        name="LabTest"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="medicineName" class="form-label">Referral Reason</label>
+      <input
+        type="text"
+        class="form-control col-md-4"
+        id="medicineName"
+        name="ReasonforReferral"
+      />
+    </div>
+  </div> -->
+  <div class="row row-cols-1">
+    <!-- <div class="form-group">
+        <label for="medicineName" class="form-label required"
+          >Laboratory Clinic Name</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="labClinicName"
+          name="labClinicName"
+          required
+        />
+      </div> -->
+
+    <div class="form-group">
+      <label for="referralReason" class="form-label required"
+        >Referral Reason</label
+      >
+      <!-- NOTE: autocomplete functionality -->
+      <input
+        type="text"
+        class="form-control"
+        id="referralReason"
+        name="referralReason"
+        required
+      />
+    </div>
+  </div>
+
+  <!-- Tests -->
+  <p class="fs-6 form-label mt-3 mb-0">Check all test/s that apply</p>
+  <div class="tests-container row row-cols-1 row-cols-md-3 mx-2">
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value="CBC"
+        name="tests"
+        id="CBC-inp"
+      />
+      <label class="form-check-label" for="CBC-inp"> CBC </label>
+    </div>
+
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value="urinalysis"
+        name="tests"
+        id="urinalysis-inp"
+      />
+      <label class="form-check-label" for="urinalysis-inp"> Urinalysis </label>
+    </div>
+
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value="blood typing"
+        name="blood typing"
+        id="bloodTyping"
+      />
+      <label class="form-check-label" for="bloodTyping"> Blood Typing </label>
+    </div>
+
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value="FBS"
+        name="tests"
+        id="FBS-inp"
+      />
+      <label class="form-check-label" for="FBS-inp"> FBS</label>
+    </div>
+
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value="urine culture"
+        name="tests"
+        id="urineCulture"
+      />
+      <label class="form-check-label" for="urineCulture">Urine Culture</label>
+    </div>
+
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value="OGTT"
+        name="tests"
+        id="OGTT-inp"
+      />
+      <label class="form-check-label" for="OGTT-inp">OGTT</label>
+    </div>
+
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value="HIV"
+        name="tests"
+        id="HIV-inp"
+      />
+      <label class="form-check-label" for="HIV-inp">HIV</label>
+    </div>
+
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value="HBsAg"
+        name="tests"
+        id="HBsAg-inp"
+      />
+      <label class="form-check-label" for="HBsAg-inp">HBsAg</label>
+    </div>
+
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value="VDRL"
+        name="tests"
+        id="VDRL-inp"
+      />
+      <label class="form-check-label" for="VDRL-inp">VDRL</label>
+    </div>
+
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value="rubella"
+        name="tests"
+        id="rubella-inp"
+      />
+      <label class="form-check-label" for="rubella-inp">Rubella</label>
+    </div>
+
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value="GBS"
+        name="tests"
+        id="GBS-inp"
+      />
+      <label class="form-check-label" for="GBS-inp">GBS</label>
+    </div>
+
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        value="HPV"
+        name="tests"
+        id="HPV-inp"
+      />
+      <label class="form-check-label" for="HPV-inp">HPV</label>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="assessment"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="plan"
+    />
+  </div>
+
+  <!-- <script>
+  let labdetailVal = {};
+  $(".referralDetails :input").change(function () {
+    let referDetName = $(this).attr("name");
+    labdetailVal[referDetName] = $(this).val();
+    console.log(labdetailVal);
+  });
+
+  $("#date-value").text(moment(StartDate).format("MM-YYYY"));
+</script> -->
+
+  <script>
+    $(function () {
+      let today = new Date();
+      $("#date-value").text(moment(today).format("MMMM DD, YYYY"));
+
+      $.ajax({
+        type: "POST",
+        url: "/emr/getTemplates",
+        data: JSON.stringify({
+          doctorId: "123456",
+          category: "laboratory",
+        }),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+          var referralAutocompleteArray = [];
+          let labTemplates = response.data;
+          if (labTemplates) {
+            console.log(response.data);
+            Object.keys(response.data).forEach(function (key) {
+              referralAutocompleteArray.push(key);
+            });
+
+            // console.log($.autocomplete());
+
+            $("#referralReason").autocomplete({
+              clearButton: true,
+              source: referralAutocompleteArray,
+              selectFirst: true,
+            });
+          }
+          $("#referralReason").on("change", function () {
+            let value = $(this).val();
+            let data = labTemplates[value];
+
+            // uncheck checked first
+            $(`input[type=checkbox]`).each(function () {
+              $(this).prop("checked", false);
+            });
+
+            // check according to data array
+            data.forEach(function (item) {
+              $(`input[value=${item}`).prop("checked", true);
+            });
+          });
+        },
+
+        error: function (xhr) {
+          console.log("Error: " + xhr.responseText);
+        },
+      });
+    });
+  </script>
+
+  <!-- Moment.js -->
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+
+  <!-- jquery Autocomplete -->
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+</form>

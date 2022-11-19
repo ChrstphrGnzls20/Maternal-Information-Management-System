@@ -1,0 +1,820 @@
+{% extends "base.html" %} {% block content %}
+<div
+  class="container-fluid bg-custom-primary full-page d-flex justify-content-center align-items-center"
+>
+  <div class="container-lg bg-white m-1 m-md-3 p-5 rounded-2">
+    <form class="register-form" novalidate>
+      <div class="step login-cred-form">
+        <h1 class="text-custom-tertiary text-center display-4 mb-5 step-title">
+          Register
+        </h1>
+
+        <div class="form-group mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            id="email"
+            required
+          />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="pwd" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="pwd"
+            id="pwd"
+            required
+          />
+        </div>
+
+        <div class="form-group mb-4">
+          <label for="pwd2" class="form-label">Confirm Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="pwd2"
+            id="pwd2"
+            required
+          />
+        </div>
+
+        <div class="form-1-btns d-flex align-items-end">
+          <button
+            class="btn btn-custom btn-custom-tertiary w-25 ms-auto fs-5"
+            id="login-cred-next-btn"
+          >
+            Next
+          </button>
+        </div>
+        <!-- <input class="btn btn-custom btn-custom-tertiary w-100 fs-5" type="submit" value="Next"> -->
+      </div>
+
+      <div class="step otp-form d-none">
+        <h1 class="text-custom-tertiary text-center display-4 mb-5 step-title">
+          OTP
+        </h1>
+        <p class="text-red">
+          NOTE: Check your spam folder before requesting for another OTP.
+        </p>
+
+        <div
+          class="error-msg-ctr d-none justify-content-center align-items-center bg-error text-white p-2 mb-3"
+        >
+          <span>
+            <i class="bi bi-exclamation-circle-fill fs-2 me-2"></i>
+          </span>
+          <p class="error-msg fs-5 mb-0"></p>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="otp" class="form-label">One-Time Password (OTP)</label>
+          <input
+            type="text"
+            class="form-control"
+            name="otp"
+            id="otp"
+            maxlength="6"
+            required
+          />
+        </div>
+
+        <div
+          class="d-flex flex-column flex-md-row justify-content-md-between mt-3"
+        >
+          <button
+            class="btn btn-custom btn-custom-tertiary fs-5 w-25 mb-3 mb-md-0"
+            id="otp-prev-btn"
+          >
+            Previous
+          </button>
+          <button
+            class="btn btn-custom btn-custom-primary fs-5 w-25"
+            id="otp-next-btn"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <div class="step basic-form d-none">
+        <h1 class="text-custom-tertiary mb-5">Basic Information</h1>
+        <!-- Personal Information -->
+        <div class="personal-info-form">
+          <div
+            class="row row-cols-1 row-cols-lg-3 d-flex flex-row justify-content-center"
+          >
+            <div class="col form-group d-flex flex-column mb-3 required">
+              <label for="fname">First Name</label>
+              <input
+                type="text"
+                name="fName"
+                class="form-control"
+                id="fname"
+                required
+              />
+            </div>
+            <div class="col form-group d-flex flex-column mb-3 required">
+              <label for="mname">Middle Name</label>
+              <input
+                type="text"
+                name="mName"
+                id="mname"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="col form-group d-flex flex-column mb-3 required">
+              <label for="lname">Last Name</label>
+              <input
+                type="text"
+                name="lName"
+                id="lname"
+                class="form-control"
+                required
+              />
+            </div>
+          </div>
+
+          <div
+            class="row row-cols-1 row-cols-lg-3 d-flex flex-row justify-content-center"
+          >
+            <div class="col form-group d-flex flex-column mb-3 required">
+              <label for="bday">Birthday</label>
+              <div class="input-group date" id="birthday-datepicker">
+                <input
+                  type="text"
+                  name="bday"
+                  class="form-control"
+                  id="bday"
+                  required
+                />
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <label class="bday-error error" for="bday"></label>
+            </div>
+            <div class="col form-group d-flex flex-column mb-3">
+              <label for="">Age</label>
+              <input
+                type="text"
+                name="age"
+                class="form-control"
+                id="age-input"
+                disabled
+              />
+            </div>
+            <div class="col form-group d-flex flex-column mb-3 required">
+              <label for="blood-type">Blood Type</label>
+              <select
+                name="bloodType"
+                class="form-select"
+                id="blood-type"
+                required
+              >
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="A">A</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="B">B</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="O">O</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="AB">AB</option>
+                <option value="Unknown">Unknown</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- End Personal Information -->
+
+        <!-- Contact Details -->
+        <div
+          class="row row-cols-1 row-cols-md-2 d-flex flex-row justify-content-center"
+        >
+          <div class="col-md-4 form-group d-flex flex-column mb-3 required">
+            <label for="mobile">Contact Number</label>
+            <input
+              type="text"
+              name="mobile"
+              class="form-control"
+              id="mobile"
+              required
+            />
+          </div>
+          <div class="col-md-8 form-group d-flex flex-column mb-3 required">
+            <label for="email-address">E-mail Address</label>
+            <input
+              type="text"
+              name="email"
+              class="form-control"
+              id="email-address"
+              disabled
+            />
+          </div>
+        </div>
+        <!-- End Contact Details -->
+
+        <!-- Complete Address  -->
+        <div class="complete-address-form">
+          <div
+            class="row row-cols-1 row-cols-lg-3 d-flex flex-row justify-content-center"
+          >
+            <div class="col form-group d-flex flex-column mb-3 required">
+              <label for="regions">Region</label>
+              <select
+                class="form-select address-select"
+                name="regions"
+                id="regions"
+                data-next="provinces"
+                required
+              ></select>
+            </div>
+            <div class="col form-group d-flex flex-column mb-3 required">
+              <label for="provinces">Province/District</label>
+              <select
+                class="form-select address-select"
+                name="provinces"
+                id="provinces"
+                data-next="cities"
+                required
+              ></select>
+            </div>
+            <div class="col form-group d-flex flex-column mb-3 required">
+              <label for="cities">City/Municipality</label>
+              <select
+                class="form-select address-select"
+                name="cities"
+                id="cities"
+                data-next="barangays"
+                required
+              ></select>
+            </div>
+          </div>
+
+          <div
+            class="row row-cols-1 row-cols-md-2 d-flex flex-row justify-content-center"
+          >
+            <div
+              class="col col-md-4 form-group d-flex flex-column mb-3 required"
+            >
+              <label for="barangays">Barangay</label>
+              <select
+                class="form-select"
+                name="barangays"
+                id="barangays"
+                required
+              ></select>
+            </div>
+            <!-- <div class="col-md-4 form-group d-flex flex-column mb-3 ">
+                    <label for="">ZIP Code</label>
+                    <input class="form-control" name="zip" id="zip-code" disabled/>
+                </div> -->
+
+            <div class="col col-md-8 form-group d-flex flex-column mb-3">
+              <label for="street">Street Address</label>
+              <input
+                type="text"
+                name="street"
+                class="form-control"
+                id="street"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- <div class="col-md-4">
+                    <input class="btn btn-custom btn-custom-primary fs-5 w-100 mt-1" type="submit" value="Next">
+                </div> -->
+          <div
+            class="col-12 d-flex flex-column flex-md-row justify-content-md-between mt-3"
+          >
+            <button
+              class="btn btn-custom btn-custom-tertiary fs-5 w-25 mb-3 mb-md-0"
+              id="basic-prev-btn"
+            >
+              Previous
+            </button>
+            <button
+              class="btn btn-custom btn-custom-primary fs-5 w-25"
+              id="basic-next-btn"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="step pm-hist-form d-none">
+        <h1 class="text-custom-tertiary">Past Medical History</h1>
+        <p class="text-muted mb-4">Check all that applies</p>
+
+        {% for disease in diseasesList %}
+        <div class="d-flex flex-column flex-md-row form-item mb-2">
+          <p class="flex-grow-1 fw-bold mb-1">{{disease.label}}</p>
+          <div
+            class="radio-group d-flex flex-row align-items-center justify-content-center"
+          >
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="{{disease.name}}"
+                value=""
+                id="{{disease.name}}-none"
+                checked
+              />
+              <label class="form-check-label" for="{{disease.name}}-none">
+                N/A
+              </label>
+            </div>
+            <div class="form-check ms-2">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="{{disease.name}}"
+                value="self"
+                id="{{disease.name}}-self"
+              />
+              <label class="form-check-label" for="{{disease.name}}-self">
+                Self
+              </label>
+            </div>
+            <div class="form-check ms-2 ms-md-3">
+              <input
+                class="form-check-input radio-family"
+                type="radio"
+                name="{{disease.name}}"
+                value="family"
+                id="{{disease.name}}-family"
+              />
+              <label class="form-check-label" for="{{disease.name}}-family">
+                Family
+              </label>
+            </div>
+            <select
+              class="ms-2 ms-md-3 form-select form-select-sm"
+              aria-label="Default select example"
+              id="{{disease.name}}--relationship"
+              disabled
+            >
+              <option value="mother" selected>Mother's Side</option>
+              <option value="father">Father's Side</option>
+            </select>
+          </div>
+        </div>
+        {% endfor %}
+
+        <div class="form-group mb-3">
+          <label for="other" class="form-label">Other</label>
+          <input type="text" class="form-control" name="other" id="other" />
+        </div>
+
+        <div
+          class="col-12 d-flex flex-column flex-md-row justify-content-md-between mt-4"
+        >
+          <button
+            class="btn btn-custom btn-custom-tertiary fs-5 w-25 mb-3 mb-md-0"
+            id="pm-prev-btn"
+          >
+            Previous
+          </button>
+          <button
+            class="btn btn-custom btn-custom-primary fs-5 w-25"
+            id="pm-next-btn"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <div class="step sl-hist-form d-none">
+        <h1 class="text-custom-tertiary mb-5">Social and Lifestyle History</h1>
+        <div class="row row-cols-1 row-cols-md-2 mb-3">
+          <div class="col">
+            <!-- Marital Status -->
+            <div class="form-group">
+              <label for="" class="form-label">Marital Status</label>
+              <select
+                class="form-select form-select-md"
+                aria-label="Default select example"
+                name="maritalStatus"
+                required
+              >
+                <option value="single">Single</option>
+                <option value="married">Married</option>
+                <option value="widowed">Widowed</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Occupation -->
+          <div class="col">
+            <div class="form-group">
+              <label for="" class="form-label required">Occupation</label>
+              <input
+                type="text"
+                class="form-control"
+                name="occupation"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="row align-items-center">
+          <div class="col-12 col-md-3 mb-2">
+            <p class="mb-0">Tabacco Smoker</p>
+          </div>
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="tabacco"
+                value="never"
+                id="never"
+                checked
+              />
+              <label class="form-check-label" for="never"> Never </label>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="tabacco"
+                value="former"
+                id="former"
+              />
+              <label class="form-check-label" for="former"> Former </label>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="tabacco"
+                value="current"
+                id="current"
+              />
+              <label class="form-check-label" for="current"> Current </label>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-3 mb-2 d-flex flex-row align-items-center">
+            <label for="" class="form-label me-1 mb-0">Amt/day</label>
+            <select
+              class="form-select form-select-md flex-grow-1"
+              name="tabacco"
+              aria-label="Default select example"
+              disabled
+            >
+              <option value="light" selected>1-3 cigarettes</option>
+              <option value="moderate">4-9 cigarettes</option>
+              <option value="heavy">>10 cigarettes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row align-items-center">
+          <div class="col-12 col-md-3 mb-2">
+            <p class="mb-0">Alcohol Intake</p>
+          </div>
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="alcohol"
+                value="no"
+                id="alcohol-no"
+                checked
+              />
+              <label class="form-check-label" for="alcohol-no"> No </label>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="alcohol"
+                value="yes"
+                id="alcohol-yes"
+              />
+              <label class="form-check-label" for="alcohol-yes"> Yes </label>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-5 mb-2 d-flex flex-row align-items-center">
+            <label for="" class="form-label me-2 mb-0">Frequency</label>
+            <select
+              class="form-select form-select-md flex-grow-1"
+              name="alcohol"
+              aria-label="Default select example"
+              disabled
+            >
+              <option value="light" selected>1-2 drinking days</option>
+              <option value="moderate">3-5 drinking days</option>
+              <option value="heavy">everyday</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row align-items-center">
+          <div class="col-12 col-md-3 mb-2">
+            <p class="mb-0">Caffeine Intake</p>
+          </div>
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="caffeine"
+                value="no"
+                id="caffeine-no"
+                checked
+              />
+              <label class="form-check-label" for="caffeine-no"> No </label>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="caffeine"
+                value="yes"
+                id="caffeine-yes"
+              />
+              <label class="form-check-label" for="caffeine-yes"> Yes </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row align-items-center">
+          <div class="col-12 col-md-3 mb-2">
+            <p class="mb-0">Domestic Abuse</p>
+          </div>
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="domesticAbuse"
+                value="no"
+                id="domesticAbuse-no"
+                checked
+              />
+              <label class="form-check-label" for="domesticAbuse-no">
+                No
+              </label>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="domesticAbuse"
+                value="yes"
+                id="domesticAbuse-yes"
+              />
+              <label class="form-check-label" for="domesticAbuse-yes">
+                Yes
+              </label>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-5 mb-2 d-flex flex-row align-items-center">
+            <label for="" class="form-label w-25 mb-0">If yes,</label>
+            <select
+              class="form-select form-select-md flex-grow-1"
+              name="domesticAbuse"
+              aria-label="Default select example"
+              disabled
+            >
+              <option value="past" selected>Past</option>
+              <option value="current">Current</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row align-items-center">
+          <div class="col-12 col-md-3 mb-2">
+            <p class="mb-0">Regular Exercise</p>
+          </div>
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="exercise"
+                value="no"
+                id="exercise-no"
+                checked
+              />
+              <label class="form-check-label" for="exercise-no"> No </label>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="exercise"
+                value="yes"
+                id="exercise-yes"
+              />
+              <label class="form-check-label" for="exercise-yes"> Yes </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row align-items-center">
+          <div class="col-12 col-md-3 mb-2">
+            <p class="mb-0">Monthly Breast Exam</p>
+          </div>
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="breastExam"
+                value="no"
+                id="breastExam-no"
+                checked
+              />
+              <label class="form-check-label" for="breastExam-no"> No </label>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="breastExam"
+                value="yes"
+                id="breastExam-yes"
+              />
+              <label class="form-check-label" for="breastExam-yes"> Yes </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row align-items-center">
+          <div class="col-12 col-md-3 mb-2">
+            <p class="mb-0">Chicken pox</p>
+          </div>
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="chickenPox"
+                value="no"
+                id="chickenPox-no"
+                checked
+              />
+              <label class="form-check-label" for="chickenPox-no"> No </label>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-2 mb-2">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="chickenPox"
+                value="yes"
+                id="chickenPox-yes"
+              />
+              <label class="form-check-label" for="chickenPox-yes"> Yes </label>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="col-12 d-flex flex-column flex-md-row justify-content-md-between mt-4"
+        >
+          <button
+            class="btn btn-custom btn-custom-tertiary fs-5 w-25 mb-3 mb-md-0"
+            id="sl-prev-btn"
+          >
+            Previous
+          </button>
+          <button
+            class="btn btn-custom btn-custom-primary fs-5 w-25"
+            id="sl-next-btn"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <div class="step contact-ref-form d-none">
+        <h2 class="mb-0 text-custom-tertiary">Person of Reference</h2>
+        <p class="text-muted">in case of emergency</p>
+        <div class="row row-cols-1 row-cols-md-2 mb-3">
+          <div class="col">
+            <!-- First Name -->
+            <div class="col">
+              <div class="form-group">
+                <label for="" class="form-label">First Name</label>
+                <input
+                  type="text"
+                  name="crFname"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Last Name -->
+          <div class="col">
+            <div class="form-group">
+              <label for="" class="form-label">Last Name</label>
+              <input type="text" name="crLname" class="form-control" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 mb-3">
+          <div class="col">
+            <!-- Contact Number -->
+            <div class="col">
+              <div class="form-group">
+                <label for="crMobile" class="form-label">Contact Number</label>
+                <input
+                  type="text"
+                  name="crMobile"
+                  class="form-control"
+                  id="crMobile"
+                  maxlength="11"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Email Address -->
+          <div class="col">
+            <div class="form-group">
+              <label for="" class="form-label">Email Address</label>
+              <input type="email" name="crEmail" class="form-control" />
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-12 d-flex flex-column flex-md-row justify-content-md-between mt-4"
+        >
+          <button
+            class="btn btn-custom btn-custom-tertiary fs-5 w-25 mb-3 mb-md-0"
+            id="cr-prev-btn"
+          >
+            Previous
+          </button>
+          <button
+            class="btn btn-custom btn-custom-primary fs-5 w-25 mb-3 mb-md-0"
+            id="cr-next-btn"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      {% include "registration-summary.html" %}
+    </form>
+  </div>
+  {% include "loader.html" %}
+</div>
+
+<!-- Custom JS -->
+<script src="{{url_for('patient.static', filename='js/utilities.js')}}"></script>
+<script src="{{url_for('patient.static', filename='js/address.js')}}"></script>
+<script src="{{url_for('patient.static', filename='js/birthday.js')}}"></script>
+<script src="{{url_for('patient.static', filename='js/register-summary.js')}}"></script>
+<script src="{{url_for('patient.static', filename='js/register-loginCred.js')}}"></script>
+<script src="{{url_for('patient.static', filename='js/register-basicInfo.js')}}"></script>
+<script src="{{url_for('patient.static', filename='js/register-history.js')}}"></script>
+<script src="{{url_for('patient.static', filename='js/register-contactRef.js')}}"></script>
+<!-- <script src="{{url_for('patient.static', filename='js/register.js')}}"></script> -->
+{% endblock %}

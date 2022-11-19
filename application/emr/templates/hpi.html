@@ -1,0 +1,619 @@
+<!-- TODO: responsiveness of site when in md size -->
+<form id="hpi-form" data-form-target="EMR">
+  <div class="row">
+    <h3 class="default-label col-12">History of Present Illness</h3>
+  </div>
+
+  <!-- <div  class = "row mt-2">
+      <div class = "form-group col-4">
+      <label for="fundalHeight" class = "form-label">Fundal Height (in cm)</label>
+      <input type="text" class = "form-control" id="fundalHeight" name="fundalHeight">
+      </div>
+
+      <div class = "form-group col-4 offset-1">
+        <label for="fetalHeartRate" class = "form-label">Fetal Heart Rate (BPM)</label>
+        <input type="text" class = "form-control" id="fetalHeartRate" name="fetalHeartRate">
+        </div> -->
+
+  <div class="row row-cols-2 gy-2">
+    <div class="form-group">
+      <label for="chiefComplaintHPI" class="form-label required"
+        >Chief Complaint</label
+      >
+      <input
+        class="form-control"
+        id="chiefComplaintHPI"
+        name="chiefComplaint"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="startDate" class="form-label required">Start date</label>
+      <input
+        type="text"
+        class="form-control datepicker"
+        id="HPIStartDate"
+        name="startDate"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="locationCC" class="form-label">Location</label>
+      <input type="text" class="form-control" id="locationCC" name="location" />
+    </div>
+
+    <div class="form-group">
+      <label for="qualityCC" class="form-label required">Quality</label>
+      <input
+        type="text"
+        class="form-control"
+        id="qualityCC"
+        name="quality"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="row row-cols-2 mt-3"></div>
+
+  <div class="row row row-cols-2 mt-3"></div>
+
+  <div class="d-flex flex-column mt-3">
+    <label class="form-label required">Severity</label>
+
+    <div class="row row row-cols-1 row-cols-md-4 mx-2">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="severityLight"
+          name="severity"
+          value="Light"
+          checked
+        />
+        <label class="form-check-label" for="severityLight">Light</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="severityModerate"
+          name="severity"
+          value="Moderate"
+        />
+        <label class="form-check-label" for="severityModerate">Moderate</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="severitySevere"
+          name="severity"
+          value="Severe"
+        />
+        <label class="form-check-label" for="severitySevere">Severe</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="severityCritical"
+          name="severity"
+          value="Critical"
+        />
+        <label class="form-check-label" for="severityCritical">Critical</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column mt-3">
+    <label class="form-label required">Onset</label>
+
+    <div class="row row-cols-1 row-cols-md-2 mx-2">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="onsetSudden"
+          name="onset"
+          value="Sudden"
+          checked
+        />
+        <label class="form-check-label" for="onsetSudden">Sudden</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="onsetGradual"
+          name="onset"
+          value="Gradual"
+        />
+        <label class="form-check-label" for="onsetGradual">Gradual</label>
+      </div>
+    </div>
+
+    <!-- <div class="d-flex flex-column mt-3">
+      <label class="default-label required">How Long?</label>
+      <div class="row row-cols-1 row-cols-md-5 mx-2 mx-md-0">
+        <div class="form-group">
+          <input
+            type="number"
+            class="form-control form-control-lg w-75"
+            id="nummberofHowLong"
+            name="nummberofHowLong"
+            aria-label="howLongDuration"
+            value="1"
+            min="1"
+            max="10"
+          />
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="howLongDays"
+            name="HPIHowLong"
+            value="Days"
+            checked
+          />
+          <label class="form-check-label" for="howLongDays">Days</label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="howLongWeeks"
+            name="HPIHowLong"
+            value="Weeks"
+          />
+          <label class="form-check-label" for="howLongWeeks">Weeks</label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="howLongMonths"
+            name="HPIHowLong"
+            value="Months"
+          />
+          <label class="form-check-label" for="howLongMonths">Months</label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="howLongYears"
+            name="HPIHowLong"
+            value="Years"
+          />
+          <label class="form-check-label" for="howLongYears">Years</label>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+  <div class="d-flex flex-column mt-3">
+    <label class="form-label required">Duration of Episode</label>
+    <div class="d-flex flex-column">
+      <div class="row row-cols-1 row-cols-md-5 mx-2 mx-md-0">
+        <div class="form-group">
+          <input
+            type="number"
+            class="form-control w-75"
+            id="nummberofDuration"
+            name="duration"
+            aria-label="durationofDuration"
+            value="1"
+            min="1"
+            max="59"
+          />
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="durationMins"
+            name="duration"
+            value="Minutes"
+            checked
+          />
+          <label class="form-check-label" for="durationMins">Minutes</label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="durationHours"
+            name="duration"
+            value="Hours"
+          />
+          <label class="form-check-label" for="durationHours">Hours</label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="durationDays"
+            name="duration"
+            value="Days"
+          />
+          <label class="form-check-label" for="durationDays">Days</label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="durationIndf"
+            name="duration"
+            value="Indefinite"
+          />
+          <label class="form-check-label" for="durationIndf">Indefinite</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column mt-3">
+    <label class="form-label required">Frequency</label>
+    <div class="row row-cols-1 row-cols-md-3 mx-2">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="freqEvFewMins"
+          name="frequency"
+          value="FewMin"
+          checked
+        />
+        <label class="form-check-label" for="freqEvFewMins"
+          >Every Few Minutes</label
+        >
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="freqEvFewHours"
+          name="frequency"
+          value="FewHours"
+        />
+        <label class="form-check-label" for="freqEvFewHours">
+          Every Few Hours</label
+        >
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="freqEvFewDays"
+          name="frequency"
+          value="FewDay"
+        />
+        <label class="form-check-label" for="freqEvFewDays"
+          >Every Few Days</label
+        >
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="freqNoPat"
+          name="frequency"
+          value="NoPattern"
+        />
+        <label class="form-check-label" for="freqNoPat">No Pattern</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="freqMinutely"
+          name="frequency"
+          value="Minutely"
+        />
+        <label class="form-check-label" for="freqMinutely">Every Minute</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="freqHourly"
+          name="frequency"
+          value="Hourly"
+        />
+        <label class="form-check-label" for="freqHourly">Hourly</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="freqDaily"
+          name="frequency"
+          value="Daily"
+        />
+        <label class="form-check-label" for="freqDaily">Daily</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="freqWeekly"
+          name="frequency"
+          value="Weekly"
+        />
+        <label class="form-check-label" for="freqWeekly">Weekly</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column mt-3">
+    <label class="form-label required">Progression</label>
+    <div class="row row-cols-1 row-cols-md-2 mx-2">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="progSuddenBet"
+          name="progression"
+          value="SudGetBetter"
+          checked
+        />
+        <label class="form-check-label" for="progSuddenBet"
+          >Suddenly getting better</label
+        >
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="progSuddenWorse"
+          name="progression"
+          value="SudGetWorse"
+        />
+        <label class="form-check-label" for="progSuddenWorse"
+          >Suddenly getting worse</label
+        >
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="progGradualBet"
+          name="progression"
+          value="GradGetBetter"
+        />
+        <label class="form-check-label" for="progGradualBet"
+          >Gradually getting better</label
+        >
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="progGradualWorse"
+          name="progression"
+          value="GradGetWorse"
+        />
+        <label class="form-check-label" for="progGradualWorse"
+          >Gradually getting worse</label
+        >
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="progStagnant"
+          name="progression"
+          value="Stagnant"
+        />
+        <label class="form-check-label" for="progStagnant"
+          >Stagnant/No Change</label
+        >
+      </div>
+    </div>
+
+    <!-- <div class="row row-cols-1 row-cols-md-3 mx-2">
+      
+    </div> -->
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group">
+      <label for="aggravatedByFactor" class="form-label required"
+        >Aggravated by</label
+      >
+      <input
+        type="text"
+        class="form-control form-control-md"
+        id="aggravatedByFactor"
+        name="aggrevatedBy"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group">
+      <label for="relievedByFactor" class="form-label required"
+        >Relieved by</label
+      >
+      <input
+        type="text"
+        class="form-control form-control-md"
+        id="relievedByFactor"
+        name="relievedBy"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="d-flex flex-column mt-3">
+    <label class="form-label">Risk Factors</label>
+    <div class="row row-cols-1 row-cols-md-2 mx-2">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="riskAlcohol"
+          name="riskFactors"
+          value="Alcohol"
+        />
+        <label class="form-check-label" for="riskAlcohol"
+          >Alcohol Consumption</label
+        >
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="riskSmoking"
+          name="riskFactors"
+          value="Smoking"
+        />
+        <label class="form-check-label" for="riskSmoking">Smoking</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="riskExercise"
+          name="riskFactors"
+          value="Unexercise"
+        />
+        <label class="form-check-label" for="riskExercise"
+          >Lack of Exercise</label
+        >
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="riskDrugs"
+          name="riskFactors"
+          value="Drugs"
+        />
+        <label class="form-check-label" for="riskDrugs">Drugs</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column mt-3">
+    <label class="form-label required"
+      >How bad does it affect Bodily Functions</label
+    >
+    <div class="row row-cols-2 row-cols-md-3 mx-2">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="bodyFuncMins"
+          name="bodilyFunctionEffect"
+          value="Minutes"
+          checked
+        />
+        <label class="form-check-label" for="bodyFuncMins">Minutes</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="bodyFuncHours"
+          name="bodilyFunctionEffect"
+          value="Hours"
+        />
+        <label class="form-check-label" for="bodyFuncHours">Hours</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="bodyFuncDays"
+          name="bodilyFunctionEffect"
+          value="Days"
+        />
+        <label class="form-check-label" for="bodyFuncDays">Days</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="bodyFuncIndf"
+          name="bodilyFunctionEffect"
+          value="Indefinite"
+        />
+        <label class="form-check-label" for="bodyFuncIndf">Indefinite</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group col-12">
+      <label for="HPINotes" class="form-label" id="HPINoteLabel">Notes</label>
+      <textarea
+        class="form-control"
+        id="HPINotes"
+        name="notes"
+        rows="5"
+        placeholder="Additional notes here"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="vital-signs"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="patient-history-pmh"
+    />
+  </div>
+</form>
+
+<script>
+  loadDatepickers({
+    autoclose: true,
+    changeMonth: true,
+    changeYear: true,
+    format: "mm/dd/yyyy",
+    endDate: "+0d",
+  });
+</script>

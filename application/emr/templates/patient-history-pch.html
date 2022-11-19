@@ -1,0 +1,330 @@
+<form class="preventiveCareHistory" data-form-target="EMR">
+  <div class="row mt-2">
+    <h3 class="default-label col-12">Preventive Care History</h3>
+  </div>
+
+  <div style="overflow-x: auto">
+    <table class="table table-borderless table-responsive" id="ph-pch-table">
+      <thead>
+        <tr align="middle">
+          <th scope="col" width="10%">Yes</th>
+          <th scope="col" width="10%">No</th>
+          <th scope="col" width="30%">Exaamination</th>
+          <th scope="col" width="10%">Abnormal</th>
+          <th scope="col" width="10%">Normal</th>
+          <th scope="col" width="30%">Date</th>
+        </tr>
+      </thead>
+      <tbody align="middle">
+        <tr>
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="papsmearYes"
+              name="papSmear"
+              value="yes"
+              aria-label="papsmearYes"
+            />
+          </td>
+
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="papsmearNo"
+              name="papSmear"
+              value="no"
+              aria-label="papsmearNo"
+              checked
+            />
+          </td>
+          <td>
+            <label> Last Pap Smear </label>
+          </td>
+
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="papSmearAbnormal"
+              name="papSmeaNormalAbnormal"
+              value="abnormal"
+              aria-label="papsmearAbnormal"
+            />
+          </td>
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="papSmearNormal"
+              name="papSmeaNormalAbnormal"
+              value="normal"
+              aria-label="papsmearNormal"
+              checked
+            />
+          </td>
+          <td>
+            <input type="text" class="form-control datepicker" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="mammogramYes"
+              name="mammogram"
+              value="yes"
+              aria-label="mammogramYes"
+            />
+          </td>
+
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="mammogramNo"
+              name="mammogram"
+              value="no"
+              aria-label="mammogramNo"
+              checked
+            />
+          </td>
+          <td>
+            <label> Last Mammogram </label>
+          </td>
+
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="mammogramAbnormal"
+              name="mammogramNormalAbnormal"
+              value="abnormal"
+              aria-label="mammogramAbnormal"
+            />
+          </td>
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="mammogramNormal"
+              name="mammogramNormalAbnormal"
+              value="normal"
+              aria-label="mammogramNormal"
+              checked
+            />
+          </td>
+          <td>
+            <input type="text" class="form-control datepicker" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="colonoscopyYes"
+              name="colonoscopy"
+              value="yes"
+              aria-label="colonoscopyYes"
+            />
+          </td>
+
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="colonoscopyNo"
+              name="colonoscopy"
+              value="no"
+              aria-label="colonoscopyNo"
+              checked
+            />
+          </td>
+          <td>
+            <label> Last Colonoscopy </label>
+          </td>
+
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="colonoscopyAbnormal"
+              name="colonoscopyNormalAbnormal"
+              value="abnormal"
+              aria-label="colonoscopyAbnormal"
+            />
+          </td>
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="colonoscopyNormal"
+              name="colonoscopyNormalAbnormal"
+              value="normal"
+              aria-label="colonoscopyNormal"
+              checked
+            />
+          </td>
+          <td>
+            <input type="text" class="form-control datepicker" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="dexaYes"
+              name="dexa"
+              value="yes"
+              aria-label="dexaYes"
+            />
+          </td>
+
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="dexaNo"
+              name="dexa"
+              value="no"
+              aria-label="dexaNo"
+              checked
+            />
+          </td>
+          <td>
+            <label>Last DEXA (Bone Scan) </label>
+          </td>
+
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="dexaAbnormal"
+              name="dexaNormalAbnormal"
+              value="abnormal"
+              aria-label="dexaAbnormal"
+            />
+          </td>
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="dexaaNormal"
+              name="dexaNormalAbnormal"
+              value="normal"
+              aria-label="dexaNormal"
+              checked
+            />
+          </td>
+          <td>
+            <input type="text" class="form-control datepicker" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="colesterolTestYes"
+              name="colesterolTest"
+              value="yes"
+              aria-label="colesterolTestYes"
+            />
+          </td>
+
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="colesterolTestNo"
+              name="colesterolTest"
+              value="no"
+              aria-label="colesterolTestNo"
+              checked
+            />
+          </td>
+          <td>
+            <label> Last Colesterol Test </label>
+          </td>
+
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="colesterolTestAbnormal"
+              name="colesterolTestNormalAbnormal"
+              value="abnormal"
+              aria-label="colesterolTestAbnormal"
+            />
+          </td>
+          <td>
+            <input
+              class="form-check-input"
+              type="radio"
+              id="colesterolTestNormal"
+              name="colesterolTestNormalAbnormal"
+              value="normal"
+              aria-label="colesterolTestNormal"
+              checked
+            />
+          </td>
+          <td>
+            <input type="text" class="form-control datepicker" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mt-3">
+      <label for="notes">Notes</label>
+      <textarea
+        class="form-control"
+        id="notes"
+        name="Notes"
+        rows="3"
+      ></textarea>
+    </div>
+  </div>
+  <!-- <script>
+    let pcHistoryVal = {};
+    $(".preventiveCareHistory :input").change(function () {
+      let pcHistoryName = $(this).attr("name");
+      pcHistoryVal[pcHistoryName] = $(this).val();
+      console.log(pcHistoryVal);
+    });
+  </script> -->
+  <script>
+    loadDatepickers({
+      autoclose: true,
+      changeMonth: true,
+      changeYear: true,
+      format: "MM yyyy",
+      endDate: "+0d",
+      minViewMode: "months",
+    });
+  </script>
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="patient-history-cmh"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="patient-history-sh"
+    />
+  </div>
+</form>

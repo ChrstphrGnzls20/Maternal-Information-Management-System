@@ -1,0 +1,249 @@
+<form class="rosBloodandLymph" data-form-target="EMR">
+  <div class="row mt-2">
+    <h3 class="default-label col-12">ROS - Blood and Lymph</h3>
+  </div>
+
+  <table class="table table-borderless" id="ros-blood-table">
+    <thead>
+      <tr align="middle">
+        <th scope="col" width="10%">Yes</th>
+        <th scope="col" width="10%">No</th>
+        <th scope="col" width="50%">Condition</th>
+      </tr>
+    </thead>
+    <tbody align="middle">
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="easyBleedYes"
+            name="easyBleed"
+            value="Yes"
+            aria-label="easyBleedYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="easyBleedNo"
+            name="easyBleed"
+            value="No"
+            aria-label="easyBleedNo"
+            checked
+          />
+        </td>
+        <td>Patient bleeds easily</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="easyBruiseYes"
+            name="easyBruise"
+            value="yes"
+            aria-label="easyBruiseYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="easyBruiseNo"
+            name="easyBruise"
+            value="no"
+            aria-label="easyBruiseNo"
+            checked
+          />
+        </td>
+        <td>Patient is Easily Bruised</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="slowHealYes"
+            name="slowHeal"
+            value="yes"
+            aria-label="slowHealYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="slowHealNo"
+            name="slowHeal"
+            value="no"
+            aria-label="slowHealNo"
+            checked
+          />
+        </td>
+        <td>Slow to heal after cuts</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="anemiaYes"
+            name="anemia"
+            value="yes"
+            aria-label="anemiaYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="anemiaNo"
+            name="anemia"
+            value="no"
+            aria-label="anemiaNo"
+            checked
+          />
+        </td>
+        <td>Anemia</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="bloodClotYes"
+            name="bloodClot"
+            value="yes"
+            aria-label="bloodClotYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="bloodClotNo"
+            name="bloodClot"
+            value="no"
+            aria-label="bloodClotNo"
+            checked
+          />
+        </td>
+        <td>Blood clots</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="pastTransfusionYes"
+            name="pastTransfusion"
+            value="yes"
+            aria-label="pastTransfusionYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="pastTransfusionNo"
+            name="pastTransfusion"
+            value="no"
+            aria-label="pastTransfusionNo"
+            checked
+          />
+        </td>
+        <td>Past Transfusion</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="enlargedGlandsNodesYes"
+            name="enlargedGlandsNodes"
+            value="yes"
+            aria-label="enlargedGlandsNodesYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="enlargedGlandsNodesNo"
+            name="enlargedGlandsNodes"
+            value="no"
+            aria-label="enlargedGlandsNodesNo"
+            checked
+          />
+        </td>
+        <td>Enlarged Glands/Lymph Nodes</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="bloodLymphSuicidaleYes"
+            name="bloodLymphSuicidal"
+            value="yes"
+            aria-label="bloodLymphSuicidalYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="bloodLymphSuicidaleNo"
+            name="bloodLymphSuicidal"
+            value="no"
+            aria-label="bloodLymphSuicidalNo"
+            checked
+          />
+        </td>
+        <td>Suicidal or Homicidal</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row mt-3">
+    <div class="form-group col-12">
+      <label
+        for="bloodandLymphNotes"
+        class="form-label"
+        id="bloodandLymphNotesLabel"
+        >Notes</label
+      >
+      <textarea
+        class="form-control"
+        id="bloodandLymphNotes"
+        name="bloodandLymphNotes"
+        rows="5"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="ros-psychiatric"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="ros-allergy"
+    />
+  </div>
+</form>

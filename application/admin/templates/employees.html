@@ -1,0 +1,360 @@
+<div class="employee-list-ctr bd-highlight shadow">
+  <div
+    class="d-flex flex-row justify-content-between align-items-center bg-white m-1 p-3 rounded-2"
+  >
+    <h3 class="mb-0">Clinic Employees</h3>
+    <button type="button" class="btn btn-outline-dark float-end add-emp-btn">
+      ADD NEW EMPLOYEE
+    </button>
+  </div>
+
+  <!-- Filter Nav -->
+  <ul
+    class="nav nav-tabs bg-white filter-nav pt-2"
+    id="filter-tab"
+    role="tablist"
+  >
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        id="all-tab"
+        data-bs-toggle="tab"
+        data-target="All"
+        type="button"
+        role="tab"
+        aria-controls="all"
+        aria-selected="true"
+      >
+        ALL
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="practitioner-tab"
+        data-bs-toggle="tab"
+        data-target="Clinician"
+        type="button"
+        role="tab"
+        aria-controls="practitioner"
+        aria-selected="false"
+      >
+        CLINICIAN
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="secretary-tab"
+        data-bs-toggle="tab"
+        data-target="Secretary"
+        type="button"
+        role="tab"
+        aria-controls="secretary"
+        aria-selected="false"
+      >
+        SECRETARY
+      </button>
+    </li>
+    <li class="ms-2 nav-item" role="searchbox" style="width: 16rem">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search Employee by Name"
+        aria-label="Recipient's username"
+      />
+    </li>
+  </ul>
+
+  <!-- Employee Table -->
+  <div class="table-responsive p-2">
+    <table class="table table-striped bg-white align-middle employees-table">
+      <thead style="background-color: rgba(0, 0, 0, 0.05)">
+        <tr style="line-height: 40px">
+          <th class="text-center">EMPLOYEE ID</th>
+          <th class="text-center">NAME</th>
+          <th class="text-center">ROLE</th>
+          <th class="text-center">CONTACT</th>
+          <th class="text-center">STATUS</th>
+          <th class="text-center">ACTIONS</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr></tr>
+
+        {% for employee in employees %}
+        <tr>
+          <td class="text-center emp-id">{{employee.licenseID}}</td>
+          <td class="text-center">{{employee.name}}</td>
+          <td class="text-center">{{employee.role}}</td>
+          <td class="text-center">{{employee.mobile}}</td>
+          <td class="text-center">{{employee.status}}</td>
+          <td class="text-center">
+            <button type="button" class="btn btn btn-primary edit-emp-btn">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-pencil-square"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                />
+              </svg>
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modals -->
+  <!--Add Modal-->
+  <div class="modal fade" id="emp-modal" role="dialog">
+    <div class="modal-dialog modal-xl">
+      <!--Modal content-->
+      <!-- <form id="employee-form">
+        <div class="modal-content">
+          <div class="modal-header d-flex justify-content-center">
+            <h2 class="mb-0 ms-2">Add new employee</h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="justify-content-center p-2">
+              <div class="add-emp-modal-container bg-white m-2 p-2">
+                <div class="row">
+                  <div class="form-group col-12 col-lg-4">
+                    <label for="license-num" class="form-label"
+                      >License Number</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="license-num"
+                      name="licenseID"
+                      maxlength="18"
+                      data-summary-label="License Number"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-12 col-lg-4 mt-3">
+                    <label for="fname" class="form-label">First Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      name="fName"
+                      data-summary-label="First Name"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group col-12 col-lg-4 mt-3">
+                    <label for="mname" class="form-label">Middle Initial</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="mname"
+                      name="mName"
+                      data-summary-label="Middle Name"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group col-12 col-lg-4 mt-3">
+                    <label for="lname" class="form-label">Last Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="lname"
+                      name="lName"
+                      data-summary-label="Last Name"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-12 col-lg-6 mt-3">
+                    <label for="pic" class="form-label">Picture</label>
+                    <div class="input-group mb-3">
+                      <input
+                        type="file"
+                        class="form-control pic"
+                        name="picture"
+                        id="pic"
+                        data-summary-label="Picture"
+                        aria-describedby="emp-pic-file-inp"
+                      />
+                    </div>
+                    <label
+                      class="visually-hidden pic-error error"
+                      for="emp-pic-file-inp"
+                    ></label>
+                  </div>
+
+                  <div class="form-group col-12 col-lg-6 mt-0 mt-lg-3">
+                    <label for="role" class="form-label">Role</label>
+                    <select
+                      class="form-select"
+                      name="role"
+                      id="role"
+                      data-summary-label="Role"
+                      required
+                    >
+                      <option value="Clinician">Clinician</option>
+                      <option value="Secretary">Secretary</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row mt-3">
+                  <div class="form-group col-12 col-lg-6">
+                    <label for="status" class="form-label">Status</label>
+                    <select
+                      class="form-select"
+                      name="status"
+                      id="status"
+                      data-summary-label="Status"
+                    >
+                      <option selected value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-12 col-lg-6 mt-3 mt-lg-0">
+                    <label for="mobile" class="form-label"
+                      >Contact Number</label
+                    >
+                    <input
+                      type="text"
+                      name="mobile"
+                      class="form-control"
+                      id="mobile"
+                      maxlength="11"
+                      data-summary-label="Contact Number"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <h3 class="mt-4">Login Credentials</h3>
+
+                <div class="row mt-3">
+                  <div class="form-group col-12 col-lg-6">
+                    <label for="mail" class="form-label">E-Mail Address</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      data-summary-label="Email Address"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="row mt-3">
+                  <div class="form-group col-12 col-lg-6">
+                    <label for="pwd" class="form-label">Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="pwd"
+                      name="pwd"
+                      required
+                      data-summary-label="Password"
+                    />
+                  </div>
+
+                  <div class="form-group col-12 col-lg-6 mt-3 mt-lg-0">
+                    <label for="pwd2" class="form-label"
+                      >Confirm Password</label
+                    >
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="pwd2"
+                      name="pwd2"
+                      data-summary-label="Confirm Password"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              CANCEL
+            </button>
+            <input type="submit" value="NEXT" class="btn btn-success ms-2" />
+          </div>
+        </div>
+      </form> -->
+    </div>
+  </div>
+
+  <!--Summary Modal-->
+  <div class="modal fade" id="summary-modal" role="dialog">
+    <div class="modal-dialog modal-xl">
+      <!--Modal content-->
+      <!-- <form>
+        <div class="modal-content">
+          <div class="modal-header d-flex justify-content-center">
+            <h2 class="mb-0 ms-2">Confirm</h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-borderless" id="summary-table">
+              <tbody>
+                insert values using jquery
+              </tbody>
+            </table>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              CANCEL
+            </button>
+            <input type="submit" value="NEXT" class="btn btn-success ms-2" />
+          </div>
+        </div>
+      </form> -->
+    </div>
+  </div>
+
+  <script src="{{url_for('admin.static', filename='js/formData.js')}}"></script>
+  <script src="{{url_for('admin.static', filename='js/employee/emp-modal.js')}}"></script>
+  <script src="{{url_for('admin.static', filename='js/employee/filter-employee.js')}}"></script>
+  <script src="{{url_for('admin.static', filename='js/employee/add-employee.js')}}"></script>
+  <script src="{{url_for('admin.static', filename='js/employee/edit-employee.js')}}"></script>
+</div>

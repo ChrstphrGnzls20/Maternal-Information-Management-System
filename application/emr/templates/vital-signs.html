@@ -1,0 +1,129 @@
+<form id="vital-signs-form" data-form-target="EMR">
+  <h3 class="default-label col-12">Vital Signs</h3>
+  <div class="row">
+    <div class="form-group col-md-4">
+      <label for="vitalHeight" class="form-label required">Height</label>
+      <input
+        type="text"
+        class="form-control"
+        id="vitalHeight"
+        name="height"
+        required
+      />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="vitalWeight" class="form-label required">Weight</label>
+      <input
+        type="text"
+        class="form-control"
+        id="vitalWeight"
+        name="weight"
+        required
+      />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="vitalBMI" class="form-label required">BMI</label>
+      <input
+        type="text"
+        class="form-control"
+        id="vitalBMI"
+        name="BMI"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group col-md-4">
+      <label for="vitalTemp" class="form-label required">Temperature</label>
+      <input
+        type="text"
+        class="form-control"
+        id="vitalTemp"
+        name="temperature"
+        required
+      />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="vitalSystolic" class="form-label required"
+        >Blood Pressure</label
+      >
+      <div class="d-flex flex-row">
+        <input
+          type="number"
+          class="form-control me-1"
+          id="vitalSystolic"
+          name="BPSystolic"
+          value="70"
+          min="70"
+          max="190"
+          required
+        />
+        <label class="default-label align-self-center">/</label>
+        <input
+          type="number"
+          class="form-control ms-1"
+          id="vitalDiastolic"
+          name="BPDiastolic"
+          value="40"
+          min="40"
+          max="100"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="vitalRespRate" class="form-label required"
+        >Respiratory Rate (BPM)</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="vitalRespRate"
+        name="respirationRate"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group col-md-4">
+      <label for="vitalOxySat" class="form-label required"
+        >Oxygen Saturation(%)</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="vitalOxySat"
+        name="oxygenSaturation"
+        required
+      />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="vitalHeartRate" class="form-label required"
+        >Heart Rate (Beats PM)</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="vitalHeartRate"
+        name="heartRate"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="hpi"
+    />
+  </div>
+</form>

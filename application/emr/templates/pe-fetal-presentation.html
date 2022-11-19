@@ -1,0 +1,357 @@
+<!-- TODO: responsiveness of site when in md size -->
+<form class="fetalMeasure" data-form-target="EMR">
+  <div class="row">
+    <h3 class="default-label col-12">Fetal Measurements</h3>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 gx-5 gy-3 gy-md-0">
+    <div class="form-group col">
+      <label for="fundalHeight" class="form-label">Fundal Height (in cm)</label>
+      <input
+        type="text"
+        class="form-control"
+        id="fundalHeight"
+        name="fundalHeight"
+      />
+    </div>
+
+    <div class="form-group col">
+      <label for="fetalHeartRate" class="form-label"
+        >Fetal Heart Rate (BPM)</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="fetalHeartRate"
+        name="fetalHeartRate"
+      />
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <h3 class="default-label col-12">Presentation</h3>
+  </div>
+
+  <div class="d-flex flex-column" id="fetalPresentationParent">
+    <label class="default-label">Which Part is Presenting?</label>
+
+    <div class="row row-cols-1 row-cols-md-3 mx-2">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="presentingHead"
+          name="fetalPresentation"
+          value="head"
+          checked
+        />
+        <label class="form-check-label" for="presentingHead">Head</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="presentingBreech"
+          name="fetalPresentation"
+          value="breech"
+        />
+        <label class="form-check-label" for="presentingBreech">Breech</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="presentingShoulder"
+          name="fetalPresentation"
+          value="shoulder"
+        />
+        <label class="form-check-label" for="presentingShoulder"
+          >Shoulder</label
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column mt-3" id="fetalPresentationFollowup">
+    <label class="default-label">If head, how is it presented?</label>
+
+    <div class="row row-cols-1 row-cols-md-3 mx-2">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="headpresentOcciput"
+          name="headPresentation"
+          value="occiput"
+          checked
+        />
+        <label class="form-check-label" for="headpresentOcciput">Occiput</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="headpresentBrow"
+          name="headPresentation"
+          value="brow"
+        />
+        <label class="form-check-label" for="headpresentBrow">Brow</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="headpresentFace"
+          name="headPresentation"
+          value="face"
+        />
+        <label class="form-check-label" for="headpresentFace">Face</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column mt-3">
+    <label class="default-label">Womb Position?</label>
+
+    <div class="row row-cols-1 row-cols-md-4 mx-2">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="wombPosLeftOCA"
+          name="wombPosition"
+          value="left OCA"
+          checked
+        />
+        <label class="form-check-label" for="wombPosLeftOCA"
+          >Left Occiput Anterior</label
+        >
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="wombPosRightOCA"
+          name="wombPosition"
+          value="right OCA"
+        />
+        <label class="form-check-label" for="wombPosRightOCA"
+          >Right Occiput Anterior</label
+        >
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="wombPosPosterior"
+          name="wombPosition"
+          value="posterior"
+        />
+        <label class="form-check-label" for="wombPosPosterior">Posterior</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="wombPosTranvsverseLie"
+          name="wombPosition"
+          value="transverse lie"
+        />
+        <label class="form-check-label" for="wombPosTranvsverseLie"
+          >Transverse Lie</label
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column mt-3">
+    <label class="default-label">Moulding</label>
+
+    <div class="row row-cols-1 row-cols-md-4 mx-2">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="mouldingZero"
+          name="mouldingVal"
+          value="0"
+          checked
+        />
+        <label class="form-check-label" for="mouldingZero">0</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="mouldingOne"
+          name="mouldingVal"
+          value="1+"
+        />
+        <label class="form-check-label" for="mouldingOne">1+</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="mouldingTwo"
+          name="mouldingVal"
+          value="2+"
+        />
+        <label class="form-check-label" for="mouldingTwo">2+</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="mouldingThree"
+          name="mouldingVal"
+          value="3+"
+        />
+        <label class="form-check-label" for="mouldingThree">3+</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group col-12">
+      <label for="fetalNotes" class="form-label" id="fetalNoteLabel"
+        >Notes</label
+      >
+      <textarea
+        class="form-control"
+        id="fetalNotes"
+        name="fetalNotes"
+        rows="5"
+        placeholder="Additional notes here"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="ros-allergy"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="pe-general"
+    />
+  </div>
+</form>
+
+<script>
+  $("input[name=fetalPresentation").on("change", function () {
+    let value = $(this).val();
+
+    let parent = $("#fetalPresentationFollowup");
+    parent.empty();
+    parent.removeClass("mt-3");
+    let toAppend = "";
+
+    console.log(parent);
+
+    if (value === "head") {
+      parent.addClass("mt-3");
+      toAppend = `
+      <label class="default-label">If head, how is it presented?</label>
+
+      <div class="row row-cols-1 row-cols-md-3 mx-2">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="headpresentOcciput"
+            name="headPresentation"
+            value="occiput"
+            checked
+          />
+          <label class="form-check-label" for="headpresentOcciput">Occiput</label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="headpresentBrow"
+            name="headPresentation"
+            value="brow"
+          />
+          <label class="form-check-label" for="headpresentBrow">Brow</label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="headpresentFace"
+            name="headPresentation"
+            value="face"
+          />
+          <label class="form-check-label" for="headpresentFace">Face</label>
+        </div>
+      </div>`;
+    } else if (value === "breech") {
+      parent.addClass("mt-3");
+      toAppend = `
+      <label class="default-label">If Breech? What Breech is it?</label>
+
+      <div class="row row-cols-1 row-cols-md-3 mx-2">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="breachTypeFrankB"
+            name="breachType"
+            value="frank breech"
+            checked
+          />
+          <label class="form-check-label" for="breachTypeFrankB"
+            >Frank Breech</label
+          >
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="breachTypeCompleteB"
+            name="breachType"
+            value="complete breech"
+          />
+          <label class="form-check-label" for="breachTypeCompleteB"
+            >Complete Breech</label
+          >
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="breachTypeFootlingB"
+            name="breachType"
+            value="footling breech"
+          />
+          <label class="form-check-label" for="breachTypeFootlingB"
+            >Footling Breech</label
+          >
+        </div>
+      </div>`;
+    } else {
+      toAppend = "";
+    }
+    parent.append(toAppend);
+  });
+</script>

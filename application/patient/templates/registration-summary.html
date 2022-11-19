@@ -1,0 +1,428 @@
+<div class="summary d-none">
+
+
+    <div class="step basic-form mb-3">
+        <h1 class="text-custom-tertiary mb-3">Basic Information</h1>
+        <!-- Personal Information -->
+        <div class="personal-info-form">
+            <div class="row row-cols-1 row-cols-lg-3 d-flex flex-row justify-content-center">
+                <div class="col form-group d-flex flex-column mb-3 required">
+                    <label for="summary-fname">First Name</label>
+                    <input type="text" name="summary-fName" class="form-control bg-blue" id="summary-fname" required>
+                </div>
+                <div class="col form-group d-flex flex-column mb-3 required">
+                    <label for="summary-mname">Middle Name</label>
+                    <input type="text" name="summary-mName" id="summary-mname" class="form-control" required>
+                </div>
+                <div class="col form-group d-flex flex-column mb-3 required">
+                    <label for="summary-lname">Last Name</label>
+                    <input type="text" name="summary-lName" id="summary-lname" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-lg-3 d-flex flex-row justify-content-center">
+                <div class="col form-group d-flex flex-column mb-3 required">
+                    <label for="summary-bday">Birthday</label>
+                    <div class="input-group date" id="birthday-datepicker">
+                        <input type="text" name="summary-bday" class="form-control" id="summary-bday" required>
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </div>
+                    </div>
+                    <label class="bday-error error" for="summary-bday"></label>
+                </div>
+                <div class="col form-group d-flex flex-column mb-3">
+                    <label for="summary-age">Age</label>
+                    <input type="text" name="summary-age" class="form-control" id="summary-age" disabled>
+                </div>
+                <div class="col form-group d-flex flex-column mb-3 required">
+                    <label for="summary-blood-type">Blood Type</label>
+                    <select name="summary-bloodType" class="form-select" id="summary-blood-type" required>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="A">A</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="B">B</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="O">O</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="AB">AB</option>
+                        <option value="Unknown">Unknown</option>
+                    </select>
+                </div>
+                
+            </div>   
+        </div>
+        <!-- Personal Information Ends -->
+
+        <!-- Contact Details -->
+        <div class="row row-cols-1 row-cols-md-2 d-flex flex-row justify-content-center">
+            <div class="col-md-4 form-group d-flex flex-column mb-3 required">
+                <label for="summary-mobile">Contact Number</label>
+                <input type="text" name="summary-mobile" class="form-control" id="summary-mobile" required>
+            </div>
+            <div class="col-md-8 form-group d-flex flex-column mb-3 required">
+                <label for="summary-email-address">E-mail Address</label>
+                <input type="text" name="summary-email" class="form-control" id="summary-email-address" disabled>
+            </div>
+        </div>
+        <!-- End Contact Details -->
+            
+        <!-- Complete Address  -->
+        <div class="complete-address-form">
+            <div class="row row-cols-1 row-cols-lg-3 d-flex flex-row justify-content-center">
+            <div class="col form-group d-flex flex-column mb-3 required">
+                <label for="summary-region">Region</label>
+                <input type="text" class="form-control" name="summary-regions" id="summary-region" required></input>
+            </div>
+            <div class="col form-group d-flex flex-column mb-3 required">
+                <label for="summary-province">Province</label>
+                <input type="text" class="form-control" name="summary-provinces" id="summary-province" required></input>
+            </div>
+            <div class="col form-group d-flex flex-column mb-3 required">
+                <label for="summary-city">City/Municipality</label>
+                <input type="text" class="form-control" name="summary-cities" id="summary-city" required></input>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 d-flex flex-row justify-content-center">
+            
+            <div class="col col-md-4 form-group d-flex flex-column mb-3 required">
+                <label for="summary-barangay">Barangay</label>
+                <input type="text" class="form-control" name="summary-barangays" id="summary-barangay" required></input>
+            </div>
+
+            <div class="col col-md-8 form-group d-flex flex-column mb-3 ">
+                <label for="summary-street">Street Address</label>
+                <input type="text" name="summary-street" class="form-control" id="summary-street" required>
+            </div>
+            
+        </div>
+        
+        </div>
+
+    </div>
+
+    <div class="step pm-hist-form mb-4">
+        <h1 class="text-custom-tertiary">Past Medical History</h1>
+        <p class="text-muted mb-4">Check all that applies</p>
+
+        {% for disease in diseasesList %}
+            <div class="d-flex flex-column flex-md-row form-item mb-2">
+                
+                <p class="flex-grow-1 fw-bold mb-1">{{disease.label}}</p>
+                <div class="radio-group d-flex flex-row align-items-center justify-content-center">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name=summary-{{disease.name}} value="" id="summary-{{disease.name}}-none" checked>
+                        <label class="form-check-label" for="summary-{{disease.name}}-none">
+                          N/A
+                        </label>
+                      </div>
+                    <div class="form-check ms-2">
+                        <input class="form-check-input" type="radio" name=summary-{{disease.name}} value="self" id="summary-{{disease.name}}-self">
+                        <label class="form-check-label" for="summary-{{disease.name}}-self">
+                          Self
+                        </label>
+                      </div>
+                      <div class="form-check ms-2 ms-md-3">
+                        <input class="form-check-input radio-family" type="radio" name=summary-{{disease.name}} value="family" id="summary-{{disease.name}}-family">
+                        <label class="form-check-label" for="summary-{{disease.name}}-family">
+                         Family
+                        </label>
+                      </div>
+                      <select class="ms-2 ms-md-3 form-select form-select-sm" aria-label="Default select example" id="summary-{{disease.name}}-relationship" disabled>
+                        <option value="mother" selected>Mother's Side</option>
+                        <option value="father">Father's Side</option>
+                      </select>
+                </div>
+            </div>
+        {% endfor %}
+
+            <div class="form-group mb-3">
+                <label for="summary-other" class="form-label">Other</label>
+                <input type="text" class="form-control" name="summary-other" id="summary-other">
+            </div>
+    </div>
+
+    <div class="step sl-hist-form mb-4">
+        <h1 class="text-custom-tertiary mb-3">Social and Lifestyle History</h1>
+        <div class="row row-cols-1 row-cols-md-2 mb-3">
+            <div class="col">
+
+                <!-- Marital Status -->
+                <div class="form-group">
+                    <label for="summary-maritalStatus" class="form-label">Marital Status</label>
+                    <select class="form-select form-select-md" aria-label="Default select example" name="summary-maritalStatus" id="summary-maritalStatus" required>
+                        <option value="single">Single</option>
+                        <option value="married">Married</option>
+                        <option value="widowed">Widowed</option>
+                      </select>
+                </div>
+            </div>
+
+            <!-- Occupation -->
+            <div class="col">
+                <div class="form-group">
+                    <label for="summary-occupation" class="form-label">Occupation</label>
+                    <input type="text" class="form-control" name="summary-occupation" id="summary-occupation" required>
+                </div>
+            </div> 
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-12 col-md-3 mb-2">
+                <p class="mb-0">Tabacco Smoker</p>
+            </div>
+            <div class="col-12 col-md-2 mb-2" >
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-tabacco" value="never" id="summary-tabacco-never" checked>
+                    <label class="form-check-label" for="summary-tabacco-never">
+                      Never
+                    </label>
+                  </div>
+            </div>
+
+            <div class="col-12 col-md-2 mb-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-tabacco" value="former" id="summary-tabacco-former">
+                    <label class="form-check-label" for="summary-tabacco-former">
+                      Former
+                    </label>
+                  </div>
+            </div>
+
+            <div class="col-12 col-md-2 mb-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-tabacco" value="current" id="summary-tabacco-current">
+                    <label class="form-check-label" for="summary-tabacco-current">
+                      Current
+                    </label>
+                    
+                  </div>
+            </div>
+
+            <div class="col-12 col-md-3 mb-2 d-flex flex-row align-items-center">
+                <label for="summary-tabacco-select" class="form-label me-1 mb-0">Amt/day</label>
+                <select class="form-select form-select-md flex-grow-1" name="summary-tabacco-select" aria-label="Default select example" id="summary-tabacco-select" disabled>
+                    <option value="light" selected>1-3 cigarettes</option>
+                    <option value="moderate">4-9 cigarettes</option>
+                    <option value="heavy">>10 cigarettes</option>
+                  </select>
+            </div>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-12 col-md-3 mb-2">
+                <p class="mb-0">Alcohol Intake</p>
+            </div>
+            <div class="col-12 col-md-2 mb-2" >
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-alcohol" value="no" id="summary-alcohol-no" checked>
+                    <label class="form-check-label" for="summary-alcohol-no">
+                      No
+                    </label>
+                  </div>
+            </div>
+
+            <div class="col-12 col-md-2 mb-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-alcohol" value="yes" id="summary-alcohol-yes">
+                    <label class="form-check-label" for="summary-alcohol-yes">
+                      Yes
+                    </label>
+                  </div>
+            </div>
+
+
+            <div class="col-12 col-md-5 mb-2 d-flex flex-row align-items-center">
+                <label for="summary-alcohol-select" class="form-label me-2 mb-0">Frequency</label>
+                <select class="form-select form-select-md flex-grow-1" name="summary-alcohol-select" aria-label="Default select example" id="summary-alcohol-select" disabled>
+                    <option value="light" selected>1-2 drinking days</option>
+                    <option value="moderate">3-5 drinking days</option>
+                    <option value="heavy">everyday</option>
+                  </select>
+            </div>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-12 col-md-3 mb-2">
+                <p class="mb-0">Caffeine Intake</p>
+            </div>
+            <div class="col-12 col-md-2 mb-2" >
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-caffeine" value="no" id="summary-caffeine-no" checked>
+                    <label class="form-check-label" for="summary-caffeine-no">
+                      No
+                    </label>
+                  </div>
+            </div>
+
+            <div class="col-12 col-md-2 mb-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-caffeine" value="yes" id="summary-caffeine-yes">
+                    <label class="form-check-label" for="summary-caffeine-yes">
+                      Yes
+                    </label>
+                  </div>
+            </div>
+
+            
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-12 col-md-3 mb-2">
+                <p class="mb-0">Domestic Abuse</p>
+            </div>
+            <div class="col-12 col-md-2 mb-2" >
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-domesticAbuse" value="no" id="summary-domesticAbuse-no" checked>
+                    <label class="form-check-label" for="summary-domesticAbuse-no">
+                      No
+                    </label>
+                  </div>
+            </div>
+
+            <div class="col-12 col-md-2 mb-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-domesticAbuse" value="yes" id="summary-domesticAbuse-yes">
+                    <label class="form-check-label" for="summary-domesticAbuse-yes">
+                      Yes
+                    </label>
+                  </div>
+            </div>
+
+
+            <div class="col-12 col-md-5 mb-2 d-flex flex-row align-items-center">
+                <label for="summary-domesticAbuse-select" class="form-label w-25 mb-0">If yes,</label>
+                <select class="form-select form-select-md flex-grow-1" name="summary-domesticAbuse" aria-label="Default select example" id="summary-domesticAbuse-select" disabled>
+                    <option value="past" selected>Past</option>
+                    <option value="current">Current</option>
+                  </select>
+            </div>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-12 col-md-3 mb-2">
+                <p class="mb-0">Regular Exercise</p>
+            </div>
+            <div class="col-12 col-md-2 mb-2" >
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-exercise" value="no" id="summary-exercise-no" checked>
+                    <label class="form-check-label" for="summary-exercise-no" >
+                      No
+                    </label>
+                  </div>
+            </div>
+
+            <div class="col-12 col-md-2 mb-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-exercise" value="yes" id="summary-exercise-yes">
+                    <label class="form-check-label" for="summary-exercise-yes">
+                      Yes
+                    </label>
+                  </div>
+            </div>
+
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-12 col-md-3 mb-2">
+                <p class="mb-0">Monthly Breast Exam</p>
+            </div>
+            <div class="col-12 col-md-2 mb-2" >
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-breastExam" value="no" id="summary-breastExam-no" checked>
+                    <label class="form-check-label" for="summary-breastExam-no">
+                      No
+                    </label>
+                  </div>
+            </div>
+
+            <div class="col-12 col-md-2 mb-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-breastExam" value="yes" id="summary-breastExam-yes">
+                    <label class="form-check-label" for="summary-breastExam-yes">
+                      Yes
+                    </label>
+                  </div>
+            </div>
+
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-12 col-md-3 mb-2">
+                <p class="mb-0">Chicken pox</p>
+            </div>
+            <div class="col-12 col-md-2 mb-2" >
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-chickenPox" value="no" id="summary-chickenPox-no" checked>
+                    <label class="form-check-label" for="summary-chickenPox-no">
+                      No
+                    </label>
+                  </div>
+            </div>
+
+            <div class="col-12 col-md-2 mb-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="summary-chickenPox" value="yes" id="summary-chickenPox-yes">
+                    <label class="form-check-label" for="summary-chickenPox-yes">
+                      Yes
+                    </label>
+                  </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="step contact-ref-form">
+        <h2 class="mb-0 text-custom-tertiary">Person of Reference</h2>
+        <p class="text-muted">in case of emergency</p>
+        <div class="row row-cols-1 row-cols-md-2 mb-3">
+            <div class="col">
+                <!-- First Name -->
+                <div class="col">
+                    <div class="form-group">
+                        <label for="summary-crFname" class="form-label">First Name</label>
+                        <input type="text" name="summary-crFname" class="form-control" id="summary-crFname" required>
+                    </div>
+                </div> 
+            </div>
+
+            <!-- Last Name -->
+            <div class="col">
+                <div class="form-group">
+                    <label for="summary-crLname" class="form-label">Last Name</label>
+                    <input type="text" name="summary-crLname" class="form-control" id="summary-crLname" required>
+                </div>
+            </div> 
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 mb-3">
+            <div class="col">
+                <!-- Contact Number -->
+                <div class="col">
+                    <div class="form-group">
+                        <label for="summary-crMobile" class="form-label">Contact Number</label>
+                        <input type="text" name="summary-crMobile" class="form-control" id="summary-crMobile" maxlength=11 required>
+                    </div>
+                </div> 
+            </div>
+
+            <!-- Email Address -->
+            <div class="col">
+                <div class="form-group">
+                    <label for="summary-crEmail" class="form-label">Email Address</label>
+                    <input type="email" name="summary-crEmail" class="form-control" id="summary-crEmail">
+                </div>
+            </div> 
+        </div>
+        <div class="col-12 d-flex flex-column flex-md-row justify-content-md-between mt-4">
+            <button class="btn btn-custom btn-custom-tertiary fs-5 w-25 mb-3 mb-md-0 " id="summary-prev-btn">Previous</button>
+            <input type="submit" class="btn .register-form-btn-submit btn-custom btn-custom-primary fs-5 w-25" value="Confirm">
+        </div>
+    </div>
+
+</div>

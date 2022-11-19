@@ -1,0 +1,434 @@
+
+<form class = "genPE" data-form-target="EMR">
+  <h3 class = "default-label col-12">General Physical Exam</h3>
+    <div class = "table-responsive">
+      <table class="table table-borderless">
+        <thead>
+          <tr class = "align-middle">
+            <th scope="col">NL</th>
+            <th scope="col">ABN</th>
+            <th scope="col">NE</th>
+            <th scope="col"></th>
+            <th scope="col">Remarks</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <th scope = "row" class = "form-check  align-middle">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="goodGenHealthPE" name="goodGenHealthPE" value="Good Gen Health" aria-label="peGenHealthYes">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline ">
+                <input class="form-check-input" type="radio" id="notgoodGenHealthPE" name="goodGenHealthPE" value="Not Good General Health" aria-label="peGenHealthNo">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="negoodGenHealthPE" name="goodGenHealthPE" checked value="Not Examined General Health" aria-label="peGenHealthNE">
+              </div>
+            </th>
+            <td>General</td>
+            <td>
+              <div class="form-group">
+              <textarea class="form-control" id="goodGenHealthNotes" name = "goodGenHealthNotes"></textarea>
+              </div>    
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope = "row" class = "form-check lign-middle">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="HEENTPE" name="HEENTPE" value="Good condition for HEENT" aria-label="peHEENTYes">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="notHEENTPE" name="HEENTPE" value="Issues or problems with HEENT" aria-label="peHEENTNo">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="neHEENTPEPE" name="HEENTPE" checked value="HEENT was unexamined" aria-label="peHEENTNE">
+              </div>
+            </th>
+            <td>HEENT</td>
+            <td>
+              <div class="form-group">
+              <textarea class="form-control" id="HEENTNotes" name = "HEENTNotes" cols=24></textarea>
+              </div>    
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope = "row" class = "form-check align-middle">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="NeckPE" name="NeckPE" value="Good condition for Neck" aria-label="peNeckYes">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="notNeckPE" name="NeckPE" value="Issues or problems with Neck" aria-label="peNeckNo">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="neNeckPE" name="NeckPE" checked value="Neck was unexamined" aria-label="peNeckNE">
+              </div>
+            </th>
+            <td>Neck</td>
+            <td>
+              <div class="form-group">
+              <textarea class="form-control" id="NeckNotes" name = "NeckNotes"></textarea>
+              </div>    
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope = "row" class = "form-check align-middle">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="ChestandLungsPE" name="ChestandLungsPE" value="Good condition for Chest and Lungs" aria-label="peChestandLungsYes">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="notChestandLungsPE" name="ChestandLungsPE" value="Issues or problems with Chest and Lungs" aria-label="peChestandLungsNo">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="neChestandLungsPE" name="ChestandLungsPE" checked value="Chest and Lungs were unexamined" aria-label="peChestandLungsNE">
+              </div>
+            </th>
+            <td>Chest and Lungs</td>
+            <td>
+              <div class="form-group">
+              <textarea class="form-control" id="ChestandLungsNotes" name = "ChestandLungsNotes"></textarea>
+              </div>    
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope = "row" class = "form-check align-middle">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="CardiovascularPE" name="CardiovascularPE" value="Good condition for Cardiovascular systems" aria-label="peCardiovascularYes">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="notCardiovascularPE" name="CardiovascularPE" value="Issues or problems with Cardiovascular systems" aria-label="peCardiovascularNo">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="neCardiovascularPE" name="CardiovascularPE" checked value="Cardiovascular systems were unexamined" aria-label="peCardiovascularNE">
+              </div>
+            </th>
+            <td>Cardiovascular</td>
+            <td>
+              <div class="form-group">
+              <textarea class="form-control" id="CardiovascularNotes" name = "CardiovascularNotes"></textarea>
+              </div>    
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope = "row" class = "form-check align-middle">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="AbdomenPE" name="AbdomenPE" value="Good condition for Patient's Abdomen" aria-label="peAbdomenYes">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="notAbdomenPE" name="AbdomenPE" value="Issues or problems with Abdomen" aria-label="peAbdomenNo">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="nsAbdomenPE" name="AbdomenPE" checked value="Abdomen was unexamined" aria-label="peAbdomenNE">
+              </div>
+            </th>
+            <td>Abdomen</td>
+            <td>
+              <div class="form-group">
+              <textarea class="form-control" id="AbdomenNotes" name = "AbdomenNotes"></textarea>
+              </div>    
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope = "row" class = "form-check align-middle">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="GenitourinaryPE" name="GenitourinaryPE" value="Good condition for Genitourinary systems" aria-label="peGenitourinaryYes">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="GenitourinaryPE" name="GenitourinaryPE" value="Issues or problems with Genitourinary systems" aria-label="peGenitourinaryNo">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="GenitourinaryPE" name="GenitourinaryPE" checked value="Genitourinary was unexamined" aria-label="peGenitourinaryNE">
+              </div>
+            </th>
+            <td>Genitourinary</td>
+            <td>
+              <div class="form-group">
+              <textarea class="form-control" id="GenitourinaryNotes" name = "GenitourinaryNotes"></textarea>
+              </div>    
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope = "row" class = "form-check align-middle">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="RectalPE" name="RectalPE" value="Good condition for Rectal systems" aria-label="peRectalYes">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="notRectalPE" name="RectalPE" value="Issues or problems with Rectal systems" aria-label="peRectalNo">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="neRectalPE" name="RectalPE" checked value="Rectal system was unexamined" aria-label="peRectalNE">
+              </div>
+            </td>
+            <td>Rectal</td>
+            <td>
+              <div class="form-group">
+              <textarea class="form-control" id="RectalNotes" name = "RectalNotes"></textarea>
+              </div>    
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope = "row" class = "form-check align-middle">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="MusculoskeletalPE" name="MusculoskeletalPE"  value="Good condition for Musculoskeletal systems" aria-label="peMusculoskeletalYes">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="notMusculoskeletalPE" name="MusculoskeletalPE" value="Issues or problems with Musculoskeletal systems" aria-label="peMusculoskeletalNo">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="neMusculoskeletalPE" name="MusculoskeletalPE" checked value="Musculoskeletal system was unexamined" aria-label="peMusculoskeletalNE">
+              </div>
+            </th>
+            <td>Musculoskeletal</td>
+            <td>
+              <div class="form-group">
+              <textarea class="form-control" id="MusculoskeletalNotes" name = "MusculoskeletalNotes"></textarea>
+              </div>    
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope = "row" class = "form-check align-middle">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="LymphNodesPE" name="LymphNodesPE" value="Good condition for Lymph Nodes" aria-label="peLymphNodesYes">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="notLymphNodesPE" name="LymphNodesPE" value="Issues or problems with Lymph Nodes" aria-label="peLymphNodesNo">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="neLymphNodesPE" name="LymphNodesPE" checked value="Lymph Nodes were unexamined" aria-label="peLymphNodesNE">
+              </div>
+            </th>
+            <td>Lymph Nodes</td>
+            <td>
+              <div class="form-group">
+              <textarea class="form-control" id="LymphNodesNotes" name = "LymphNodesNotes"></textarea>
+              </div>    
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope = "row" class = "form-check align-middle">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="skinPE" name="SkinPE" value="Good condition for Skin" aria-label="peSkinYes">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="notSkinPE" name="SkinPE" value="Issues or problems with Skin" aria-label="peSkinNo">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="neSkinPE" name="SkinPE" checked value="Skin was unexamined" aria-label="peSkinNE">
+              </div>
+            </td>
+            <td>Extremeties/Skin</td>
+            <td>
+              <div class="form-group">
+              <textarea class="form-control" id="SkinNotes" name = "SkinNotes"></textarea>
+              </div>    
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope = "row" class = "form-check align-middle">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="NeurologicalPE" name="NeurologicalPE" value="Good condition for Neurological systems" aria-label="peNeurologicalYes">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="notNeurologicalPE" name="NeurologicalPE" value="Issues or problems with Neurological Systems" aria-label="peNeurologicalNo">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="neNeurologicalPE" name="NeurologicalPE" checked value="Neurological systems were unexamined" aria-label="peNeurologicalNE">
+              </div>
+            </th>
+            <td>Neurological</td>
+            <td>
+              <div class="form-group">
+              <textarea class="form-control" id="NeurologicalNotes" name = "NeurologicalNotes"></textarea>
+              </div>    
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope = "row" class = "form-check align-middle">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="BreastPE" name="BreastPE" value="Good condition for Breasts" aria-label="peBreastYes">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="notBreastPE" name="BreastPE" value="Issues or problems with Breasts" aria-label="peBreastNo">
+              </div>
+            </th>
+            <th>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="neBreastPE" name="BreastPE" checked value="Breasts were unexamined" aria-label="peBreastNE">
+              </div>
+            </th>
+            <td>Breast</td>
+            <td>
+              <div class="form-group">
+              <textarea class="form-control" id="BreastNotes" name = "BreastNotes"></textarea>
+              </div>    
+              </div>
+            </td>
+          </tr>
+
+
+        </tbody>
+      </table>
+    </div>
+
+    <div  class = "row">
+      <div class="form-group col-12 mt-3">
+      <label class = "form-label" for = "GeneralNotes">Notes</label>
+      <textarea class="form-control" id="General Notes" name = "GeneralNotes" rows="5" placeholder="Additional notes here"></textarea>
+      </div>
+    </div> 
+
+    <div class="d-flex justify-content-between mt-3 w-100">
+      <input
+        type="submit"
+        class="btn btn-custom-tertiary emr-prev-btn px-5"
+        value="Previous"
+        data-next-page="pe-fetal-presentation"
+      />
+  
+      <input
+        type="submit"
+        class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+        value="Next"
+        data-next-page="ie-pap-smear"
+      />
+    </div>
+</form>
+
+    <!-- <script>
+      let genPEVal = {
+        genPEGen: {},
+        genPEHEENT: {},
+        genPENeck: {},
+        genPEChest: {},
+        genPECardio: {},
+        genPEAbdomen: {},
+        genPEUrinary: {},
+        genPERectal: {},
+        genPEMusculoSkeletal: {},
+        genPELymph: {},
+        genPESkin: {},
+        genPENeuro: {},
+        genPEBreast: {}
+       }
+
+      $(".genPE :input").change(function(){
+      let genPEName = $(this).attr("name");
+      if(genPEName == "goodGenHealthPE" || genPEName == "goodGenHealthNotes"){
+        genPEVal.genPEGen[genPEName] = $(this).val();
+      }
+      else if(genPEName == "HEENTPE" || genPEName == "HEENTNotes"){
+        genPEVal.genPEHEENT[genPEName] = $(this).val();
+      }
+      else if(genPEName == "NeckPE" || genPEName == "NeckNotes"){
+        genPEVal.genPENeck[genPEName] = $(this).val();
+      }
+      else if(genPEName == "ChestandLungsPE" || genPEName == "ChestandLungsNotes"){
+        genPEVal.genPEChest[genPEName] = $(this).val();
+      }
+      else if(genPEName == "CardiovascularPE" || genPEName == "CardiovascularNotes"){
+        genPEVal.genPECardio[genPEName] = $(this).val();
+      }
+      else if(genPEName == "AbdomenPE" || genPEName == "AbdomenNotes"){
+        genPEVal.genPEAbdomen[genPEName] = $(this).val();
+      }
+      else if(genPEName == "GenitourinaryPE" || genPEName == "GenitourinaryNotes"){
+        genPEVal.genPEUrinary[genPEName] = $(this).val();
+      }
+      else if(genPEName == "RectalPE" || genPEName == "RectalNotes"){
+        genPEVal.genPERectal[genPEName] = $(this).val();
+      }
+      else if(genPEName == "MusculoskeletalPE" || genPEName == "MusculoskeletalNotes"){
+        genPEVal.genPEMusculoSkeletal[genPEName] = $(this).val();
+      }
+      else if(genPEName == "LymphNodesPE" || genPEName == "LymphNodesNotes"){
+        genPEVal.genPELymph[genPEName] = $(this).val();
+      }
+      else if(genPEName == "SkinPE" || genPEName == "SkinNotes"){
+        genPEVal.genPESkin[genPEName] = $(this).val();
+      }
+      else if(genPEName == "NeurologicalPE" || genPEName == "NeurologicalNotes"){
+        genPEVal.genPENeuro[genPEName] = $(this).val();
+      }
+      else if(genPEName == "BreastPE" || genPEName == "BreastNotes"){
+        genPEVal.genPEBreast[genPEName] = $(this).val();
+      }
+      else{
+        genPEVal[genPEName] = $(this).val();
+      }
+      console.log(genPEVal);
+      });
+    </script> -->

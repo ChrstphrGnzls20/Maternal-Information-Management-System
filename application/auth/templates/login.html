@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid bg-custom-gradient full-page d-flex justify-content-center align-items-center ">
+    <div class="container-md bg-white m-1 m-md-3 p-5 rounded-2">
+        <h1 class="text-custom-tertiary mb-5 text-center form-title">{{title}}</h1>
+<form class="login-form">
+
+    <div class="mb-3">
+        <label class="form-label" required for="email">Username</label>
+        <input class="form-control" type="email" name="email" id="email"  placeholder="e.g. juandelacruz@gmail.com" required>
+    </div>
+
+
+    <div class="mb-3">
+        <label class="form-label" for="password">Password</label>
+        <input class="form-control" type="password" name="password" id="password" placeholder= "must be 6-30 characters long" >
+        
+    </div>
+
+    <div>
+        <div class="d-flex flex-column mt-4">
+            <input class="mb-3 btn btn-custom btn-custom-primary fs-5 w-100" type="submit" value="Login">
+            {% if entity == "patient" %}
+            <a class=" btn btn-custom btn-custom-tertiary fs-5 w-100 prev-btn" href="/register">Register</a>
+            {% endif %}
+        </div>
+    </div>
+</form>
+</div>
+
+
+{% include "loader.html" %}
+
+</div>
+
+</div>
+
+<script src="{{url_for('static', filename='auth/js/login.js')}}"></script>
+
+{% endblock %}

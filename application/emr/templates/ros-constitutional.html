@@ -1,0 +1,196 @@
+<form class="rosConst" data-form-target="EMR">
+  <div class="row mt-2">
+    <h3 class="default-label col-12">ROS - Constitutional</h3>
+  </div>
+
+  <table class="table table-borderless" id="ros-constitutional-table">
+    <thead>
+      <tr align="middle">
+        <th scope="col" width="10%">Yes</th>
+        <th scope="col" width="10%">No</th>
+        <th scope="col" width="50%">Condition</th>
+      </tr>
+    </thead>
+    <tbody align="middle">
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="GoodGenHealthYes"
+            name="GoodGenHealth"
+            value="yes"
+            aria-label="GoodGenHealthYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="GoodGenHealthNo"
+            name="GoodGenHealth"
+            value="no"
+            aria-label="GoodGenHealthNo"
+            checked
+          />
+        </td>
+        <td>Good General Health Lately</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="WeightGainYes"
+            name="WeightGain"
+            value="yes"
+            aria-label="WeightGainYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="WeightGainNo"
+            name="WeightGain"
+            value="no"
+            aria-label="WeightGainNo"
+            checked
+          />
+        </td>
+        <td>Weight Gain</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="WeightLossYes"
+            name="WeightLoss"
+            value="yes"
+            aria-label="WeightLossYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="WeightLossNo"
+            name="WeightLoss"
+            value="no"
+            aria-label="WeightLossNo"
+            checked
+          />
+        </td>
+        <td>Weight Loss</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="constFatigueYes"
+            name="fatigue"
+            value="yes"
+            aria-label="fatigueYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="constFatigueNo"
+            name="fatigue"
+            value="no"
+            aria-label="fatigueNo"
+            checked
+          />
+        </td>
+        <td>Fatigue</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="constFeverYes"
+            name="fever"
+            value="yes"
+            aria-label="feverYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="constFeverNo"
+            name="fever"
+            value="no"
+            aria-label="feverNo"
+            checked
+          />
+        </td>
+        <td>Fever</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="constChillsYes"
+            name="chills"
+            value="yes"
+            aria-label="chillsYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="constChillsNo"
+            name="chills"
+            value="no"
+            aria-label="chillsNo"
+            checked
+          />
+        </td>
+        <td>Chills</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row mt-3">
+    <div class="form-group col-12">
+      <label for="constNotes" class="form-label" id="constNotesLabel"
+        >Notes</label
+      >
+      <textarea
+        class="form-control"
+        id="constNotes"
+        name="constNotes"
+        rows="5"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="patient-history-ah"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="ros-eyes"
+    />
+  </div>
+</form>

@@ -1,0 +1,249 @@
+<form
+  id="contraceptive-history-form"
+  class="contraceptiveHistory"
+  data-form-target="EMR"
+>
+  <h3 class="default-label col-12">Contraceptive History</h3>
+  <div class="d-flex flex-column mt-3">
+    <label class="form-label required">Are you sexually active?</label>
+
+    <div class="row row-cols-1 row-cols-md-2 mx-2">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="sActiveNo"
+          name="sexuallyActive"
+          value="Not sexually active"
+        />
+        <label class="form-check-label" for="sActiveNo">No</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="sActiveYes"
+          name="sexuallyActive"
+          value="Sexually Active"
+        />
+        <label class="form-check-label" for="sActiveYes">Yes</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-3 row">
+    <div class="col-6">
+      <label for="quantityPartners">How many lifetime partners?</label>
+      <br />
+      <input
+        class="History-input form-control"
+        type="number"
+        id="qtyPartner"
+        name="quantityPartners"
+        min="1"
+        max="10"
+      />
+    </div>
+    <div class="col-6">
+      <label for="quantityPartners">How many in the last year?</label>
+      <br />
+      <input
+        class="History-input form-control"
+        type="number"
+        id="partnerYr"
+        name="partnerYears"
+        min="1"
+        max="10"
+      />
+    </div>
+  </div>
+
+  <div class="d-flex flex-column mt-3">
+    <label class="form-label required">Any problems with current method?</label>
+
+    <div class="row row-cols-1 row-cols-md-2 mx-2">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="methodProblemNo"
+          name="curMethodProblems"
+          value="There are no problems with current method"
+        />
+        <label class="form-check-label" for="methodProblemNo">No</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="methodProblemYes"
+          name="curMethodProblems"
+          value="There are problems with current method"
+        />
+        <label class="form-check-label" for="methodProblemYes">Yes</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column mt-3">
+    <label class="form-label"
+      >Previously Used Methods (Check all that apply)</label
+    >
+    <div class="row row-cols-1 row-cols-md-2 mx-2">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="bcp"
+          name="usedMethods"
+          value="birth control pills"
+        />
+        <label class="form-check-label" for="bcp">Birth Control Pill</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="condom"
+          name="usedMethods"
+          value="condoms"
+        />
+        <label class="form-check-label" for="condom">Condoms</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="diapraphm"
+          name="usedMethods"
+          value="diapraphm"
+        />
+        <label class="form-check-label" for="diapraphm">Diapraphm</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="DepoProvera"
+          name="usedMethods"
+          value="depo provera"
+        />
+        <label class="form-check-label" for="DepoProvera">Depo Provera</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="iud"
+          name="usedMethods"
+          value="IUD"
+        />
+        <label class="form-check-label" for="iud">IUD</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="nuvaring"
+          name="usedMethods"
+          value="nuvaring"
+        />
+        <label class="form-check-label" for="nuvaring">Nuvaring</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="implanon"
+          name="usedMethods"
+          value="implanon"
+        />
+        <label class="form-check-label" for="implanon">Implanon</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="nexplanon"
+          name="usedMethods"
+          value="nexplanon"
+        />
+        <label class="form-check-label" for="nexplanon">nexplanon</label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="sponge"
+          name="usedMethods"
+          value="sponge"
+        />
+        <label class="form-check-label" for="sponge">Sponge</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <label for="otherMethod">Other</label>
+    <textarea
+      class="form-control"
+      id="otherMethod"
+      name="OtherMethod"
+      rows="1"
+    ></textarea>
+  </div>
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="patient-history-ph"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="patient-history-gh"
+    />
+  </div>
+</form>
+
+<!-- <script>
+    let cHistoryVal = {
+      methodsUsed: [],
+    };
+
+    $(document).ready(function () {
+      $(".contraceptiveHistory :input").change(function () {
+        let cHistoryName = $(this).attr("name");
+
+        if (cHistoryName === "usedMethods") {
+          let value = $(this).val();
+          if (cHistoryVal.methodsUsed.includes(value)) {
+            let sortMethod = cHistoryVal.methodsUsed.filter(
+              (item) => value !== item
+            );
+            cHistoryVal.methodsUsed = sortMethod;
+            console.log(cHistoryVal);
+            return;
+          }
+          cHistoryVal.methodsUsed.push($(this).val());
+        } else {
+          cHistoryVal[cHistoryName] = $(this).val();
+        }
+
+        console.log(cHistoryVal);
+      });
+    });
+  </script> -->

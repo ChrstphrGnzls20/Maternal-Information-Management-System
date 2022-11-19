@@ -1,0 +1,279 @@
+<form class="rosChest" data-form-target="EMR">
+  <div class="row mt-2">
+    <h3 class="default-label col-12">ROS - Chest</h3>
+  </div>
+
+  <table class="table table-borderless" id="ros-breast-table">
+    <thead>
+      <tr align="middle">
+        <th scope="col" width="10%">Yes</th>
+        <th scope="col" width="10%">No</th>
+        <th scope="col" width="50%">Condition</th>
+      </tr>
+    </thead>
+    <tbody align="middle">
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="chestPainsYes"
+            name="chestPains"
+            value="yes"
+            aria-label="chestPainsYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="chestPainsNo"
+            name="chestPains"
+            value="no"
+            aria-label="chestPainsNo"
+            checked
+          />
+        </td>
+        <td>Chest Pains</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="irregularHearbeatYes"
+            name="irregularHearbeat"
+            value="yes"
+            aria-label="irregularHearbeatYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="irregularHearbeatNo"
+            name="irregularHearbeat"
+            value="no"
+            aria-label="irregularHearbeatNo"
+            checked
+          />
+        </td>
+        <td>Irregular Heartbeat</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="chestShortofBreathYes"
+            name="ShortofBreath"
+            value="Yes"
+            aria-label="chestShortofBreathYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="chestShortofBreathYes"
+            name="ShortofBreath"
+            value="Yes"
+            aria-label="chestShortofBreathYes"
+            checked
+          />
+        </td>
+        <td>Shortness of Breath</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="swollenBreastsYes"
+            name="swollenBreasts"
+            value="yes"
+            aria-label="swollenBreastsYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="swollenBreastsNo"
+            name="swollenBreasts"
+            value="no"
+            aria-label="swollenBreastsNo"
+            checked
+          />
+        </td>
+        <td>Swelling</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="breastLumpsYes"
+            name="breastLumps"
+            value="yes"
+            aria-label="breastLumpsYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="breastLumpsNo"
+            name="breastLumps"
+            value="no"
+            aria-label="breastLumpsNo"
+            checked
+          />
+        </td>
+        <td>Lumps</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="breastDischargeYes"
+            name="breastDischarge"
+            value="yes"
+            aria-label="breastDischargeYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="breastDischargeNo"
+            name="breastDischarge"
+            value="no"
+            aria-label="breastDischargeNo"
+            checked
+          />
+        </td>
+        <td>Nipple Discharge</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- <div  class = "row">
+        <label class = "default-label col-1 mt-4">Yes</label>
+        <label class = "default-label col-1 mt-4">No</label>
+      </div>
+      
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="chestPainsYes" name="chestPains" value="Yes" aria-label="chestPainsYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="chestPainsNo" name="chestPains" value="No" aria-label="chestPainsNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Chest Pain</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="irregularHearbeatYes" name="irregularHearbeat" value="Yes" aria-label="irregularHearbeatYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="irregularHearbeatNo" name="irregularHearbeat" value="No" aria-label="irregularHearbeatNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Irregular Heartbeats</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="chestShortofBreathYes" name="chestShortofBreath" value="Yes" aria-label="chestShortofBreathYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="chestShortofBreathNo" name="chestShortofBreath" value="No" aria-label="chestShortofBreathNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Shortness of Breath</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="rapidHeartRateYes" name="rapidHeartRate" value="Yes" aria-label="rapidHeartRateYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="rapidHeartRateNo" name="rapidHeartRate" value="No" aria-label="rapidHeartRateNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Rapid Heart Rate</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="swellofLimbsYes" name="swellofLimbs" value="Yes" aria-label="swellofLimbsYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="swellofLimbsNo" name="swellofLimbs" value="No" aria-label="swellofLimbsNo" checked> 
+        </div>
+
+        <label class="default-label col-5">Swelling of Feet, Ankles, or Hands</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="varicoseVeinsYes" name="varicoseVeins" value="Yes" aria-label="varicoseVeinsYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="varicoseVeinsNo" name="varicoseVeins" value="No" aria-label="varicoseVeinsNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Varicose Veins</label>
+
+      </div> -->
+
+  <div class="row mt-3">
+    <div class="form-group col-12">
+      <label for="chestNotes" class="form-label" id="chestNotesLabel"
+        >Notes</label
+      >
+      <textarea
+        class="form-control"
+        id="chestNotes"
+        name="chestNotes"
+        rows="5"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="ros-breast"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="ros-respiratory"
+    />
+  </div>
+</form>

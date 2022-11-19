@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block additionalHeaders %}
+
+<!-- localized css -->
+<link rel="stylesheet" href="{{url_for('emr.static', filename='styles.css')}}">
+
+<!-- jquery ui -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js" integrity="sha512-TToQDr91fBeG4RE5RjMl/tqNAo35hSRR4cbIFasiV2AAMQ6yKXXYhdSdEpUcRE6bqsTiB+FPLPls4ZAFMoK5WA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar1">
+        <div class="p-4 pt-5">
+    <ul class="list-unstyled components mb-5">
+      <li class="border-bottom">
+        <a class="btn emr-cat" data-target="vital-signs">
+          Vital Signs
+        </a>
+        </li>
+    <li class="border-bottom">
+      <a class="btn emr-cat" data-target="hpi">
+        History of Present Illness
+      </a>
+      </li>
+
+    <!-- Patient History -->
+    <li class="border-bottom">
+      <a href="#patient-history-dropdown" data-bs-toggle="collapse" aria-expanded="false" class="btn emr-dropdown dropdown-toggle ">       
+        Patient History
+    </a>
+    </li> 
+      <ul class="collapse list-unstyled" id="patient-history-dropdown">
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="patient-history-pmh">
+                Past Medical History
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="patient-history-ph">
+                Pregnancy History
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="patient-history-ch">
+                Contraceptive History
+            </a>
+        </li>
+        <li>
+          <a class="btn emr-cat emr-sub-cat" data-target="patient-history-gh">
+            Gynecological History
+        </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="patient-history-cmh">
+                Current Medication History
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="patient-history-pch">
+                Preventive Care History
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="patient-history-sh">
+                Surgical History
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="patient-history-ah">
+                Allergy History
+            </a>
+        </li>
+      </ul>
+    </li>
+
+    <!-- Review of Systems -->
+    <li class="border-bottom">
+        <a href="#ros-dropdown" data-bs-toggle="collapse" aria-expanded="false" class="btn emr-dropdown dropdown-toggle ">       
+            Review of Systems
+        </a>
+    </li> 
+      <ul class="collapse list-unstyled" id="ros-dropdown">
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-constitutional">
+                Constitutional
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-eyes">
+                Eyes
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-ent">
+                Ears, Nose Throat
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-breast">
+                Breast
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-cardiovascular">
+                Cardiovascular
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-respiratory">
+                Respiratory
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-gastrointestinal">
+                Gastrointestinal
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-urinary-reproductive">
+                Urinary and Reproductive
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-skin">
+                Integument (Skin)
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-neurological">
+                Neurological
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-musculoskeletal">
+                Musculoskeletal
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-endocrine">
+                Endocrine
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-psychiatric">
+                Psychiatric
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-blood">
+                Blood and Lymph
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="ros-allergy">
+                Allergy
+            </a>
+      </li>
+      </ul>
+    </li>
+    <li class="border-bottom">
+      <a href="#pe-dropdown" data-bs-toggle="collapse" aria-expanded="false" class="btn emr-dropdown dropdown-toggle ">       
+        Physical Exam
+        </a>
+    </li> 
+      <ul class="collapse list-unstyled" id="pe-dropdown">
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="pe-fetal-presentation">
+                Fetal Presentation
+            </a>
+        </li>
+        <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="pe-general">
+                General
+            </a>
+        </li>
+        <li class="border-bottom">
+          <a href="#ie-dropdown" data-bs-toggle="collapse" aria-expanded="false" class="btn emr-sub-cat emr-dropdown dropdown-toggle ">       
+            Internal Examination
+        </a>
+        </li> 
+          <ul class="collapse list-unstyled" id="ie-dropdown">
+            <li>
+                <a class="btn emr-cat emr-sub-sub-cat" data-target="ie-pap-smear">
+                    Pap Smear
+                </a>
+            </li>
+            <li>
+                <a class="btn emr-cat emr-sub-sub-cat" data-target="ie-vag-vul-cer">
+                    Vulva, Vagina, Cervix
+                </a>
+            </li>
+            </ul>
+        </li>
+      </ul>
+      </li>
+    <li class="border-bottom">
+      <a class="btn emr-cat" data-target="assessment">
+        Assessment
+      </a>
+      </li>
+    <li class="border-bottom">
+      <a class="btn emr-cat" data-target="laboratory">
+        Laboratory
+      </a>
+      </li>
+    <li class="border-bottom">
+      <a class="btn emr-cat" data-target="plan">
+        Plan
+      </a>
+      </li>
+    <li class="border-bottom">
+      <a class="btn emr-cat" data-target="summary">
+        Summary
+      </a>
+    </li>
+    </ul>
+  </div>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="emr-wrapper" class="container-fluid p-2 p-md-3">
+        <!-- wrapper -->
+        <div class="container-lg bg-white py-3 shadow" id='emr-content'></div>
+    </div>
+</div>
+
+<!-- Moment.js -->
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+
+
+<!-- Custom JS -->
+
+<script src="{{url_for('emr.static', filename='datePicker.js')}}" ></script>
+<script src="{{url_for('emr.static', filename='formData.js')}}" ></script>
+<script src="{{url_for('emr.static', filename='emrRouter.js')}}" ></script>
+<!-- <script type="module" src="{{url_for('emr.static', filename='date-picker.js')}}" ></script> -->
+<!-- <script src="{{url_for('static', filename='emr/js/emr-data.js')}}" defer></script> -->
+
+{% endblock %}

@@ -1,0 +1,101 @@
+<div class="full-page d-flex flex-column mt-3">
+    <h1 class="mb-3">Create New Appointment</h1>
+    <form action="">
+        <div class="form-group">
+            <label for="prac-select" class="form-label">Practitioner</label>
+            <select class="form-select w-50 " id="prac-select">
+                <option value="">Select practitioner</option>
+                <option value="wayne">Dr. Wayne Andrew Amazan</option>
+            </select>
+        </div>
+    </form>
+    
+    <!-- calendar -->
+    <div class="mt-3 container-xl invisible" id="calendar"></div>
+</div>
+
+<!-- Create appointment modal -->
+  <div class="modal fade" id="createApptModal" tabindex="-1" aria-labelledby="createApptModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog ">
+    <form id="createApptForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createApptModalLabel">Create New Appointment</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="modal-body">
+                <!-- practitioner -->
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="practitioner" class="form-label">Practitioner</label>
+                        <input type="text" class="form-control" id="practitioner" disabled>
+                    </div>
+                </div>
+
+                <!-- date -->
+                <div class="row">
+                    <div class="col form-groups">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="text" class="form-control" id="date" disabled>
+                    </div>
+                </div>
+
+                <!-- time -->
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="time" class="form-label">Time</label>
+                        <input type="text" class="form-control timepicker" id="time">
+                    </div>
+                </div>
+          
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+          <!-- <button type="button" class="btn btn-success">Create Appointment</button> -->
+          <input type="submit" class="btn btn-success" value="Create Appointment">
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+
+  <!-- Confirmation modal -->
+  <div class="modal fade" id="confirmation" tabindex="-1" aria-labelledby="confirmationLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmationLabel">Confirm Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="modal-body">
+                <!-- practitioner -->
+                <div class="row">
+                    <h5><b>Practitioner:</b> &emsp;<span id="conf-practitioner"></span></h1>
+                </div>
+
+                <!-- date -->
+                <div class="row">
+                    <h5><b>Date: </b> &emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;<span id="conf-date"></span></h1>
+                </div>
+
+                <!-- time -->
+                <div class="row">
+                    <h5><b>Time: </b>&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;<span id="conf-time"></span></h1>
+                </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script type="module"
+src="{{ url_for('patient.static', filename='js/calendar.js') }}"></script>
+
