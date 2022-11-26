@@ -59,10 +59,15 @@ def startRegister():
     return render_template('register.html', diseasesList=diseasesList)
 
 
+@patient.route('/register/success')
+def registerSuccess():
+    return render_template("register-success.html")
+
+
 @patient.route('/')
 def dashboard():
     if not session.get('_id'):
-        return redirect("/patient/login")
+        return redirect("/login/patient")
     content = [
         {
             'idx': 0,
@@ -109,95 +114,18 @@ def dashboard():
 def homeAppointment():
     if not session.get('_id'):
         return redirect("/patient/login")
-    # sidebarItems = [
-    #     {
-    #         "label": "DASHBOARD",
-    #         "icon": "bi bi-house-door",
-    #         "route": "/patient/dashboard/",
-    #         "active": "false",
-    #     },
-    #     {
-    #         "label": "APPOINTMENT",
-    #         "icon": "bi bi-calendar-week",
-    #         "route": "/patient/dashboard/appointment",
-    #         "active": "true",
-    #     },
-    #     {
-    #         "label": "CONSULTATIONS",
-    #         "icon": "bi bi-calendar-week",
-    #         "route": "/patient/dashboard/consultations",
-    #         "active": "false",
-    #     },
-    # ]
-
-    appointments = [
-        {
-            "ref": 1,
-            "practitioner": "Kevin Hart",
-            "scheduleDate": "08/15/2022",
-            "scheduleTime": "12:00pm",
-            "status": "Done"
-        },
-        {
-            "ref": 2,
-            "practitioner": "Kevin Hart",
-            "scheduleDate": "08/17/2022",
-            "scheduleTime": "12:00pm",
-            "status": "Pending"
-        }
-    ]
-    return render_template("dashboard.html", contentTemplate="/home-appointment.html",  sidebarItems=sidebarItems, activeSidebar="APPOINTMENTS", appointments=appointments)
+    return render_template("dashboard.html", contentTemplate="/home-appointment.html",  sidebarItems=sidebarItems, activeSidebar="APPOINTMENTS")
 
 
 @patient.route('/appointments/create')
 def createAppointment():
     if not session.get('_id'):
         return redirect("/patient/login")
-    # sidebarItems = [
-    #     {
-    #         "label": "DASHBOARD",
-    #         "icon": "bi bi-house-door",
-    #         "route": "/patient/dashboard/",
-    #         "active": "active",
-    #     },
-    #     {
-    #         "label": "APPOINTMENT",
-    #         "icon": "bi bi-calendar-week",
-    #         "route": "/patient/dashboard/appointment",
-    #         "active": "true",
-    #     },
-    #     {
-    #         "label": "CONSULTATIONS",
-    #         "icon": "bi bi-calendar-week",
-    #         "route": "/patient/dashboard/consultations",
-    #         "active": "false",
-    #     },
-    # ]
-    return render_template("dashboard.html", contentTemplate="/create-appointment.html",  sidebarItems=sidebarItems, activeSidebar="APPOINTMENTS")
+    return render_template("dashboard.html", contentTemplate="/create-appointment.html",  sidebarItems=sidebarItems, activeSidebar="APPOINTMENTS", clinicians=appointmentObj.getAvailableClinicians())
 
 
 @patient.route("/consultations")
 def homeConsultations():
-    # sidebarItems = [
-    #     {
-    #         "label": "DASHBOARD",
-    #         "icon": "bi bi-house-door",
-    #         "route": "/patient/dashboard/",
-    #         "active": "active",
-    #     },
-    #     {
-    #         "label": "APPOINTMENT",
-    #         "icon": "bi bi-calendar-week",
-    #         "route": "/patient/dashboard/appointment",
-    #         "active": "false",
-    #     },
-    #     {
-    #         "label": "CONSULTATIONS",
-    #         "icon": "bi bi-calendar-week",
-    #         "route": "/patient/dashboard/consultations",
-    #         "active": "true",
-    #     },
-    # ]
     return render_template("dashboard.html", contentTemplate="/home-consultations.html",  sidebarItems=sidebarItems, activeSidebar="CONSULTATIONS")
 
 
@@ -213,22 +141,18 @@ def homeConsultations():
 #
 #####################
 
-@patient.route('/register/data', methods=["POST"])
-def handleRegister():
-    if request.method == "POST":
-        # save data to db
-        data = json.loads(request.data)
+# @patient.route('/register/data', methods=["POST"])
+# def handleRegister():
+#     if request.method == "POST":
+#         # save data to db
+#         data = json.loads(request.data)
 
-        print(json.dumps(data, indent=2))
-        result = patientObj.register(data)
-        if result:
-            return make_response(jsonify(result), 201)
-        return make_response(jsonify({"errorMsg": "There was an error processing your request. Please try again later."}, 500))
+#         print(json.dumps(data, indent=2))
+#         result = patientObj.register(data)
+#         if result:
+#             return make_response(jsonify(result), 201)
+#         return make_response(jsonify({"errorMsg": "There was an error processing your request. Please try again later."}, 500))
 
-
-@patient.route('/register/success')
-def registerSuccess():
-    return render_template("register-success.html")
 
 #####################
 #
@@ -239,21 +163,33 @@ def registerSuccess():
 # NOTE: PROJECTION IN MONGODB IS THE SOLUTION TO GET SPECIFIC APPOINTMENTS ON A DOCUMENT WITH ARRAY OF APPOINTMENTS
 
 
-@patient.route("appointments/api/add", methods=["POST"])
-def addAppointment():
-    '''
-        EXPECTS AND RETURNS A DICTIONARY OF SERVICE INFORMATION INSERTED
-        FORMAT:
-        {
-            _id: value, 
-            doctor: value,
-            date: value,
-            time: value,
-        }
-    '''
-    if request.method == "POST":
-        data = json.loads(request.data)
-        result = appointmentObj.retrieveAppointments({"_id": data['_id']})
-        print(result)
-        if result:
-            return make_response(jsonify({"hello": "Hello"}))
+@patient.route("/patient-id")
+def patientID():
+    return patientObj.getRandomPatientID()
+
+
+# @patient.route("appointments/api/<string:id>", methods=["GET"])
+# def getAppointments(id):
+#     return make_response(appointmentObj.retrieveAppointments(filter={"patient_id": id}), 201)
+
+
+# @patient.route("appointments/api/add", methods=["POST"])
+# def addAppointment():
+#     '''
+#         EXPECTS AND RETURNS A DICTIONARY OF SERVICE INFORMATION INSERTED
+#         FORMAT:
+#         {
+#             _id: autogenerated,
+#             doctor_id: value,
+#             patient_id: value,
+#             date: value,
+#             time: value,
+#             createdDate: value,
+#         }
+#     '''
+#     if request.method == "POST":
+#         data = json.loads(request.data)
+#         result = appointmentObj.addAppointment(data)
+#         print(result)
+#         if result:
+#             return make_response(jsonify(result))

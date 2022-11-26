@@ -2,40 +2,27 @@ let currentLicenseID = "";
 
 // FUNCTION FOR RETRIEVING SELECTED EMPLOYEE INFORMATION USING AJAX AND FILLING THE MODAL WITH THE RETRIEVED INFORMATION WHEN THE AJAX-REQUEST IS SUCCESSFUL
 let retrieveEmployeeAndFillModal = function (licenseID) {
-  let filter = { licenseID: licenseID };
   $.ajax({
-    method: "POST",
-    url: `/admin/employee/search`,
+    method: "GET",
+    url: `${API_BASE_URL}/employees/${licenseID}`,
     dataType: "json",
-    data: JSON.stringify(filter),
     contentType: "application/json",
-    success: function (response) {
-      if (response.code === "SUCCESS") {
-        // if request is successfull
-        let employeeData = response.data[0];
-        let [fName, mName, lName] = employeeData.name.split(" ");
-        let nameObj = { fName: fName, mName: mName, lName: lName };
-        $("#edit-employee-form :input[type!=button]:input[type!=submit]").each(
-          function () {
-            let name = $(this).attr("name");
-            // set value of input accordingly
-            $(this).val(employeeData[name]);
-            // special cases for name fields
-            if (["fName", "mName", "lName"].includes(name)) {
-              $(this).val(nameObj[name]);
-            }
-          }
-        );
-      } else {
-        // removeErrorMessage();
-        // updateErrorMessage(response.errMsg);
+  }).done(function (response) {
+    let employeeData = response[0];
+    console.log(employeeData);
+    let [fName, mName, lName] = employeeData.name.split(" ");
+    let nameObj = { fName: fName, mName: mName, lName: lName };
+    $("#edit-employee-form :input[type!=button]:input[type!=submit]").each(
+      function () {
+        let name = $(this).attr("name");
+        // set value of input accordingly
+        $(this).val(employeeData[name]);
+        // special cases for name fields
+        if (["fName", "mName", "lName"].includes(name)) {
+          $(this).val(nameObj[name]);
+        }
       }
-    },
-    error: function (xhr) {
-      // let errorMsg = xhr.responseJSON.errMsg;
-      // removeErrorMessage();
-      // updateErrorMessage(errorMsg);
-    },
+    );
   });
 };
 
@@ -51,47 +38,34 @@ let editEmployee = function (licenseID, data) {
   console.log(data);
   $.ajax({
     method: "PATCH",
-    url: `/admin/employee/edit/${licenseID}`,
+    url: `${API_BASE_URL}/employees/${licenseID}`,
     dataType: "json",
     data: JSON.stringify(data),
     contentType: "application/json",
-    success: function (response) {
-      if (response.code === "SUCCESS") {
-        // empModal.modal("hide");
-        // location.reload();
+  }).done(function (response) {
+    let employeeData = response;
 
-        let employeeData = response.data;
-
-        let toEditEmployeeRow = "";
-        let employeeTrs = $(".employees-table tbody tr");
-        employeeTrs.each(function () {
-          if ($(this).children(".emp-id").text() === currentLicenseID) {
-            toEditEmployeeRow = $(this);
-            return;
-          }
-        });
-        // remove outdated employee row
-        toEditEmployeeRow.remove();
-
-        // re-insert with updated information
-        let empTableBody = $(".employees-table tbody");
-        let updatedEmployeeRow = generateEmployeeRow(employeeData);
-
-        empTableBody.append(updatedEmployeeRow);
-
-        // add event listener to button manually
-
-        // close modal
-        summaryModal.modal("hide");
-      } else {
-        //
+    let toEditEmployeeRow = "";
+    let employeeTrs = $(".employees-table tbody tr");
+    employeeTrs.each(function () {
+      if ($(this).children(".emp-id").text() === currentLicenseID) {
+        toEditEmployeeRow = $(this);
+        return;
       }
-    },
-    error: function (xhr) {
-      // let errorMsg = xhr.responseJSON.errMsg;
-      // removeErrorMessage();
-      // updateErrorMessage(errorMsg);
-    },
+    });
+    // REMOVE OUTDATED EMPLOYEE ROW
+    toEditEmployeeRow.remove();
+
+    // RE-INSERT WITH UPDATED INFORMATION
+    let empTableBody = $(".employees-table tbody");
+    let updatedEmployeeRow = generateEmployeeRow(employeeData);
+
+    empTableBody.append(updatedEmployeeRow);
+
+    // ADD EVENT LISTENER TO BUTTON MANUALLY
+
+    // CLOSE MODAL
+    summaryModal.modal("hide");
   });
 };
 
@@ -111,8 +85,15 @@ $(function () {
     let modalContent = generateModalContent(currentMode);
     employeeModalDialog.append(modalContent);
 
+    // ATTACH VALIDATORS
+    attachValidators($("#edit-employee-form"));
+
     // RETRIEVE EMPLOYEE INFORMATION AND FILL MODAL
     retrieveEmployeeAndFillModal(currentLicenseID);
+
+    // DISABLE EMPLOYEE ID INPUT, ROLE SELECT
+    $("input[name=_id]").prop("disabled", true);
+    $("select[name=role]").prop("disabled", true);
 
     // SHOW EDIT-EMPLOYEE-MODAL
     employeeModal.modal("show");

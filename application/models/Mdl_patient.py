@@ -2,7 +2,8 @@
 # Imported Libraries
 from ..extensions import mail
 from ..extensions import mongo
-from uuid import uuid4
+# from uuid import uuid4
+import shortuuid
 from passlib.hash import sha256_crypt
 import random
 from flask_mail import Message
@@ -30,9 +31,12 @@ class Patient(object):
     def __init__(self):
         self.OTP = 0
 
-    @staticmethod
-    def getRandomPatientID() -> str:
-        return str(uuid4())
+    def getRandomPatientID(self) -> str:
+        patientID = shortuuid.ShortUUID().random(length=10)
+        results = self.findPatient(filter={"_id": patientID})
+        if not len(list(results)):
+            return patientID
+        return self.getRandomPatientID()
 
     def generateOTP(self, email: str) -> None:
         self.OTP = random.randrange(100000, 999999)
@@ -53,10 +57,23 @@ class Patient(object):
         print(self.OTP)
         return str(unverifiedOTP) == str(self.OTP)
 
-    def findPatient(self, filter: dict, return_fields: dict) -> dict:
+    def register(self, data: dict) -> str:
+        collection = mongo.db.patient
+
+        # attach additional information
+        data['_id'] = self.getRandomPatientID()
+        data['registeredDate'] = datetime.utcnow()
+
+        # password hashing
+        data['password'] = sha256_crypt.encrypt(data['password'])
+
+        result = collection.insert_one(data)
+        return result.inserted_id
+
+    def findPatient(self, filter: dict, returnFields: dict = {}) -> dict:
         collection = mongo.db.patient
         resultArray = []
-        results = collection.find(filter, return_fields)
+        results = collection.find(filter, returnFields)
         for result in results:
             resultArray.append(result)
         return resultArray
@@ -70,37 +87,33 @@ class Patient(object):
         # except Exception:
         #     return {"code": "SUCCESS"}
 
-    def login(self, loginCred: dict) -> dict:
-        collection = mongo.db.patient
-        try:
-            result = collection.find_one_or_404(
-                {"email": loginCred['email']}, {"_id": 1, "email": 1, "password": 1})
-            if result:
-                if sha256_crypt.verify(loginCred['password'], result['password']):
-                    result.pop('password')
-                    return {"code": "SUCCESS", "data": result}
-                return {"code": "FAILURE", "errorMsg": "Incorrect password!"}
-        except Exception:
-            return {"code": "FAILURE", "errorMsg": "Email does not exists! Register <a href='/register' style='color: inherit'>here.</a>"}
-
-    def register(self, data: dict) -> dict:
-        collection = mongo.db.patient
-
-        # attach additional information
-        data['_id'] = self.getRandomPatientID()
-        data['registeredDate'] = datetime.utcnow()
-
-        # password hashing
-        data['password'] = sha256_crypt.encrypt(data['password'])
-
-        result = collection.insert_one(data)
-        return result.inserted_id
+    # def login(self, loginCred: dict) -> dict:
+    #     collection = mongo.db.patient
+    #     resultArray = []
+    #     try:
+    #         result = collection.find_one_or_404(
+    #             {"email": loginCred['email']}, {"_id": 1, "email": 1, "password": 1})
+    #         if result:
+    #             if sha256_crypt.verify(loginCred['password'], result['password']):
+    #                 result.pop('password')
+    #                 resultArray.append(result)
+    #     except Exception as ex:
+    #         print(ex)
+    #     finally:
+    #         return resultArray
+        # try:
+        #     result = collection.find_one_or_404(
+        #         {"email": loginCred['email']}, {"_id": 1, "email": 1, "password": 1})
+        #     if result:
+        #         if sha256_crypt.verify(loginCred['password'], result['password']):
+        #             result.pop('password')
+        #             return {"code": "SUCCESS", "data": result}
+        #         return {"code": "FAILURE", "errorMsg": "Incorrect password!"}
+        # except Exception:
+        #     return {"code": "FAILURE", "errorMsg": "Email does not exists! Register <a href='/register' style='color: inherit'>here.</a>"}
 
     # for testing
 
     def deleteAll(self) -> None:
         collection = mongo.db.patient
         collection.delete_many({})
-
-    def saveAddress(self, data) -> bool:
-        collection = mongo.db.address

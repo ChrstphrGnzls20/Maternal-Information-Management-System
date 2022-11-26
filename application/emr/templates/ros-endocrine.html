@@ -168,4 +168,28 @@
       data-next-page="ros-psychiatric"
     />
   </div>
+
+  <script>
+              
+    $(".rosEndocrine").on("submit", function(){
+      let Endocrine = { }
+
+      let rosColdIntolerance = $("input[name='coldIntolerance']:checked");
+      let rosHeatIntolerance = $("input[name='heatIntolerance']:checked");
+      let rosEndoDiabetes = $("input[name='endoDiabetes']:checked");
+      let rosExcessThirstandUrine = $("input[name='excessiveThirstandUrine']:checked");
+      let rosEndoSkinDry = $("input[name='SkinDryness']:checked");
+      let rosEndoNotes = $("#endocrineNotes");
+
+      Endocrine[rosColdIntolerance.attr("name")] = (rosColdIntolerance.val());
+      Endocrine[rosHeatIntolerance.attr("name")] = (rosHeatIntolerance.val());
+      Endocrine[rosEndoDiabetes.attr("name")] = (rosEndoDiabetes.val());
+      Endocrine[rosExcessThirstandUrine.attr("name")] = (rosExcessThirstandUrine.val());
+      Endocrine[rosEndoSkinDry.attr("name")] = (rosEndoSkinDry.val());
+      Endocrine[rosEndoNotes.attr("name")] = (rosEndoNotes.val());
+
+      console.log(Endocrine);
+    });
+  </script>
+  
 </form>

@@ -1,0 +1,23 @@
+from flask import Flask, Blueprint
+
+# BLUEPRINTS
+from ..api.patientAPI import patientAPI
+from ..api.authAPI import authAPI
+from ..api.appointmentAPI import appointmentAPI
+from ..api.employeeAPI import employeeAPI
+from ..api.clinicServiceAPI import clinicServiceAPI
+
+api = Blueprint("api", __name__)
+
+api.register_blueprint(patientAPI, url_prefix='/patients')
+api.register_blueprint(authAPI, url_prefix='/auth')
+api.register_blueprint(appointmentAPI, url_prefix='/appointments')
+api.register_blueprint(employeeAPI, url_prefix='/employees')
+api.register_blueprint(clinicServiceAPI, url_prefix='/clinic-services')
+
+# IMPORTANT: ALL API ENDPOINTS MUST RETURN EITHER '[]' OR '[{}]'
+
+
+@api.route("/")
+def API():
+    return "HELLO THERE FROM API BLUEPRINT"

@@ -1,0 +1,77 @@
+<form class="soapAssess" data-form-target="EMR">
+  <div class="row mt-2">
+    <h3 class="default-label col-12">Assessment</h3>
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group col-6">
+      <label for="assessmentDiag" class="form-label">Diagnosis</label>
+      <input
+        type="text"
+        class="form-control"
+        id="assessmentDiag"
+        name="assessmentDiag"
+      />
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group col-12">
+      <label for="assessmentDiagNote" class="form-label">Notes</label>
+      <textarea
+        class="form-control"
+        id="assessmentDiagNote"
+        name="assessmentDiagNote"
+        rows="5"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group col-6">
+      <label for="assessmentDXDiag" class="form-label">Dx Diagnosis</label>
+      <input
+        type="text"
+        class="form-control"
+        id="assessmentDXDiag"
+        name="assessmentDXDiag"
+      />
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group col-12">
+      <label for="fname" class="form-label">Notes</label>
+      <textarea
+        class="form-control"
+        id="assessmentDXDiagNote"
+        name="assessmentDXDiagNote"
+        rows="5"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="ie-vag-vul-cer"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="laboratory"
+    />
+  </div>
+  <!-- <script>
+      let soapAssVal = { }
+      $(".soapAssess :input").change(function(){
+      let assName = $(this).attr("name");
+      soapAssVal[assName] = $(this).val();
+      console.log(soapAssVal);
+      });
+      </script> -->
+</form>

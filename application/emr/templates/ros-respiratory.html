@@ -292,4 +292,30 @@
       data-next-page="ros-gastrointestinal"
     />
   </div>
+
+  <script>
+    $(".rosResp").on("submit", function(){
+      let Respiratory = { };
+
+      let rosChronicCough = $("input[name='chronicCough']:checked");
+      let rosCoughBlood = $("input[name='coughingBlood']:checked");
+      let rosRespShortBreath = $("input[name='shortnessOfBreath']:checked");
+      let rosAsthma = $("input[name='Asthma']:checked");
+      let rosTBexpose = $("input[name='tbExposure']:checked");
+      let rosRespChills = $("input[name='respChills']:checked");
+      let rosRespNotes = $("#respNotes");
+
+      Respiratory[rosChronicCough.attr("name")] = (rosChronicCough.val());
+      Respiratory[rosCoughBlood.attr("name")] = (rosCoughBlood.val());
+      Respiratory[rosRespShortBreath.attr("name")] = (rosRespShortBreath.val());
+      Respiratory[rosAsthma.attr("name")] = (rosAsthma.val());
+      Respiratory[rosTBexpose.attr("name")] = (rosTBexpose.val());
+      Respiratory[rosRespChills.attr("name")] = (rosRespChills.val());
+      Respiratory[rosRespNotes.attr("name")] = (rosRespNotes.val());
+      
+
+      console.log(Respiratory);
+    });
+  </script>
+
 </form>

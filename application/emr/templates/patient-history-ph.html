@@ -77,7 +77,7 @@
             />
           </td>
           <td>
-            <select class="form-select" name="childSex">
+            <select class="form-select" name="childGender">
               <option selected></option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -132,7 +132,7 @@
     <form>
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="surgicalHistoryModalLabel">
+          <h1 class="modal-title fs-5" id="pregnancyHistoryModalLabel">
             Modal title
           </h1>
           <button
@@ -145,7 +145,7 @@
         <div class="modal-body">
           <div class="row">
             <div class="form-group">
-              <label for="#" class="form-label">Pregnancy Year</label>
+              <label for="#" class="form-label required">Pregnancy Year</label>
               <input
                 type="text"
                 class="form-control datepicker"
@@ -153,39 +153,51 @@
                 name="pregnancyYear"
                 min="1900"
                 max="2099"
+                required
               />
             </div>
           </div>
           <div class="row mt-3">
             <div class="form-group">
-              <label for="#" class="form-label"
+              <label for="#" class="form-label required"
                 >Miscarriage or Place of Delivery</label
               >
-              <input type="text" name="placeOfDelivery" class="form-control" />
+              <input
+                type="text"
+                name="placeOfDelivery"
+                class="form-control"
+                required
+              />
             </div>
           </div>
           <div class="row mt-3">
             <div class="form-group">
-              <label for="#" class="form-label"
+              <label for="#" class="form-label required"
                 >Duration of Pregnancy (in Weeks)</label
               >
               <input
                 type="number"
                 name="durationOfPregnancy"
                 class="form-control"
+                required
               />
             </div>
           </div>
           <div class="row mt-3">
             <div class="form-group">
-              <label for="#" class="form-label">Hours of Labor</label>
-              <input type="number" name="hoursOfLabor" class="form-control" />
+              <label for="#" class="form-label required">Hours of Labor</label>
+              <input
+                type="number"
+                name="hoursOfLabor"
+                class="form-control"
+                required
+              />
             </div>
           </div>
           <div class="row mt-3">
             <div class="form-group">
               <label for="#" class="form-label">Type of Delivery</label>
-              <select name="typeOfDelivery" class="form-select">
+              <select name="typeOfDelivery" class="form-select" required>
                 <option value="Normal">Normal</option>
                 <option value="Cesarean">Cesarean</option>
               </select>
@@ -193,16 +205,21 @@
           </div>
           <div class="row mt-3">
             <div class="form-group">
-              <label for="#" class="form-label"
+              <label for="#" class="form-label required"
                 >Delivery Complications on Mother/Infant</label
               >
-              <input type="text" name="complications" class="form-control" />
+              <input
+                type="text"
+                name="complications"
+                class="form-control"
+                required
+              />
             </div>
           </div>
           <div class="row mt-3">
             <div class="form-group">
               <label for="#" class="form-label">Sex</label>
-              <select class="form-select" name="childSex">
+              <select class="form-select" name="childGender" required>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
@@ -211,14 +228,21 @@
 
           <div class="row mt-3">
             <div class="form-group">
-              <label for="#" class="form-label">Birth Weight (in pounds)</label>
-              <input type="number" name="birthWeight" class="form-control" />
+              <label for="#" class="form-label required"
+                >Birth Weight (in pounds)</label
+              >
+              <input
+                type="number"
+                name="birthWeight"
+                class="form-control"
+                required
+              />
             </div>
           </div>
           <div class="row mt-3">
             <div class="form-group">
               <label for="#" class="form-label">Present Health</label>
-              <select class="form-select" name="presentHealth">
+              <select class="form-select" name="presentHealth" required>
                 <option value="Normal">Normal</option>
                 <option value="Abnormal">Abnormal</option>
               </select>
@@ -359,9 +383,9 @@
       <td>
         <input
           type="text"
-          name="childSex"
+          name="childGender"
           class="form-control"
-          value=${data.childSex}
+          value=${data.childGender}
           readonly
         />
       </td>
@@ -431,7 +455,13 @@
     console.log(pHistoryVal);
   });
 </script> -->
-
+<!-- LOADASH -->
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+  integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
 <script>
   $(function () {
     loadDatepickers({
@@ -446,6 +476,8 @@
     let trIndex = 1;
     let mode = "";
     let activeTrIndex = 0;
+    let previousData = {};
+    let pregnancyHistory = [];
 
     function generateFormGroup(data) {
       return `
@@ -455,7 +487,7 @@
       <input type='number' name='hoursOfLabor' value="${data.hoursOfLabor}" />
       <input type='text' name='typeOfDelivery' value="${data.typeOfDelivery}" />
       <input type='text' name='complications' value="${data.complications}" />
-      <input type='text' name='childSex' value="${data.childSex}" />
+      <input type='text' name='childGender' value="${data.childGender}" />
       <input type='text' name='birthWeight' value="${data.birthWeight}" />
       <input type='text' name='presentHealth' value="${data.presentHealth}" />
       `;
@@ -498,7 +530,7 @@
         ${data.complications}
       </td>
       <td>
-        ${data.childSex}
+        ${data.childGender}
       </td>
       <td>
         ${data.birthWeight}
@@ -518,9 +550,7 @@
     $("table").on("click", ".btn-add", function () {
       mode = "ADD";
 
-      $(".modal input[type=text]").each(function () {
-        $(this).val("");
-      });
+      clearModalTextFields((modalClass = ".modal"));
     });
 
     // when edit button is clicked
@@ -528,20 +558,85 @@
       mode = "EDIT";
       let trParent = $(this).parent().parent();
       activeTrIndex = trParent.attr("data-row-index");
+      clearModalTextFields((modalClass = ".modal"));
 
-      let inputs = $(`div[data-row-index=${activeTrIndex}]`).find("input");
-      // console.log(trParent.find("input[type=text]"));
-      inputs.each(function () {
-        let name = $(this).attr("name");
-        let value = $(this).val();
-        $(`.modal input[name=${name}]`).val(value);
-      });
+      // let inputs = $(`div[data-row-index=${activeTrIndex}]`).find("input");
+      // // console.log(trParent.find("input[type=text]"));
+      // inputs.each(function () {
+      //   let name = $(this).attr("name");
+      //   let value = $(this).val();
+      //   $(`.modal input[name=${name}]`).val(value);
+      // });
+
+      let siblings = $(this).parent().siblings();
+      let pregnancyYear = $(siblings[0]).text().trim();
+      let placeOfDelivery = $(siblings[1]).text().trim();
+      let durationOfPregnancy = $(siblings[2]).text().trim();
+      let hoursOfLabor = $(siblings[3]).text().trim();
+      let typeOfDelivery = $(siblings[4]).text().trim();
+      let complications = $(siblings[5]).text().trim();
+      let childGender = $(siblings[6]).text().trim();
+      let birthWeight = $(siblings[7]).text().trim();
+      let presentHealth = $(siblings[8]).text().trim();
+
+      // POPULATE MODAL FIELDS
+      $(".modal input[name=pregnancyYear]").val(pregnancyYear);
+      $(".modal input[name=placeOfDelivery]").val(placeOfDelivery);
+      $(".modal input[name=durationOfPregnancy]").val(durationOfPregnancy);
+      $(".modal input[name=hoursOfLabor]").val(hoursOfLabor);
+      $(".modal input[name=typeOfDelivery]").val(typeOfDelivery);
+      $(".modal input[name=complications]").val(complications);
+      $(".modal input[name=childGender]").val(childGender);
+      $(".modal input[name=birthWeight]").val(birthWeight);
+      $(".modal input[name=presentHealth]").val(presentHealth);
+
+      Object.assign(
+        previousData,
+        { pregnancyYear: pregnancyYear },
+        { placeOfDelivery: placeOfDelivery },
+        { durationOfPregnancy: durationOfPregnancy },
+        { hoursOfLabor: hoursOfLabor },
+        { typeOfDelivery: typeOfDelivery },
+        { complications: complications },
+        { childGender: childGender },
+        { birthWeight: birthWeight },
+        { presentHealth: presentHealth }
+      );
     });
 
     $("table").on("click", ".btn-delete", function () {
       let trParent = $(this).parent().parent();
 
       trParent.remove();
+
+      // REMOVE DELETED VALUE
+      let siblings = $(this).parent().siblings();
+      let pregnancyYear = $(siblings[0]).text().trim();
+      let placeOfDelivery = $(siblings[1]).text().trim();
+      let durationOfPregnancy = $(siblings[2]).text().trim();
+      let hoursOfLabor = $(siblings[3]).text().trim();
+      let typeOfDelivery = $(siblings[4]).text().trim();
+      let complications = $(siblings[5]).text().trim();
+      let childGender = $(siblings[6]).text().trim();
+      let birthWeight = $(siblings[7]).text().trim();
+      let presentHealth = $(siblings[8]).text().trim();
+
+      Object.assign(
+        previousData,
+        { pregnancyYear: pregnancyYear },
+        { placeOfDelivery: placeOfDelivery },
+        { durationOfPregnancy: durationOfPregnancy },
+        { hoursOfLabor: hoursOfLabor },
+        { typeOfDelivery: typeOfDelivery },
+        { complications: complications },
+        { childGender: childGender },
+        { birthWeight: birthWeight },
+        { presentHealth: presentHealth }
+      );
+
+      pregnancyHistory = pregnancyHistory.filter((item) => {
+        return !_.isEqual(item, previousData);
+      });
     });
 
     // when submitting modal form
@@ -566,15 +661,19 @@
         $(toAppend).insertBefore("#tr-dummy");
 
         // add fields to hidden div that holds form data
-        let newFormGroup = generateFormGroup(data);
-        toAppend = `
-        <div data-row-index=${trIndex} style="display: none;">
-          ${newFormGroup}
-        </div>
-        `;
+        // let newFormGroup = generateFormGroup(data);
+        // toAppend = `
+        // <div data-row-index=${trIndex} style="display: none;">
+        //   ${newFormGroup}
+        // </div>
+        // `;
 
-        let form = $("form[data-form-target=EMR]");
-        form.append(toAppend);
+        // let form = $("form[data-form-target=EMR]");
+        // form.append(toAppend);
+
+        // APPEND VALUES TO EXISTING OBJECT
+        pregnancyHistory.push(data);
+        console.log(pregnancyHistory);
 
         trIndex++;
       } else {
@@ -587,14 +686,74 @@
         trParent.append(TDs);
 
         // update hidden form values
-        let currentFormDiv = $(`div[data-row-index=${activeTrIndex}]`);
+        // let currentFormDiv = $(`div[data-row-index=${activeTrIndex}]`);
 
-        currentFormDiv.empty();
-        let newFormGroup = generateFormGroup(data);
-        currentFormDiv.append(newFormGroup);
+        // currentFormDiv.empty();
+        // let newFormGroup = generateFormGroup(data);
+        // currentFormDiv.append(newFormGroup);
+
+        // APPEND UPDATED VALUES TO EXISTING OBJECT
+        pregnancyHistory = pregnancyHistory.filter((item) => {
+          return !_.isEqual(item, previousData);
+        });
+        pregnancyHistory.push(data);
       }
 
       $(".modal").modal("hide");
     });
+
+    $(".pregnancyHistory").on("submit", function () {
+      console.log(pregnancyHistory);
+    });
   });
 </script>
+
+<!-- <script>
+  let pHistoryVal = { }
+  $(".pregnancyHistory :input").change(function(){
+    let pHistoryName = $(this).attr("name");
+    pHistoryVal[pHistoryName] = $(this).val();
+    console.log(pHistoryVal);
+  });
+</script> -->
+
+<!-- <script>
+              
+    $(".pregnancyHistory").on("submit", function(){
+      let pHistoryVal = { }
+      
+      let phPregnancyYr = $("#PregnancyYr");
+      let phMiscarriageorPlaceofDelivery = $("#MiscarriageOrPlaceOfDelivery");
+      let phDurationofPregnancy = $("#DurationOfPregnancy");
+      let phHoursofLabor = $("#HoursOfLabor");
+      let phTypeOfDelivery = $("#TypeOfDelivery");
+      let phDeliveryComplicationsonMotherInfant = $("#DeliveryComplicationsOnMotherInfant");
+      let phChildGender = $("#ChildGender");
+      let phBirthWeightinPounds = $("#BirthWeightinPounds");
+      let phPresentHealth = $("#PresentHealth");
+      
+
+      pHistoryVal[phPregnancyYr.attr("name")] = (phPregnancyYr.val());
+      pHistoryVal[phMiscarriageorPlaceofDelivery.attr("name")] = (phMiscarriageorPlaceofDelivery.val());
+      pHistoryVal[phDurationofPregnancy.attr("name")] = (phDurationofPregnancy.val());
+      pHistoryVal[phHoursofLabor.attr("name")] = (phHoursofLabor.val());
+      pHistoryVal[phTypeOfDelivery.attr("name")] = (phTypeOfDelivery.val());
+      pHistoryVal[phDeliveryComplicationsonMotherInfant.attr("name")] = (phDeliveryComplicationsonMotherInfant.val());
+      pHistoryVal[phChildGender.attr("name")] = (phChildGender.val());
+      pHistoryVal[phBirthWeightinPounds.attr("name")] = (phBirthWeightinPounds.val());
+      pHistoryVal[phPresentHealth.attr("name")] = (phPresentHealth.val());
+
+
+      console.log(pHistoryVal);
+    });
+  </script> -->
+
+<!-- let phPregnancyYr = $("#PregnancyYr");
+let phMiscarriageorPlaceofDelivery = $("#MiscarriageOrPlaceOfDelivery");
+let phDurationofPregnancy = $("input[name='duration of Pregnancy']:checked");
+let phHoursofLabor = $("input[name='hoursofLabor']:checked");
+let phTypeOfDelivery = $("input[name='typeOfDelivery']:checked");
+let phDeliveryComplicationsonMotherInfant = $("input[name='delivery Complications on Mother/Infant']:checked");
+let phChildGender = $("input[name='childGender']:checked");
+let phBirthWeightinPounds = $("input[name='birthWeightinPounds']:checked");
+let phPresentHealth = $("input[name='presentHealth']:checked"); -->

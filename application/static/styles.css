@@ -413,3 +413,9 @@ body {
   outline: 0;
   border: 0;
 }
+
+/* FOR REQUIRED INPUTS */
+label.required::after {
+  content: "*";
+  color: red;
+}

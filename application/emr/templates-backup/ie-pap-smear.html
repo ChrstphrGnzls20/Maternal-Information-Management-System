@@ -1,0 +1,147 @@
+<!-- TODO: responsiveness of site when in md size -->
+<form class="papTest" data-form-target="EMR">
+  <div class="row">
+    <h3 class="default-label">Pap Smear</h3>
+  </div>
+
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <label class="align-self-start mt-4 fs-5 text-black">Result</label>
+
+    <div class="row row-cols-1 row-cols-md-4 mt-2 p-3 w-100">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="papSmear"
+          id="papNormal"
+          value="normal"
+          checked
+        />
+        <label class="form-check-label" for="papNormal"> Normal </label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="papSmear"
+          id="papASCUS"
+          value="ASC-US"
+        />
+        <label class="form-check-label" for="papASCUS"> ASC-US </label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="papSmear"
+          id="papAGC"
+          value="AGC"
+        />
+        <label class="form-check-label" for="papAGC"> AGC </label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="papSmear"
+          id="papASCH"
+          value="ASC-H"
+        />
+        <label class="form-check-label" for="papASCH"> ASC-H </label>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-4 mt-2 p-3 w-100">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="papSmear"
+          id="papHSIL"
+          value="HSIL"
+        />
+        <label class="form-check-label" for="papHSIL"> HSIL </label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="papSmear"
+          id="papAIS"
+          value="AIS"
+        />
+        <label class="form-check-label" for="papAIS"> AIS </label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="papSmear"
+          id="papCervicalCancer"
+          value="cervical cancer"
+        />
+        <label class="form-check-label" for="papCervicalCancer">
+          Cervical Cancer
+        </label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="papSmear"
+          id="papUnsatisfactory"
+          value="unsatisfactory"
+        />
+        <label class="form-check-label" for="papUnsatisfactory">
+          Unsatisfactory
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group">
+      <label for="papSmearGenNotes" class="form-label" id="papGenNotes"
+        >Notes</label
+      >
+      <textarea
+        class="form-control"
+        id="papSmearGenNotes"
+        name="papSmearGenNotes"
+        rows="5"
+        placeholder="Additional notes here"
+      ></textarea>
+    </div>
+  </div>
+
+  <!-- <script>
+      let papVal = { }
+      $(".papTest :input").change(function(){
+      let papName = $(this).attr("name");
+      papVal[papName] = $(this).val();
+      console.log(papVal);
+      });
+      </script> -->
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="pe-general"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="ie-vag-vul-cer"
+    />
+  </div>
+</form>

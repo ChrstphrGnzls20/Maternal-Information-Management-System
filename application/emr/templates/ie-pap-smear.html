@@ -144,4 +144,21 @@
       data-next-page="ie-vag-vul-cer"
     />
   </div>
+
+ <script>
+              
+    $(".papTest").on("submit", function(){
+      let PapSmear = { }
+
+      let iePapSmear = $("input[name='papSmear']:checked");
+      let iePapSmearNotes = $("#papSmearGenNotes");
+
+      PapSmear[iePapSmear.attr("name")] = (iePapSmear.val());
+      PapSmear[iePapSmearNotes.attr("name")] = (iePapSmearNotes.val());
+      
+
+      console.log(PapSmear);
+    });
+  </script>
+
 </form>

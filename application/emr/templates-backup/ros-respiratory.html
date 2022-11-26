@@ -1,0 +1,295 @@
+<!-- <form class = "rosResp">
+
+    <div  class = "row mt-2">
+      <h3 class = "default-label col-12">ROS - Respiratory</h3>
+      </div>
+
+      <div  class = "row">
+        <label class = "default-label col-1 mt-4">Yes</label>
+        <label class = "default-label col-1 mt-4">No</label>
+      </div>
+      
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="chronicCoughYes" name="chronicCough" value="Yes" aria-label="chronicCoughYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="chronicCoughNo" name="chronicCough" value="No" aria-label="chronicCoughNo" checked> 
+        </div>
+
+        <label class="default-label col-4">Chronic or Frequent Coughs</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="coughingBloodYes" name="coughingBlood" value="Yes" aria-label="coughingBloodYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="coughingBloodNo" name="coughingBlood" value="No" aria-label="coughingBloodNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Coughing up blood</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="respshortofBreathYes" name="respshortofBreath" value="Yes" aria-label="respshortofBreathYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="respshortofBreathNo" name="respshortofBreath" value="No" aria-label="respshortofBreathNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Shortness of Breath</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="AsthmaYes" name="Asthma" value="Yes" aria-label="AsthmaYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="AsthmaNo" name="Asthma" value="No" aria-label="AsthmaNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Asthma or Wheezing</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="tbExposureYes" name="tbExposure" value="Yes" aria-label="tbExposureYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="tbExposureNo" name="tbExposure" value="No" aria-label="tbExposureNo" checked> 
+        </div>
+
+        <label class="default-label col-3">TB Exposure</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="respChillsYes" name="respChills" value="Yes" aria-label="respChillsYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="respChillsNo" name="respChills" value="No" aria-label="respChillsNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Chills</label>
+
+      </div>
+
+      <div class="row mt-3">
+        <div class="form-group col-12">
+        <label for="respROSNotes" class = "form-label" id =  "respROSNotesLabel">Notes</label>
+        <textarea class="form-control" id="respROSNotes" name = "respROSNotes" rows="5"></textarea>
+        </div>    
+        </div>
+
+</form> -->
+
+<form class="rosResp" data-form-target="EMR">
+  <div class="row mt-2">
+    <h3 class="default-label col-12">ROS - Respiratory</h3>
+  </div>
+
+  <table class="table table-borderless" id="ros-respiratory-table">
+    <thead>
+      <tr align="middle">
+        <th scope="col" width="10%">Yes</th>
+        <th scope="col" width="10%">No</th>
+        <th scope="col" width="50%">Condition</th>
+      </tr>
+    </thead>
+
+    <tbody align="middle">
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="chronicCoughYes"
+            name="chronicCough"
+            value="yes"
+            aria-label="chronicCoughYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="chronicCoughNo"
+            name="chronicCough"
+            value="no"
+            aria-label="chronicCoughNo"
+            checked
+          />
+        </td>
+        <td>Chronic or Frequent Coughs</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="coughingBloodYes"
+            name="coughingBlood"
+            value="yes"
+            aria-label="coughingBloodYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="coughingBloodNo"
+            name="coughingBlood"
+            value="no"
+            aria-label="coughingBloodNo"
+            checked
+          />
+        </td>
+        <td>Coughing up blood</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="shortnessOfBreathYes"
+            name="shortnessOfBreath"
+            value="yes"
+            aria-label="shortnessOfBreathYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="shortnessOfBreathNo"
+            name="shortnessOfBreath"
+            value="no"
+            aria-label="shortnessOfBreathNo"
+            checked
+          />
+        </td>
+        <td>Shortness of Breath</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="AsthmaYes"
+            name="Asthma"
+            value="yes"
+            aria-label="AsthmaYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="AsthmaNo"
+            name="Asthma"
+            value="no"
+            aria-label="AsthmaNo"
+            checked
+          />
+        </td>
+        <td>Asthma or Wheezing</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="tbExposureYes"
+            name="tbExposure"
+            value="yes"
+            aria-label="tbExposureYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="tbExposureNo"
+            name="tbExposure"
+            value="no"
+            aria-label="tbExposureNo"
+            checked
+          />
+        </td>
+        <td>TB Exposure</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="respChillsYes"
+            name="respChills"
+            value="yes"
+            aria-label="respChillsYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="respChillsNo"
+            name="respChills"
+            value="no"
+            aria-label="respChillsNo"
+            checked
+          />
+        </td>
+        <td>Chills</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row mt-3">
+    <div class="form-group col-12">
+      <label for="respNotes" class="form-label" id="respNotesLabel"
+        >Notes</label
+      >
+      <textarea
+        class="form-control"
+        id="respNotes"
+        name="respNotes"
+        rows="5"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="ros-cardiovascular"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="ros-gastrointestinal"
+    />
+  </div>
+</form>

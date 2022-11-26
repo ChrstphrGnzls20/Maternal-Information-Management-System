@@ -71,6 +71,9 @@
 
     <!-- Custom CSS-->
     <link rel="stylesheet" href="{{ url_for('static', filename="styles.css")}}">
+
+    <!-- GLOBAL JS -->
+    <script src="{{ url_for('static', filename='globals.js') }}"></script>
   </head>
   <body>
     {% block content %} {% endblock %}

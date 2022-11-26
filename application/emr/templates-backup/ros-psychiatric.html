@@ -1,0 +1,374 @@
+<!-- <form class = "rosPsychological">
+
+    <div  class = "row mt-2">
+      <h3 class = "default-label col-12">ROS - Psychological</h3>
+      </div>
+
+      <div  class = "row">
+        <label class = "default-label col-1 mt-4">Yes</label>
+        <label class = "default-label col-1 mt-4">No</label>
+      </div>
+      
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="AnxietyYes" name="Anxiety" value="Yes" aria-label="AnxietyYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="AnxietyNo" name="Anxiety" value="No" aria-label="AnxietyNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Anxiety</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="DepressionYes" name="Depression" value="Yes" aria-label="DepressionYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="DepressionNo" name="Depression" value="No" aria-label="DepressionNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Depression</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="diffSleepingYes" name="diffSleeping" value="Yes" aria-label="diffSleepingYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="diffSleepingNo" name="diffSleeping" value="No" aria-label="diffSleepingNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Difficulty in Sleeping</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="excessAngerYes" name="excessAnger" value="Yes" aria-label="excessAngerYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="excessAngerNo" name="excessAnger" value="No" aria-label="excessAngerNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Excessive Anger</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="memoryLossAndConfusionYes" name="memoryLossAndConfusion" value="Yes" aria-label="memoryLossAndConfusionYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="memoryLossAndConfusionNo" name="memoryLossAndConfusion" value="No" aria-label="memoryLossAndConfusionNo" checked> 
+        </div>
+
+        <label class="default-label col-4">Memory Loss or Confusion</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="psychNervousnessYes" name="psychNervousness" value="Yes" aria-label="psychNervousnessYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="psychNervousnessNo" name="psychNervousness" value="No" aria-label="psychNervousnessNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Nervousness</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="psychMoodinessYes" name="psychMoodiness" value="Yes" aria-label="psychMoodinessNodesYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="psychMoodinessNo" name="psychMoodiness" value="No" aria-label="psychMoodinessNodesNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Moodiness</label>
+
+      </div>
+
+      <div class = "row mt-2">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="sucidalAndHomicidalYes" name="sucidalAndHomicidal" value="Yes" aria-label="sucidalAndHomicidalYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="sucidalAndHomicidalNo" name="sucidalAndHomicidal" value="No" aria-label="sucidalAndHomicidalNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Suicidal or homicidal</label>
+
+      </div>
+
+      <div class="row mt-3">
+        <div class="form-group col-12">
+        <label for="psychologicalROSNotes" class = "form-label" id =  "psychologicalROSNotesLabel">Notes</label>
+        <textarea class="form-control" id="psychologicalNotes" name = "psychologicalROSNotes" rows="5"></textarea>
+        </div>    
+        </div>
+
+</form> -->
+
+<form class="rosPsychological" data-form-target="EMR">
+  <div class="row mt-2">
+    <h3 class="default-label col-12">ROS - Psychological</h3>
+  </div>
+
+  <table class="table table-borderless" id="ros-psychological-table">
+    <thead>
+      <tr align="middle">
+        <th scope="col" width="10%">Yes</th>
+        <th scope="col" width="10%">No</th>
+        <th scope="col" width="50%">Condition</th>
+      </tr>
+    </thead>
+
+    <tbody align="middle">
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="AnxietyYes"
+            name="Anxiety"
+            value="yes"
+            aria-label="AnxietyYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="AnxietyNo"
+            name="Anxiety"
+            value="no"
+            aria-label="AnxietyNo"
+            checked
+          />
+        </td>
+        <td>Anxiety</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="DepressionYes"
+            name="Depression"
+            value="yes"
+            aria-label="DepressionYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="DepressionNo"
+            name="Depression"
+            value="yes"
+            aria-label="DepressionNo"
+            checked
+          />
+        </td>
+        <td>Depression</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="diffSleepingYes"
+            name="diffSleeping"
+            value="yes"
+            aria-label="diffSleepingYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="diffSleepingNo"
+            name="diffSleeping"
+            value="yes"
+            aria-label="diffSleepingNo"
+            checked
+          />
+        </td>
+        <td>Difficulty in Sleeping</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="excessAngerYes"
+            name="excessAnger"
+            value="yes"
+            aria-label="excessAngerYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="excessAngerNo"
+            name="excessAnger"
+            value="yes"
+            aria-label="excessAngerNo"
+            checked
+          />
+        </td>
+        <td>Excessive Anger</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="memoryLossAndConfusionYes"
+            name="memoryLossAndConfusion"
+            value="yes"
+            aria-label="memoryLossAndConfusionYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="memoryLossAndConfusionNo"
+            name="memoryLossAndConfusion"
+            value="yes"
+            aria-label="memoryLossAndConfusionNo"
+            checked
+          />
+        </td>
+        <td>Memory Loss or Confusion</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="NervousnessYes"
+            name="Nervousness"
+            value="yes"
+            aria-label="NervousnessYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="NervousnessNo"
+            name="Nervousness"
+            value="yes"
+            aria-label="NervousnessNo"
+            checked
+          />
+        </td>
+        <td>Nervousness</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="psychMoodinessYes"
+            name="psychMoodiness"
+            value="yes"
+            aria-label="psychMoodinessYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="psychMoodinessNo"
+            name="psychMoodiness"
+            value="yes"
+            aria-label="psychMoodinessNo"
+            checked
+          />
+        </td>
+        <td>Moodiness</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="sucidalAndHomicidalYes"
+            name="sucidalAndHomicidal"
+            value="yes"
+            aria-label="sucidalAndHomicidalYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="sucidalAndHomicidalNo"
+            name="sucidalAndHomicidal"
+            value="yes"
+            aria-label="sucidalAndHomicidalNo"
+            checked
+          />
+        </td>
+        <td>Suicidal or homicidal</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row mt-3">
+    <div class="form-group col-12">
+      <label
+        for="psychologicalNotes"
+        class="form-label"
+        id="psychologicalNotesLabel"
+        >Notes</label
+      >
+      <textarea
+        class="form-control"
+        id="psychologicalNotes"
+        name="psychologicalNotes"
+        rows="5"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="ros-endocrine"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="ros-blood"
+    />
+  </div>
+</form>

@@ -19,13 +19,11 @@ class ClinicService(object):
             return json.loads(json.dumps({"_id": self._id}))
         return self.generateID()
 
-    def retrieveClinicServices(self, filter: object = {}) -> list:
+    def retrieveClinicServices(self, filter: dict = {}, returnFields: dict = {}) -> list:
         collection = mongo.db[self.dbName]
-        # returnFields = {"_id": 0}
         resultArray = []
-        # results = collection.find({}, returnFields)
-        results = collection.find(filter)
-        # results = collection.find(filter, returnFields)
+        # results = collection.find(filter)
+        results = collection.find(filter, returnFields)
         for result in results:
             resultArray.append(result)
         return resultArray
@@ -53,7 +51,7 @@ class ClinicService(object):
                 {"_id": serviceID}, {"$set": json.loads(json.dumps(updateQuery))}, return_document=ReturnDocument.AFTER)
             # structuredData = {"code": "SUCCESS",
             #   "data": json.loads(json.dumps(result))}
-            return json.loads(json.dumps(result))
+            return result
         except Exception:
             # return {"code": "FAILED TO UPDATE"}
             return {}

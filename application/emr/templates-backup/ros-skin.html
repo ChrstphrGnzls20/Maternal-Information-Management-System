@@ -1,0 +1,197 @@
+<form class="rosResp" data-form-target="EMR">
+  <div class="row mt-2">
+    <h3 class="default-label col-12">ROS - Integument (Skin)</h3>
+  </div>
+
+  <table class="table table-borderless" id="ros-skin-table">
+    <thead>
+      <tr align="middle">
+        <th scope="col" width="10%">Yes</th>
+        <th scope="col" width="10%">No</th>
+        <th scope="col" width="50%">Condition</th>
+      </tr>
+    </thead>
+
+    <tbody align="middle">
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="rashYes"
+            name="rash"
+            value="yes"
+            aria-label="rashYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="rashNo"
+            name="rash"
+            value="no"
+            aria-label="rashNo"
+            checked
+          />
+        </td>
+        <td>Rash</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="itchingYes"
+            name="itching"
+            value="yes"
+            aria-label="itchingYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="itchingNo"
+            name="itching"
+            value="no"
+            aria-label="itchingNo"
+            checked
+          />
+        </td>
+        <td>Itching</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="hairGrowthChangeYes"
+            name="hairGrowthChange"
+            value="yes"
+            aria-label="hairGrowthChangeYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="hairGrowthChangeNo"
+            name="hairGrowthChange"
+            value="no"
+            aria-label="hairGrowthChangeNo"
+            checked
+          />
+        </td>
+        <td>Hair growth change</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="newSkinLesionsYes"
+            name="newSkinLesions"
+            value="yes"
+            aria-label="newSkinLesionsYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="newSkinLesionsNo"
+            name="newSkinLesions"
+            value="no"
+            aria-label="newSkinLesionsNo"
+            checked
+          />
+        </td>
+        <td>New skin lesions</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="recentChangesToSkinYes"
+            name="recentChangesToSkin"
+            value="yes"
+            aria-label="recentChangesToSkinYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="recentChangesToSkinNo"
+            name="recentChangesToSkin"
+            value="no"
+            aria-label="recentChangesToSkinNo"
+            checked
+          />
+        </td>
+        <td>Recent changes to skin</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="acneYes"
+            name="acne"
+            value="yes"
+            aria-label="acneYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="acneNo"
+            name="acne"
+            value="no"
+            aria-label="acneNo"
+            checked
+          />
+        </td>
+        <td>Acne</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row mt-3">
+    <div class="form-group col-12">
+      <label for="skinNotes" class="form-label" id="skinNotesLabel"
+        >Notes</label
+      >
+      <textarea
+        class="form-control"
+        id="skinNotes"
+        name="skinNotes"
+        rows="5"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="ros-urinary-reproductive"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="ros-neurological"
+    />
+  </div>
+</form>

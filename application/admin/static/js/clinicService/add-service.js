@@ -19,7 +19,7 @@ function generateServiceRow(service) {
 function fetchAndLoadServiceID() {
   $.ajax({
     method: "GET",
-    url: "/admin/clinic-service/api/generateID",
+    url: `${API_BASE_URL}/clinic-services/generate-id`,
     contentType: "application/json",
     dataType: "json",
   }).done(function (response) {
@@ -32,7 +32,7 @@ function fetchAndLoadServiceID() {
 function addService(data) {
   $.ajax({
     method: "POST",
-    url: "/admin/clinic-service/api/add",
+    url: `${API_BASE_URL}/clinic-services`,
     contentType: "application/json",
     dataType: "json",
     data: JSON.stringify(data),

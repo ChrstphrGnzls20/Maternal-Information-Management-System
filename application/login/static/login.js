@@ -13,7 +13,7 @@ alert = function (alertText) {
 $(function () {
   let currentURL = window.location.href;
   let splitURL = currentURL.split("/");
-  let currentEntity = splitURL[splitURL.length - 2];
+  let currentEntity = splitURL[splitURL.length - 1];
 
   console.log(currentEntity);
 
@@ -46,7 +46,7 @@ $(function () {
 
       $.ajax({
         type: "POST",
-        url: `/${currentEntity}/login/attempt`,
+        url: `${API_BASE_URL}/auth/login/${currentEntity}`,
         data: JSON.stringify(loginCred),
         dataType: "json",
         contentType: "application/json",
@@ -56,30 +56,28 @@ $(function () {
         complete: function () {
           $(".loader-ctr").toggleClass("d-none");
         },
-        success: function (response) {
-          if (response.code === "SUCCESS") {
-            console.log(response);
-            let data = response.data;
-            let id = data._id;
-            let email = data.email;
+      })
+        .done(function (response) {
+          let data = response[0];
+          let id = data._id;
+          let email = data.email;
 
-            // location.href = `/${currentEntity}/dashboard/`;
-            // NOTE: use above, below is for testing
+          // location.href = `/${currentEntity}/dashboard/`;
+          // NOTE: use above, below is for testing
 
-            // SAVE ID TO LOCALSTORAGE FOR FURTHER USE
-            localStorage.setItem("entity", currentEntity);
-            localStorage.setItem("id", id);
-            localStorage.setItem("email", email);
+          // SAVE ID TO LOCALSTORAGE FOR FURTHER USE
+          localStorage.setItem("entity", currentEntity);
+          localStorage.setItem("id", id);
+          localStorage.setItem("email", email);
 
-            // REDIRECT TO HOMEPAGE
-            location.href = `/${currentEntity}/`;
-          } else {
-            let formTitle = $(".form-title");
-            formTitle.siblings(".error-msg-ctr").remove();
-            $(alert(response.errorMsg)).insertAfter(formTitle);
-          }
-        },
-      });
+          // REDIRECT TO HOMEPAGE
+          location.href = `/${currentEntity}/`;
+        })
+        .catch(function () {
+          let formTitle = $(".form-title");
+          formTitle.siblings(".error-msg-ctr").remove();
+          $(alert("Invalid login credentials!")).insertAfter(formTitle);
+        });
     }
   });
 });

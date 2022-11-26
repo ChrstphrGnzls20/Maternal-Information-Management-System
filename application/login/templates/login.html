@@ -22,7 +22,7 @@
         <div class="d-flex flex-column mt-4">
             <input class="mb-3 btn btn-custom btn-custom-primary fs-5 w-100" type="submit" value="Login">
             {% if entity == "patient" %}
-            <a class=" btn btn-custom btn-custom-tertiary fs-5 w-100 prev-btn" href="/register">Register</a>
+            <a class=" btn btn-custom btn-custom-tertiary fs-5 w-100 prev-btn" href="/patient/register">Register</a>
             {% endif %}
         </div>
     </div>
@@ -36,6 +36,6 @@
 
 </div>
 
-<script src="{{url_for('static', filename='auth/js/login.js')}}"></script>
+<script src="{{url_for('login.static', filename='login.js')}}"></script>
 
 {% endblock %}

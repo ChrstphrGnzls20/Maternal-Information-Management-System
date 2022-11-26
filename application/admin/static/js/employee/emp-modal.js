@@ -18,7 +18,7 @@ function generateModalContent(mode) {
 
     <div class="row mt-3">
         <div class="form-group col-12 col-lg-6">
-            <label for="mail" class="form-label">E-Mail Address</label>
+            <label for="mail" class="form-label required">E-Mail Address</label>
             <input
             type="email"
             class="form-control"
@@ -32,7 +32,7 @@ function generateModalContent(mode) {
 
     <div class="row mt-3">
         <div class="form-group col-12 col-lg-6">
-            <label for="pwd" class="form-label">Password</label>
+            <label for="pwd" class="form-label required">Password</label>
             <input
             type="password"
             class="form-control"
@@ -44,7 +44,7 @@ function generateModalContent(mode) {
         </div>
 
         <div class="form-group col-12 col-lg-6 mt-3 mt-lg-0">
-            <label for="pwd2" class="form-label"
+            <label for="pwd2" class="form-label required"
             >Confirm Password</label>
             <input
             type="password"
@@ -77,14 +77,14 @@ function generateModalContent(mode) {
         <div class="add-emp-modal-container bg-white m-2 p-2">
             <div class="row">
             <div class="form-group col-12 col-lg-4">
-                <label for="license-num" class="form-label"
-                >License Number</label
+                <label for="license-num" class="form-label required"
+                >License ID</label
                 >
                 <input
                 type="text"
                 class="form-control"
                 id="license-num"
-                name="licenseID"
+                name="_id"
                 maxlength="18"
                 data-summary-label="License Number"
                 required
@@ -94,7 +94,7 @@ function generateModalContent(mode) {
 
             <div class="row">
             <div class="form-group col-12 col-lg-4 mt-3">
-                <label for="fname" class="form-label">First Name</label>
+                <label for="fname" class="form-label required">First Name</label>
                 <input
                 type="text"
                 class="form-control"
@@ -106,7 +106,7 @@ function generateModalContent(mode) {
             </div>
 
             <div class="form-group col-12 col-lg-4 mt-3">
-                <label for="mname" class="form-label">Middle Initial</label>
+                <label for="mname" class="form-label required">Middle Initial</label>
                 <input
                 type="text"
                 class="form-control"
@@ -118,7 +118,7 @@ function generateModalContent(mode) {
             </div>
 
             <div class="form-group col-12 col-lg-4 mt-3">
-                <label for="lname" class="form-label">Last Name</label>
+                <label for="lname" class="form-label required">Last Name</label>
                 <input
                 type="text"
                 class="form-control"
@@ -150,7 +150,7 @@ function generateModalContent(mode) {
             </div>
 
             <div class="form-group col-12 col-lg-6 mt-0 mt-lg-3">
-                <label for="role" class="form-label">Role</label>
+                <label for="role" class="form-label required">Role</label>
                 <select
                 class="form-select"
                 name="role"
@@ -158,28 +158,29 @@ function generateModalContent(mode) {
                 data-summary-label="Role"
                 required
                 >
-                <option value="Clinician">Clinician</option>
-                <option value="Secretary">Secretary</option>
+                <option value="doctor">Doctor</option>
+                <option value="secretary">Secretary</option>
                 </select>
             </div>
             </div>
 
             <div class="row mt-3">
             <div class="form-group col-12 col-lg-6">
-                <label for="status" class="form-label">Status</label>
+                <label for="status" class="form-label required">Status</label>
                 <select
                 class="form-select"
                 name="status"
                 id="status"
                 data-summary-label="Status"
+                required
                 >
-                <option selected value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
                 </select>
             </div>
 
             <div class="form-group col-12 col-lg-6 mt-3 mt-lg-0">
-                <label for="mobile" class="form-label"
+                <label for="mobile" class="form-label required"
                 >Contact Number</label
                 >
                 <input
@@ -260,6 +261,7 @@ function generateSummaryContent(mode) {
         <button
             type="button"
             class="btn btn-danger"
+            id="close-summary-modal-btn"
             data-bs-dismiss="modal"
         >
             CANCEL
@@ -269,4 +271,15 @@ function generateSummaryContent(mode) {
     </div>
 </form>
   `;
+}
+
+function generateErrorAlert(alertText) {
+  return `
+      <div class="alert alert-danger d-flex justify-content-center align-items-center error-msg-ctr" role="alert">
+        <span>
+            <i class="bi bi-exclamation-circle-fill fs-2 me-2"></i>
+        </span>
+        <p class="error-msg fs-5 mb-0">${alertText}</p>
+      </div>
+    `;
 }

@@ -1,0 +1,852 @@
+<form class="rosUrinary" data-form-target="EMR">
+  <div class="row mt-2">
+    <h3 class="default-label col-12">ROS - Urinary</h3>
+  </div>
+
+  <!-- <div  class = "row">
+        <label class = "default-label col-1 mt-4">Yes</label>
+        <label class = "default-label col-1 mt-4">No</label>
+        <label class = "default-label col-1 offset-4 mt-4">Yes</label>
+        <label class = "default-label col-1 mt-4">No</label>
+      </div> -->
+
+  <table class="table table-borderless" id="ros-urinary-table">
+    <thead>
+      <tr align="middle">
+        <th scope="col" width="10%">Yes</th>
+        <th scope="col" width="10%">No</th>
+        <th scope="col" width="30%">Condition</th>
+        <th scope="col" width="10%">Yes</th>
+        <th scope="col" width="10%">No</th>
+        <th scope="col" width="30%">Condition</th>
+      </tr>
+    </thead>
+    <tbody align="middle">
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="kidneyStonesYes"
+            name="kidneyStones"
+            value="yes"
+            aria-label="kidneyStonesYes"
+          />
+        </td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="kidneyStonesNo"
+            name="kidneyStones"
+            value="no"
+            aria-label="kidneyStonesNo"
+            checked
+          />
+        </td>
+        <td>Kidney Stones</td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="pelvicPainYes"
+            name="pelvicPain"
+            value="yes"
+            aria-label="pelvicPainYes"
+          />
+        </td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="pelvicPainNo"
+            name="pelvicPain"
+            value="no"
+            aria-label="pelvicPainNo"
+            checked
+          />
+        </td>
+        <td>Pelvic Pain</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="urinateUrgencyYes"
+            name="urinateUrgency"
+            value="yes"
+            aria-label="urinateUrgencyYes"
+          />
+        </td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="urinateUrgencyNo"
+            name="urinateUrgency"
+            value="no"
+            aria-label="urinateUrgencyNo"
+            checked
+          />
+        </td>
+        <td>Urgent to urinate</td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="bloatingYes"
+            name="bloating"
+            value="yes"
+            aria-label="bloatingYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="bloatingNo"
+            name="bloating"
+            value="no"
+            aria-label="bloatingNo"
+            checked
+          />
+        </td>
+        <td>Bloating</td>
+      </tr>
+
+      <!-- Start here -->
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="frequentUrinationYes"
+            name="frequentUrination"
+            value="yes"
+            aria-label="frequentUrinationYes"
+          />
+        </td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="frequentUrinationNo"
+            name="frequentUrination"
+            value="no"
+            aria-label="frequentUrinationNo"
+            checked
+          />
+        </td>
+        <td>Frequent Urination</td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="periodStoppedYes"
+            name="periodStopped"
+            value="yes"
+            aria-label="periodStoppedYes"
+          />
+        </td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="periodStoppedNo"
+            name="periodStopped"
+            value="no"
+            aria-label="periodStoppedNo"
+            checked
+          />
+        </td>
+
+        <td>Periods Stopped</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="urineLeakYes"
+            name="urineLeak"
+            value="yes"
+            aria-label="urineLeakYes"
+          />
+        </td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="urineLeakNo"
+            name="urineLeak"
+            value="no"
+            aria-label="urineLeakNo"
+            checked
+          />
+        </td>
+        <td>Leaking Urine While Sneezing</td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="takingHormonesYes"
+            name="takingHormones"
+            value="yes"
+            aria-label="takingHormonesYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="takingHormonesNo"
+            name="takingHormones"
+            value="no"
+            aria-label="takingHormonesNo"
+            checked
+          />
+        </td>
+        <td>Taking Hormones</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="burningUrineYes"
+            name="burningUrine"
+            value="Yes"
+            aria-label="burningUrineYes"
+          />
+        </td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="burningUrineNo"
+            name="burningUrine"
+            value="no"
+            aria-label="burningUrineNo"
+            checked
+          />
+        </td>
+        <td>Burning or painful urination</td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="hotFlashNightSweatYes"
+            name="hotFlashNightSweat"
+            value="yes"
+            aria-label="hotFlashNightSweatYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="hotFlashNightSweatNo"
+            name="hotFlashNightSweat"
+            value="no"
+            aria-label="hotFlashNightSweatNo"
+            checked
+          />
+        </td>
+        <td>Hot Flashes/Night Sweats</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="pregnantPossibleYes"
+            name="pregnantPossible"
+            value="yes"
+            aria-label="pregnantPossibleYes"
+          />
+        </td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="pregnantPossibleNo"
+            name="pregnantPossible"
+            value="no"
+            aria-label="pregnantPossibleNo"
+            checked
+          />
+        </td>
+        <td>Possible Pregnancy</td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="lackofDesireYes"
+            name="lackofDesire"
+            value="yes"
+            aria-label="lackofDesireYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="lackofDesireNo"
+            name="lackofDesire"
+            value="no"
+            aria-label="lackofDesireNo"
+            checked
+          />
+        </td>
+        <td>Lack of Sexual Desire</td>
+      </tr>
+
+      <!-- Up Til Dito Ako Wayne -->
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="postCoitalBleedYes"
+            name="postCoitalBleed"
+            value="yes"
+            aria-label="postCoitalBleedYes"
+          />
+        </td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="postCoitalBleedNo"
+            name="postCoitalBleed"
+            value="no"
+            aria-label="postCoitalBleedNo"
+            checked
+          />
+        </td>
+        <td>Post coital bleeding</td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="unusualDischargeYes"
+            name="unusualDischarge"
+            value="yes"
+            aria-label="unusualDischargeYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="unusualDischargeNo"
+            name="unusualDischarge"
+            value="no"
+            aria-label="unusualDischargeNo"
+            checked
+          />
+        </td>
+        <td>Unusual Vaginal Discharge</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="significantPMSYes"
+            name="significantPMS"
+            value="yes"
+            aria-label="significantPMSYes"
+          />
+        </td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="significantPMSNo"
+            name="significantPMS"
+            value="no"
+            aria-label="significantPMSNo"
+            checked
+          />
+        </td>
+        <td>Significant PMS</td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="vaginalDrynessYes"
+            name="vaginalDryness"
+            value="yes"
+            aria-label="vaginalDrynessYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="vaginalDrynessNo"
+            name="vaginalDryness"
+            value="no"
+            aria-label="vaginalDrynessNo"
+            checked
+          />
+        </td>
+        <td>Vaginal Dryness</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="shortnessOfBreathYes"
+            name="shortnessOfBreath"
+            value="yes"
+            aria-label="shortnessOfBreathYes"
+          />
+        </td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="shortnessOfBreathNo"
+            name="shortnessOfBreath"
+            value="no"
+            aria-label="shortnessOfBreathNo"
+            checked
+          />
+        </td>
+        <td>Shortness of Breath</td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="HysterectomyYes"
+            name="Hysterectomy"
+            value="yes"
+            aria-label="HysterectomyYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="HysterectomyNo"
+            name="Hysterectomy"
+            value="no"
+            aria-label="HysterectomyNo"
+            checked
+          />
+        </td>
+        <td>Hysterectomy</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="irregularPeriodYes"
+            name="irregularPeriod"
+            value="yes"
+            aria-label="irregularPeriodYes"
+          />
+        </td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="irregularPeriodNo"
+            name="irregularPeriod"
+            value="no"
+            aria-label="irregularPeriodNo"
+            checked
+          />
+        </td>
+        <td>Irregular Periods</td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="ovariesRemovedYes"
+            name="ovariesRemoved"
+            value="yes"
+            aria-label="ovariesRemovedYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="ovariesRemovedNo"
+            name="ovariesRemoved"
+            value="no"
+            aria-label="ovariesRemovedNo"
+            checked
+          />
+        </td>
+        <td>Ovaries Removed</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="heavyPeriodYes"
+            name="heavyPeriod"
+            value="yes"
+            aria-label="heavyPeriodYes"
+          />
+        </td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="heavyPeriodNo"
+            name="heavyPeriod"
+            value="no"
+            aria-label="heavyPeriodNo"
+            checked
+          />
+        </td>
+        <td>Heavy Period</td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="urinaryPainfulIntercourseYes"
+            name="urinaryPainfulIntercourse"
+            value="yes"
+            aria-label="urinaryPainfulIntercourseYes"
+          />
+        </td>
+
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="urinaryPainfulIntercourseNo"
+            name="urinaryPainfulIntercourse"
+            value="no"
+            aria-label="urinaryPainfulIntercourseNo"
+            checked
+          />
+        </td>
+        <td>Painful Intercourse</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="kidneyStonesYes" name="kidneyStones" value="Yes" aria-label="kidneyStonesYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="kidneyStonesNo" name="kidneyStones" value="No" aria-label="kidneyStonesNo" checked> 
+        </div>
+
+        <label class="default-label col-3 me-0">Kidney Stones</label>
+
+        <div class="form-check form-check-inline col-1 offset-1 ms-5 me-0">
+          <input class="form-check-input" type="radio" id="pelvicPainYes" name="pelvicPain" value="Yes" aria-label="pelvicPainYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="pelvicPainNo" name="pelvicPain" value="No" aria-label="pelvicPainNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Pelvic Pain</label>
+      </div>
+
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="urinateUrgencyYes" name="urinateUrgency" value="Yes" aria-label="urinateUrgencyYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="urinateUrgencyNo" name="urinateUrgency" value="No" aria-label="urinateUrgencyNo" checked> 
+        </div>
+
+        <label class="default-label col-3 me-0">Urgency to Urinate</label>
+
+        <div class="form-check form-check-inline col-1 offset-1 ms-5 me-0">
+          <input class="form-check-input" type="radio" id="bloatingYes" name="bloating" value="Yes" aria-label="bloatingYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="bloatingNo" name="bloating" value="No" aria-label="bloatingNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Bloating</label>
+      </div>
+
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="frequentUrinationYes" name="frequentUrination" value="Yes" aria-label="frequentUrinationYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="frequentUrinationNo" name="frequentUrination" value="No" aria-label="frequentUrinationNo" checked> 
+        </div>
+
+        <label class="default-label col-3 me-0">Frequent Urination</label>
+
+        <div class="form-check form-check-inline col-1 offset-1 ms-5 me-0">
+          <input class="form-check-input" type="radio" id="periodStoppedYes" name="periodStopped" value="Yes" aria-label="periodStoppedYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="periodStoppedNo" name="periodStopped" value="No" aria-label="periodStoppedNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Periods Stopped</label>
+      </div>
+
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="urineLeakYes" name="urineLeak" value="Yes" aria-label="urineLeakYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="urineLeakNo" name="urineLeak" value="No" aria-label="urineLeakNo" checked> 
+        </div>
+
+        <label class="default-label col-3 me-0">Leaking urine while sneezing</label>
+
+        <div class="form-check form-check-inline col-1 offset-1 ms-5 me-0">
+          <input class="form-check-input" type="radio" id="takingHormonesYes" name="takingHormones" value="Yes" aria-label="takingHormonesYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="takingHormonesNo" name="takingHormones" value="No" aria-label="takingHormonesNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Taking Hormones</label>
+      </div>
+
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="burningUrineYes" name="burningUrine" value="Yes" aria-label="burningUrineYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="burningUrineNo" name="burningUrine" value="No" aria-label="burningUrineNo" checked> 
+        </div>
+
+        <label class="default-label col-3 me-0">Burning or painful  urination</label>
+
+        <div class="form-check form-check-inline col-1 offset-1 ms-5 me-0">
+          <input class="form-check-input" type="radio" id="hotFlashNightSweatYes" name="hotFlashNightSweat" value="Yes" aria-label="hotFlashNightSweatYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="hotFlashNightSweatNo" name="hotFlashNightSweat" value="No" aria-label="hotFlashNightSweatNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Hot Flashes/Night Sweats</label>
+      </div>
+
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="pregnantPossibleYes" name="pregnantPossible" value="Yes" aria-label="pregnantPossibleYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="pregnantPossibleNo" name="pregnantPossible" value="No" aria-label="pregnantPossibleNo" checked> 
+        </div>
+
+        <label class="default-label col-3 me-0">Possibility of Pregnancy</label>
+
+        <div class="form-check form-check-inline col-1 offset-1 ms-5 me-0">
+          <input class="form-check-input" type="radio" id="lackofDesireYes" name="lackofDesire" value="Yes" aria-label="lackofDesireYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="lackofDesireNo" name="lackofDesire" value="No" aria-label="lackofDesireNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Lack of Sexual Desire  </label>
+      </div>
+
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="postCoitBleedYes" name="postCoitBleed" value="Yes" aria-label="postCoitBleedYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="postCoitBleedNo" name="postCoitBleed" value="No" aria-label="postCoitBleedNo" checked> 
+        </div>
+
+        <label class="default-label col-3 me-0">Post coital bleeding</label>
+
+        <div class="form-check form-check-inline col-1 offset-1 ms-5 me-0">
+          <input class="form-check-input" type="radio" id="unusualDischargeYes" name="unusualDischarge" value="Yes" aria-label="unusualDischargeYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="unusualDischargeNo" name="unusualDischarge" value="No" aria-label="unusualDischargeNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Unusual Vaginal Discharge</label>
+      </div>
+
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="significantPMSYes" name="significantPMS" value="Yes" aria-label="significantPMSYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="significantPMSNo" name="significantPMS" value="No" aria-label="significantPMSNo" checked> 
+        </div>
+
+        <label class="default-label col-3 me-0">Significant PMS</label>
+
+        <div class="form-check form-check-inline col-1 offset-1 ms-5 me-0">
+          <input class="form-check-input" type="radio" id="vaginalDrynessYes" name="vaginalDryness" value="Yes" aria-label="vaginalDrynessYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="vaginalDrynessNo" name="vaginalDryness" value="No" aria-label="vaginalDrynessNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Vaginal Dryness</label>
+      </div>
+
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="urinaryShortofBreathYes" name="urinaryShortofBreath" value="Yes" aria-label="urinaryShortofBreathYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="urinaryShortofBreathNo" name="urinaryShortofBreath" value="No" aria-label="urinaryShortofBreathNo" checked> 
+        </div>
+
+        <label class="default-label col-3 me-0">Shortness of Breath</label>
+
+        <div class="form-check form-check-inline col-1 offset-1 ms-5 me-0">
+          <input class="form-check-input" type="radio" id="HysterectomyYes" name="Hysterectomy" value="Yes" aria-label="HysterectomyYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="HysterectomyNo" name="Hysterectomy" value="No" aria-label="HysterectomyNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Hysterectomy</label>
+      </div>
+
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="irregularPeriodYes" name="irregularPeriod" value="Yes" aria-label="irregularPeriodYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="irregularPeriodNo" name="irregularPeriod" value="No" aria-label="irregularPeriodNo" checked> 
+        </div>
+
+        <label class="default-label col-3 me-0">Irregular Periods</label>
+
+        <div class="form-check form-check-inline col-1 offset-1 ms-5 me-0">
+          <input class="form-check-input" type="radio" id="ovariesRemovedYes" name="ovariesRemoved" value="Yes" aria-label="ovariesRemovedYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="ovariesRemovedNo" name="ovariesRemoved" value="No" aria-label="ovariesRemovedNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Ovaries Removed</label>
+      </div>
+
+      
+
+     
+
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="heavyPeriodYes" name="heavyPeriod" value="Yes" aria-label="heavyPeriodYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="heavyPeriodNo" name="heavyPeriod" value="No" aria-label="heavyPeriodNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Heavy Periods</label>
+
+      </div>
+
+      <div class = "row mt-3">
+        <div class="form-check form-check-inline col-1 ms-3 me-0">
+          <input class="form-check-input" type="radio" id="urinaryPainfulIntercourseYes" name="urinaryPainfulIntercourse" value="Yes" aria-label="urinaryPainfulIntercourseYes">
+        </div>
+
+        <div class="form-check form-check-inline col-1">
+          <input class="form-check-input" type="radio" id="urinaryPainfulIntercourseNo" name="urinaryPainfulIntercourse" value="No" aria-label="urinaryPainfulIntercourseNo" checked> 
+        </div>
+
+        <label class="default-label col-3">Painful Intercourse</label>
+
+      </div> -->
+  <div class="row mt-3">
+    <div class="form-group col-12">
+      <label for="urinaryNotes" class="form-label" id="urinaryNotesLabel"
+        >Notes</label
+      >
+      <textarea
+        class="form-control"
+        id="urinaryNotes"
+        name="urinaryNotes"
+        rows="5"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="ros-gastrointestinal"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="ros-skin"
+    />
+  </div>
+</form>

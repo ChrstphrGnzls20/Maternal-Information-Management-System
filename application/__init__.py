@@ -1,15 +1,16 @@
 import json
-from flask import Flask, render_template, url_for, request, redirect, make_response, jsonify
+from flask import Flask, render_template, url_for, request, redirect, session
 
 # session
 from flask_session import Session
 
 # blueprints
-from application.auth.auth import auth
+from application.login.login import login
 from application.patient.patient import patient
 from application.admin.admin import admin
 from application.emr.emr import emr
 from application.address.address import address
+from application.api.api import api
 
 """Extensions/Plugins"""
 # pymongo
@@ -47,16 +48,23 @@ def init_app():
 
     with app.app_context():
         # Include routes
-        app.register_blueprint(auth)
+        app.register_blueprint(login, url_prefix='/login')
         app.register_blueprint(patient, url_prefix="/patient")
         app.register_blueprint(admin, url_prefix="/admin")
         app.register_blueprint(address, url_prefix="/address")
         app.register_blueprint(emr, url_prefix="/emr")
+        app.register_blueprint(api, url_prefix='/api')
     # from . import models
 
     @app.route('/')
     def index():
         return render_template('index.html')
+
+    @app.route('/logout')
+    def logout():
+        session.clear()
+
+        return redirect("/")
 
     return app
 

@@ -1,4 +1,6 @@
 //global vars
+// let BASE_URL = "http://127.0.0.1:5000/patient/appointments/api/";
+
 let createApptModal = $("#createApptModal");
 let confirmationModal = $("#confirmation");
 let pracSelect = $("#prac-select");
@@ -10,16 +12,6 @@ let selectedPractitioner;
 let selectedDate;
 let selectedTime;
 let selectedAppointment = {};
-
-// listen when practitioner changes
-$("#prac-select").on("change", function () {
-  console.log($(this).val());
-  if ($(this).val()) {
-    $("#calendar").removeClass("invisible");
-    return;
-  }
-  $("#calendar").addClass("invisible");
-});
 
 //initialize FullCalendar
 $(function () {
@@ -54,9 +46,12 @@ $(function () {
 
         // set the values
         selectedPractitioner = pracSelect.val();
+        let selectedPractitionerName = $(
+          `#prac-select option[value=${selectedPractitioner}]`
+        ).text();
         selectedDate = info.date;
 
-        practInput.val(pracSelect.val());
+        practInput.val(selectedPractitionerName);
         let dateToDisplay = moment(info.date).format("MMMM DD, YYYY");
         dateInput.val(dateToDisplay);
         createApptModal.modal("show");
@@ -65,15 +60,7 @@ $(function () {
 
       //events for testing
       //TODO: fetch all dates that have events from the selected practitioner and disable it
-      events: [
-        {
-          id: "a",
-          title: "my event",
-          start: "2022-09-30T12:00:00",
-          displayEventTime: true,
-          allDay: false,
-        },
-      ],
+      events: [],
 
       // eventClick: function (info) {
       //   var title = prompt("Edit Event Content:", info.event.title);
@@ -100,33 +87,66 @@ $(function () {
     scrollbar: true,
     zindex: 9999999,
   });
-});
 
-// listen on form submit
-$("#createApptForm").on("submit", function (e) {
-  e.preventDefault();
+  // listen when practitioner changes
+  $("#prac-select").on("change", function () {
+    console.log($(this).val());
+    if ($(this).val()) {
+      $("#calendar").removeClass("invisible");
+      return;
+    }
+    $("#calendar").addClass("invisible");
+  });
 
-  let practitioner = pracSelect.val();
-  let selectedTime = timeInput.timepicker("getTime");
-  let selectedHour = selectedTime.getHours();
-  let selectedMinute = selectedTime.getMinutes();
-  let selectedDateTime = moment(selectedDate);
-  selectedDateTime.add(selectedHour, "hours");
-  selectedDateTime.add(selectedMinute, "minutes");
+  // listen on form submit
+  $("#createApptForm").on("submit", function (e) {
+    e.preventDefault();
 
-  selectedAppointment = {
-    practitioner: practitioner,
-    dateTime: selectedDateTime.format(),
-  };
+    let practitioner = pracSelect.val();
+    let selectedTime = timeInput.timepicker("getTime");
+    let selectedHour = selectedTime.getHours();
+    let selectedMinute = selectedTime.getMinutes();
+    let selectedDateTime = moment(selectedDate);
+    selectedDateTime.add(selectedHour, "hours");
+    selectedDateTime.add(selectedMinute, "minutes");
 
-  //show another modal with values
-  $("#conf-practitioner").text(pracSelect.find(":selected").text());
-  $("#conf-date").text(moment(selectedDate).format("MMMM DD, YYYY"));
-  $("#conf-time").text(timeInput.val());
-  createApptModal.modal("hide");
-  confirmationModal.modal("show");
-});
+    selectedAppointment = {
+      patient_id: localStorage.getItem("id"),
+      doctor_id: practitioner,
+      appointmentDate: selectedDateTime.toISOString(),
+    };
 
-confirmationModal.on("hidden.bs.modal", function () {
-  createApptModal.modal("show");
+    //show another modal with values
+    $("#conf-practitioner").text(pracSelect.find(":selected").text());
+    $("#conf-date").text(moment(selectedDate).format("MMMM DD, YYYY"));
+    $("#conf-time").text(timeInput.val());
+    createApptModal.modal("hide");
+    confirmationModal.modal("show");
+  });
+
+  $("#cancel-add-appointment-btn").on("click", function () {
+    createApptModal.modal("show");
+  });
+
+  $("#add-appointment-btn").on("click", function () {
+    confirmationModal.modal("hide");
+    console.log(selectedAppointment);
+
+    $.ajax({
+      method: "POST",
+      url: `${API_BASE_URL}/appointments`,
+      contentType: "application/json",
+      dataType: "json",
+      data: JSON.stringify(selectedAppointment),
+    })
+      .done(function (response) {
+        // IF SUCCESSFULLY SET AN APPOINTMENT, REDIRECT BACK TO APPOINTMENTS TABLE
+        if (response) {
+          location.href = "/patient/appointments";
+        }
+      })
+      .catch(function (xhr) {
+        console.log(xhr);
+      });
+  });
 });

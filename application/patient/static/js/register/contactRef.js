@@ -52,7 +52,7 @@ registerForm.on("submit", function (evt) {
 
   $.ajax({
     type: "POST",
-    url: "/patient/register/data",
+    url: `${API_BASE_URL}/patients`,
     data: JSON.stringify(registerData),
     dataType: "json",
     contentType: "application/json",

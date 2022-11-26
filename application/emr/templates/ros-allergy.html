@@ -143,4 +143,26 @@
       data-next-page="pe-fetal-presentation"
     />
   </div>
+
+  <script>
+              
+    $(".rosAllergy").on("submit", function(){
+      let Allergy = { }
+
+      let rosAllergySinus = $("input[name='sinusAllergy']:checked");
+      let rosFreqIll = $("input[name='frequentIllness']:checked");
+      let rosSkinAllergy = $("input[name='allergicSkin']:checked");
+      let rosAutoImmune = $("input[name='autoImmune']:checked");
+      let rosAllergyNotes = $("#allergyNotes");
+
+      Allergy[rosAllergySinus.attr("name")] = (rosAllergySinus.val());
+      Allergy[rosFreqIll.attr("name")] = (rosFreqIll.val());
+      Allergy[rosSkinAllergy.attr("name")] = (rosSkinAllergy.val());
+      Allergy[rosAutoImmune.attr("name")] = (rosAutoImmune.val());
+      Allergy[rosAllergyNotes.attr("name")] = (rosAllergyNotes.val());
+
+      console.log(Allergy);
+
+    });
+  </script>
 </form>

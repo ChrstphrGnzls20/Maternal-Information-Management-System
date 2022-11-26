@@ -193,4 +193,30 @@
       data-next-page="ros-eyes"
     />
   </div>
+
+  <script>
+              
+    $(".rosConst").on("submit", function(){
+      let Constitutional = { }
+
+      let rosGoodGenHealth = $("input[name='GoodGenHealth']:checked");
+      let rosWeightGain = $("input[name='WeightGain']:checked");
+      let rosWeightLoss = $("input[name='WeightLoss']:checked");
+      let rosConstFatigue = $("input[name='fatigue']:checked");
+      let rosConstFever = $("input[name='fever']:checked");
+      let rosConstChills = $("input[name='chills']:checked");
+      let rosConstNotes = $("#constNotes");
+
+      Constitutional[rosGoodGenHealth.attr("name")] = (rosGoodGenHealth.val());
+      Constitutional[rosWeightGain.attr("name")] = (rosWeightGain.val());
+      Constitutional[rosWeightLoss.attr("name")] = (rosWeightLoss.val());
+      Constitutional[rosConstFatigue.attr("name")] = (rosConstFatigue.val());
+      Constitutional[rosConstFever.attr("name")] = (rosConstFever.val());
+      Constitutional[rosConstChills.attr("name")] = (rosConstChills.val());
+      Constitutional[rosConstNotes.attr("name")] = (rosConstNotes.val());
+
+
+      console.log(Constitutional);
+    });
+  </script>
 </form>

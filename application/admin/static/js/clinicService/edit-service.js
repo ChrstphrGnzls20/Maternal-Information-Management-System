@@ -4,40 +4,38 @@ let retrieveEmployeeAndFillModal = function (serviceID) {
   //   let filter = { _id: serviceID };
   $.ajax({
     method: "GET",
-    url: `/admin/clinic-service/api/${serviceID}`,
+    url: `${API_BASE_URL}/clinic-services/${serviceID}`,
     contentType: "application/json",
     dataType: "json",
-    error: function (xhr) {
-      // let errorMsg = xhr.responseJSON.errMsg;
-      // removeErrorMessage();
-      // updateErrorMessage(errorMsg);
-    },
-  }).done(function (response) {
-    if (response) {
-      serviceData = response[0];
-      console.log(serviceData);
+  })
+    .done(function (response) {
+      if (response) {
+        serviceData = response[0];
+        console.log(serviceData);
 
-      $("#edit-service-form :input[type!=button]:input[type!=submit]").each(
-        function () {
-          let name = $(this).attr("name");
-          // SET VALUE ACCORDING TO NAME
-          $(this).val(serviceData[name]);
-        }
-      );
-    }
-  });
+        $("#edit-service-form :input[type!=button]:input[type!=submit]").each(
+          function () {
+            let name = $(this).attr("name");
+            // SET VALUE ACCORDING TO NAME
+            $(this).val(serviceData[name]);
+          }
+        );
+      }
+    })
+    .catch(function (xhr) {
+      console.log(xhr);
+    });
 };
 
 function editService(serviceID, newServiceData) {
   $.ajax({
     method: "PATCH",
-    url: `/admin/clinic-service/api/${serviceID}/edit`,
+    url: `${API_BASE_URL}/clinic-services/${serviceID}`,
     dataType: "json",
     data: JSON.stringify(newServiceData),
     contentType: "application/json",
   })
     .done(function (response) {
-      console.log(response);
       // CONSIDERING THAT THE SERVICE ID IS NON-EDITABLE
       response._id = serviceID;
 

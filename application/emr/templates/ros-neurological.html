@@ -257,4 +257,27 @@
       data-next-page="ros-musculoskeletal"
     />
   </div>
+
+  <script>
+    $(".rosNeurological").on("submit", function(){
+    let Neurological = { }
+  
+      let rosTinglingOrNumb = $("input[name='tinglingorNumbness']:checked");
+      let rosSeizure = $("input[name='seizures']:checked");
+      let rosFreqHeadache = $("input[name='frequentHeadache']:checked");
+      let rosLightHeadorDizzy = $("input[name='lightheadedOrDizzy']:checked");
+      let rosMoodiness = $("input[name='neuroMoodiness']:checked");
+      let rosNeurologicalNotes = $("#neurologicalNotes");
+
+      Neurological[rosTinglingOrNumb.attr("name")] = (rosTinglingOrNumb.val());
+      Neurological[rosSeizure.attr("name")] = (rosSeizure.val());
+      Neurological[rosFreqHeadache.attr("name")] = (rosFreqHeadache.val());
+      Neurological[rosLightHeadorDizzy.attr("name")] = (rosLightHeadorDizzy.val());
+      Neurological[rosMoodiness.attr("name")] = (rosMoodiness.val());
+      Neurological[rosNeurologicalNotes.attr("name")] = (rosNeurologicalNotes.val());
+
+      console.log(Neurological);
+    });
+  </script>
+
 </form>

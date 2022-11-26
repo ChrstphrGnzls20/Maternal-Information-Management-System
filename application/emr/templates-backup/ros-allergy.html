@@ -1,0 +1,146 @@
+<form class="rosAllergy" data-form-target="EMR">
+  <div class="row mt-2">
+    <h3 class="default-label col-12">ROS - Allergy</h3>
+  </div>
+
+  <table class="table table-borderless" id="ros-allergy-table">
+    <thead>
+      <tr align="middle">
+        <th scope="col" width="10%">Yes</th>
+        <th scope="col" width="10%">No</th>
+        <th scope="col" width="50%">Condition</th>
+      </tr>
+    </thead>
+    <tbody align="middle">
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="sinusAllergyYes"
+            name="sinusAllergy"
+            value="Yes"
+            aria-label="sinusAllergyYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="sinusAllergyNo"
+            name="sinusAllergy"
+            value="No"
+            aria-label="sinusAllergyNo"
+            checked
+          />
+        </td>
+        <td>Sinus Allergy</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="frequentIllnessYes"
+            name="frequentIllness"
+            value="Yes"
+            aria-label="frequentIllnessYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="frequentIllnessNo"
+            name="frequentIllness"
+            value="No"
+            aria-label="frequentIllnessNo"
+            checked
+          />
+        </td>
+        <td>Frequent Illness</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="allergicSkinYes"
+            name="allergicSkin"
+            value="Yes"
+            aria-label="allergicSkinYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="allergicSkinNo"
+            name="allergicSkin"
+            value="No"
+            aria-label="allergicSkinNo"
+            checked
+          />
+        </td>
+        <td>Allergic Skin Condition</td>
+      </tr>
+
+      <tr>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="autoImmuneYes"
+            name="autoImmune"
+            value="Yes"
+            aria-label="autoImmuneYes"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            id="autoImmuneNo"
+            name="autoImmune"
+            value="No"
+            aria-label="autoImmuneNo"
+            checked
+          />
+        </td>
+        <td>Auto-Immune Disease</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row mt-3">
+    <div class="form-group col-12">
+      <label for="allergyNotes" class="form-label" id="allergyNotesLabel"
+        >Notes</label
+      >
+      <textarea
+        class="form-control"
+        id="allergyNotes"
+        name="allergyNotes"
+        rows="5"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="ros-blood"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="pe-fetal-presentation"
+    />
+  </div>
+</form>

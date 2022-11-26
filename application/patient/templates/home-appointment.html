@@ -1,75 +1,78 @@
 <div class="p-3 m-md-2 mt-4 mt-md-4 shadow-lg" id="home-appt">
-    <div class="d-flex justify-content-between align-items-center">
-        <h1 class="">Appointments</h1>
-        <div class="add-btn-ctr">
-            <span class="me-3 d-none d-md-inline">Create New Appointment</span>
-            <a href="/patient/appointments/create" class="btn btn-lg btn-success rounded-circle" id="add-btn">+</a>
-        </div>
-        
+  <div class="d-flex justify-content-between align-items-center">
+    <h1 class="">Appointments</h1>
+    <div class="add-btn-ctr">
+      <span class="me-3 d-none d-md-inline">Create New Appointment</span>
+      <a
+        href="/patient/appointments/create"
+        class="btn btn-lg btn-success rounded-circle"
+        id="add-btn"
+        >+</a
+      >
     </div>
-    
-    <table class="table table-striped table-md-responsive text-nowrap ">
-    <thead>
-        <tr style="line-height: 40px;">
-            <th scope="col" class="text-center">Ref ID</th>
-            <th scope="col" class="text-center">Practitioner</th>
-            <th scope="col" class="text-center">Schedule Date</th>
-            <th scope="col" class="text-center">Time</th>
-            <th scope="col" class="text-center">Status</th>
-            <!-- <th scope="col">Action</th> -->
-        </tr>
+  </div>
+
+  <table
+    class="table table-striped table-md-responsive text-nowrap"
+    id="appointments-table"
+  >
+    <thead style="background-color: rgba(0, 0, 0, 0.05)">
+      <tr style="line-height: 40px">
+        <th scope="col" class="text-center">Ref ID</th>
+        <th scope="col" class="text-center">Practitioner</th>
+        <th scope="col" class="text-center">Schedule Date</th>
+        <th scope="col" class="text-center">Time</th>
+        <th scope="col" class="text-center">Status</th>
+        <!-- <th scope="col">Action</th> -->
+      </tr>
     </thead>
     <tbody>
-        {% for appointment in appointments %}
-        <tr style="line-height: 40px;">
-            <th scope="row" class="text-center">{{appointment.ref}}</th>
-            <td class="text-center">{{appointment.practitioner}}</td>
-            <td class="text-center">{{appointment.scheduleDate}}</td>
-            <td class="text-center">{{appointment.scheduleTime}}</td>
-            <!-- <td>Pending</td> -->
-            <td class="text-center">
-                <div class="btn-group">
-                    <span type="button" class="border-0 p-0 fw-bold btn btn-white dropdown-toggle {{'text-warning' if appointment.status == "Pending" else 'text-success'}}" data-bs-toggle="dropdown" aria-expanded="false">
-                      {{appointment.status}}
-                    </span>
-                    <ul class="dropdown-menu">
-                      {% if appointment.status != "Pending" %}
-                        <li><a class="dropdown-item" href="#">View</a></li>
-                      {% endif %}
-                      
-                      {% if appointment.status == "Pending" %}
-                        <li>
-                            <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#cancelApptModal">Cancel Appointment</a>
-                        </li>
-                      {% endif %}
-                      
-                    </ul>
-                  </div>
-            </td>
-        </tr>
-        {% endfor %}
+      <tr></tr>
+    </tbody>
+  </table>
+</div>
 
-    <!-- Modal -->
-<div class="modal fade" id="cancelApptModal" tabindex="-1" aria-labelledby="cancelApptModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="cancelApptModalLabel">Confirmation</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Are you sure you want to cancel this appointment?
-          <br>
-          <span class="text-muted">Note: This will be immediately cancelled.</span>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
-          <button type="button" class="btn btn-success">Yes, cancel it</button>
-        </div>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="cancelApptModal"
+  tabindex="-1"
+  aria-labelledby="cancelApptModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cancelApptModalLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to cancel this appointment?
+        <br />
+        <span class="text-muted"
+          >Note: This will be immediately cancelled.</span
+        >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          No
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          id="confirm-cancel-appointment-btn"
+        >
+          Yes, cancel it
+        </button>
       </div>
     </div>
   </div>
-  
-    </tbody>
-    </table>
 </div>
+
+<script src="{{ url_for('patient.static', filename='js/appointment/home-appointment.js') }}"></script>
+<script src="{{ url_for('patient.static', filename='js/appointment/cancel-appointment.js') }}"></script>

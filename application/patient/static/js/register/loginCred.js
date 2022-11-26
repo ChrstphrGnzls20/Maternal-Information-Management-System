@@ -1,10 +1,10 @@
 let loginCredentials = {};
-let authPath = "http://127.0.0.1:5000/auth";
+// let authPath = "http://127.0.0.1:5000/auth";
 
 function validateEmailAndGenerateOTP(email, password) {
   $.ajax({
     type: "GET",
-    url: `${authPath}/patient/check-email/${email}`,
+    url: `${API_BASE_URL}/auth/patient/check-email/${email}`,
     dataType: "json",
     contentType: "application/json",
     // loader
@@ -49,7 +49,7 @@ $("#login-cred-next-btn").on("click", function (evt) {
 let validateOTP = function (OTP) {
   $.ajax({
     method: "GET",
-    url: `${authPath}/verify-otp/${OTP}`,
+    url: `${API_BASE_URL}/auth/otp/${OTP}/verify`,
     dataType: "json",
     contentType: "application/json",
     beforeSend: function () {

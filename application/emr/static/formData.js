@@ -20,7 +20,7 @@ function cleanData(dataArray) {
     let temp = [];
     // if value is numeric
     if (isNaN(data.value)) {
-      data.value = data.value.replace(/[^a-zA-Z ']/g, "");
+      data.value = data.value.replace(/[^a-zA-Z0-9 ']/g, "");
       data.value = data.value.trim();
     }
     if (cleanedData[data.name]) {
@@ -29,31 +29,31 @@ function cleanData(dataArray) {
       //   console.
       // }
       // on first iteration where the key has single value of type string
-      if (
-        typeof cleanedData[data.name] === "string" &&
-        data.name === "allergyName"
-      ) {
-        specVal.push(cleanedData[data.name]);
-        specVal.push(data.value);
-      } else if (
-        typeof cleanedData[data.name] != "string" &&
-        data.name === "allergyName"
-      ) {
-        specVal.push(cleanedData[data.name]);
-        specVal.push(data.value);
-      } else if (
-        typeof cleanedData[data.name] == "string" &&
-        data.name === "allergyReaction"
-      ) {
-        specVal2.push(cleanedData[data.name]);
-        specVal2.push(data.value);
-      } else if (
-        typeof cleanedData[data.name] != "string" &&
-        data.name === "allergyReaction"
-      ) {
-        specVal2.push(cleanedData[data.name]);
-        specVal2.push(data.value);
-      }
+      // if (
+      //   typeof cleanedData[data.name] === "string" &&
+      //   data.name === "allergyName"
+      // ) {
+      //   specVal.push(cleanedData[data.name]);
+      //   specVal.push(data.value);
+      // } else if (
+      //   typeof cleanedData[data.name] != "string" &&
+      //   data.name === "allergyName"
+      // ) {
+      //   specVal.push(cleanedData[data.name]);
+      //   specVal.push(data.value);
+      // } else if (
+      //   typeof cleanedData[data.name] == "string" &&
+      //   data.name === "allergyReaction"
+      // ) {
+      //   specVal2.push(cleanedData[data.name]);
+      //   specVal2.push(data.value);
+      // } else if (
+      //   typeof cleanedData[data.name] != "string" &&
+      //   data.name === "allergyReaction"
+      // ) {
+      //   specVal2.push(cleanedData[data.name]);
+      //   specVal2.push(data.value);
+      // }
 
       if (typeof cleanedData[data.name] === "string") {
         temp.push(cleanedData[data.name]);
@@ -73,8 +73,6 @@ function cleanData(dataArray) {
     cleanedData[data.name] = data.value;
   });
 
-  console.log(specVal);
-  console.log(specVal2);
   // console.log(specVal3);
   console.log(cleanedData);
   return cleanedData;

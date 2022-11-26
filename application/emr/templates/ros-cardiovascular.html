@@ -193,4 +193,31 @@
       data-next-page="ros-respiratory"
     />
   </div>
+
+  <script>
+              
+    $(".rosChest").on("submit", function(){
+      let CardioVascular = { }
+
+      let rosChestPains = $("input[name='chestPains']:checked");
+      let rosirregHeartbeat = $("input[name='irregularHearbeat']:checked");
+      let rosChestShortBreath = $("input[name='chestShortofBreath']:checked");
+      let rosRapidHeartRate = $("input[name='rapidHeartRate']:checked");
+      let rosSwellingLimb = $("input[name='swellofLimbs']:checked");
+      let rosVaricoseVein = $("input[name='varicoseVeins']:checked");
+      let rosCardioNotes = $("#cardioNotes");
+
+      CardioVascular[rosChestPains.attr("name")] = (rosChestPains.val());
+      CardioVascular[rosirregHeartbeat.attr("name")] = (rosirregHeartbeat.val());
+      CardioVascular[rosChestShortBreath.attr("name")] = (rosChestShortBreath.val());
+      CardioVascular[rosRapidHeartRate.attr("name")] = (rosRapidHeartRate.val());
+      CardioVascular[rosSwellingLimb.attr("name")] = (rosSwellingLimb.val());
+      CardioVascular[rosVaricoseVein.attr("name")] = (rosVaricoseVein.val());
+      CardioVascular[rosCardioNotes.attr("name")] = (rosCardioNotes.val());
+      
+
+      console.log(CardioVascular);
+    });
+  </script>
+  
 </form>

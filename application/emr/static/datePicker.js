@@ -32,3 +32,19 @@ function getDaysDiffToday(date) {
 
   return moment().diff(value, "days");
 }
+
+function setDatepickerValueToday(element, format = "FULL") {
+  let currentDay = moment().date();
+  let currentMonth = moment().month() + 1;
+  let currentYear = moment().year();
+  if (format === "YEAR") {
+    $(element).bootstrapDP("update", `${currentYear}`);
+  } else if (format === "MONTH") {
+    $(element).bootstrapDP("update", `${currentMonth}/${currentYear}}`);
+  } else {
+    $(element).bootstrapDP(
+      "update",
+      `${currentDay}/${currentMonth}/${currentYear}}`
+    );
+  }
+}

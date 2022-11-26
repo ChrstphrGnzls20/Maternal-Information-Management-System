@@ -8,33 +8,24 @@ let clearTable = function (table) {
 
 // FUNCTION FOR RETRIEVING EMPLOYEE DEPENDING ON THE SELECTED CATEGORY USING AJAX AND ONLY DISPLAYING RETRIEVED EMPLOYEE TO THE TABLE WHEN THE AJAX-REQUEST IS SUCCESSFUL
 let filterTable = function (filter) {
+  let searchParams = $.param(filter);
+  console.log(searchParams);
   $.ajax({
-    method: "POST",
-    url: `/admin/employee/search`,
+    method: "GET",
+    url: `${API_BASE_URL}/employees?${searchParams}`,
     dataType: "json",
     data: JSON.stringify(filter),
     contentType: "application/json",
-    success: function (response) {
-      let empTableBody = $(".employees-table tbody");
-      // clear table
-      clearTable(empTableBody);
-      if (response.code === "SUCCESS") {
-        // if request is successfull
-        let employeesData = response.data;
+  }).done(function (response) {
+    let empTableBody = $(".employees-table tbody");
+    // clear table
+    clearTable(empTableBody);
+    // if request is successfull
+    let employeesData = response;
 
-        employeesData.forEach(function (employee) {
-          empTableBody.append(generateEmployeeRow(employee));
-        });
-      } else {
-        // removeErrorMessage();
-        // updateErrorMessage(response.errMsg);
-      }
-    },
-    error: function (xhr) {
-      // let errorMsg = xhr.responseJSON.errMsg;
-      // removeErrorMessage();
-      // updateErrorMessage(errorMsg);
-    },
+    employeesData.forEach(function (employee) {
+      empTableBody.append(generateEmployeeRow(employee));
+    });
   });
 };
 
@@ -42,11 +33,11 @@ let filterTable = function (filter) {
 function generateEmployeeRow(employee) {
   return `
         <tr>
-          <td class="text-center emp-id">${employee.licenseID}</td>
+          <td class="text-center emp-id">${employee._id}</td>
           <td class="text-center">${employee.name}</td>
-          <td class="text-center">${employee.role}</td>
+          <td class="text-center" style="text-transform: capitalize">${employee.role}</td>
           <td class="text-center">${employee.mobile}</td>
-          <td class="text-center">${employee.status}</td>
+          <td class="text-center" style="text-transform: capitalize">${employee.status}</td>
           <td class="text-center"><button type="button" class="btn btn btn-primary edit-emp-btn"> 
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                       <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -68,7 +59,9 @@ $(function () {
   $("#filter-tab input").on("input", function () {
     let value = $(this).val();
 
-    currentFilters["name"] = { $regex: value, $options: "i" };
+    currentFilters["name"] = value;
+
+    // currentFilters["name"] = { $regex: value, $options: "i" };
 
     filterTable(currentFilters);
   });

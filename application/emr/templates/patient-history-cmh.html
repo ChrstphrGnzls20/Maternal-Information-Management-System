@@ -1,7 +1,7 @@
 <form
   class="currentMedHistory"
   data-form-target="EMR"
-  id="current-medicaation-form"
+  id="current-medication-form"
 >
   <h3>Current Medication</h3>
 
@@ -83,7 +83,7 @@
         <div class="modal-body">
           <div class="row">
             <div class="form-group">
-              <label for="#" class="form-label">Drug Name</label>
+              <label for="#" class="form-label required">Drug Name</label>
               <input
                 type="text"
                 class="form-control"
@@ -95,7 +95,7 @@
           </div>
           <div class="row mt-3">
             <div class="form-group">
-              <label for="#" class="form-label">Drug Dose</label>
+              <label for="#" class="form-label required">Drug Dose</label>
               <input
                 type="text"
                 class="form-control"
@@ -126,6 +126,14 @@
   </div>
 </div>
 
+<!-- LOADASH -->
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+  integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+
 <script>
   $(function () {
     loadDatepickers({
@@ -140,6 +148,8 @@
     let trIndex = 1;
     let mode = "";
     let activeTrIndex = 0;
+    let previousData = {};
+    let currentMedicationHistory = [];
 
     function generateFormGroup(data) {
       return `
@@ -158,12 +168,12 @@
               data-bs-target="#currentMedicationHistoryModal">
           <span>
             <i class="fa-solid fa-pen"></i>
-          </span>      
+          </span>
         </button>
         <button type="button" class="btn btn-danger btn-delete">
           <span>
             <i class="fa-solid fa-x"></i>
-          </span>      
+          </span>
         </button>
       </td>
       <td>
@@ -173,44 +183,76 @@
         ${data.drugDose}
       </td>
       `;
-
-      // let tbody = $("table tbody");
-
-      // console.log(tbody);
-      // tbody.prepend(toInsert);
     }
 
     // when add button (+) is clicked
     $("table").on("click", ".btn-add", function () {
       mode = "ADD";
 
-      $(".modal input[type=text]").each(function () {
-        $(this).val("");
-      });
+      clearModalTextFields((modalClass = ".modal"));
     });
 
-    // when edit button is clicked
+    // WHEN EDIT BUTTON IS CLICKED
     $("table").on("click", ".btn-edit", function () {
       mode = "EDIT";
       let trParent = $(this).parent().parent();
       activeTrIndex = trParent.attr("data-row-index");
 
-      let inputs = $(`div[data-row-index=${activeTrIndex}]`).find("input");
-      // console.log(trParent.find("input[type=text]"));
-      inputs.each(function () {
-        let name = $(this).attr("name");
-        let value = $(this).val();
-        $(`.modal input[name=${name}]`).val(value);
-      });
+      clearModalTextFields((modalClass = ".modal"));
+
+      // let inputs = $(`div[data-row-index=${activeTrIndex}]`).find("input");
+      // // console.log(trParent.find("input[type=text]"));
+      // inputs.each(function () {
+      //   let name = $(this).attr("name");
+      //   let value = $(this).val();
+      //   $(`.modal input[name=${name}]`).val(value);
+      //   console.log(name, value);
+      //   previousData[name] = value;
+      // });
+      let siblings = $(this).parent().siblings();
+      let drugName = $(siblings[0]).text().trim();
+      let drugDose = $(siblings[1]).text().trim();
+
+      // POPULATE MODAL FIELDS
+      $(".modal input[name=drugName]").val(drugName);
+      $(".modal input[name=drugDose]").val(drugDose);
+
+      Object.assign(
+        previousData,
+        { drugName: drugName },
+        { drugDose: drugDose }
+      );
     });
 
     $("table").on("click", ".btn-delete", function () {
       let trParent = $(this).parent().parent();
 
       trParent.remove();
+
+      // REMOVE DELETED VALUE
+      let siblings = $(this).parent().siblings();
+      let drugName = $(siblings[0]).text().trim();
+      let drugDose = $(siblings[1]).text().trim();
+
+      Object.assign(
+        previousData,
+        { drugName: drugName },
+        { drugDose: drugDose }
+      );
+
+      currentMedicationHistory = currentMedicationHistory.filter((item) => {
+        return !_.isEqual(item, previousData);
+      });
     });
 
-    // when submitting modal form
+    // WHEN MODAL IS CLOSED
+    $("button[data-bs-dismiss=modal]").on("click", function () {
+      $(".modal input[type=text]").each(function () {
+        $(this).val("");
+      });
+    });
+
+    // WHEN SUBMITTING MODAL FORM
     $(".modal form").on("submit", function (evt) {
       // pass
       evt.preventDefault();
@@ -232,15 +274,19 @@
         $(toAppend).insertBefore("#tr-dummy");
 
         // add fields to hidden div that holds form data
-        let newFormGroup = generateFormGroup(data);
-        toAppend = `
-        <div data-row-index=${trIndex} style="display: none;">
-          ${newFormGroup}
-        </div>
-        `;
+        // let newFormGroup = generateFormGroup(data);
+        // toAppend = `
+        // <div data-row-index=${trIndex} style="display: none;">
+        //   ${newFormGroup}
+        // </div>
+        // `;
 
-        let form = $("form[data-form-target=EMR]");
-        form.append(toAppend);
+        // let form = $("form[data-form-target=EMR]");
+        // form.append(toAppend);
+
+        // APPEND ADDED VALUES TO EXISTING OBJECT
+        currentMedicationHistory.push(data);
+        console.log(currentMedicationHistory);
 
         trIndex++;
       } else {
@@ -253,166 +299,25 @@
         trParent.append(TDs);
 
         // update hidden form values
-        let currentFormDiv = $(`div[data-row-index=${activeTrIndex}]`);
+        // let currentFormDiv = $(`div[data-row-index=${activeTrIndex}]`);
 
-        currentFormDiv.empty();
-        let newFormGroup = generateFormGroup(data);
-        currentFormDiv.append(newFormGroup);
+        // currentFormDiv.empty();
+        // let newFormGroup = generateFormGroup(data);
+        // currentFormDiv.append(newFormGroup);
+
+        // APPEND UPDATED VALUES TO EXISTING OBJECT
+        currentMedicationHistory = currentMedicationHistory.filter((item) => {
+          return !_.isEqual(item, previousData);
+        });
+        currentMedicationHistory.push(data);
       }
 
       $(".modal").modal("hide");
+    });
+
+    // WHEN FORM IS SUBMITTED
+    $("#current-medication-form").on("submit", function () {
+      console.log(currentMedicationHistory);
     });
   });
 </script>
-
-<!-- <script>
-  $(function () {
-    let mode = "";
-    let trIndex = 1;
-
-    $("table").on("click", ".btn-add", function () {
-      mode = "ADD";
-
-      $(".modal input[type=text]").each(function () {
-        $(this).val("");
-      });
-    });
-
-    $("table").on("click", ".btn-edit", function () {
-      mode = "EDIT";
-      let trParent = $(this).parent().parent();
-      activeTrIndex = trParent.attr("data-row-index");
-
-      let inputs = trParent.find("input[type=text]");
-      // console.log(trParent.find("input[type=text]"));
-      inputs.each(function () {
-        let name = $(this).attr("name");
-        let value = $(this).val();
-        $(`.modal input[name=${name}]`).val(value);
-      });
-    });
-
-    $("table").on("click", ".btn-delete", function () {
-      let trParent = $(this).parent().parent();
-
-      trParent.remove();
-    });
-
-    function addInputs(data) {
-      let toBeAdded = `
-    <tr data-row-index=${trIndex}>
-      <td>
-        <button type="button" class="btn btn-warning btn-edit" data-bs-toggle="modal"
-              data-bs-target="#currentMedicationHistoryModal">
-          <span>
-            <i class="fa-solid fa-pen"></i>
-          </span>      
-        </button>
-        <button type="button" class="btn btn-danger btn-delete">
-          <span>
-            <i class="fa-solid fa-x"></i>
-          </span>      
-        </button>
-      </td>
-      <td>
-          <input type="text" name="drugName" class="form-control" value=${data.drugName} readonly />
-      </td>
-      <td>
-          <input type="text" name="drugDose" class="form-control" value=${data.drugDose} readonly/>
-      </td>
-    </tr>
-
-      `;
-
-      let tbody = $("table tbody");
-
-      console.log(tbody);
-      tbody.prepend(toBeAdded);
-    }
-
-    $(".modal form").on("submit", function (evt) {
-      evt.preventDefault();
-
-      // if ($(this).valid()) {
-      let submittedValues = $(this).serializeArray();
-
-      let data = cleanData(submittedValues);
-
-      if (mode === "ADD") {
-        addInputs(data);
-        trIndex++;
-      } else {
-        // edit functionality
-        let trParent = $(`table tr[data-row-index=${activeTrIndex}]`);
-
-        let inputs = trParent.find("input[type=text]");
-
-        inputs.each(function (idx) {
-          let name = $(this).attr("name");
-          $(this).val(data[name]);
-        });
-      }
-
-      $(".modal input[type=text]").each(function () {
-        $(this).val("");
-      });
-
-      $(".modal").modal("hide");
-      // }
-    });
-  });
-
-  /*
-    [
-      {tule: 2022},
-      ...
-    ]
-  
-    {
-      ...,
-      appointments: {
-        2019-11-23: {
-          vitalSigns: {
-            height: value,
-            weight: value, 
-            BMI: value, 
-            temperature: value, 
-            BPDiastolic: value,
-            BPSystolic: value, 
-            oxygenSaturation: value, 
-            heartRate: value
-          },
-          HPI: {
-            CC: value,
-            startDate: value, 
-            location: value, 
-            severity: value,
-            onset: value,
-            durationOfEpisode: [value, measurement],
-            frequency: value,
-            progression: value,
-            aggrevatedBy: value,
-            relievedBy: value,
-            riskFactors: [values],
-            bodilyFunction: value,
-            notes: value,
-          },
-          ROS: {
-            eyes: [
-              { key: value },
-            ]
-            ...
-          },
-          PE: {
-            fetalPresentation: {
-              fundalHeight: value,
-              fetalHeartRate: value,
-              presentation: 
-            }
-          }
-        }
-      }
-    }
-  
-  */
-</script> -->

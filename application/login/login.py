@@ -1,55 +1,42 @@
-import requests
-import json
-from flask import Blueprint, render_template, request, make_response, jsonify, session, redirect
+from flask import Blueprint, render_template
 
-
-#import auth
-# from . import auth
-
-#import models
-from application.models.Mdl_patient import Patient
-from application.models.Mdl_employee import Employee
-
-
-patientObj = Patient()
-employeeObj = Employee()
-
-auth = Blueprint('auth', __name__, template_folder="templates",
-                 static_url_path="static/auth")
+login = Blueprint('login', __name__, template_folder="templates",
+                  static_folder="static")
 
 
 # for testing
-@auth.route('/delete_all')
-def deleteAll():
-    patientObj.deleteAll()
-    return "DELETED"
+# @login.route('/delete_all')
+# def deleteAll():
+#     patientObj.deleteAll()
+#     return "DELETED"
 
 
-@auth.route('/<entity>/login', methods=["GET", "POST"])
-def login(entity):
+@login.route('/<string:entity>')
+def loginPage(entity):
     return render_template("login.html", title="Login", entity=entity)
+
 
 # ADD ROLE TO LOGIN CREDENTIAL FOR A MORE SECURED LOGIN
 
 
-@auth.route('/<entity>/login/attempt', methods=["POST"])
-def loginAttempt(entity):
-    if request.method == "POST":
-        loginCred = json.loads(request.data)
-        if entity == "patient":
-            result = patientObj.login(loginCred)
-        else:
-            result = employeeObj.login(loginCred)
-        if result['code'] == "SUCCESS":
-            if entity == "patient":
-                session['_id'] = result['data']['_id']
-                session['userRole'] = 'patient'
-            else:
-                session['_id'] = result['data']['_id']
-                session['userRole'] = result['data']['userRole']
-            return make_response(jsonify(result), 201)
-        else:
-            return make_response(jsonify(result), 201)
+# @auth.route('/<entity>/login/attempt', methods=["POST"])
+# def loginAttempt(entity):
+#     if request.method == "POST":
+#         loginCred = json.loads(request.data)
+#         if entity == "patient":
+#             result = patientObj.login(loginCred)
+#         else:
+#             result = employeeObj.login(loginCred)
+#         if result['code'] == "SUCCESS":
+#             if entity == "patient":
+#                 session['_id'] = result['data']['_id']
+#                 session['userRole'] = 'patient'
+#             else:
+#                 session['_id'] = result['data']['_id']
+#                 session['userRole'] = result['data']['userRole']
+#             return make_response(jsonify(result), 201)
+#         else:
+#             return make_response(jsonify(result), 201)
 
 
 # @auth.route('/register/')
@@ -105,37 +92,37 @@ def loginAttempt(entity):
 #     elif request.method == "GET":
 #         return "Bad request"
 
-@auth.route("/auth/<string:entity>/check-email/<string:email>", methods=["GET"])
-def checkEmail(entity, email):
-    '''
-        EXPECTS AN ENTITY WHICH SPECIFY WHAT DATABASE TO LOOK FOR AND THE EMAIL TO CHECK
-    '''
-    if request.method == "GET":
-        if entity == "patient":
-            result = patientObj.findPatient({"email": email}, {})
-            if result:
-                # RETURNS AN ERROR CODE 409 (CONFLICT) WHEN THE EMAIL ALREADY EXISTS IN THE DATABASE
-                return make_response(jsonify({"errorMsg": "Email already exists! Go to login <a href='/patient/login' style='color: inherit'>here.</a>"}), 409)
-            patientObj.generateOTP(email)
-            return make_response(jsonify([]), 201)
+# @auth.route("/auth/<string:entity>/check-email/<string:email>", methods=["GET"])
+# def checkEmail(entity, email):
+#     '''
+#         EXPECTS AN ENTITY WHICH SPECIFY WHAT DATABASE TO LOOK FOR AND THE EMAIL TO CHECK
+#     '''
+#     if request.method == "GET":
+#         if entity == "patient":
+#             result = patientObj.findPatient({"email": email}, {})
+#             if result:
+#                 # RETURNS AN ERROR CODE 409 (CONFLICT) WHEN THE EMAIL ALREADY EXISTS IN THE DATABASE
+#                 return make_response(jsonify({"errorMsg": "Email already exists! Go to login <a href='/patient/login' style='color: inherit'>here.</a>"}), 409)
+#             patientObj.generateOTP(email)
+#             return make_response(jsonify([]), 201)
 
-            # @auth.route("/register/new_otp", methods=["POST"])
-            # def newOTP():
-            #     if request.method == "POST":
-            #         email = json.loads(request.data)
-            #         print(email)
-            #         patientObj.generateOTP(email)
-            #         return make_response(jsonify({'code': "SUCCESS"}), 201)
+    # @auth.route("/register/new_otp", methods=["POST"])
+    # def newOTP():
+    #     if request.method == "POST":
+    #         email = json.loads(request.data)
+    #         print(email)
+    #         patientObj.generateOTP(email)
+    #         return make_response(jsonify({'code': "SUCCESS"}), 201)
 
 
-@auth.route("/auth/verify-otp/<string:unverifiedOTP>", methods=["GET"])
-def verifyOTP(unverifiedOTP):
-    if request.method == "GET":
-        result = patientObj.verifyOTP(unverifiedOTP)
-        print(result)
-        if result:
-            return make_response(jsonify({'code': "SUCCESS"}), 201)
-        return make_response(jsonify({"errorMsg": "Incorrect OTP!"}), 422)
+# @auth.route("/auth/verify-otp/<string:unverifiedOTP>", methods=["GET"])
+# def verifyOTP(unverifiedOTP):
+#     if request.method == "GET":
+#         result = patientObj.verifyOTP(unverifiedOTP)
+#         print(result)
+#         if result:
+#             return make_response(jsonify({'code': "SUCCESS"}), 201)
+#         return make_response(jsonify({"errorMsg": "Incorrect OTP!"}), 422)
 
 
 # @auth.route('/register/data', methods=["GET", "POST"])
@@ -156,13 +143,6 @@ def verifyOTP(unverifiedOTP):
 # @auth.route('/register/success')
 # def registerSuccess():
 #     return render_template("register-success.html")
-
-
-@auth.route('/logout')
-def logout():
-    session.clear()
-
-    return redirect("/")
 
 
 # NOTE: for testing

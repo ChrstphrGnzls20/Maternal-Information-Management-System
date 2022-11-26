@@ -2,6 +2,7 @@
 
 {% block additionalHeaders %}
 
+
 <!-- localized css -->
 <link rel="stylesheet" href="{{url_for('emr.static', filename='styles.css')}}">
 
@@ -237,7 +238,10 @@
 
 <script src="{{url_for('emr.static', filename='datePicker.js')}}" ></script>
 <script src="{{url_for('emr.static', filename='formData.js')}}" ></script>
+<script src="{{url_for('emr.static', filename='modal-utilities.js')}}" ></script>
 <script src="{{url_for('emr.static', filename='emrRouter.js')}}" ></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
 <!-- <script type="module" src="{{url_for('emr.static', filename='date-picker.js')}}" ></script> -->
 <!-- <script src="{{url_for('static', filename='emr/js/emr-data.js')}}" defer></script> -->
 

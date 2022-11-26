@@ -19,7 +19,7 @@
         class="nav-link active"
         id="all-tab"
         data-bs-toggle="tab"
-        data-target="All"
+        data-target=""
         type="button"
         role="tab"
         aria-controls="all"
@@ -33,10 +33,10 @@
         class="nav-link"
         id="practitioner-tab"
         data-bs-toggle="tab"
-        data-target="Clinician"
+        data-target="doctor"
         type="button"
         role="tab"
-        aria-controls="practitioner"
+        aria-controls="doctor"
         aria-selected="false"
       >
         CLINICIAN
@@ -47,7 +47,7 @@
         class="nav-link"
         id="secretary-tab"
         data-bs-toggle="tab"
-        data-target="Secretary"
+        data-target="secretary"
         type="button"
         role="tab"
         aria-controls="secretary"
@@ -85,11 +85,15 @@
 
         {% for employee in employees %}
         <tr>
-          <td class="text-center emp-id">{{employee.licenseID}}</td>
+          <td class="text-center emp-id">{{employee._id}}</td>
           <td class="text-center">{{employee.name}}</td>
-          <td class="text-center">{{employee.role}}</td>
+          <td class="text-center" style="text-transform: capitalize">
+            {{employee.role}}
+          </td>
           <td class="text-center">{{employee.mobile}}</td>
-          <td class="text-center">{{employee.status}}</td>
+          <td class="text-center" style="text-transform: capitalize">
+            {{employee.status}}
+          </td>
           <td class="text-center">
             <button type="button" class="btn btn btn-primary edit-emp-btn">
               <svg

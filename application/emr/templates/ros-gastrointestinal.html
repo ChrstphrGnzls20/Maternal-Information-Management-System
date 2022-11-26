@@ -640,4 +640,42 @@
       data-next-page="ros-urinary-reproductive"
     />
   </div>
+
+  <script>
+              
+    $(".rosGastro").on("submit", function(){
+      let GastroIntestinal = { }
+
+      let rosLossofAppetite = $("input[name='lossofAppetite']:checked");
+      let rosAbdomenPain = $("input[name='abdominalPain']:checked");
+      let rosChangeBowel = $("input[name='changeBowel']:checked");
+      let rosNauseaGastro = $("input[name='nausea']:checked");
+      let rosVomitingGastro = $("input[name='vomiting']:checked");
+      let rosDiarrhea = $("input[name='diarrhea']:checked");
+      let rosConstipation = $("input[name='constipation']:checked");
+      let rosUnableStoolRestrain = $("input[name='unableStoolRestrain']:checked");
+      let rosBloodwithBowel = $("input[name='bloodwithBowel']:checked");
+      let rosHeartBurn = $("input[name='heartburn']:checked");
+      let rosPolyps = $("input[name='polyps']:checked");
+      let rosGastroNotes = $("#gastroNotes");
+
+      GastroIntestinal[rosLossofAppetite.attr("name")] = (rosLossofAppetite.val());
+      GastroIntestinal[rosAbdomenPain.attr("name")] = (rosAbdomenPain.val());
+      GastroIntestinal[rosChangeBowel.attr("name")] = (rosChangeBowel.val());
+      GastroIntestinal[rosNauseaGastro.attr("name")] = (rosNauseaGastro.val());
+      GastroIntestinal[rosVomitingGastro.attr("name")] = (rosVomitingGastro.val());
+      GastroIntestinal[rosDiarrhea.attr("name")] = (rosDiarrhea.val());
+      GastroIntestinal[rosConstipation.attr("name")] = (rosConstipation.val());
+      GastroIntestinal[rosUnableStoolRestrain.attr("name")] = (rosUnableStoolRestrain.val());
+      GastroIntestinal[rosBloodwithBowel.attr("name")] = (rosBloodwithBowel.val());
+      GastroIntestinal[rosHeartBurn.attr("name")] = (rosHeartBurn.val());
+      GastroIntestinal[rosPolyps.attr("name")] = (rosPolyps.val());
+      GastroIntestinal[rosGastroNotes.attr("name")] = (rosGastroNotes.val());
+      
+      
+
+      console.log(GastroIntestinal);
+    });
+  </script>
+
 </form>

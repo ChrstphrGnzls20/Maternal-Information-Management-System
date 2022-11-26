@@ -1,0 +1,129 @@
+<form
+  id="past-medical-history-form"
+  class="pastMedicalHistory"
+  data-form-target="EMR"
+>
+  <div class="row mt-2">
+    <h3 class="default-label col-12">Past Medical History</h3>
+  </div>
+  <table class="table table-borderless">
+    <thead class="thLabel">
+      <tr>
+        <th class="thLeft" style="width: 50%">Disease</th>
+        <th class="thLeft" style="width: 5%">N/A</th>
+        <th style="width: 5%">Self</th>
+        <th style="width: 5%">Family</th>
+        <th style="width: 30%">
+          Indicate Relationship (if you selected family)
+        </th>
+      </tr>
+    </thead>
+
+    <tbody></tbody>
+  </table>
+
+  <div>
+    <label for="other">Other</label>
+    <textarea class="form-control" id="other" name="other" rows="1"></textarea>
+  </div>
+
+  <!-- <script>
+    let pmHistoryVal = {};
+    $(".pastMedicalHistory :input").change(function () {
+      let pmHistoryName = $(this).attr("name");
+      pmHistoryVal[pmHistoryName] = $(this).val();
+      console.log(pmHistoryVal);
+    });
+  </script> -->
+
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="patient-history-hpi"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="patient-history-ph"
+    />
+  </div>
+</form>
+
+<script>
+  $(function () {
+    const DISEASESLIST = [
+      { name: "cv19", label: "Covid 19" },
+      { name: "arthritis", label: "Athritis" },
+      { name: "diabetes", label: "Diabetes" },
+      { name: "highBloodPressure", label: "High Blood Pressure" },
+      { name: "heartDisease", label: "Heart Disease" },
+      { name: "thyroidDisease", label: "Thyroid Disease" },
+      { name: "eatingDisorder", label: "Eating Disorder" },
+      { name: "bloodTransfusions", label: "Blood Transfusions" },
+      { name: "hiv", label: "HIV+" },
+      { name: "bronchitis", label: "Bronchitis" },
+      { name: "emphysema", label: "Emphysema" },
+      { name: "athma", label: "Asthma" },
+      { name: "epilepsy", label: "Epilepsy" },
+      { name: "liverDiseases", label: "Liver Diseases" },
+      { name: "hepatitis", label: "Hepatitis" },
+      { name: "gallstones", label: "Gallstones" },
+      { name: "kidneyDisease", label: "Kidney Disease" },
+      { name: "ovarianCancer", label: "Ovarian Cancer" },
+      { name: "endometrialCancer", label: "Endometrial Cancer" },
+      { name: "breastCancer", label: "Breast Cancer" },
+      { name: "colonCancer", label: "Colon Cancer" },
+    ];
+
+    function generateDiseaseTrs(name, label) {
+      return `
+      <tr>
+        <td class="tdLeft">${label}</td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            name=${name}
+            id="${name}-none"
+            value=""
+            checked
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            name=${name}
+            id="${name}-self"
+            value="self"
+          />
+        </td>
+        <td>
+          <input
+            class="form-check-input"
+            type="radio"
+            name=${name}
+            id="${name}-family"
+            value="family"
+          />
+        </td>
+        <td>
+          <select name="${name}-relationship" class="form-select form-select-sm" disabled>
+            <option value="mother">Mother Side</option>
+            <option value="father">Father Side</option>
+          </select>
+        </td>
+      </tr>`;
+    }
+
+    DISEASESLIST.forEach(function (item) {
+      let tbody = $("table tbody");
+      let tr = generateDiseaseTrs(item.name, item.label);
+      tbody.append(tr);
+    });
+  });
+</script>

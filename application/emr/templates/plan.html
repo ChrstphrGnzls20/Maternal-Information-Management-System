@@ -20,14 +20,14 @@
   </div>
 
   <div class="table-responsive mt-3">
-    <table class="table table-borderless">
+    <table class="table table-borderless" id="prescription-table">
       <thead align="middle" style="background-color: rgba(0, 0, 0, 0.05)">
         <tr>
           <th scope="col" width="10%"></th>
           <th scope="col" width="10%">Medicine</th>
           <th scope="col" width="10%">Type</th>
           <th scope="col" width="10%">Dosage</th>
-          <th scope="col" width="5%">Amount</th>
+          <th scope="col" width="5%">Measurement</th>
           <th scope="col" width="15%">Frequency</th>
           <th scope="col" width="20%">Instructions</th>
         </tr>
@@ -103,14 +103,14 @@
       type="submit"
       class="btn btn-custom-tertiary emr-prev-btn px-5"
       value="Previous"
-      data-next-page="patient-history-gh"
+      data-next-page="laboratory"
     />
 
     <input
       type="submit"
       class="btn btn-success btn-custom-primary px-5 emr-next-btn"
       value="Next"
-      data-next-page="patient-history-pch"
+      data-next-page="summary"
     />
   </div>
 </form>
@@ -174,11 +174,11 @@
               />
             </div>
             <div class="form-group col-md-5">
-              <label for="medicineMeasure" class="form-label"></label>
+              <label for="medicineMeasurement" class="form-label"></label>
               <select
                 class="form-select"
-                id="medicineMeasure"
-                name="medicineMeasure"
+                id="medicineMeasurement"
+                name="medicineMeasurement"
               >
                 <option value="mg">mg</option>
                 <option value="ml">ml</option>
@@ -253,11 +253,30 @@
   </div>
 </div>
 
+<!-- LOADASH -->
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+  integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+
 <script>
   $(function () {
+    loadDatepickers({
+      autoclose: true,
+      changeMonth: true,
+      changeYear: true,
+      format: "MM dd, yyyy",
+      startDate: "+1d",
+    });
+
     let trIndex = 1;
     let mode = "";
     let activeTrIndex = 0;
+    let previousData = {};
+    let prescription = [];
+    let carePlan = [];
 
     function generateFormGroup(data) {
       return `
@@ -298,7 +317,7 @@
         ${data.medicineDosage}
       </td>
       <td>
-        ${data.medicineMeasure}
+        ${data.medicineMeasurement}
       </td>
       <td>
         ${data.medicineFrequency}
@@ -310,37 +329,91 @@
     }
 
     // when add button (+) is clicked
-    $("table").on("click", ".btn-add", function () {
+    $("#prescription-table").on("click", ".btn-add", function () {
       mode = "ADD";
 
-      $(".modal input[type=text]").each(function () {
-        $(this).val("");
-      });
+      clearModalTextFields((modalClass = ".modal"));
     });
 
     // when edit button is clicked
-    $("table").on("click", ".btn-edit", function () {
+    $("#prescription-table").on("click", ".btn-edit", function () {
       mode = "EDIT";
       let trParent = $(this).parent().parent();
       activeTrIndex = trParent.attr("data-row-index");
+      clearModalTextFields((modalClass = ".modal"));
 
-      let inputs = $(`div[data-row-index=${activeTrIndex}]`).find("input");
-      // console.log(trParent.find("input[type=text]"));
-      inputs.each(function () {
-        let name = $(this).attr("name");
-        let value = $(this).val();
-        $(`.modal input[name=${name}]`).val(value);
-      });
+      // let inputs = $(`div[data-row-index=${activeTrIndex}]`).find("input");
+      // // console.log(trParent.find("input[type=text]"));
+      // inputs.each(function () {
+      //   let name = $(this).attr("name");
+      //   let value = $(this).val();
+      //   $(`.modal input[name=${name}]`).val(value);
+      // });
+
+      let siblings = $(this).parent().siblings();
+      let medicineName = $(siblings[0]).text().trim();
+      let medicineType = $(siblings[1]).text().trim();
+      let medicineDosage = $(siblings[2]).text().trim();
+      let medicineMeasurement = $(siblings[3]).text().trim();
+      let medicineFrequency = $(siblings[4]).text().trim();
+      let medicineInstructions = $(siblings[5]).text().trim();
+
+      // POPULATE MODAL FIELDS
+      $("#prescriptionModal input[name=medicineName]").val(medicineName);
+      $("#prescriptionModal input[name=medicineType]").val(medicineType);
+      $("#prescriptionModal input[name=medicineDosage]").val(medicineDosage);
+      $("#prescriptionModal input[name=medicineMeasurement]").val(
+        medicineMeasurement
+      );
+      $("#prescriptionModal input[name=medicineFrequency]").val(
+        medicineFrequency
+      );
+      $("#prescriptionModal textarea[name=medicineInstructions]").val(
+        medicineInstructions
+      );
+
+      Object.assign(
+        previousData,
+        { medicineName: medicineName },
+        { medicineType: medicineType },
+        { medicineDosage: medicineDosage },
+        { medicineMeasurement: medicineMeasurement },
+        { medicineFrequency: medicineFrequency },
+        { medicineInstructions: medicineInstructions }
+      );
     });
 
-    $("table").on("click", ".btn-delete", function () {
+    $("#prescription-table").on("click", ".btn-delete", function () {
       let trParent = $(this).parent().parent();
 
       trParent.remove();
+
+      // REMOVE DELETED VALUE
+      let siblings = $(this).parent().siblings();
+      let medicineName = $(siblings[0]).text().trim();
+      let medicineType = $(siblings[1]).text().trim();
+      let medicineDosage = $(siblings[2]).text().trim();
+      let medicineMeasurement = $(siblings[3]).text().trim();
+      let medicineFrequency = $(siblings[4]).text().trim();
+      let medicineInstructions = $(siblings[5]).text().trim();
+
+      Object.assign(
+        previousData,
+        { medicineName: medicineName },
+        { medicineType: medicineType },
+        { medicineDosage: medicineDosage },
+        { medicineMeasurement: medicineMeasurement },
+        { medicineFrequency: medicineFrequency },
+        { medicineInstructions: medicineInstructions }
+      );
+
+      prescription = prescription.filter((item) => {
+        return !_.isEqual(item, previousData);
+      });
     });
 
     // when submitting modal form
-    $(".modal form").on("submit", function (evt) {
+    $("#prescriptionModal form").on("submit", function (evt) {
       // pass
       evt.preventDefault();
 
@@ -361,15 +434,18 @@
         $(toAppend).insertBefore("#tr-dummy");
 
         // add fields to hidden div that holds form data
-        let newFormGroup = generateFormGroup(data);
-        toAppend = `
-        <div data-row-index=${trIndex} style="display: none;">
-          ${newFormGroup}
-        </div>
-        `;
+        // let newFormGroup = generateFormGroup(data);
+        // toAppend = `
+        // <div data-row-index=${trIndex} style="display: none;">
+        //   ${newFormGroup}
+        // </div>
+        // `;
 
-        let form = $("form[data-form-target=EMR]");
-        form.append(toAppend);
+        // let form = $("form[data-form-target=EMR]");
+        // form.append(toAppend);
+
+        // APPEND VALUES TO EXISTING OBJECT
+        prescription.push(data);
 
         trIndex++;
       } else {
@@ -382,14 +458,24 @@
         trParent.append(TDs);
 
         // update hidden form values
-        let currentFormDiv = $(`div[data-row-index=${activeTrIndex}]`);
+        // let currentFormDiv = $(`div[data-row-index=${activeTrIndex}]`);
 
-        currentFormDiv.empty();
-        let newFormGroup = generateFormGroup(data);
-        currentFormDiv.append(newFormGroup);
+        // currentFormDiv.empty();
+        // let newFormGroup = generateFormGroup(data);
+        // currentFormDiv.append(newFormGroup);
+
+        // APPEND UPDATED VALUES TO EXISTING OBJECT
+        prescription = prescription.filter((item) => {
+          return !_.isEqual(item, previousData);
+        });
+        prescription.push(data);
       }
 
-      $(".modal").modal("hide");
+      $("#prescriptionModal").modal("hide");
+    });
+
+    $("#plan-form").on("submit", function () {
+      console.log(prescription);
     });
   });
 </script>
