@@ -58,3 +58,8 @@ def getTemplates():
         templates = emrObj.getTemplates(
             filter={"doctor_id": doctorId}, fields={"_id": 0, "templates": 1})
         return make_response(jsonify({"data": templates["templates"][category]}), 201)
+
+
+@emr.route("/getPDF")
+def getPDF():
+    return render_template("vital-signs.html", vitalSigns="Hi")

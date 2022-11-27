@@ -16,7 +16,7 @@ table tr {
 }
 
 .status-span {
-  width: 50%;
+  max-width: 70%;
   padding: 0px 10px;
   color: white;
   border-radius: 15px;
