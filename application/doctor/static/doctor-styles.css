@@ -1,0 +1,58 @@
+.appointment-summary-card {
+  width: 20rem;
+}
+
+table thead {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+table tr {
+  line-height: 40px;
+}
+
+#search,
+#sortSelect {
+  width: 30rem;
+}
+
+.status-span {
+  width: 50%;
+  padding: 0px 10px;
+  color: white;
+  border-radius: 15px;
+  display: block;
+  margin: 0 auto;
+}
+
+.status-span.status-1 {
+  background-color: #28a745;
+}
+.status-span.status-2 {
+  background-color: #ff9302;
+}
+
+.status-span.status-3 {
+  background-color: #dc3545;
+}
+
+.appointment-summary-table th,
+.appointment-summary-table td,
+.patient-summary-table th,
+.patient-summary-table td {
+  text-align: center;
+}
+
+.btn.btn-basic-info {
+  background-color: #147cd7;
+  color: white;
+}
+.btn.btn-basic-info:hover {
+  background-color: #147cd7;
+}
+.btn.btn-emr {
+  background-color: #256d85;
+  color: white;
+}
+.btn.btn-emr:hover {
+  background-color: #256d85;
+}

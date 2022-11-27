@@ -85,11 +85,9 @@ $(function () {
     "click",
     (chilren = ".emr-next-btn,.emr-prev-btn"),
     function (evt) {
-      console.log("HELLo");
       evt.preventDefault();
       let nextPage = $(this).attr("data-next-page");
       let form = $(this).parent().parent();
-      console.log(form);
       if (form.valid()) {
         form.trigger("submit", [nextPage]);
       }
@@ -111,15 +109,13 @@ $(function () {
 
   $(".emr-cat").on("click", function () {
     let target = $(this).attr("data-target");
-
     let form = $("form");
-    // NOTE: REMOVE!
-    // if (form.valid()) {
-    //   form.trigger("submit", [nextPage]);
-    //   getEMRContent(target);
-    // }
-    getEMRContent(target);
-    activeEMRView = target;
+    if (form.valid()) {
+      form.trigger("submit", [target]);
+      getEMRContent(target);
+      activeEMRView = target;
+    }
+    // getEMRContent(target);
   });
 
   let activeEMRView = localStorage.getItem("activeEMRView")

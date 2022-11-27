@@ -1,0 +1,100 @@
+<link
+  rel="stylesheet"
+  href="{{url_for('doctor.static', filename='doctor-styles.css')}}"
+/>
+
+<div class="d-flex-column mt-5 py-3">
+  <div class="container-fluid">
+    <div class="row">
+      <h3 class="default-label col-12">PATIENTS</h3>
+    </div>
+    <form class="my-2">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="form-group d-flex flex-row align-items-center">
+          <label for="search" class="form-label mb-0 me-3"
+            >Search Patient</label
+          >
+          <input
+            class="form-control"
+            id="search"
+            name="nameSearch"
+            aria-label="SearchEmployeeInput"
+            placeholder="Patient's name"
+          />
+        </div>
+
+        <div
+          class="form-group d-flex flex-row align-items-center justify-content-end"
+        >
+          <label for="sortSelect" class="form-label mb-0 me-3">Sort by</label>
+          <select
+            class="form-select"
+            id="sortSelect"
+            aria-label="SelectEmployee"
+          >
+            <option selected>Open this select menu</option>
+            <option value="regular">Regular checkup</option>
+            <option value="follow-up">Follow-up</option>
+            <option value="monitoring">Close monitoring</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <table class="table patient-summary-table" style="overflow-x: auto">
+      <thead>
+        <tr class="align-middle">
+          <th scope="col">Patient Name</th>
+          <th scope="col">Last Visit Date</th>
+          <th scope="col">Trimester</th>
+          <th scope="col">Contact No.</th>
+          <th scope="col">Status</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr></tr>
+        <tr>
+          <td>Kevin Hart</td>
+          <td>08/21/2022</td>
+          <td>1st Trimester</td>
+          <td>09123456789</td>
+          <td>
+            <span class="status-span status-3">Close Monitoring</span>
+          </td>
+          <td>
+            <button class="btn btn-emr" aria-labelledby="EMR">
+              <i class="fa-solid fa-chart-line"></i>
+            </button>
+            <button
+              class="btn btn-basic-info"
+              aria-labelledby="Basic Information"
+            >
+              <i class="fa-solid fa-folder-open"></i>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>Dwayne Johnson</td>
+          <td>08/21/2022</td>
+          <td>1st Trimester</td>
+          <td>09987654321</td>
+          <td>
+            <span class="status-span status-2">For Follow-up</span>
+          </td>
+          <td>
+            <button class="btn btn-emr" aria-labelledby="EMR">
+              <i class="fa-solid fa-chart-line"></i>
+            </button>
+            <button
+              class="btn btn-basic-info"
+              aria-labelledby="Basic Information"
+            >
+              <i class="fa-solid fa-folder-open"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

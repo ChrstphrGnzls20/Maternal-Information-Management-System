@@ -11,6 +11,7 @@ from application.admin.admin import admin
 from application.emr.emr import emr
 from application.address.address import address
 from application.api.api import api
+from application.doctor.doctor import doctor
 
 """Extensions/Plugins"""
 # pymongo
@@ -51,6 +52,7 @@ def init_app():
         app.register_blueprint(login, url_prefix='/login')
         app.register_blueprint(patient, url_prefix="/patient")
         app.register_blueprint(admin, url_prefix="/admin")
+        app.register_blueprint(doctor, url_prefix="/doctor")
         app.register_blueprint(address, url_prefix="/address")
         app.register_blueprint(emr, url_prefix="/emr")
         app.register_blueprint(api, url_prefix='/api')

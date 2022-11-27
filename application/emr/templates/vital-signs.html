@@ -2,20 +2,24 @@
   <h3 class="default-label col-12">Vital Signs</h3>
   <div class="row">
     <div class="form-group col-md-4">
-      <label for="vitalHeight" class="form-label required">Height (in centimeters)</label>
+      <label for="vitalHeight" class="form-label required"
+        >Height (in centimeters)</label
+      >
       <input
         type="number"
         class="form-control"
         id="vitalHeight"
         name="height"
-        min=100
-        max=200
+        min="100"
+        max="200"
         required
       />
     </div>
 
     <div class="form-group col-md-4">
-      <label for="vitalWeight" class="form-label required">Weight (in kilograms)</label>
+      <label for="vitalWeight" class="form-label required"
+        >Weight (in kilograms)</label
+      >
       <input
         type="number"
         class="form-control"
@@ -39,7 +43,9 @@
 
   <div class="row mt-3">
     <div class="form-group col-md-4">
-      <label for="vitalTemp" class="form-label required">Temperature (in Celcius)</label>
+      <label for="vitalTemp" class="form-label required"
+        >Temperature (in Celcius)</label
+      >
       <input
         type="number"
         class="form-control"
@@ -138,38 +144,37 @@
   </div>
 
   <script>
-    $("#vitalHeight, #vitalWeight").on("change", function(){
-      let heightInMeters = parseInt($("#vitalHeight").val()) / 100
-      let weightInKg = parseInt($("#vitalWeight").val())
-      let BMI = weightInKg / (heightInMeters * heightInMeters)
-      $("#vitalBMI").val(BMI)
-    })
+    $("#vitalHeight, #vitalWeight").on("change", function () {
+      let heightInMeters = parseInt($("#vitalHeight").val()) / 100;
+      let weightInKg = parseInt($("#vitalWeight").val());
+      let BMI = weightInKg / (heightInMeters * heightInMeters);
+      $("#vitalBMI").val(BMI);
+    });
 
-    $("#vital-signs-form").on("submit", function(evt){
+    $("#vital-signs-form").on("submit", function (evt) {
       evt.preventDefault();
-      if($(this).valid()){
-        let height = $('#vitalHeight').val();
-        let weight = $('#vitalWeight').val();
-        let BMI = $('#vitalBMI').val();
-        let temp = $('#vitalTemp').val();
-        let systolicBP = $('#vitalSystolic').val();
-        let diastolicBP = $('#vitalDiastolic').val();
-        let respiratoryRate = $('#vitalRespRate').val();
-        let oxygenSaturation = $('#vitalOxySat').val();
-        let heartRate = $('#vitalHeartRate').val();
+      if ($(this).valid()) {
+        let height = $("#vitalHeight").val();
+        let weight = $("#vitalWeight").val();
+        let BMI = $("#vitalBMI").val();
+        let temp = $("#vitalTemp").val();
+        let systolicBP = $("#vitalSystolic").val();
+        let diastolicBP = $("#vitalDiastolic").val();
+        let respiratoryRate = $("#vitalRespRate").val();
+        let oxygenSaturation = $("#vitalOxySat").val();
+        let heartRate = $("#vitalHeartRate").val();
 
         let vitalSigns = {
           height,
           weight,
-          BMI,
           temp,
           BP: `${systolicBP}/${diastolicBP}`,
           respiratoryRate,
           oxygenSaturation,
-          heartRate
-        }
-        console.log(vitalSigns)
+          heartRate,
+        };
+        console.log(vitalSigns);
       }
-    })
-    </script>
+    });
+  </script>
 </form>

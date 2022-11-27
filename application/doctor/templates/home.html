@@ -1,0 +1,242 @@
+<link
+  rel="stylesheet"
+  href="{{url_for('doctor.static', filename='doctor-styles.css')}}"
+/>
+
+<div class="d-flex-column mt-5">
+  <div class="container-fluid">
+    <div class="row row-cols-1 row-cols-md-3 justify-content-around w-100 gy-3">
+      <div class="col card appointment-summary-card text-white bg-primary">
+        <div class="card-body">
+          <h5 class="card-title">Pending</h5>
+          <p class="card-text">3</p>
+        </div>
+      </div>
+
+      <div class="col card appointment-summary-card text-white bg-success">
+        <div class="card-body">
+          <h5 class="card-title">Active</h5>
+          <p class="card-text">3</p>
+        </div>
+      </div>
+
+      <div class="col card appointment-summary-card text-white bg-warning">
+        <div class="card-body">
+          <h5 class="card-title">Complete</h5>
+          <p class="card-text">3</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-3 rounded-2">
+      <div class="card-body">
+        <div
+          class="d-flex flex-row justify-content-between align-items-center bg-white m-1 p-1"
+        >
+          <h3>RECENT APPOINTMENTS</h3>
+          <button type="button" class="btn btn-outline-dark float-end">
+            SEE ALL
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table
+            class="table table-striped align-middle appointment-summary-table"
+          >
+            <thead>
+              <tr>
+                <th>APPOINTMENT ID</th>
+                <th>PATIENT</th>
+                <th>SCHEDULE DATE</th>
+                <th>TIME</th>
+                <th>CREATED DATE</th>
+                <th>STATUS</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr></tr>
+              <tr>
+                <td>1</td>
+                <td>Kevin Hart</td>
+                <td>08/21/2022</td>
+                <td>10:00 AM</td>
+                <td>08/13/2022</td>
+                <td>Completed</td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn btn-primary"
+                    name="AddEmployeeButton"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-pencil-square"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                      />
+                    </svg>
+                  </button>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Dwayne Johnson</td>
+                <td>08/22/2022</td>
+                <td>9:00 AM</td>
+                <td>08/14/2022</td>
+                <td>Pending</td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn btn-primary"
+                    name="AddEmployeeButton"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-pencil-square"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                      />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Ron Carl Marcos</td>
+                <td>08/22/2022</td>
+                <td>10:00 AM</td>
+                <td>08/14/2022</td>
+                <td>Pending</td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn btn-primary"
+                    name="AddEmployeeButton"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-pencil-square"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                      />
+                    </svg>
+                  </button>
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="EmployeeAcc-bg justify-content-center bd-highlight">
+      <div class="flex-column mt-5">
+        <div class="card mt-2 rounded-2">
+          <div class="card-body">
+            <div
+              class="d-flex flex-row justify-content-between align-items-center bg-white m-1 p-1"
+            >
+              <h3>RECENT PATIENTS</h3>
+              <button type="button" class="btn btn-outline-dark float-end">
+                SEE ALL
+              </button>
+            </div>
+            <div class="table-responsive">
+              <table
+                class="table table-striped align-middle patient-summary-table"
+              >
+                <thead>
+                  <tr>
+                    <th>Patient Name</th>
+                    <th>Last visit date</th>
+                    <th>Trimester</th>
+                    <th>Contact no.</th>
+                    <th>Status</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr></tr>
+                  <tr>
+                    <td>Kevin Hart</td>
+                    <td>08/21/2022</td>
+                    <td>1st Trimester</td>
+                    <td>09123456789</td>
+                    <td>
+                      <span class="status-span status-3">Close Monitoring</span>
+                    </td>
+                    <td>
+                      <button class="btn btn-emr" aria-labelledby="EMR">
+                        <i class="fa-solid fa-chart-line"></i>
+                      </button>
+                      <button
+                        class="btn btn-basic-info"
+                        aria-labelledby="Basic Information"
+                      >
+                        <i class="fa-solid fa-folder-open"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Dwayne Johnson</td>
+                    <td>08/21/2022</td>
+                    <td>1st Trimester</td>
+                    <td>09987654321</td>
+                    <td>
+                      <span class="status-span status-2">For Follow-up</span>
+                    </td>
+                    <td>
+                      <button class="btn btn-emr" aria-labelledby="EMR">
+                        <i class="fa-solid fa-chart-line"></i>
+                      </button>
+                      <button
+                        class="btn btn-basic-info"
+                        aria-labelledby="Basic Information"
+                      >
+                        <i class="fa-solid fa-folder-open"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

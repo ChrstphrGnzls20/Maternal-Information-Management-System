@@ -6,10 +6,10 @@ from datetime import datetime
 import pytz
 
 # DOCTOR MODEL FOR RETRIEVING DOCTOR'S INFORMATION
-from .Mdl_doctor import Doctor
+from .Mdl_employee import Employee
 
 # INSTANTIATE MODEL
-# employeeObj = Employee()
+doctorObj = Employee()
 
 
 class Appointment(object):
@@ -29,6 +29,10 @@ class Appointment(object):
         resultsArr = []
         results = collection.find(filter, returnFields)
         for result in results:
+            doctorID = result["doctor_id"]
+            assignedDoctor = doctorObj.retrieveEmployees(
+                filter={"_id": doctorID}, returnFields={"name": 1})[0]
+            result['doctor_name'] = assignedDoctor['name']
             resultsArr.append(result)
 
         return resultsArr
@@ -51,15 +55,25 @@ class Appointment(object):
         collection.insert_one(data)
         return data
 
-    def cancelAppointment(self, appointmentID: str) -> dict:
+    def editAppointment(self, appointmentID: str, action: str) -> dict:
         collection = mongo.db[self.dbName]
         try:
             result = collection.find_one_and_update(
-                {"_id": appointmentID}, {"$set": {"status": "cancelled"}}, return_document=ReturnDocument.AFTER)
+                {"_id": appointmentID}, {"$set": {"status": action}}, return_document=ReturnDocument.AFTER)
         except Exception:
             result = {}
         finally:
             return result
+
+    # def cancelAppointment(self, appointmentID: str) -> dict:
+    #     collection = mongo.db[self.dbName]
+    #     try:
+    #         result = collection.find_one_and_update(
+    #             {"_id": appointmentID}, {"$set": {"status": "cancelled"}}, return_document=ReturnDocument.AFTER)
+    #     except Exception:
+    #         result = {}
+    #     finally:
+    #         return result
 
 
 '''

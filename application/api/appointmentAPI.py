@@ -1,18 +1,16 @@
 # models
-from ..models.Mdl_patient import Patient
 from ..models.Mdl_appointment import Appointment
 
 from flask import Blueprint, request, make_response, jsonify
 import json
 
 # instantiate model
-patientObj = Patient()
 appointmentObj = Appointment()
 
 appointmentAPI = Blueprint('appointmentAPI', __name__)
 
 
-@appointmentAPI.route("/<string:entity>/<string:userID>/<string:appointmentID>", methods=["GET", "PATCH"])
+@appointmentAPI.route("/<string:entity>/<string:userID>/<string:appointmentID>", methods=["GET"])
 @appointmentAPI.route("/<string:entity>/<string:userID>", methods=["GET"])
 def getAppointments(entity: str, userID: str, appointmentID: str = None):
     # IF USER IS NOT PATIENT NOR DOCTOR, THROWS A 401(UNAUTHORIZED) HTTP ERROR
@@ -24,6 +22,7 @@ def getAppointments(entity: str, userID: str, appointmentID: str = None):
     if request.method == "GET":
         if not appointmentID:
             return make_response(appointmentObj.retrieveAppointments(filter={filterKey: userID}), 201)
+        # FOR RETRIEVING SPECIFIC APPOINTMENT THAT BELONGS TO A SPECIFIC USER
         return make_response(appointmentObj.retrieveAppointments(filter={filterKey: userID, "_id": appointmentID}), 201)
     elif request.method == "PATCH":
         return make_response(jsonify("HELLO"))
@@ -53,10 +52,16 @@ def addAppointment():
 # TODO: CANCEL APPOINTMENT
 
 
-@appointmentAPI.route("/<string:appointmentID>/cancel", methods=["PATCH"])
-def cancelAppointment(appointmentID):
+# @appointmentAPI.route("/<string:appointmentID>/cancel", methods=["PATCH"])
+@appointmentAPI.route("/<string:appointmentID>/<string:action>", methods=["PATCH"])
+def cancelAppointment(appointmentID: str, action: str):
     if request.method == "PATCH":
-        result = appointmentObj.cancelAppointment(appointmentID=appointmentID)
-        if result:
-            return make_response(jsonify(result), 201)
-        return make_response(jsonify(result), 404)
+        validActions = ["cancel", "confirm", "reject"]
+        if action in validActions:
+            result = appointmentObj.editAppointment(
+                appointmentID=appointmentID, action=f'{action}ed')
+            if result:
+                return make_response(jsonify(result), 201)
+            return make_response(jsonify(result), 404)
+        # THROW A 401(UNAUTHORIZED) ERROR IF THE ACTION IS NOT VALID
+        return make_response(jsonify(result), 401)

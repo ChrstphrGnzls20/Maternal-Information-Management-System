@@ -7,7 +7,7 @@ function generateAppointmentTrs(appointment) {
   if (appointment.status === "pending") {
     spanClass = "text-warning";
     dropdownItems = `<li><a class="dropdown-item" id='cancel-appointment-btn' href="" data-appointment-id=${appointment._id} data-bs-toggle="modal" data-bs-target="#cancelApptModal">Cancel Appointment</a></li>`;
-  } else if (appointment.status === "cancelled") {
+  } else if (appointment.status === "canceled") {
     spanClass = "text-danger";
     dropdownItems = `<li><a class="dropdown-item" href="#">View</a></li>`;
   } else {
@@ -16,7 +16,7 @@ function generateAppointmentTrs(appointment) {
   }
   return ` <tr style="line-height: 40px;">
     <th scope="row" class="text-center">${appointment._id}</th>
-    <td class="text-center">${appointment.doctor_id}</td>
+    <td class="text-center">${appointment.doctor_name}</td>
     <td class="text-center">${scheduleDate}</td>
     <td class="text-center">${scheduleTime}</td>
     <!-- <td>Pending</td> -->
@@ -43,6 +43,8 @@ $(function () {
   })
     .done(function (response) {
       let data = response;
+
+      console.log(data);
       let appointmentsTableBody = $("#appointments-table tbody");
 
       data.forEach(function (item) {

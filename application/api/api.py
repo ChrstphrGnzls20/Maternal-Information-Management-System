@@ -6,6 +6,7 @@ from ..api.authAPI import authAPI
 from ..api.appointmentAPI import appointmentAPI
 from ..api.employeeAPI import employeeAPI
 from ..api.clinicServiceAPI import clinicServiceAPI
+from ..api.emrAPI import emrAPI
 
 api = Blueprint("api", __name__)
 
@@ -14,6 +15,7 @@ api.register_blueprint(authAPI, url_prefix='/auth')
 api.register_blueprint(appointmentAPI, url_prefix='/appointments')
 api.register_blueprint(employeeAPI, url_prefix='/employees')
 api.register_blueprint(clinicServiceAPI, url_prefix='/clinic-services')
+api.register_blueprint(emrAPI, url_prefix='/emr')
 
 # IMPORTANT: ALL API ENDPOINTS MUST RETURN EITHER '[]' OR '[{}]'
 
