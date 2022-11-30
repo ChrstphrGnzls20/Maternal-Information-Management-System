@@ -10,22 +10,41 @@ appointmentObj = Appointment()
 appointmentAPI = Blueprint('appointmentAPI', __name__)
 
 
-@appointmentAPI.route("/<string:entity>/<string:userID>/<string:appointmentID>", methods=["GET"])
+# @appointmentAPI.route("/<string:entity>/<string:userID>/<string:appointmentID>", methods=["GET"])
 @appointmentAPI.route("/<string:entity>/<string:userID>", methods=["GET"])
 def getAppointments(entity: str, userID: str, appointmentID: str = None):
     # IF USER IS NOT PATIENT NOR DOCTOR, THROWS A 401(UNAUTHORIZED) HTTP ERROR
+    filters: dict = {}
     if entity not in ["patient", "doctor"]:
         return make_response(jsonify([]), 401)
     filterKey: str = f"{entity}_id"
+    filters[filterKey] = userID
+
+    # CHECK IF STATUS IS SPECIFIED
+    status = request.args.get("status", None)
+    if status:
+        filters['status'] = status
+
+    # CHECK FOR APPOINTMENT ID
+    appointmentID = request.args.get("search_id", None)
+    limit = int(request.args.get("limit", 0))
+    pageNumber = int(request.args.get("page", 0))
+    sortKey = request.args.get("sortKey", None)
+    sortDir = int(request.args.get("sortDirection", 1))  # ASCENDING IN DEFAULT
+
+    # CHECK IF SORT IS VALID
+    validSort = (sortKey, sortDir) if sortKey in ['_id', 'appointmentDate', 'createdDate',
+                                                  'doctor_id', 'doctor_name', 'patient_id', 'patient_name', 'status'] else None
 
     # FOR RETRIEVING ALL APPOINTMENTS THAT BELONGS TO A SPECIFIC USER
     if request.method == "GET":
         if not appointmentID:
-            return make_response(appointmentObj.retrieveAppointments(filter={filterKey: userID}), 201)
+            # IF THERE IS A VALID SORT IN THE SEARCH PARAMS
+            if validSort:
+                return make_response(appointmentObj.retrieveAppointments(filter=filters, limit=limit, pageNumber=pageNumber, sort=validSort), 201)
+            return make_response(appointmentObj.retrieveAppointments(filter=filters, limit=limit, pageNumber=pageNumber), 201)
         # FOR RETRIEVING SPECIFIC APPOINTMENT THAT BELONGS TO A SPECIFIC USER
         return make_response(appointmentObj.retrieveAppointments(filter={filterKey: userID, "_id": appointmentID}), 201)
-    elif request.method == "PATCH":
-        return make_response(jsonify("HELLO"))
 
 
 @appointmentAPI.route("/", methods=["POST"])
@@ -53,15 +72,25 @@ def addAppointment():
 
 
 # @appointmentAPI.route("/<string:appointmentID>/cancel", methods=["PATCH"])
-@appointmentAPI.route("/<string:appointmentID>/<string:action>", methods=["PATCH"])
-def cancelAppointment(appointmentID: str, action: str):
+@appointmentAPI.route("/<string:appointmentID>", methods=["PATCH"])
+def editAppointment(appointmentID: str):
     if request.method == "PATCH":
-        validActions = ["cancel", "confirm", "reject"]
-        if action in validActions:
+        data = json.loads(request.data)
+        validActions = ["canceled", "accepted", "rejected"]
+        if data['status'] in validActions:
             result = appointmentObj.editAppointment(
-                appointmentID=appointmentID, action=f'{action}ed')
+                appointmentID=appointmentID, payload=data)
             if result:
                 return make_response(jsonify(result), 201)
             return make_response(jsonify(result), 404)
         # THROW A 401(UNAUTHORIZED) ERROR IF THE ACTION IS NOT VALID
-        return make_response(jsonify(result), 401)
+        return make_response({}, 401)
+
+
+# @appointmentAPI.route("/tests")
+# def tests():
+#     additionalFilters = {}
+#     for key, value in request.args.items():
+#         additionalFilters[key] = value
+#         # print(key, value)
+#     return additionalFilters

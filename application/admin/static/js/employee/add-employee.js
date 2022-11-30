@@ -65,7 +65,7 @@ function attachValidators(formEl) {
       pwd2: {
         required: true,
         minlength: 6,
-        equalTo: "#pwd",
+        equalTo: "#password",
       },
       otp: {
         digits: true,
@@ -103,7 +103,7 @@ $(function () {
       role: "doctor",
       // status: "aActive",
       email: "example@gmail.com",
-      pwd: "123123",
+      password: "123123",
       pwd2: "123123",
     };
     $("#emp-modal :input[type!=submit]").each(function () {

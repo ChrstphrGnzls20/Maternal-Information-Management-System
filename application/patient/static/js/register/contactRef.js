@@ -40,12 +40,21 @@ registerForm.on("submit", function (evt) {
 
   console.log("FORM SUBMITTED!");
 
+  // BUILD NAME AS ONE PROPERTY
+  let name = `${basicInformation.fName} ${basicInformation.mName} ${basicInformation.lName}`;
+
+  basicInformation["name"] = name;
+  delete basicInformation["fName"];
+  delete basicInformation["mName"];
+  delete basicInformation["lName"];
+
   let registerData = {
     ...loginCredentials,
     patientHistory: {
       pastMedicalHistory: [...pastMedicalHistory],
       socialLifestyleHistory: [...socialLifestyleHistory],
     },
+    basicInformation: { ...basicInformation },
     contactReference: contactReference,
   };
   console.log(registerData);

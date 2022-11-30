@@ -16,7 +16,10 @@ patientObj = Patient()
 def addOrRetrievePatient(patientID=None):
     # FOR RETRIEVING PATIENT WITH THE GIVEN PATIENT ID
     if request.method == "GET" and patientID:
-        result = patientObj.findPatient({"_id": patientID})
+        limit = int(request.args.get("limit", 0))
+        pageNumber = int(request.args.get("page", 0))
+        result = patientObj.findPatient(
+            {"_id": patientID}, limit=limit, pageNumber=pageNumber)
         if result:
             return make_response(jsonify(result), 201)
 

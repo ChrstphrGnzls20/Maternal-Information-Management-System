@@ -25,8 +25,10 @@ def employeeCRUD(employeeID: str = None):
 
     # FOR RETRIEVING ALL EMPLOYEES (WITH OR WITHOUT ROLE)
     if request.method == "GET" and not employeeID:
+        limit = int(request.args.get("limit", 0))
+        pageNumber = int(request.args.get("page", 0))
         result = employeeObj.retrieveEmployees(
-            filter=filter, returnFields=returnFields)
+            filter=filter, returnFields=returnFields, limit=limit, pageNumber=pageNumber)
         print(result)
         return make_response(jsonify(result), 201)
 

@@ -1,0 +1,196 @@
+<link
+  rel="stylesheet"
+  href="{{url_for('doctor.static', filename='doctor-styles.css')}}"
+/>
+
+<div class="d-flex-column mt-5 py-3">
+  <div class="container-fluid">
+    <div class="row">
+      <h3 class="default-label col-12">APPOINTMENTS</h3>
+    </div>
+    <form class="my-2">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="form-group d-flex flex-row align-items-center">
+          <label for="search" class="form-label mb-0 me-3"
+            >Search Patient</label
+          >
+          <input
+            class="form-control"
+            id="search"
+            name="nameSearch"
+            aria-label="SearchEmployeeInput"
+            placeholder="Patient's name"
+          />
+        </div>
+
+        <div
+          class="form-group d-flex flex-row align-items-center justify-content-end"
+        >
+          <label for="sortSelect" class="form-label mb-0 me-3"
+            >Filter by status</label
+          >
+          <select class="form-select" id="sortSelect" aria-label="sortSelect">
+            <option selected value="">All</option>
+            <option value="completed">Completed</option>
+            <option value="pending">Pending</option>
+            <option value="canceled">Canceled</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <div class="table-responsive">
+      <table
+        class="table align-middle appointments-table"
+        style="overflow-x: auto"
+      >
+        <thead>
+          <th scope="col">APPOINTMENT ID</th>
+          <th scope="col">PATIENT NAME</th>
+          <th scope="col">SCHEDULE DATE</th>
+          <th scope="col">TIME</th>
+          <th scope="col">CREATED DATE</th>
+          <th scope="col">STATUS</th>
+        </thead>
+
+        <tbody>
+          <tr></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Reject Modal -->
+<div
+  class="modal fade"
+  id="rejectApptModal"
+  tabindex="-1"
+  aria-labelledby="rejectApptModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rejectApptModalLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <p class="mb-0">
+            Are you sure you want to <b>reject</b> this appointment?
+          </p>
+          <!-- <br /> -->
+          <span class="text-muted"
+            >Note: This will be immediately rejected.</span
+          >
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="rejectionReason" class="form-label"
+            >Reason (optional):</label
+          >
+
+          <textarea
+            class="form-control"
+            name="rejectionReason"
+            id="rejectionReason"
+            cols="30"
+            rows="5"
+          ></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          No
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          id="confirm-reject-appointment-btn"
+        >
+          Yes, reject it
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Accept Modal -->
+<div
+  class="modal fade"
+  id="acceptApptModal"
+  tabindex="-1"
+  aria-labelledby="acceptApptModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="acceptApptModalLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to <b>approve</b> this appointment?
+        <br />
+        <span class="text-muted">Note: This will immediately take effect.</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          No
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          id="confirm-accept-appointment-btn"
+        >
+          Yes, accept it
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Rejection Summary Modal -->
+<div
+  class="modal fade"
+  id="rejectSummaryModal"
+  tabindex="-1"
+  aria-labelledby="rejectSummaryModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rejectSummaryModalLabel">Information</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{url_for('doctor.static', filename='/utils.js')}}"></script>
+<script src="{{url_for('doctor.static', filename='/appointment/appointment.js')}}"></script>

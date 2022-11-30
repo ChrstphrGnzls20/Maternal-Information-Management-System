@@ -37,6 +37,8 @@ table tr {
 
 .appointment-summary-table th,
 .appointment-summary-table td,
+.appointments-table th,
+.appointments-table td,
 .patient-summary-table th,
 .patient-summary-table td {
   text-align: center;

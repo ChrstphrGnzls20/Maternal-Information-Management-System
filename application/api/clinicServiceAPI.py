@@ -28,7 +28,7 @@ def serviceCRUD(serviceID=None):
         EXPECTS AND RETURNS A DICTIONARY OF SERVICE INFORMATION INSERTED
         FORMAT:
         {
-            _id: value, 
+            _id: value,
             name: value,
             description: value,
             price: value,
@@ -43,7 +43,10 @@ def serviceCRUD(serviceID=None):
                 filter={"_id": serviceID})
         # FOR RETRIEVING ALL CLINIC SERVICE
         else:
-            result = clinicServiceObj.retrieveClinicServices()
+            limit = int(request.args.get("limit", 0))
+            pageNumber = int(request.args.get("page", 0))
+            result = clinicServiceObj.retrieveClinicServices(
+                limit=limit, pageNumber=pageNumber)
         return make_response(jsonify(result), 201)
 
     # FOR ADDING NEW CLINIC SERVICE

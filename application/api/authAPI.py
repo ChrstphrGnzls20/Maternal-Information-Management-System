@@ -41,6 +41,9 @@ def loginAttempt(entity: str):
     # FOR VERIFYING LOGIN CREDENTIALS
     if request.method == "POST":
         loginCred = json.loads(request.data)
+        print(loginCred)
+        if entity != 'patient':
+            entity = 'employee'
         loginObj = Login(entity=entity)
         result = loginObj.login(loginCred=loginCred)
         # IF THE LOGIN CREDENTIAL IS CORRECT

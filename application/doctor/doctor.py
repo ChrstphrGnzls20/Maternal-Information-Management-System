@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template
+from flask import Flask, Blueprint, render_template, session, redirect
 
 doctor = Blueprint("doctor", __name__, static_folder="static",
                    template_folder="templates")
@@ -25,9 +25,16 @@ sidebarItems = [
 
 @doctor.route("/")
 def doctorDashboard():
+    if not session.get('_id'):
+        return redirect("/login/doctor")
     return render_template("dashboard.html", contentTemplate="/home.html", sidebarItems=sidebarItems, activeSidebar="DASHBOARD")
 
 
+@doctor.route("/appointments")
+def appointments():
+    return render_template("dashboard.html", contentTemplate="/appointment.html", sidebarItems=sidebarItems, activeSidebar="APPOINTMENTS")
+
+
 @doctor.route("/patients")
-def patientsDashboard():
+def patients():
     return render_template("dashboard.html", contentTemplate="/patient.html", sidebarItems=sidebarItems, activeSidebar="PATIENTS")

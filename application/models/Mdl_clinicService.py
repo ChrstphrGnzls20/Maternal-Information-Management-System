@@ -11,6 +11,7 @@ class ClinicService(object):
     def __init__(self):
         self._id = ""
         self.dbName = "clinicService"
+        self.servicePerPage = 5  # FOR PAGINATION
 
     def generateID(self) -> dict:
         self._id = random.randrange(100000, 999999)
@@ -19,11 +20,12 @@ class ClinicService(object):
             return json.loads(json.dumps({"_id": self._id}))
         return self.generateID()
 
-    def retrieveClinicServices(self, filter: dict = {}, returnFields: dict = {}) -> list:
+    def retrieveClinicServices(self, filter: dict = {}, returnFields: dict = {}, limit: int = 0, pageNumber: int = 0) -> list:
         collection = mongo.db[self.dbName]
         resultArray = []
         # results = collection.find(filter)
-        results = collection.find(filter, returnFields)
+        results = collection.find(filter, returnFields).limit(limit).skip(
+            ((pageNumber - 1) * self.servicePerPage) if pageNumber > 0 else 0)
         for result in results:
             resultArray.append(result)
         return resultArray

@@ -9,7 +9,7 @@ class Employee(object):
     # A CLASS FOR EXECUTING EMPLOYEE'S FUNCTIONS (ADD, EDIT)
     def __init__(self) -> None:
         self.dbName = "employee"
-        pass
+        self.employeePerPage = 5  # FOR PAGINATION
 
     # GENERATE A RANDOM EMPLOYEE ID (WITH LENGTH OF 6 CHARS) IF AND ONLY IF THE EMPLOYEE IS A SECRETARY
     def generateRandomEmpID(self) -> str:
@@ -19,9 +19,10 @@ class Employee(object):
             return patientID
         return self.generateRandomEmpID()
 
-    def retrieveEmployees(self, filter: dict = {}, returnFields: dict = {}) -> dict:
+    def retrieveEmployees(self, filter: dict = {}, returnFields: dict = {}, limit: int = 0, pageNumber: int = 0) -> dict:
         collection = mongo.db[self.dbName]
-        result = collection.find(filter, returnFields)
+        result = collection.find(filter, returnFields).limit(limit).skip(
+            ((pageNumber - 1) * self.employeePerPage) if pageNumber > 0 else 0)
         employees = []
         for employee in result:
             employees.append(employee)
@@ -42,7 +43,8 @@ class Employee(object):
             return {}
         del employeeData['pwd2']
         # password hashing
-        employeeData['pwd'] = sha256_crypt.encrypt(employeeData['pwd'])
+        employeeData['password'] = sha256_crypt.encrypt(
+            employeeData['password'])
         result = collection.insert_one(employeeData)
         return employeeData
 

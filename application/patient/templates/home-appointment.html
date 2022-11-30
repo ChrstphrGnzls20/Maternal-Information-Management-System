@@ -3,12 +3,12 @@
     <h1 class="">Appointments</h1>
     <div class="add-btn-ctr">
       <span class="me-3 d-none d-md-inline">Create New Appointment</span>
-      <a
-        href="/patient/appointments/create"
+      <button
         class="btn btn-lg btn-success rounded-circle"
-        id="add-btn"
-        >+</a
+        id="new-appointment-btn"
       >
+        +
+      </button>
     </div>
   </div>
 
@@ -52,12 +52,31 @@
         ></button>
       </div>
       <div class="modal-body">
-        Are you sure you want to cancel this appointment?
-        <br />
-        <span class="text-muted"
-          >Note: This will be immediately cancelled.</span
-        >
+        <div>
+          <p class="mb-0">
+            Are you sure you want to <b>cancel</b> this appointment?
+          </p>
+          <!-- <br /> -->
+          <span class="text-muted"
+            >Note: This will be immediately cancelled.</span
+          >
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="cancelReason" class="form-label"
+            >Reason (optional):</label
+          >
+
+          <textarea
+            class="form-control"
+            name="cancelReason"
+            id="cancelReason"
+            cols="30"
+            rows="5"
+          ></textarea>
+        </div>
       </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
           No
@@ -68,6 +87,66 @@
           id="confirm-cancel-appointment-btn"
         >
           Yes, cancel it
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Existing Appointment Modal -->
+<div
+  class="modal fade"
+  id="existingAppointmentModal"
+  tabindex="-1"
+  aria-labelledby="existingAppointmentModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold">Attention</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Rejection Summary Modal -->
+<div
+  class="modal fade"
+  id="rejectSummaryModal"
+  tabindex="-1"
+  aria-labelledby="rejectSummaryModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rejectSummaryModalLabel">Information</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Close
         </button>
       </div>
     </div>

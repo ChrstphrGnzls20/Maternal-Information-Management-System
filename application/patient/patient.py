@@ -113,14 +113,14 @@ def dashboard():
 @patient.route('/appointments/')
 def homeAppointment():
     if not session.get('_id'):
-        return redirect("/patient/login")
+        return redirect("/login/patient")
     return render_template("dashboard.html", contentTemplate="/home-appointment.html",  sidebarItems=sidebarItems, activeSidebar="APPOINTMENTS")
 
 
 @patient.route('/appointments/create')
 def createAppointment():
     if not session.get('_id'):
-        return redirect("/patient/login")
+        return redirect("/login/patient")
     return render_template("dashboard.html", contentTemplate="/create-appointment.html",  sidebarItems=sidebarItems, activeSidebar="APPOINTMENTS", clinicians=appointmentObj.getAvailableClinicians())
 
 
@@ -128,6 +128,8 @@ def createAppointment():
 def homeConsultations():
     return render_template("dashboard.html", contentTemplate="/home-consultations.html",  sidebarItems=sidebarItems, activeSidebar="CONSULTATIONS")
 
+
+# TODO: CREATE MECHANISM FOR CHECKING/DELEGATING DOCTOR FOR EACH PATIENT
 
 #####################
 #

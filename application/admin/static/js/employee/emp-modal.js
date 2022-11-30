@@ -32,12 +32,12 @@ function generateModalContent(mode) {
 
     <div class="row mt-3">
         <div class="form-group col-12 col-lg-6">
-            <label for="pwd" class="form-label required">Password</label>
+            <label for="password" class="form-label required">Password</label>
             <input
             type="password"
             class="form-control"
-            id="pwd"
-            name="pwd"
+            id="password"
+            name="password"
             required
             data-summary-label="Password"
             />

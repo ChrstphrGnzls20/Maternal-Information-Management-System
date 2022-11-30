@@ -30,6 +30,7 @@ Model for patient transactions:
 class Patient(object):
     def __init__(self):
         self.OTP = 0
+        self.patientPerPage = 5  # FOR PAGINATION
 
     def getRandomPatientID(self) -> str:
         patientID = shortuuid.ShortUUID().random(length=10)
@@ -70,10 +71,11 @@ class Patient(object):
         result = collection.insert_one(data)
         return result.inserted_id
 
-    def findPatient(self, filter: dict, returnFields: dict = {}) -> dict:
+    def findPatient(self, filter: dict, returnFields: dict = {}, limit: int = 0, pageNumber: int = 0) -> list:
         collection = mongo.db.patient
         resultArray = []
-        results = collection.find(filter, returnFields)
+        results = collection.find(filter, returnFields).limit(limit).skip(
+            ((pageNumber - 1) * self.patientPerPage) if pageNumber > 0 else 0)
         for result in results:
             resultArray.append(result)
         return resultArray

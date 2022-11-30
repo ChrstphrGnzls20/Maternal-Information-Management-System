@@ -7,19 +7,24 @@ $(function () {
   });
 
   $("#confirm-cancel-appointment-btn").on("click", function () {
-    console.log(`Appointment ID: ${selectedAppointmentID}`);
-    console.log(`Patient ID: ${patientID}`);
+    let cancelReason = $("#cancelReason").val();
 
     $.ajax({
       method: "PATCH",
-      url: `${API_BASE_URL}/appointments/${selectedAppointmentID}/cancel`,
+      url: `${API_BASE_URL}/appointments/${selectedAppointmentID}`,
       contentType: "application/json",
       dataType: "json",
+      data: JSON.stringify({
+        status: "canceled",
+        additionalInfo: {
+          note: cancelReason,
+        },
+      }),
     })
       .done(function (response) {
         // IF SUCCESSFULLY CANCELLED AN APPOINTMENT, REDIRECT BACK TO APPOINTMENTS TABLE
         if (response) {
-          location.href = "/patient/appointments";
+          location.reload();
         }
       })
       .catch(function (xhr) {
