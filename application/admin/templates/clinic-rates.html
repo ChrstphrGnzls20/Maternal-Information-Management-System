@@ -86,7 +86,7 @@
       <tbody>
         <tr></tr>
 
-        {% for service in services %}
+        <!-- {% for service in services %}
         <tr>
           <td class="text-center service-id">{{service._id}}</td>
           <td class="text-center">{{service.name}}</td>
@@ -114,7 +114,7 @@
             </button>
           </td>
         </tr>
-        {% endfor %}
+        {% endfor %} -->
       </tbody>
     </table>
   </div>
@@ -263,3 +263,4 @@
 <script src="{{url_for('admin.static', filename='js/clinicService/service-modal.js')}}"></script>
 <script src="{{url_for('admin.static', filename='js/clinicService/edit-service.js')}}"></script>
 <script src="{{url_for('admin.static', filename='js/clinicService/add-service.js')}}"></script>
+<script src="{{url_for('admin.static', filename='js/clinicService/home.js')}}"></script>

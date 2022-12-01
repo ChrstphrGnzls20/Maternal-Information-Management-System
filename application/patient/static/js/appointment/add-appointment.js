@@ -1,6 +1,3 @@
-//global vars
-// let BASE_URL = "http://127.0.0.1:5000/patient/appointments/api/";
-
 let createApptModal = $("#createApptModal");
 let confirmationModal = $("#confirmation");
 let pracSelect = $("#prac-select");
@@ -32,18 +29,6 @@ $(function () {
       weekends: false,
       //better support for comp and mobile
       dateClick: function (info) {
-        // let title = prompt("Event Content:");
-        // console.log(title);
-        // if (title) {
-        //   calendar.addEvent({
-        //     id: Math.floor(Math.random() * 1000),
-        //     title: title,
-        //     start: info.dateStr,
-        //     end: info.endStr,
-        //   });
-        // }
-        //open modal
-
         // set the values
         selectedPractitioner = pracSelect.val();
         let selectedPractitionerName = $(
@@ -57,17 +42,29 @@ $(function () {
         createApptModal.modal("show");
         calendar.unselect();
       },
+      selectAllow: function (selectInfo) {
+        console.log(selectInfo);
+        return false;
+      },
 
       //events for testing
       //TODO: fetch all dates that have events from the selected practitioner and disable it
-      events: [],
-
-      // eventClick: function (info) {
-      //   var title = prompt("Edit Event Content:", info.event.title);
-      //   if (title) {
-      //     calendar.getEventById(info.event.id).setProp("title", title);
-      //   }
-      // },
+      events: [
+        // {
+        //   title: "event1",
+        //   start: "2022-12-01",
+        // },
+        // {
+        //   title: "event2",
+        //   start: "2022-01-05",
+        //   end: "2022-12-07",
+        // },
+        // {
+        //   title: "event3",
+        //   start: "2022-12-09T12:30:00",
+        //   allDay: false, // will make the time show
+        // },
+      ],
     }
   );
 
@@ -75,17 +72,20 @@ $(function () {
 
   // timepicker
   //TODO: up for changes based on client's time
-  $(".timepicker").timepicker({
-    timeFormat: "h:mm p",
-    interval: 30,
-    minTime: "8",
-    maxTime: "5:00pm",
+  $("#time").timepicker({
+    step: 30,
+    minTime: "8am",
+    maxTime: "5pm",
     defaultTime: "08",
-    startTime: "08:00",
-    dynamic: false,
-    dropdown: true,
-    scrollbar: true,
-    zindex: 9999999,
+    forceRoundTime: true,
+    timeFormat: "h:i A",
+    disableTimeRanges: [["11:00", "12:00"], []],
+    scrollbar: false,
+    defaultValue: "8am",
+  });
+
+  $("#time").on("keypress", function (e) {
+    e.preventDefault();
   });
 
   // listen when practitioner changes

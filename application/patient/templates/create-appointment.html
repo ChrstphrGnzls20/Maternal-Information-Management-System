@@ -1,3 +1,11 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.14.0/jquery.timepicker.min.css"
+  integrity="sha512-WlaNl0+Upj44uL9cq9cgIWSobsjEOD1H7GK1Ny1gmwl43sO0QAUxVpvX2x+5iQz/C60J3+bM7V07aC/CNWt/Yw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+
 <div class="full-page d-flex flex-column mt-3">
   <h1 class="mb-3">Create New Appointment</h1>
   <form action="">
@@ -66,8 +74,13 @@
           <!-- time -->
           <div class="row">
             <div class="col form-group">
-              <label for="time" class="form-label">Time</label>
-              <input type="text" class="form-control timepicker" id="time" />
+              <label for="time" class="form-label required">Time</label>
+              <input
+                type="text"
+                class="form-control timepicker"
+                id="time"
+                required
+              />
             </div>
           </div>
         </div>
@@ -156,4 +169,11 @@
 <script
   type="module"
   src="{{ url_for('patient.static', filename='js/appointment/add-appointment.js') }}"
+></script>
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.14.0/jquery.timepicker.min.js"
+  integrity="sha512-s0SB4i9ezk9SRyV1Glrj/w5xS5ExSxXiN44fQeV9GYOtExbVWnC+mUsUyZdIYv6qXL0xe1qvpe0h1kk56gsgaA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
 ></script>

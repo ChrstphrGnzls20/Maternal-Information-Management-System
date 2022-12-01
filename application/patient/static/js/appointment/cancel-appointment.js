@@ -1,9 +1,13 @@
 $(function () {
   let selectedAppointmentID = "";
-  let patientID = localStorage.getItem("id");
 
   $("#appointments-table").on("click", "#cancel-appointment-btn", function () {
     selectedAppointmentID = $(this).attr("data-appointment-id");
+    let cancellationsAvailable =
+      3 - localStorage.getItem("cancellationMadeToday");
+    $(".cancellation-number").html(
+      `Are you sure you want to <b>cancel</b> this appointment? <br/> You only have <b>${cancellationsAvailable} cancellation/s </b> that can be made today.`
+    );
   });
 
   $("#confirm-cancel-appointment-btn").on("click", function () {

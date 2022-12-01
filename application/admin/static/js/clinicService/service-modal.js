@@ -4,6 +4,27 @@ let serviceModalDialog = $("#service-modal > .modal-dialog");
 let summaryModal = $("#summary-modal");
 let summaryModalDialog = $("#summary-modal > .modal-dialog");
 
+function generateServiceRow(service) {
+  const formattedPrice = new Intl.NumberFormat("fil-PH", {
+    style: "currency",
+    currency: "PHP",
+  }).format(service.price);
+  return `
+    <tr>
+    <td class="text-center service-id">${service._id}</td>
+    <td class="text-center">${service.name}</td>
+    <td class="text-center">${service.description}</td>
+    <td class="text-center">${formattedPrice}</td>
+    <td class="text-center">${service.status}</td>
+    <td class="text-center"><button type="button" class="btn btn btn-primary edit-service-btn"> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                </svg></button></td>
+    </tr>
+    `;
+}
+
 function generateModalContent(mode) {
   // CLEAR MODAL FIRST BEFORE APPENDING
   serviceModalDialog.empty();
@@ -16,156 +37,6 @@ function generateModalContent(mode) {
     header = `<h2 class="mb-0 ms-2">Edit clinic service</h2>`;
     formId = "edit-service-form";
   }
-  //   return `
-  //     <form id="${formId}">
-  //     <div class="modal-content">
-  //     <div class="modal-header d-flex justify-content-center">
-  //         ${header}
-  //         <button
-  //         type="button"
-  //         class="btn-close"
-  //         data-bs-dismiss="modal"
-  //         ></button>
-  //     </div>
-  //     <div class="modal-body">
-  //         <div class="justify-content-center p-2">
-  //         <div class="add-emp-modal-container bg-white m-2 p-2">
-  //             <div class="row">
-  //             <div class="form-group">
-  //                 <label for="license-num" class="form-label"
-  //                 >License Number</label
-  //                 >
-  //                 <input
-  //                 type="text"
-  //                 class="form-control"
-  //                 id="license-num"
-  //                 name="licenseID"
-  //                 maxlength="18"
-  //                 data-summary-label="License Number"
-  //                 required
-  //                 />
-  //             </div>
-  //             </div>
-
-  //             <div class="row">
-  //             <div class="form-group mt-3">
-  //                 <label for="fname" class="form-label">First Name</label>
-  //                 <input
-  //                 type="text"
-  //                 class="form-control"
-  //                 id="name"
-  //                 name="fName"
-  //                 data-summary-label="First Name"
-  //                 required
-  //                 />
-  //             </div>
-
-  //             <div class="form-group mt-3">
-  //                 <label for="mname" class="form-label">Middle Initial</label>
-  //                 <input
-  //                 type="text"
-  //                 class="form-control"
-  //                 id="mname"
-  //                 name="mName"
-  //                 data-summary-label="Middle Name"
-  //                 required
-  //                 />
-  //             </div>
-
-  //             <div class="form-group mt-3">
-  //                 <label for="lname" class="form-label">Last Name</label>
-  //                 <input
-  //                 type="text"
-  //                 class="form-control"
-  //                 id="lname"
-  //                 name="lName"
-  //                 data-summary-label="Last Name"
-  //                 required
-  //                 />
-  //             </div>
-  //             </div>
-
-  //             <div class="row">
-  //             <div class="form-group col-12 col-lg-6 mt-3">
-  //                 <label for="pic" class="form-label">Picture</label>
-  //                 <div class="input-group mb-3">
-  //                 <input
-  //                     type="file"
-  //                     class="form-control pic"
-  //                     name="picture"
-  //                     id="pic"
-  //                     data-summary-label="Picture"
-  //                     aria-describedby="emp-pic-file-inp"
-  //                 />
-  //                 </div>
-  //                 <label
-  //                 class="visually-hidden pic-error error"
-  //                 for="emp-pic-file-inp"
-  //                 ></label>
-  //             </div>
-
-  //             <div class="form-group col-12 col-lg-6 mt-0 mt-lg-3">
-  //                 <label for="role" class="form-label">Role</label>
-  //                 <select
-  //                 class="form-select"
-  //                 name="role"
-  //                 id="role"
-  //                 data-summary-label="Role"
-  //                 required
-  //                 >
-  //                 <option value="Clinician">Clinician</option>
-  //                 <option value="Secretary">Secretary</option>
-  //                 </select>
-  //             </div>
-  //             </div>
-
-  //             <div class="row mt-3">
-  //             <div class="form-group col-12 col-lg-6">
-  //                 <label for="status" class="form-label">Status</label>
-  //                 <select
-  //                 class="form-select"
-  //                 name="status"
-  //                 id="status"
-  //                 data-summary-label="Status"
-  //                 >
-  //                 <option selected value="Active">Active</option>
-  //                 <option value="Inactive">Inactive</option>
-  //                 </select>
-  //             </div>
-
-  //             <div class="form-group col-12 col-lg-6 mt-3 mt-lg-0">
-  //                 <label for="mobile" class="form-label"
-  //                 >Contact Number</label
-  //                 >
-  //                 <input
-  //                 type="text"
-  //                 name="mobile"
-  //                 class="form-control"
-  //                 id="mobile"
-  //                 maxlength="11"
-  //                 data-summary-label="Contact Number"
-  //                 required
-  //                 />
-  //             </div>
-  //             </div>
-
-  //             ${loginCredential}
-  //         </div>
-  //         </div>
-  //     </div>
-
-  //     <div class="modal-footer">
-  //         <button
-  //         type="button"
-  //         class="btn btn-danger"
-  //         data-bs-dismiss="modal"
-  //         >
-  //         CANCEL
-  //         </button>
-  //         <input type="submit" value="NEXT" class="btn btn-success ms-2" />
-  //     </div>
-  //     </div>
-  // </form>`;
 
   return `
     <form id="${formId}">
@@ -197,7 +68,7 @@ function generateModalContent(mode) {
 
             <div class="row">
               <div class="form-group mt-3">
-                <label for="serviceName" class="form-label">Service Name</label>
+                <label for="serviceName" class="form-label required">Service Name</label>
                 <input
                   type="text"
                   class="form-control"
@@ -211,7 +82,7 @@ function generateModalContent(mode) {
 
             <div class="row">
                 <div class="form-group mt-3">
-                    <label for="serviceDescription" class="form-label"
+                    <label for="serviceDescription" class="form-label required"
                     >Description</label
                     >
                     <input
@@ -227,7 +98,7 @@ function generateModalContent(mode) {
               
             <div class="row">
               <div class="form-group mt-3">
-                <label for="servicePrice" class="form-label">Price</label>
+                <label for="servicePrice" class="form-label required">Price</label>
                 <input
                   type="text"
                   class="form-control"
@@ -241,12 +112,13 @@ function generateModalContent(mode) {
 
             <div class="row mt-3">
               <div class="form-group">
-                <label for="serviceStatus" class="form-label">Status</label>
+                <label for="serviceStatus" class="form-label required">Status</label>
                 <select
                   class="form-select"
                   name="status"
                   id="serviceStatus"
                   data-summary-label="Status"
+                  required
                 >
                   <option selected value="Active">Active</option>
                   <option value="Inactive">Inactive</option>

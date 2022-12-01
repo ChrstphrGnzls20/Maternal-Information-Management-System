@@ -29,7 +29,18 @@ function generateAppointmentTrs(appointment) {
       </ul>
     </div>`;
   } else {
-    statusEl = `<p class="fw-bold text-capitalize text-success me-3 mb-0">${appointment.status}</p>`;
+    statusEl = `
+    <div class="btn-group">
+      <span type="button" class="border-0 p-0 fw-bold btn btn-white dropdown-toggle text-capitalize text-success" data-bs-toggle="dropdown" aria-expanded="false">
+        ${appointment.status}
+      </span>
+      <ul class="dropdown-menu">
+        <li>
+          <a class="dropdown-item" id='cancel-appointment-btn' href="" data-appointment-id=${appointment._id} data-bs-toggle="modal" data-bs-target="#cancelApptModal">Cancel Appointment</a>
+        </li>
+      </ul>
+    </div>`;
+    // statusEl = `<p class="fw-bold text-capitalize text-success me-3 mb-0">${appointment.status}</p>`;
   }
   return ` <tr style="line-height: 40px;">
     <th scope="row" class="text-center">${appointment._id}</th>
@@ -79,6 +90,21 @@ function checkForExistingAppointment(patientID) {
   });
 }
 
+// TODO: revise accordingly to provide a friendlier UX
+function checkForRecentCancellation(appointments) {
+  let hasRecentCancellation = 0;
+  appointments.forEach(function (item) {
+    if (item.status === "canceled") {
+      let canceledDate = moment(item.additionalInfo.modifiedDate);
+      let dateDiff = parseInt(moment().diff(canceledDate, "days"));
+      if (dateDiff === 0) {
+        hasRecentCancellation++;
+      }
+    }
+  });
+  return hasRecentCancellation;
+}
+
 $(function () {
   let patientID = localStorage.getItem("id");
   let searchParams = $.param({ sortKey: "createdDate", sortDirection: -1 }); // TO SORT THE TABLE BY LATEST CREATED DATE
@@ -101,6 +127,9 @@ $(function () {
         let tr = generateAppointmentTrs(item);
         appointmentsTableBody.append(tr);
       });
+
+      let numberOfCancellations = checkForRecentCancellation(appointments);
+      localStorage.setItem("cancellationMadeToday", numberOfCancellations);
     })
     .catch(function (xhr) {
       console.log(xhr);
@@ -109,8 +138,19 @@ $(function () {
   // WHEN THE USER TRIES TO CREATE A NEW APPOINTMENT
   $("#new-appointment-btn").on("click", function () {
     checkForExistingAppointment(patientID).then(function (response) {
-      console.log(response);
       if (!response.length) {
+        // LIMIT THE CANCELLED APPOINTMENT TO 3
+        if (localStorage.getItem("cancellationMadeToday") > 2) {
+          let modal = $("#existingAppointmentModal");
+          let modalBody = $("#existingAppointmentModal .modal-body");
+          modalBody.empty();
+          modalBody.append(`
+          <p>You have canceled several appointments today. </p> 
+          <p>Please try again tomorrow.</p>`);
+          $(modal).modal("show");
+          return;
+        }
+        // IF NO RECENT CANCELLATION AND NO PENDING APPOINTMENT, REDIRECT TO CREATE APPOINTMENT PAGE
         location.href = "/patient/appointments/create";
       } else {
         let data = response[0];

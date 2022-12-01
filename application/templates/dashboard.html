@@ -1,31 +1,37 @@
-{% extends "base.html" %}
-
-{% block additionalHeaders %}
+{% extends "base.html" %} {% block additionalHeaders %}
 <!-- Full Calendar -->
 <!-- <link href='{{url_for('static', filename='/node_modules/@fullcalendar/common/main.css')}}' rel='stylesheet' /> -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.css">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.css"
+/>
+
+<!-- <link
+  rel="stylesheet"
+  href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css"
+/> -->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.js"></script>
 
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 <div class="dashboard-body">
-    <div class="d-flex" id="wrapper">
-        <!-- Sidebar-->
-        <div class="bg-custom-primary" id="sidebar-wrapper">
-            <div class="sidebar-heading">MCIMS</div>
-            <div class="list-group list-group-flush bg-custom-primary">
-                {% for item in sidebarItems %}
-                <a class="list-group-item list-group-item-action p-3 {{'active' if activeSidebar == item.label}}" href={{item.route}}>
-                    <span class="">
-                        <i class="{{item.icon}} me-3" ></i>
-                    </span>
-                    {{item.label}}
-                </a>
-                
-                {% endfor %}
-                <!-- <a class="list-group-item list-group-item-action p-3" href="#">
+  <div class="d-flex" id="wrapper">
+    <!-- Sidebar-->
+    <div class="bg-custom-primary" id="sidebar-wrapper">
+      <div class="sidebar-heading">MCIMS</div>
+      <div class="list-group list-group-flush bg-custom-primary">
+        {% for item in sidebarItems %}
+        <a
+          class="list-group-item list-group-item-action p-3 {{'active' if activeSidebar == item.label}}"
+          href="{{item.route}}"
+        >
+          <span class="">
+            <i class="{{item.icon}} me-3"></i>
+          </span>
+          {{item.label}}
+        </a>
+
+        {% endfor %}
+        <!-- <a class="list-group-item list-group-item-action p-3" href="#">
                     <span class="">
                         <i class="bi bi-house-door me-3" ></i>
                     </span>
@@ -38,37 +44,52 @@
                     </span>
                     APPOINTMENT
                 </a>  -->
-            </div>
-        </div>
-        <!-- Page content wrapper-->
-        <div id="page-content-wrapper">
-            <!-- Top navigation-->
-            <nav class="navbar navbar-expand bg-custom-secondary border-bottom">
-                <div class="container-fluid" >
-                    <!-- sidebar toggler -->
-                    <button class="btn ms-2 bg-custom-secondary border border-white" id="sidebarToggle">
-                        <i class="bi bi-list text-white"></i>
-                    </button>
-                    <!-- sidebar toggler end -->
+      </div>
+    </div>
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper">
+      <!-- Top navigation-->
+      <nav class="navbar navbar-expand bg-custom-secondary border-bottom">
+        <div class="container-fluid">
+          <!-- sidebar toggler -->
+          <button
+            class="btn ms-2 bg-custom-secondary border border-white"
+            id="sidebarToggle"
+          >
+            <i class="bi bi-list text-white"></i>
+          </button>
+          <!-- sidebar toggler end -->
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                            <li class="nav-item dropdown ">
-                                <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#!">Settings</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/logout">Logout</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle text-white"
+                  id="navbarDropdown"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  >Account</a
+                >
+                <div
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="navbarDropdown"
+                >
+                  <a class="dropdown-item" href="#!">Settings</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/logout">Logout</a>
                 </div>
-            </nav>
-    
-            <!-- Page content-->
-            <div class="container-fluid bg-light full-page ">
-                <!-- <h1 class="mt-4">Simple Sidebar</h1>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Page content-->
+      <div class="container-fluid bg-light full-page">
+        <!-- <h1 class="mt-4">Simple Sidebar</h1>
                 <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
                 <p>
                     Make sure to keep all page content within the
@@ -77,30 +98,26 @@
                     <code>#sidebarToggle</code>
                     ID which will toggle the menu when clicked.
                 </p> -->
-            {% with content=content %}
-                {% include contentTemplate %}
-            {% endwith %}
-            </div>
-        </div>
+        {% with content=content %} {% include contentTemplate %} {% endwith %}
+      </div>
     </div>
+  </div>
 </div>
 
-
 <script>
-    $("#sidebarToggle").on('click', function(){
-        $(".dashboard-body").toggleClass("sb-sidenav-toggled");
-    })
+  $("#sidebarToggle").on("click", function () {
+    $(".dashboard-body").toggleClass("sb-sidenav-toggled");
+  });
 
-    $(window).resize(function(){
-        if($(window).width() < 576){
-        $(".dashboard-body").removeClass("sb-sidenav-toggled");
+  $(window).resize(function () {
+    if ($(window).width() < 576) {
+      $(".dashboard-body").removeClass("sb-sidenav-toggled");
     }
-    })
-    
+  });
 </script>
 
 <!-- Moment.js -->
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 <!-- Jquery timepicker -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
 {% endblock %}
