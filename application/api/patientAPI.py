@@ -34,4 +34,15 @@ def addOrRetrievePatient(patientID=None):
             return make_response(jsonify(result), 201)
     return make_response(jsonify({"errorMsg": "There was an error processing your request. Please try again later."}, 500))
 
+
+@patientAPI.route("/<string:patientID>/pmh", methods=["GET"])
+def retrievePastMedicalHistory(patientID):
+    if request.method == "GET":
+        result = patientObj.findPatient(filter={"_id": patientID}, returnFields={
+                                        "_id": 0, "patientHistory.pastMedicalHistory": 1})
+        if result:
+            return make_response(jsonify(result), 201)
+    return make_response(jsonify({"errorMsg": "There was an error processing your request. Please try again later."}, 500))
+
+
 # TODO: BUILD ENDPOINT FOR EDITING PATIENT FOR FUTURE USE

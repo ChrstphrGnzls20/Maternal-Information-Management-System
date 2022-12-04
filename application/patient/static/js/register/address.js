@@ -23,7 +23,7 @@ function fetchList(element, code, name, type, value = null, toGet = null) {
     // dataType: "text",
     success: function (response) {
       let data = JSON.parse(response);
-
+      console.log(data);
       element.empty();
       createOptions(element, data, code, name);
     },

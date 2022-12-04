@@ -74,6 +74,8 @@ $(function () {
     ".view-rejection-details",
     function () {
       selectedAppointmentID = $(this).attr("data-appointment-id");
+      let status = $(this).attr("data-appointment-status");
+
       let selectedAppointment = {};
       appointments.forEach(function (item) {
         if (item._id === selectedAppointmentID) {
@@ -81,7 +83,7 @@ $(function () {
         }
       });
 
-      viewAppointmentSummaryModal(selectedAppointment);
+      viewAppointmentSummaryModal(selectedAppointment, status);
     }
   );
 });

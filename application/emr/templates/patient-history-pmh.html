@@ -24,7 +24,12 @@
 
   <div>
     <label for="other">Other</label>
-    <textarea class="form-control" id="otherPMDisease" name="otherPMDisease" rows="1"></textarea>
+    <textarea
+      class="form-control"
+      id="otherPMDisease"
+      name="otherPMDisease"
+      rows="1"
+    ></textarea>
   </div>
 
   <!-- <script>
@@ -128,63 +133,66 @@
   });
 </script>
 
-
 <script>
-              
-  $(".pastMedicalHistory").on("submit", function(){
-    let pmHistoryVal = { }
-    
-    let pmcv19 = $("input[name='cv19']:checked");
-    let pmarthritis = $("input[name='arthritis']:checked");
-    let pmdiabetes = $("input[name='diabetes']:checked");
-    let pmhighBloodPressure = $("input[name='highBloodPressure']:checked");
-    let pmheartDisease = $("input[name='heartDisease']:checked");
-    let pmthyroidDisease = $("input[name='thyroidDisease']:checked");
-    let pmeatingDisorder = $("input[name='eatingDisorder']:checked");
-    let pmbloodTransfusions = $("input[name='bloodTransfusions']:checked");
-    let pmhiv = $("input[name='hiv']:checked");
-    let pmbronchitis = $("input[name='bronchitis']:checked");
-    let pmemphysema = $("input[name='emphysema']:checked");
-    let pmasthma = $("input[name='asthma']:checked");
-    let pmepilepsy = $("input[name='epilepsy']:checked");
-    let pmliverDiseases = $("input[name='liverDiseases']:checked");
-    let pmhepatitis = $("input[name='hepatitis']:checked");
-    let pmgallstones = $("input[name='gallstones']:checked");
-    let pmkidneyDisease = $("input[name='kidneyDisease']:checked");
-    let pmovarianCancer = $("input[name='ovarianCancer']:checked");
-    let pmendometrialCancer = $("input[name='endometrialCancer']:checked");
-    let pmbreastCancer = $("input[name='breastCancer']:checked");
-    let pmcolonCancer = $("input[name='colonCancer']:checked");
-    let pmotherPMDisease = $("#otherPMDisease");
+  $(function () {
+    // IMPORTANT: GET PAST MEDICAL HISTORY OF PATIENT FROM THE BACKEND
 
-    pmHistoryVal[pmcv19.attr("name")] = (pmcv19.val());
-    pmHistoryVal[pmarthritis.attr("name")] = (pmarthritis.val());
-    pmHistoryVal[pmdiabetes.attr("name")] = (pmdiabetes.val());
-    pmHistoryVal[pmhighBloodPressure.attr("name")] = (pmhighBloodPressure.val());
-    pmHistoryVal[pmheartDisease.attr("name")] = (pmheartDisease.val());
-    pmHistoryVal[pmthyroidDisease.attr("name")] = (pmthyroidDisease.val());
-    pmHistoryVal[pmeatingDisorder.attr("name")] = (pmeatingDisorder.val());
-    pmHistoryVal[pmbloodTransfusions.attr("name")] = (pmbloodTransfusions.val());
-    pmHistoryVal[pmhiv.attr("name")] = (pmhiv.val());
-    pmHistoryVal[pmbronchitis.attr("name")] = (pmbronchitis.val());
-    pmHistoryVal[pmemphysema.attr("name")] = (pmemphysema.val());
-    pmHistoryVal[pmasthma.attr("name")] = (pmasthma.val());
-    pmHistoryVal[pmepilepsy.attr("name")] = (pmepilepsy.val());
-    pmHistoryVal[pmliverDiseases.attr("name")] = (pmliverDiseases.val());
-    pmHistoryVal[pmhepatitis.attr("name")] = (pmhepatitis.val());
-    pmHistoryVal[pmgallstones.attr("name")] = (pmgallstones.val());
-    pmHistoryVal[pmkidneyDisease.attr("name")] = (pmkidneyDisease.val());
-    pmHistoryVal[pmovarianCancer.attr("name")] = (pmovarianCancer.val());
-    pmHistoryVal[pmendometrialCancer.attr("name")] = (pmendometrialCancer.val());
-    pmHistoryVal[pmbreastCancer.attr("name")] = (pmbreastCancer.val());
-    pmHistoryVal[pmcolonCancer.attr("name")] = (pmcolonCancer.val());
-    pmHistoryVal[pmotherPMDisease.attr("name")] = (pmotherPMDisease.val());
-  
-    console.log(pmHistoryVal);
+    $(".pastMedicalHistory").on("submit", function () {
+      let pmHistoryVal = {};
+
+      let pmcv19 = $("input[name='cv19']:checked");
+      let pmarthritis = $("input[name='arthritis']:checked");
+      let pmdiabetes = $("input[name='diabetes']:checked");
+      let pmhighBloodPressure = $("input[name='highBloodPressure']:checked");
+      let pmheartDisease = $("input[name='heartDisease']:checked");
+      let pmthyroidDisease = $("input[name='thyroidDisease']:checked");
+      let pmeatingDisorder = $("input[name='eatingDisorder']:checked");
+      let pmbloodTransfusions = $("input[name='bloodTransfusions']:checked");
+      let pmhiv = $("input[name='hiv']:checked");
+      let pmbronchitis = $("input[name='bronchitis']:checked");
+      let pmemphysema = $("input[name='emphysema']:checked");
+      let pmasthma = $("input[name='asthma']:checked");
+      let pmepilepsy = $("input[name='epilepsy']:checked");
+      let pmliverDiseases = $("input[name='liverDiseases']:checked");
+      let pmhepatitis = $("input[name='hepatitis']:checked");
+      let pmgallstones = $("input[name='gallstones']:checked");
+      let pmkidneyDisease = $("input[name='kidneyDisease']:checked");
+      let pmovarianCancer = $("input[name='ovarianCancer']:checked");
+      let pmendometrialCancer = $("input[name='endometrialCancer']:checked");
+      let pmbreastCancer = $("input[name='breastCancer']:checked");
+      let pmcolonCancer = $("input[name='colonCancer']:checked");
+      let pmotherPMDisease = $("#otherPMDisease");
+
+      pmHistoryVal[pmcv19.attr("name")] = pmcv19.val();
+      pmHistoryVal[pmarthritis.attr("name")] = pmarthritis.val();
+      pmHistoryVal[pmdiabetes.attr("name")] = pmdiabetes.val();
+      pmHistoryVal[pmhighBloodPressure.attr("name")] =
+        pmhighBloodPressure.val();
+      pmHistoryVal[pmheartDisease.attr("name")] = pmheartDisease.val();
+      pmHistoryVal[pmthyroidDisease.attr("name")] = pmthyroidDisease.val();
+      pmHistoryVal[pmeatingDisorder.attr("name")] = pmeatingDisorder.val();
+      pmHistoryVal[pmbloodTransfusions.attr("name")] =
+        pmbloodTransfusions.val();
+      pmHistoryVal[pmhiv.attr("name")] = pmhiv.val();
+      pmHistoryVal[pmbronchitis.attr("name")] = pmbronchitis.val();
+      pmHistoryVal[pmemphysema.attr("name")] = pmemphysema.val();
+      pmHistoryVal[pmasthma.attr("name")] = pmasthma.val();
+      pmHistoryVal[pmepilepsy.attr("name")] = pmepilepsy.val();
+      pmHistoryVal[pmliverDiseases.attr("name")] = pmliverDiseases.val();
+      pmHistoryVal[pmhepatitis.attr("name")] = pmhepatitis.val();
+      pmHistoryVal[pmgallstones.attr("name")] = pmgallstones.val();
+      pmHistoryVal[pmkidneyDisease.attr("name")] = pmkidneyDisease.val();
+      pmHistoryVal[pmovarianCancer.attr("name")] = pmovarianCancer.val();
+      pmHistoryVal[pmendometrialCancer.attr("name")] =
+        pmendometrialCancer.val();
+      pmHistoryVal[pmbreastCancer.attr("name")] = pmbreastCancer.val();
+      pmHistoryVal[pmcolonCancer.attr("name")] = pmcolonCancer.val();
+      pmHistoryVal[pmotherPMDisease.attr("name")] = pmotherPMDisease.val();
+
+      console.log(pmHistoryVal);
+    });
   });
 </script>
-
-
 
 <!-- <script>
   let PastMedicalHistory = { }

@@ -29,7 +29,7 @@
             type="radio"
             id="ulcerationNo"
             name="internalUlceration"
-            value="No"
+            value="no"
             checked
             aria-label="UlcerationNo"
           />
@@ -73,7 +73,7 @@
             type="radio"
             id="condylomataNo"
             name="internalCondylomata"
-            value="No"
+            value="no"
             checked
             aria-label="condylomataNo"
           />
@@ -118,7 +118,7 @@
             id="varicesNo"
             name="internalVarices"
             checked
-            value="No"
+            value="no"
             aria-label="varicesNo"
           />
         </td>
@@ -162,7 +162,7 @@
             id="periScarNo"
             name="internalPeriScar"
             checked
-            value="No"
+            value="no"
             aria-label="periScarNo"
           />
         </td>
@@ -206,7 +206,7 @@
             id="rigidityNo"
             name="internalRigidity"
             checked
-            value="No"
+            value="no"
             aria-label="rigidityNo"
           />
         </td>
@@ -279,7 +279,7 @@
             type="radio"
             id="VaginaDiscNo"
             name="vaginaDisc"
-            value="No"
+            value="no"
             checked
             aria-label="VaginaDiscNo"
           />
@@ -294,7 +294,7 @@
             type="radio"
             id="fullRectumYes"
             name="fullRectum"
-            value="Yes"
+            value="yes"
             aria-label="fullRectumYes"
           />
         </td>
@@ -304,7 +304,7 @@
             type="radio"
             id="fullRectumNo"
             name="fullRectum"
-            value="No"
+            value="no"
             checked
             aria-label="fullRectumNo"
           />
@@ -319,7 +319,7 @@
             type="radio"
             id="vaginalStrictYes"
             name="vaginalStrict"
-            value="Yes"
+            value="yes"
             aria-label="vaginalStrictYes"
           />
         </td>
@@ -329,7 +329,7 @@
             type="radio"
             id="vaginalStrictNo"
             name="vaginalStrict"
-            value="No"
+            value="no"
             checked
             aria-label="vaginalStrictNo"
           />
@@ -344,7 +344,7 @@
             type="radio"
             id="umbprolapYes"
             name="umbProlapse"
-            value="Yes"
+            value="yes"
             aria-label="umbprolapYes"
           />
         </td>
@@ -354,7 +354,7 @@
             type="radio"
             id="umbprolapNo"
             name="umbProlapse"
-            value="No"
+            value="no"
             checked
             aria-label="umbprolapNo"
           />
@@ -522,70 +522,168 @@
 </form>
 
 <script>
-  $("#vulva-tests-table input[type=radio]").on("change", function () {
-    let value = $(this).val();
-    let locationSelect = $(this).parent().siblings().find("select");
+  $(function () {
+    let existingData = getDataFromLocalStorage(
+      (objName = "vulva-vagina-cervix"),
+      (parentObjName = "internalExamination"),
+      (grandParentObjName = "physicalExamination")
+    );
 
-    if (value === "yes") {
-      locationSelect.prop("disabled", false);
-      return;
+    console.log(existingData);
+
+    if (existingData) {
+      let { Vulva, Vagina, Cervix } = existingData;
+      // SET VALUES OF VULVA
+      // Vulva.forEach((item) => {
+      //   Object.entries(item).forEach(([key, value]) => {
+      //     console.log(key, value);
+      //     if (key === "vulvaNotes") {
+      //       $("#vulvaNotes").val(value);
+      //       return;
+      //     }
+
+      //     if (key !== "location") {
+      //       let radios = $(`input[name=${key}]`);
+      //       $(radios).each(function () {
+      //         let radioValueProp = $(this).prop("value");
+      //         if (radioValueProp === value) {
+      //           $(this).prop("checked", true);
+      //         }
+      //       });
+      //       return;
+      //     }
+      //     let locationValue = value;
+      //     let locationSelect = $(this).parent().siblings().find("select");
+      //     console.log(locationSelect);
+      //     locationSelect.val(locationValue);
+      //     locationSelect.prop("disabled", false);
+      //   });
+      // });
+      Object.entries(Vulva).forEach((key, item) => {
+        let data = key[1];
+        let dataKeys = Object.keys(data);
+
+        if (dataKeys[0] === "vulvaNotes") {
+          $("#vulvaNotes").val(data[dataKeys[0]]);
+          return;
+        }
+
+        let radios = $(`input[name=${dataKeys[0]}]`);
+        $(radios).each(function () {
+          let value = $(this).prop("value");
+          if (value === data[dataKeys[0]]) {
+            $(this).prop("checked", true);
+
+            // IF IT HAS LOCATION
+            if (data[dataKeys[0]] === "yes") {
+              let locationValue = data[dataKeys[1]];
+              let locationSelect = $(this).parent().siblings().find("select");
+              locationSelect.val(locationValue);
+              locationSelect.prop("disabled", false);
+            }
+          }
+        });
+      });
+      // SET VALUES OF VAGINA
+      Object.entries(Vagina).forEach(([key, value]) => {
+        if (key === "vaginaNotes") {
+          $("#vaginaNotes").val(value);
+          return;
+        }
+
+        let radios = $(`input[name=${key}`);
+
+        $(radios).each(function () {
+          let radioValue = $(this).prop("value");
+          if (radioValue === value) {
+            $(this).prop("checked", true);
+          }
+        });
+      });
+
+      // SET VALUES OF CERVIX
+      Object.entries(Cervix).forEach(([key, value]) => {
+        if (key === "cervixNotes") {
+          $("#cervixNotes").val(value);
+          return;
+        }
+        $(`input[name=${key}]`).val(value);
+      });
     }
-    locationSelect.prop("disabled", true);
-  });
 
-  $(".IntExam").on("submit", function () {
-    // VULVA
-    let Vulva = [];
-    let checkedRadios = $("#vulva-tests-table input[type=radio]:checked");
-
-    checkedRadios.each(function () {
-      let tempObject = {};
-      let name = $(this).attr("name");
+    $("#vulva-tests-table input[type=radio]").on("change", function () {
       let value = $(this).val();
-
-      tempObject[name] = value;
-
-      // internalUlceration: yes|no
+      let locationSelect = $(this).parent().siblings().find("select");
 
       if (value === "yes") {
-        let locationSelect = $(this).parent().siblings().find("select");
-
-        tempObject["location"] = locationSelect.val();
+        locationSelect.prop("disabled", false);
+        return;
       }
-      Vulva.push(tempObject);
+      locationSelect.prop("disabled", true);
     });
 
-    let vulvaNotes = $("#vulvaNotes").val();
-    Vulva.push({ notes: vulvaNotes });
+    $(".IntExam").on("submit", function () {
+      // VULVA
+      let Vulva = [];
+      let checkedRadios = $("#vulva-tests-table input[type=radio]:checked");
 
-    // VAGINA
-    let Vagina = [];
-    checkedRadios = $("#vagina-tests-table input[type=radio]:checked");
+      checkedRadios.each(function () {
+        let tempObject = {};
+        let name = $(this).attr("name");
+        let value = $(this).val();
 
-    checkedRadios.each(function () {
-      let nameProp = $(this).attr("name");
-      let value = $(this).val();
+        tempObject[name] = value;
 
-      Vagina.push({ [nameProp]: value });
+        if (value === "yes") {
+          let locationSelect = $(this).parent().siblings().find("select");
+
+          tempObject["location"] = locationSelect.val();
+        }
+        Vulva.push(tempObject);
+      });
+
+      let vulvaNotes = $("#vulvaNotes").val();
+      Vulva.push({ vulvaNotes });
+
+      // VAGINA
+      let Vagina = {};
+      checkedRadios = $("#vagina-tests-table input[type=radio]:checked");
+
+      checkedRadios.each(function () {
+        let nameProp = $(this).attr("name");
+        let value = $(this).val();
+
+        Vagina[nameProp] = value;
+      });
+
+      let vaginaNotes = $("#vaginaNotes").val();
+      Vagina["vaginaNotes"] = vaginaNotes;
+
+      // CERVIX
+      let cervixLength = $("#cervixLength").val();
+      let cervixDilation = $("#cervixDilation").val();
+      let cervixNotes = $("#cervixNotes").val();
+
+      let Cervix = {
+        cervixLength: cervixLength,
+        cervixDilation: cervixDilation,
+        cervixNotes,
+      };
+
+      // let VulvaVaginaCervix = [Vulva, Vagina, Cervix];
+      let VulvaVaginaCervix = {
+        Vulva,
+        Vagina,
+        Cervix,
+      };
+
+      saveDataToLocalstorage(
+        (data = VulvaVaginaCervix),
+        (objName = "vulva-vagina-cervix"),
+        (parentObjName = "internalExamination"),
+        (grandParentObjName = "physicalExamination")
+      );
     });
-
-    let vaginaNotes = $("#vaginaNotes").val();
-    Vagina.push({ notes: vaginaNotes });
-
-    // CERVIX
-    let cervixLength = $("#cervixLength").val();
-    let cervixDilation = $("#cervixDilation").val();
-    let cervixNotes = $("#cervixNotes").val();
-
-    let Cervix = {
-      cervixLength: cervixLength,
-      cervixDilation: cervixDilation,
-      notes: cervixNotes,
-    };
-
-    let VulvaVaginaCervix = [Vulva, Vagina, Cervix];
-
-    console.log(VulvaVaginaCervix);
 
     // let vulInternalUlceration = $("input[name='internalUlceration']:checked");
     // let vulLocationUlceration = $("#locationUlceration");

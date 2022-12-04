@@ -212,7 +212,7 @@
             type="number"
             class="form-control w-75"
             id="nummberofDuration"
-            name="duration"
+            name="durationEpisode"
             aria-label="durationofDuration"
             value="1"
             min="1"
@@ -607,52 +607,105 @@
     />
   </div>
   <script>
-              
-    $("#hpi-form").on("submit", function(){
-      let HPI = { }
-      
-      let ChiefComplaint = $("input[name='chiefComplaint']");
-      let HPIStartDate = $("#HPIStartDate");
-      let Location = $("input[name='location']");
-      let Quality = $("input[name='quality']");
-      let Severity = $("input[name='severity']:checked");
-      let Onset = $("input[name='onset']:checked");
-      let Duration = $("input[name='duration']:checked");
-      let Frequency = $("input[name='frequency']:checked");
-      let Progression = $("input[name='progression']:checked");
-      let AggravatedByFactor = $("#aggravatedByFactor");
-      let RelievedByFactor = $("#relievedByFactor");
-      let RiskFactors = $("input[name='riskFactors']:checked");
-      let BodilyFunctionEffect = $("input[name='bodilyFunctionEffect']:checked");
-      let HPInotes = $("#HPINotes");
-  
-      HPI[ChiefComplaint.attr("name")] = (ChiefComplaint.val());
-      HPI[HPIStartDate.attr("name")] = (HPIStartDate.val());
-      HPI[Location.attr("name")] = (Location.val());
-      HPI[Quality.attr("name")] = (Quality.val());
-      HPI[Severity.attr("name")] = (Severity.val());
-      HPI[Onset.attr("name")] = (Onset.val());
-      HPI[Duration.attr("name")] = (Duration.val());
-      HPI[Frequency.attr("name")] = (Frequency.val());
-      HPI[Progression.attr("name")] = (Progression.val());
-      HPI[AggravatedByFactor.attr("name")] = (AggravatedByFactor.val());
-      HPI[RelievedByFactor.attr("name")] = (RelievedByFactor.val());
-      HPI[RiskFactors.attr("name")] = (RiskFactors.val());
-      HPI[BodilyFunctionEffect.attr("name")] = (BodilyFunctionEffect.val());
-      HPI[HPInotes.attr("name")] = (HPInotes.val());
-      
-      console.log(HPI);
+    $(function () {
+      loadDatepickers({
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
+        format: "mm/dd/yyyy",
+        endDate: "+0d",
+      });
+
+      let existingData = getDataFromLocalStorage("HPI");
+      let radioKeys = [
+        "severity",
+        "onset",
+        "duration",
+        "frequency",
+        "progression",
+        "bodilyFunctionEffect",
+      ];
+      // let inputKeys = [
+      //   "chiefComplaint",
+      //   "startDate",
+      //   "location",
+      //   "quality",
+      //   "aggrevatedBy",
+      //   "relievedBy",
+      //   "notes",
+      // ];
+      Object.entries(existingData).forEach(([key, value]) => {
+        let inputEl = $(`input[name=${key}], textarea[name=${key}]`);
+        // IF INPUT IS RADIO BUTTON
+        if (radioKeys.includes(key)) {
+          $(inputEl).each(function () {
+            if ($(this).prop("value") === value) {
+              $(this).prop("checked", true);
+              return;
+            }
+          });
+        } else if (key === "riskFactors") {
+          if (Array.isArray(value)) {
+            $(inputEl).each(function () {
+              console.log(value.includes($(this).prop("value")));
+              if (value.includes($(this).prop("value"))) {
+                $(this).prop("checked", true);
+                return;
+              }
+            });
+          } else {
+            $(inputEl).each(function () {
+              if ($(this).prop("value") === value) {
+                $(this).prop("checked", true);
+                return;
+              }
+            });
+          }
+        } else {
+          inputEl.val(value);
+        }
+      });
+
+      $("#hpi-form").on("submit", function () {
+        let HPI = {};
+        let cleanedData = cleanData($(this).serializeArray());
+
+        // let ChiefComplaint = $("input[name='chiefComplaint']");
+        // let HPIStartDate = $("#HPIStartDate");
+        // let Location = $("input[name='location']");
+        // let Quality = $("input[name='quality']");
+        // let Severity = $("input[name='severity']:checked");
+        // let DurationEpisode = $("input[name='durationEpisode']");
+        // let Duration = $("input[name='duration']:checked");
+        // let Onset = $("input[name='onset']:checked");
+        // let Frequency = $("input[name='frequency']:checked");
+        // let Progression = $("input[name='progression']:checked");
+        // let AggravatedByFactor = $("#aggravatedByFactor");
+        // let RelievedByFactor = $("#relievedByFactor");
+        // let RiskFactors = $("input[name='riskFactors']:checked");
+        // let BodilyFunctionEffect = $(
+        //   "input[name='bodilyFunctionEffect']:checked"
+        // );
+        // let HPInotes = $("#HPINotes");
+
+        // HPI[ChiefComplaint.attr("name")] = ChiefComplaint.val();
+        // HPI[HPIStartDate.attr("name")] = HPIStartDate.val();
+        // HPI[Location.attr("name")] = Location.val();
+        // HPI[Quality.attr("name")] = Quality.val();
+        // HPI[Severity.attr("name")] = Severity.val();
+        // HPI[Onset.attr("name")] = Onset.val();
+        // HPI[DurationEpisode.attr("name")] = DurationEpisode.val();
+        // HPI[Duration.attr("name")] = Duration.val();
+        // HPI[Frequency.attr("name")] = Frequency.val();
+        // HPI[Progression.attr("name")] = Progression.val();
+        // HPI[AggravatedByFactor.attr("name")] = AggravatedByFactor.val();
+        // HPI[RelievedByFactor.attr("name")] = RelievedByFactor.val();
+        // HPI[RiskFactors.attr("name")] = RiskFactors.val();
+        // HPI[BodilyFunctionEffect.attr("name")] = BodilyFunctionEffect.val();
+        // HPI[HPInotes.attr("name")] = HPInotes.val();
+
+        saveDataToLocalstorage(cleanedData, "HPI");
+      });
     });
   </script>
-
 </form>
-
-<script>
-  loadDatepickers({
-    autoclose: true,
-    changeMonth: true,
-    changeYear: true,
-    format: "mm/dd/yyyy",
-    endDate: "+0d",
-  });
-</script>

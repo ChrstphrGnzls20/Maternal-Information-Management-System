@@ -20,7 +20,7 @@ function cleanData(dataArray) {
     let temp = [];
     // if value is numeric
     if (isNaN(data.value)) {
-      data.value = data.value.replace(/[^a-zA-Z0-9 ']/g, "");
+      data.value = data.value.replace(/[^a-zA-Z0-9 '/]/g, "");
       data.value = data.value.trim();
     }
     if (cleanedData[data.name]) {
@@ -67,9 +67,9 @@ function cleanData(dataArray) {
       return;
     }
     // special case for HPI start date
-    if (data.name === "startDate") {
-      data.value = getDaysDiffToday(data.value);
-    }
+    // if (data.name === "startDate") {
+    //   data.value = getDaysDiffToday(data.value);
+    // }
     cleanedData[data.name] = data.value;
   });
 

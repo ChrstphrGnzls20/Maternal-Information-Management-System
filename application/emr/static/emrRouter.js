@@ -110,12 +110,13 @@ $(function () {
   $(".emr-cat").on("click", function () {
     let target = $(this).attr("data-target");
     let form = $("form");
-    if (form.valid()) {
-      form.trigger("submit", [target]);
-      getEMRContent(target);
-      activeEMRView = target;
-    }
-    // getEMRContent(target);
+    // if (form.valid()) {
+    //   form.trigger("submit", [target]);
+    //   getEMRContent(target);
+    //   activeEMRView = target;
+    // }
+    form.trigger("submit", [target]);
+    getEMRContent(target);
   });
 
   let activeEMRView = localStorage.getItem("activeEMRView")

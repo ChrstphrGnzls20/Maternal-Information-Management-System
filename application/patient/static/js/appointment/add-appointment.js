@@ -15,13 +15,11 @@ $(function () {
   let calendar = new FullCalendar.Calendar(
     document.getElementById("calendar"),
     {
-      //   plugins: ["dayGrid", "timeGrid"],
       initialView: "dayGridMonth",
-      //   selectable: true,
       headerToolbar: {
         left: "prev,next today",
         center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay",
+        right: "dayGridMonth",
       },
       validRange: {
         start: new Date(moment().add(1, "days")),
@@ -79,12 +77,11 @@ $(function () {
     defaultTime: "08",
     forceRoundTime: true,
     timeFormat: "h:i A",
-    disableTimeRanges: [["11:00", "12:00"], []],
+    // disableTimeRanges: [["11:00", "12:00"], []],
     scrollbar: false,
-    defaultValue: "8am",
   });
 
-  $("#time").on("keypress", function (e) {
+  $("#time").on("keydown", function (e) {
     e.preventDefault();
   });
 

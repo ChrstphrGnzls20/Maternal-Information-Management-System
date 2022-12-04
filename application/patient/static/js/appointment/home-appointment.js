@@ -95,7 +95,7 @@ function checkForRecentCancellation(appointments) {
   let hasRecentCancellation = 0;
   appointments.forEach(function (item) {
     if (item.status === "canceled") {
-      let canceledDate = moment(item.additionalInfo.modifiedDate);
+      let canceledDate = moment(item.additionalInfo.dateModified, "YYYY-MM-DD");
       let dateDiff = parseInt(moment().diff(canceledDate, "days"));
       if (dateDiff === 0) {
         hasRecentCancellation++;

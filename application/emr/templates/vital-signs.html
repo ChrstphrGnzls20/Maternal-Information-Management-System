@@ -144,37 +144,66 @@
   </div>
 
   <script>
-    $("#vitalHeight, #vitalWeight").on("change", function () {
-      let heightInMeters = parseInt($("#vitalHeight").val()) / 100;
-      let weightInKg = parseInt($("#vitalWeight").val());
-      let BMI = weightInKg / (heightInMeters * heightInMeters);
-      $("#vitalBMI").val(BMI);
-    });
+    $(function () {
+      // CHECK FIRST IF THE DATA EXISTS IN LOCALSTORAGE
+      let existingData = getDataFromLocalStorage("vitalSigns");
 
-    $("#vital-signs-form").on("submit", function (evt) {
-      evt.preventDefault();
-      if ($(this).valid()) {
+      if (existingData) {
+        Object.entries(existingData).forEach(([key, value]) => {
+          if (key === "BP") {
+            let [BPSystolic, BPDiastolic] = value.split("/");
+            $("input[name=vitalSystolic]").val(BPSystolic);
+            $("input[name=vitalDiastolic]").val(BPDiastolic);
+          }
+          $(`input[name=${key}]`).val(value);
+        });
+
+        // RE-CALCULATE BMI
+        let heightInMeters = parseInt($("#vitalHeight").val()) / 100;
+        let weightInKg = parseInt($("#vitalWeight").val());
+        let BMI = calculateBMI(heightInMeters, weightInKg);
+        $("#vitalBMI").val(BMI);
+      }
+
+      // CALCULATE BMI EVERYTIME HEIGHT/WEIGHT CHANGES
+      $("#vitalHeight, #vitalWeight").on("change", function () {
+        let heightInMeters = parseInt($("#vitalHeight").val()) / 100;
+        let weightInKg = parseInt($("#vitalWeight").val());
+        let BMI = calculateBMI(heightInMeters, weightInKg);
+        $("#vitalBMI").val(BMI);
+      });
+
+      $("#vital-signs-form").on("submit", function (evt) {
+        evt.preventDefault();
+        let vitalSigns = {};
+        // if ($(this).valid()) {
         let height = $("#vitalHeight").val();
         let weight = $("#vitalWeight").val();
         let BMI = $("#vitalBMI").val();
         let temp = $("#vitalTemp").val();
         let systolicBP = $("#vitalSystolic").val();
         let diastolicBP = $("#vitalDiastolic").val();
-        let respiratoryRate = $("#vitalRespRate").val();
+        let respirationRate = $("#vitalRespRate").val();
         let oxygenSaturation = $("#vitalOxySat").val();
         let heartRate = $("#vitalHeartRate").val();
 
-        let vitalSigns = {
+        vitalSigns = {
           height,
           weight,
-          temp,
+          temperature: temp,
           BP: `${systolicBP}/${diastolicBP}`,
-          respiratoryRate,
+          respirationRate,
           oxygenSaturation,
           heartRate,
         };
+        // }
         console.log(vitalSigns);
-      }
+
+        // SAVE TO LOCALSTORAGE BEFORE LEAVING PAGE
+        saveDataToLocalstorage(vitalSigns, "vitalSigns");
+
+        // DESTROY OBJECT
+      });
     });
   </script>
 </form>
