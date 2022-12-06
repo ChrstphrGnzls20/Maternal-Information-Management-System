@@ -2,20 +2,26 @@
   <h3 class="default-label col-12">Vital Signs</h3>
   <div class="row">
     <div class="form-group col-md-4">
-      <label for="vitalHeight" class="form-label required">Height</label>
+      <label for="vitalHeight" class="form-label required"
+        >Height (in centimeters)</label
+      >
       <input
-        type="text"
+        type="number"
         class="form-control"
         id="vitalHeight"
         name="height"
+        min="100"
+        max="200"
         required
       />
     </div>
 
     <div class="form-group col-md-4">
-      <label for="vitalWeight" class="form-label required">Weight</label>
+      <label for="vitalWeight" class="form-label required"
+        >Weight (in kilograms)</label
+      >
       <input
-        type="text"
+        type="number"
         class="form-control"
         id="vitalWeight"
         name="weight"
@@ -24,25 +30,29 @@
     </div>
 
     <div class="form-group col-md-4">
-      <label for="vitalBMI" class="form-label required">BMI</label>
+      <label for="vitalBMI" class="form-label">BMI</label>
       <input
-        type="text"
+        type="number"
         class="form-control"
         id="vitalBMI"
         name="BMI"
-        required
+        disabled
       />
     </div>
   </div>
 
   <div class="row mt-3">
     <div class="form-group col-md-4">
-      <label for="vitalTemp" class="form-label required">Temperature</label>
+      <label for="vitalTemp" class="form-label required"
+        >Temperature (in Celcius)</label
+      >
       <input
-        type="text"
+        type="number"
         class="form-control"
         id="vitalTemp"
         name="temperature"
+        min="35"
+        max="45"
         required
       />
     </div>
@@ -81,10 +91,12 @@
         >Respiratory Rate (BPM)</label
       >
       <input
-        type="text"
+        type="number"
         class="form-control"
         id="vitalRespRate"
         name="respirationRate"
+        min="10"
+        max="25"
         required
       />
     </div>
@@ -96,10 +108,12 @@
         >Oxygen Saturation(%)</label
       >
       <input
-        type="text"
+        type="number"
         class="form-control"
         id="vitalOxySat"
         name="oxygenSaturation"
+        min="80"
+        max="100"
         required
       />
     </div>
@@ -109,10 +123,12 @@
         >Heart Rate (Beats PM)</label
       >
       <input
-        type="text"
+        type="number"
         class="form-control"
         id="vitalHeartRate"
         name="heartRate"
+        min="40"
+        max="200"
         required
       />
     </div>
@@ -126,4 +142,68 @@
       data-next-page="hpi"
     />
   </div>
+
+  <script>
+    $(function () {
+      // CHECK FIRST IF THE DATA EXISTS IN LOCALSTORAGE
+      let existingData = getDataFromLocalStorage("vitalSigns");
+
+      if (existingData) {
+        Object.entries(existingData).forEach(([key, value]) => {
+          if (key === "BP") {
+            let [BPSystolic, BPDiastolic] = value.split("/");
+            $("input[name=vitalSystolic]").val(BPSystolic);
+            $("input[name=vitalDiastolic]").val(BPDiastolic);
+          }
+          $(`input[name=${key}]`).val(value);
+        });
+
+        // RE-CALCULATE BMI
+        let heightInMeters = parseInt($("#vitalHeight").val()) / 100;
+        let weightInKg = parseInt($("#vitalWeight").val());
+        let BMI = calculateBMI(heightInMeters, weightInKg);
+        $("#vitalBMI").val(BMI);
+      }
+
+      // CALCULATE BMI EVERYTIME HEIGHT/WEIGHT CHANGES
+      $("#vitalHeight, #vitalWeight").on("change", function () {
+        let heightInMeters = parseInt($("#vitalHeight").val()) / 100;
+        let weightInKg = parseInt($("#vitalWeight").val());
+        let BMI = calculateBMI(heightInMeters, weightInKg);
+        $("#vitalBMI").val(BMI);
+      });
+
+      $("#vital-signs-form").on("submit", function (evt) {
+        evt.preventDefault();
+        let vitalSigns = {};
+        // if ($(this).valid()) {
+        let height = $("#vitalHeight").val();
+        let weight = $("#vitalWeight").val();
+        let BMI = $("#vitalBMI").val();
+        let temp = $("#vitalTemp").val();
+        let systolicBP = $("#vitalSystolic").val();
+        let diastolicBP = $("#vitalDiastolic").val();
+        let respirationRate = $("#vitalRespRate").val();
+        let oxygenSaturation = $("#vitalOxySat").val();
+        let heartRate = $("#vitalHeartRate").val();
+
+        vitalSigns = {
+          height,
+          weight,
+          temperature: temp,
+          BP: `${systolicBP}/${diastolicBP}`,
+          respirationRate,
+          oxygenSaturation,
+          heartRate,
+        };
+        // }
+        console.log(vitalSigns);
+
+        // SAVE TO LOCALSTORAGE BEFORE LEAVING PAGE
+        saveDataToLocalstorage(vitalSigns, "vitalSigns");
+
+        // DESTROY OBJECT
+      });
+    });
+  </script>
 </form>

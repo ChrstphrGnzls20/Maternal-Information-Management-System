@@ -524,14 +524,14 @@
 <script>
   $(function () {
     let existingData = getDataFromLocalStorage(
-      (objName = "vulva-vagina-cervix"),
+      (objName = "vulvaVaginaCervix"),
       (parentObjName = "internalExamination"),
       (grandParentObjName = "physicalExamination")
     );
 
     console.log(existingData);
 
-    if (existingData) {
+    if (Object.keys(existingData).length) {
       let { Vulva, Vagina, Cervix } = existingData;
       // SET VALUES OF VULVA
       // Vulva.forEach((item) => {
@@ -679,7 +679,7 @@
 
       saveDataToLocalstorage(
         (data = VulvaVaginaCervix),
-        (objName = "vulva-vagina-cervix"),
+        (objName = "vulvaVaginaCervix"),
         (parentObjName = "internalExamination"),
         (grandParentObjName = "physicalExamination")
       );

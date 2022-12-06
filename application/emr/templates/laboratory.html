@@ -210,8 +210,8 @@
       data-next-page="plan"
     />
   </div>
-
-  <!-- <script>
+</form>
+<!-- <script>
   let labdetailVal = {};
   $(".referralDetails :input").change(function () {
     let referDetName = $(this).attr("name");
@@ -222,82 +222,77 @@
   $("#date-value").text(moment(StartDate).format("MM-YYYY"));
 </script> -->
 
-  <script>
-    $(function () {
-      let today = new Date();
-      $("#date-value").text(moment(today).format("MMMM DD, YYYY"));
+<script>
+  $(function () {
+    let today = new Date();
+    $("#date-value").text(moment(today).format("MMMM DD, YYYY"));
 
-      // AJAX-REQUEST TO GET TEMPLATES FOR AUTOCOMPLETE FUNCTIONALITY
-      $.ajax({
-        type: "POST",
-        url: "/emr/getTemplates",
-        data: JSON.stringify({
-          doctorId: "123456",
-          category: "laboratory",
-        }),
-        contentType: "application/json",
-        dataType: "json",
-      })
-        .done(function (response) {
-          var referralAutocompleteArray = [];
-          let labTemplates = response.data;
-          if (labTemplates) {
-            console.log(response.data);
-            Object.keys(response.data).forEach(function (key) {
-              referralAutocompleteArray.push(key);
+    // AJAX-REQUEST TO GET TEMPLATES FOR AUTOCOMPLETE FUNCTIONALITY
+    $.ajax({
+      type: "POST",
+      url: "/emr/getTemplates",
+      data: JSON.stringify({
+        doctorId: "123456",
+        category: "laboratory",
+      }),
+      contentType: "application/json",
+      dataType: "json",
+    });
+    let existingData = getDataFromLocalStorage("laboratory");
+    let radioKeys = [
+      "severity",
+      "onset",
+      "duration",
+      "frequency",
+      "progression",
+      "bodilyFunctionEffect",
+    ];
+    if (existingData) {
+      Object.entries(existingData).forEach(([key, value]) => {
+        let inputEl = $(`input[name=${key}], textarea[name=${key}]`);
+        // IF INPUT IS RADIO BUTTON
+        if (radioKeys.includes(key)) {
+          $(inputEl).each(function () {
+            if ($(this).prop("value") === value) {
+              $(this).prop("checked", true);
+              return;
+            }
+          });
+        } else if (key === "riskFactors") {
+          if (Array.isArray(value)) {
+            $(inputEl).each(function () {
+              console.log(value.includes($(this).prop("value")));
+              if (value.includes($(this).prop("value"))) {
+                $(this).prop("checked", true);
+                return;
+              }
             });
-
-            $("#referralReason").autocomplete({
-              clearButton: true,
-              source: referralAutocompleteArray,
-              selectFirst: true,
+          } else {
+            $(inputEl).each(function () {
+              if ($(this).prop("value") === value) {
+                $(this).prop("checked", true);
+                return;
+              }
             });
           }
-          $("#referralReason").on("change", function () {
-            let value = $(this).val();
-            let data = labTemplates[value];
-
-            // uncheck checked first
-            $(`input[type=checkbox]`).each(function () {
-              $(this).prop("checked", false);
-            });
-
-            // check according to data array
-            data.forEach(function (item) {
-              $(`input[value=${item}`).prop("checked", true);
-            });
-          });
-        })
-        .catch(function (xhr) {
-          console.log(xhr);
-        });
-
-      // GET VALUES
-      $("#referralDetails").on("submit", function () {
-        let reasonForReferral = $("#referralReason").val();
-        let tests = [];
-
-        $("input[name=tests]:checked").each(function () {
-          let value = $(this).val();
-          tests.push(value);
-        });
-
-        let referral = {
-          reasonForReferral: reasonForReferral,
-          tests: tests,
-        };
-
-        console.log(referral);
+        } else {
+          inputEl.val(value);
+        }
       });
+    }
+
+    $("#referralDetails").on("submit", function () {
+      let cleanedData = cleanData($(this).serializeArray());
+      saveDataToLocalstorage(cleanedData, "laboratory");
     });
-  </script>
+  });
+</script>
 
-  <!-- jquery Autocomplete -->
+<!-- jquery Autocomplete -->
 
-  <!-- <script
+<!-- <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js"
     integrity="sha512-TToQDr91fBeG4RE5RjMl/tqNAo35hSRR4cbIFasiV2AAMQ6yKXXYhdSdEpUcRE6bqsTiB+FPLPls4ZAFMoK5WA=="
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   ></script> -->
-</form>

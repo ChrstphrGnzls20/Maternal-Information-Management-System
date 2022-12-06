@@ -246,4 +246,35 @@
       data-next-page="ros-allergy"
     />
   </div>
+
+  <script>
+              
+    $(".rosBloodandLymph").on("submit", function(){
+      let BloodAndLymph = { }
+
+      let rosEasyBleed = $("input[name='easyBleed']:checked");
+      let rosEasyBruise = $("input[name='easyBruise']:checked");
+      let rosSlowHeal = $("input[name='slowHeal']:checked");
+      let rosBloodAnemia = $("input[name='anemia']:checked");
+      let rosBloodClot = $("input[name='bloodClot']:checked");
+      let rosPastTransfusion = $("input[name='pastTransfusion']:checked");
+      let rosEnlargedGlandsNodes = $("input[name='enlargedGlandsNodes']:checked");
+      let rosBloodLymphSuicide = $("input[name='bloodLymphSuicidal']:checked");
+      let rosBloodLymphNotes = $("#bloodandLymphNotes");
+
+      BloodAndLymph[rosEasyBleed.attr("name")] = (rosEasyBleed.val());
+      BloodAndLymph[rosEasyBruise.attr("name")] = (rosEasyBruise.val());
+      BloodAndLymph[rosSlowHeal.attr("name")] = (rosSlowHeal.val());
+      BloodAndLymph[rosBloodAnemia.attr("name")] = (rosBloodAnemia.val());
+      BloodAndLymph[rosBloodClot.attr("name")] = (rosBloodClot.val());
+      BloodAndLymph[rosPastTransfusion.attr("name")] = (rosPastTransfusion.val());
+      BloodAndLymph[rosEnlargedGlandsNodes.attr("name")] = (rosEnlargedGlandsNodes.val());
+      BloodAndLymph[rosBloodLymphSuicide.attr("name")] = (rosBloodLymphSuicide.val());
+      BloodAndLymph[rosBloodLymphNotes.attr("name")] = (rosBloodLymphNotes.val());
+      
+      
+
+      console.log(BloodAndLymph);
+    });
+  </script>
 </form>

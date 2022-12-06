@@ -1,4 +1,4 @@
-<form class="rosChest" data-form-target="EMR">
+<form class="rosChest" id="ros-cardio" data-form-target="EMR">
   <div class="row mt-2">
     <h3 class="default-label col-12">ROS - Cardiovascular</h3>
   </div>
@@ -195,29 +195,40 @@
   </div>
 
   <script>
-              
-    $(".rosChest").on("submit", function(){
-      let CardioVascular = { }
+    $(function () {
+      let existingData = getDataFromLocalStorage(
+        (objName = "cardiovascular"),
+        (parentObjName = "reviewOfSystems")
+      );
 
-      let rosChestPains = $("input[name='chestPains']:checked");
-      let rosirregHeartbeat = $("input[name='irregularHearbeat']:checked");
-      let rosChestShortBreath = $("input[name='chestShortofBreath']:checked");
-      let rosRapidHeartRate = $("input[name='rapidHeartRate']:checked");
-      let rosSwellingLimb = $("input[name='swellofLimbs']:checked");
-      let rosVaricoseVein = $("input[name='varicoseVeins']:checked");
-      let rosCardioNotes = $("#cardioNotes");
+      if (existingData) {
+        Object.entries(existingData).forEach(([key, value]) => {
+          // IF INPUT IS RADIO BUTTON
+          if (key === "cardioNotes") {
+            $("#cardioNotes").val(value);
+            return;
+          }
 
-      CardioVascular[rosChestPains.attr("name")] = (rosChestPains.val());
-      CardioVascular[rosirregHeartbeat.attr("name")] = (rosirregHeartbeat.val());
-      CardioVascular[rosChestShortBreath.attr("name")] = (rosChestShortBreath.val());
-      CardioVascular[rosRapidHeartRate.attr("name")] = (rosRapidHeartRate.val());
-      CardioVascular[rosSwellingLimb.attr("name")] = (rosSwellingLimb.val());
-      CardioVascular[rosVaricoseVein.attr("name")] = (rosVaricoseVein.val());
-      CardioVascular[rosCardioNotes.attr("name")] = (rosCardioNotes.val());
-      
+          let radios = $(`input[name=${key}`);
 
-      console.log(CardioVascular);
+          $(radios).each(function () {
+            let radioValue = $(this).prop("value");
+            if (radioValue === value) {
+              $(this).prop("checked", true);
+            }
+          });
+        });
+      }
+
+      $("#ros-cardio").on("submit", function () {
+        let cleanedData = cleanData($(this).serializeArray());
+
+        saveDataToLocalstorage(
+          (data = cleanedData),
+          (objName = "cardiovascular"),
+          (parentObjName = "reviewOfSystems")
+        );
+      });
     });
   </script>
-  
 </form>

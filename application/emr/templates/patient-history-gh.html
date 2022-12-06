@@ -1,4 +1,4 @@
-<form id="gyne-history-form" class="gyneHistory" data-form-target="EMR">
+<form id="ph-gyne-history-form" class="gyneHistory" data-form-target="EMR">
   <div class="row mt-2">
     <h3 class="default-label col-12">Gynecological History</h3>
   </div>
@@ -407,7 +407,6 @@
         </div>
         <label class="m-2">Uterine Fibroids</label>
       </div>
-
     </div>
   </div>
 
@@ -448,51 +447,43 @@
 </form>
 
 <script>
-              
-  $(".gyneHistory").on("submit", function(){
-    let gHistoryVal = { }
-    
-    let gabnormalPapSmear = $("input[name='abnormalPapSmear']:checked");
-    let gdesExposure = $("input[name='desExposure']:checked");
-    let ginfertility = $("input[name='infertility']:checked");
-    let gPID = $("input[name='PID']:checked");
-    let gVaginitis = $("input[name='Vaginitis']:checked");
-    let gUrinaryIncontinence = $("input[name='UrinaryIncontinence']:checked");
-    let gBreastPain = $("input[name='BreastPain']:checked");
-    let gEndometriosis = $("input[name='Endometriosis']:checked");
-    let gOvarianCysts = $("input[name='OvarianCysts']:checked");
-    let gPMS = $("input[name='PMS']:checked");
-    let gSTD = $("input[name='STD']:checked");
-    let gUTI = $("input[name='UTI']:checked");
-    let gPelvicPains = $("input[name='PelvicPains']:checked");
-    let gGenitalWarts = $("input[name='GenitalWarts']:checked");
-    let gRecurrentMiscarriage = $("input[name='RecurrentMiscarriage']:checked");
-    let gUterineFibroids = $("input[name='UterineFibroids']:checked");
-    let ggyneNotes = $("#gyneNotes");
+  $(function () {
+    let existingData = getDataFromLocalStorage(
+      (objName = "gynecologicalHistory"),
+      (parentObjName = "patientHistory")
+    );
 
-    gHistoryVal[gabnormalPapSmear.attr("name")] = (gabnormalPapSmear.val());
-    gHistoryVal[gdesExposure.attr("name")] = (gdesExposure.val());
-    gHistoryVal[ginfertility.attr("name")] = (ginfertility.val());
-    gHistoryVal[gPID.attr("name")] = (gPID.val());
-    gHistoryVal[gVaginitis.attr("name")] = (gVaginitis.val());
-    gHistoryVal[gUrinaryIncontinence.attr("name")] = (gUrinaryIncontinence.val());
-    gHistoryVal[gBreastPain.attr("name")] = (gBreastPain.val());
-    gHistoryVal[gEndometriosis.attr("name")] = (ginfertility.val());
-    gHistoryVal[gOvarianCysts.attr("name")] = (gOvarianCysts.val());
-    gHistoryVal[gPMS.attr("name")] = (gPMS.val());
-    gHistoryVal[gSTD.attr("name")] = (gSTD.val());
-    gHistoryVal[gUTI.attr("name")] = (gUTI.val());
-    gHistoryVal[gPelvicPains.attr("name")] = (gPelvicPains.val());
-    gHistoryVal[gGenitalWarts.attr("name")] = (gGenitalWarts.val());
-    gHistoryVal[gRecurrentMiscarriage.attr("name")] = (gRecurrentMiscarriage.val());
-    gHistoryVal[gUterineFibroids.attr("name")] = (gUterineFibroids.val());
-    gHistoryVal[ggyneNotes.attr("name")] = (ggyneNotes.val());
-  
-    console.log(gHistoryVal);
+    if (existingData) {
+      Object.entries(existingData).forEach(([key, value]) => {
+        // IF INPUT IS RADIO BUTTON
+        if (key === "gyneNotes") {
+          $("#gyneNotes").val(value);
+          return;
+        }
+
+        let radios = $(`input[name=${key}`);
+
+        $(radios).each(function () {
+          let radioValue = $(this).prop("value");
+          if (radioValue === value) {
+            $(this).prop("checked", true);
+          }
+        });
+      });
+    }
+
+    $("#ph-gyne-history-form").on("submit", function () {
+      let Gynecological = {};
+      let cleanedData = cleanData($(this).serializeArray());
+
+      saveDataToLocalstorage(
+        (data = cleanedData),
+        (objName = "gynecologicalHistory"),
+        (parentObjName = "patientHistory")
+      );
+    });
   });
 </script>
-
-
 
 <!-- <script>
   let gHistoryVal = { }

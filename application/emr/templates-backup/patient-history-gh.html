@@ -390,7 +390,7 @@
           <input
             class="form-check-input"
             type="radio"
-            name="UterinFibroids"
+            name="UterineFibroids"
             id="uterinFibroidsNo"
             value="no"
             checked
@@ -407,6 +407,7 @@
         </div>
         <label class="m-2">Uterine Fibroids</label>
       </div>
+
     </div>
   </div>
 
@@ -414,7 +415,7 @@
     <label>Notes</label>
     <textarea
       class="form-control"
-      name="Notes"
+      name="gyneNotes"
       id="gyneNotes"
       rows="3"
     ></textarea>
@@ -441,7 +442,63 @@
       type="submit"
       class="btn btn-success btn-custom-primary px-5 emr-next-btn"
       value="Next"
-      data-next-page="patient-history-pch"
+      data-next-page="patient-history-cmh"
     />
   </div>
 </form>
+
+<script>
+              
+  $(".gyneHistory").on("submit", function(){
+    let gHistoryVal = { }
+    
+    let gabnormalPapSmear = $("input[name='abnormalPapSmear']:checked");
+    let gdesExposure = $("input[name='desExposure']:checked");
+    let ginfertility = $("input[name='infertility']:checked");
+    let gPID = $("input[name='PID']:checked");
+    let gVaginitis = $("input[name='Vaginitis']:checked");
+    let gUrinaryIncontinence = $("input[name='UrinaryIncontinence']:checked");
+    let gBreastPain = $("input[name='BreastPain']:checked");
+    let gEndometriosis = $("input[name='Endometriosis']:checked");
+    let gOvarianCysts = $("input[name='OvarianCysts']:checked");
+    let gPMS = $("input[name='PMS']:checked");
+    let gSTD = $("input[name='STD']:checked");
+    let gUTI = $("input[name='UTI']:checked");
+    let gPelvicPains = $("input[name='PelvicPains']:checked");
+    let gGenitalWarts = $("input[name='GenitalWarts']:checked");
+    let gRecurrentMiscarriage = $("input[name='RecurrentMiscarriage']:checked");
+    let gUterineFibroids = $("input[name='UterineFibroids']:checked");
+    let ggyneNotes = $("#gyneNotes");
+
+    gHistoryVal[gabnormalPapSmear.attr("name")] = (gabnormalPapSmear.val());
+    gHistoryVal[gdesExposure.attr("name")] = (gdesExposure.val());
+    gHistoryVal[ginfertility.attr("name")] = (ginfertility.val());
+    gHistoryVal[gPID.attr("name")] = (gPID.val());
+    gHistoryVal[gVaginitis.attr("name")] = (gVaginitis.val());
+    gHistoryVal[gUrinaryIncontinence.attr("name")] = (gUrinaryIncontinence.val());
+    gHistoryVal[gBreastPain.attr("name")] = (gBreastPain.val());
+    gHistoryVal[gEndometriosis.attr("name")] = (ginfertility.val());
+    gHistoryVal[gOvarianCysts.attr("name")] = (gOvarianCysts.val());
+    gHistoryVal[gPMS.attr("name")] = (gPMS.val());
+    gHistoryVal[gSTD.attr("name")] = (gSTD.val());
+    gHistoryVal[gUTI.attr("name")] = (gUTI.val());
+    gHistoryVal[gPelvicPains.attr("name")] = (gPelvicPains.val());
+    gHistoryVal[gGenitalWarts.attr("name")] = (gGenitalWarts.val());
+    gHistoryVal[gRecurrentMiscarriage.attr("name")] = (gRecurrentMiscarriage.val());
+    gHistoryVal[gUterineFibroids.attr("name")] = (gUterineFibroids.val());
+    gHistoryVal[ggyneNotes.attr("name")] = (ggyneNotes.val());
+  
+    console.log(gHistoryVal);
+  });
+</script>
+
+
+
+<!-- <script>
+  let gHistoryVal = { }
+  $(".gyneHistory :input").on("submit", function(){
+    let gHistoryName = $(this).attr("name");
+    gHistoryVal[gHistoryName] = $(this).val();
+    console.log(gHistoryVal);
+  });
+</script> -->

@@ -2,6 +2,7 @@
 
 {% block additionalHeaders %}
 
+
 <!-- localized css -->
 <link rel="stylesheet" href="{{url_for('emr.static', filename='styles.css')}}">
 
@@ -222,6 +223,13 @@
   </div>
     </nav>
 
+    <!-- Custom JS -->
+    <script src="{{url_for('emr.static', filename='utils.js')}}" ></script>
+    <script src="{{url_for('emr.static', filename='datePicker.js')}}" ></script>
+    <script src="{{url_for('emr.static', filename='formData.js')}}" ></script>
+    <script src="{{url_for('emr.static', filename='modal-utilities.js')}}" ></script>
+    <script src="{{url_for('emr.static', filename='emrRouter.js')}}" ></script>
+
     <!-- Page Content  -->
     <div id="emr-wrapper" class="container-fluid p-2 p-md-3">
         <!-- wrapper -->
@@ -233,11 +241,11 @@
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 
 
-<!-- Custom JS -->
 
-<script src="{{url_for('emr.static', filename='datePicker.js')}}" ></script>
-<script src="{{url_for('emr.static', filename='formData.js')}}" ></script>
-<script src="{{url_for('emr.static', filename='emrRouter.js')}}" ></script>
+
+<!-- JQUERY UI -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
 <!-- <script type="module" src="{{url_for('emr.static', filename='date-picker.js')}}" ></script> -->
 <!-- <script src="{{url_for('static', filename='emr/js/emr-data.js')}}" defer></script> -->
 

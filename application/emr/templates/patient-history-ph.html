@@ -3,7 +3,7 @@
     <h3 class="default-label col-12">Pregnancy History</h3>
   </div>
   <div class="table-responsive" style="overflow-x: auto">
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="pregnancy-history-table">
       <thead class="thLabel table-secondary">
         <tr>
           <th scope="col" width="5%"></th>
@@ -21,84 +21,7 @@
         </tr>
       </thead>
 
-      <tbody>
-        <tr id="tr-dummy">
-          <td>
-            <button
-              class="btn btn-success btn-add"
-              type="button"
-              data-bs-toggle="modal"
-              data-bs-target="#pregnancyHistoryModal"
-            >
-              <span>
-                <i class="fa-solid fa-plus"></i>
-              </span>
-            </button>
-          </td>
-          <!-- <td>
-            <input
-              type="text"
-              class="form-control datepicker"
-              id="pregnancyYear"
-              name="pregnancyYear"
-              min="1900"
-              max="2099"
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              name="placeOfDelivery"
-              class="form-control"
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              name="durationOfPregnancy"
-              class="form-control"
-            />
-          </td>
-          <td>
-            <input type="number" name="HoursofLabor" class="form-control" />
-          </td>
-          <td>
-            <select name="typeOfDelivery" class="form-select">
-              <option selected></option>
-              <option value="Normal">Normal</option>
-              <option value="Cesarean">Cesarean</option>
-            </select>
-          </td>
-          <td>
-            <input
-              type="text"
-              name="complications"
-              class="form-control"
-            />
-          </td>
-          <td>
-            <select class="form-select" name="childGender">
-              <option selected></option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </td>
-          <td>
-            <input
-              type="number"
-              name="birthWeight"
-              class="form-control"
-            />
-          </td>
-          <td>
-            <select class="form-select" name="presentHealth">
-              <option selected></option>
-              <option value="Normal">Normal</option>
-              <option value="Abnormal">Abnormal</option>
-            </select>
-          </td> -->
-        </tr>
-      </tbody>
+      <tbody></tbody>
     </table>
   </div>
 
@@ -473,28 +396,9 @@
       minViewMode: "years",
     });
 
-    let trIndex = 1;
     let mode = "";
-    let activeTrIndex = 0;
     let previousData = {};
     let pregnancyHistory = [];
-
-    function generateFormGroup(data) {
-      return `
-      <input type='text' name='pregnancyYear' value="${data.pregnancyYear}" />
-      <input type='text' name='placeOfDelivery' value="${data.placeOfDelivery}" />
-      <input type='number' name='durationOfPregnancy' value="${data.durationOfPregnancy}" />
-      <input type='number' name='hoursOfLabor' value="${data.hoursOfLabor}" />
-      <input type='text' name='typeOfDelivery' value="${data.typeOfDelivery}" />
-      <input type='text' name='complications' value="${data.complications}" />
-      <input type='text' name='childGender' value="${data.childGender}" />
-      <input type='text' name='birthWeight' value="${data.birthWeight}" />
-      <input type='text' name='presentHealth' value="${data.presentHealth}" />
-      `;
-
-      // let form = $("form[data-form-target=EMR]");
-      // form.append(toInsert);
-    }
 
     function generateTableTDs(data) {
       return `
@@ -539,11 +443,56 @@
         ${data.presentHealth}
       </td>
     </tr>`;
+    }
 
-      // let tbody = $("table tbody");
+    function updateTable(dataArray) {
+      let tableBody = $("#pregnancy-history-table tbody");
+      let trWithAddBtn = `<tr id="tr-dummy">
+          <td>
+            <button
+              class="btn btn-success btn-add"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#pregnancyHistoryModal"
+            >
+              <span>
+                <i class="fa-solid fa-plus"></i>
+              </span>
+            </button>
+          </td>
+        </tr>`;
 
-      // console.log(tbody);
-      // tbody.prepend(toInsert);
+      tableBody.empty();
+      tableBody.append(trWithAddBtn);
+
+      if (!dataArray.length) return;
+
+      dataArray.forEach(function (item) {
+        let TDs = generateTableTDs(item);
+
+        // APPEND GENERATED TR TO TABLE
+        let toAppend = `
+        <tr>
+          ${TDs}
+        </tr>
+        `;
+        $(toAppend).insertBefore("#tr-dummy");
+      });
+    }
+
+    // FUNCTIONALITY TO LOAD EXISTING DATA FROM LOCALSTORAGE
+    let existingData = getDataFromLocalStorage(
+      "pregnancyHistory",
+      "patientHistory"
+    );
+
+    updateTable(pregnancyHistory);
+
+    if (Object.keys(existingData).length) {
+      console.log(existingData);
+      pregnancyHistory = [...existingData];
+
+      updateTable(pregnancyHistory);
     }
 
     // when add button (+) is clicked
@@ -557,16 +506,7 @@
     $("table").on("click", ".btn-edit", function () {
       mode = "EDIT";
       let trParent = $(this).parent().parent();
-      activeTrIndex = trParent.attr("data-row-index");
       clearModalTextFields((modalClass = ".modal"));
-
-      // let inputs = $(`div[data-row-index=${activeTrIndex}]`).find("input");
-      // // console.log(trParent.find("input[type=text]"));
-      // inputs.each(function () {
-      //   let name = $(this).attr("name");
-      //   let value = $(this).val();
-      //   $(`.modal input[name=${name}]`).val(value);
-      // });
 
       let siblings = $(this).parent().siblings();
       let pregnancyYear = $(siblings[0]).text().trim();
@@ -605,10 +545,6 @@
     });
 
     $("table").on("click", ".btn-delete", function () {
-      let trParent = $(this).parent().parent();
-
-      trParent.remove();
-
       // REMOVE DELETED VALUE
       let siblings = $(this).parent().siblings();
       let pregnancyYear = $(siblings[0]).text().trim();
@@ -637,6 +573,8 @@
       pregnancyHistory = pregnancyHistory.filter((item) => {
         return !_.isEqual(item, previousData);
       });
+
+      updateTable(pregnancyHistory);
     });
 
     // when submitting modal form
@@ -644,59 +582,26 @@
       // pass
       evt.preventDefault();
 
+      console.log("SUBMITTED");
+
       let submittedValues = $(this).serializeArray();
 
       let data = cleanData(submittedValues);
 
       if (mode === "ADD") {
-        generateFormGroup(data);
-        let TDs = generateTableTDs(data);
-
-        // append generated TR to table
-        let toAppend = `
-        <tr data-row-index=${trIndex}>
-          ${TDs}
-        </tr>
-        `;
-        $(toAppend).insertBefore("#tr-dummy");
-
-        // add fields to hidden div that holds form data
-        // let newFormGroup = generateFormGroup(data);
-        // toAppend = `
-        // <div data-row-index=${trIndex} style="display: none;">
-        //   ${newFormGroup}
-        // </div>
-        // `;
-
-        // let form = $("form[data-form-target=EMR]");
-        // form.append(toAppend);
-
         // APPEND VALUES TO EXISTING OBJECT
         pregnancyHistory.push(data);
-        console.log(pregnancyHistory);
 
-        trIndex++;
+        updateTable(pregnancyHistory);
       } else {
-        // edit functionality
-        let trParent = $(`table tr[data-row-index=${activeTrIndex}]`);
-
-        // update table row values
-        trParent.empty();
-        let TDs = generateTableTDs(data);
-        trParent.append(TDs);
-
-        // update hidden form values
-        // let currentFormDiv = $(`div[data-row-index=${activeTrIndex}]`);
-
-        // currentFormDiv.empty();
-        // let newFormGroup = generateFormGroup(data);
-        // currentFormDiv.append(newFormGroup);
-
+        // EDIT FUNCTIONALITY
         // APPEND UPDATED VALUES TO EXISTING OBJECT
         pregnancyHistory = pregnancyHistory.filter((item) => {
           return !_.isEqual(item, previousData);
         });
         pregnancyHistory.push(data);
+
+        updateTable(pregnancyHistory);
       }
 
       $(".modal").modal("hide");
@@ -704,6 +609,11 @@
 
     $(".pregnancyHistory").on("submit", function () {
       console.log(pregnancyHistory);
+      saveDataToLocalstorage(
+        pregnancyHistory,
+        "pregnancyHistory",
+        "patientHistory"
+      );
     });
   });
 </script>

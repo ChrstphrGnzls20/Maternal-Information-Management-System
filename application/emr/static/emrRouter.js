@@ -96,7 +96,7 @@ $(function () {
 
   $("#emr-content").on(
     "submit",
-    "form[data-form-target=EMR]",
+    "form[data-form-target='EMR']",
     function (evt, nextPage) {
       evt.preventDefault();
       // let values = $(this).serializeArray();
@@ -109,14 +109,13 @@ $(function () {
 
   $(".emr-cat").on("click", function () {
     let target = $(this).attr("data-target");
-    let form = $("form");
+    let form = $("form[data-form-target='EMR']");
     // if (form.valid()) {
     //   form.trigger("submit", [target]);
     //   getEMRContent(target);
     //   activeEMRView = target;
     // }
     form.trigger("submit", [target]);
-    getEMRContent(target);
   });
 
   let activeEMRView = localStorage.getItem("activeEMRView")

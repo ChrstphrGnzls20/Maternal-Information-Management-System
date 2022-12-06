@@ -193,4 +193,30 @@
       data-next-page="ros-cardiovascular"
     />
   </div>
+
+  <script>
+    $(".rosBreast").on("submit", function(){
+      let Breast = { }
+
+      let rosBreastRash = $("input[name='breastRash']:checked");
+      let rosBreastItch = $("input[name='breastItching']:checked");
+      let rosTenderness = $("input[name='Tenderness']:checked");
+      let rosSwollenBreast = $("input[name='swollenBreasts']:checked");
+      let rosBreastLump = $("input[name='breastLumps']:checked");
+      let rosBreastDischarge = $("input[name='breastDischarge']:checked");
+      let rosBreastNotes = $("#breastNotes");
+
+      Breast[rosBreastRash.attr("name")] = (rosBreastRash.val());
+      Breast[rosBreastItch.attr("name")] = (rosBreastItch.val());
+      Breast[rosTenderness.attr("name")] = (rosTenderness.val());
+      Breast[rosSwollenBreast.attr("name")] = (rosSwollenBreast.val());
+      Breast[rosBreastLump.attr("name")] = (rosBreastLump.val());
+      Breast[rosBreastDischarge.attr("name")] = (rosBreastDischarge.val());
+      Breast[rosBreastNotes.attr("name")] = (rosBreastNotes.val());
+      
+
+      console.log(Breast);
+
+    });
+  </script>
 </form>

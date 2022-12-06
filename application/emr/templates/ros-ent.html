@@ -1,4 +1,4 @@
-<form class="rosENT" data-form-target="EMR">
+<form class="rosENT" id="ros-ent" data-form-target="EMR">
   <div class="row mt-2">
     <h3 class="default-label col-12">ROS - Ears, Nose, Throat</h3>
   </div>
@@ -146,26 +146,59 @@
   </div>
 
   <script>
-              
-    $(".rosENT").on("submit", function(){
-      let ENT = { }
+    $(function () {
+      let existingData = getDataFromLocalStorage(
+        (objName = "earsNoseThroat"),
+        (parentObjName = "reviewOfSystems")
+      );
 
-      let rosChronicSinus = $("input[name='chronicSinus']:checked");
-      let rosNoseBleed = $("input[name='noseBleeds']:checked");
-      let rosSoreThroat = $("input[name='soreThroat']:checked");
-      let rosThyroidMass = $("input[name='thyroidMass']:checked");
-      let rosENTNotes = $("#entNotes");
+      if (existingData) {
+        Object.entries(existingData).forEach(([key, value]) => {
+          // IF INPUT IS RADIO BUTTON
+          if (key === "entNotes") {
+            $("#entNotes").val(value);
+            return;
+          }
 
+          let radios = $(`input[name=${key}`);
 
-      ENT[rosChronicSinus.attr("name")] = (rosChronicSinus).val();
-      ENT[rosNoseBleed.attr("name")] = (rosNoseBleed.val());
-      ENT[rosSoreThroat.attr("name")] = (rosSoreThroat.val());
-      ENT[rosThyroidMass.attr("name")] = (rosThyroidMass.val());
-      ENT[rosENTNotes.attr("name")] = (rosENTNotes.val());
-      
+          $(radios).each(function () {
+            let radioValue = $(this).prop("value");
+            if (radioValue === value) {
+              $(this).prop("checked", true);
+            }
+          });
+        });
+      }
 
-      console.log(ENT);
+      $("#ros-ent").on("submit", function () {
+        let eyesROS = {};
+        let cleanedData = cleanData($(this).serializeArray());
 
+        saveDataToLocalstorage(
+          (data = cleanedData),
+          (objName = "earsNoseThroat"),
+          (parentObjName = "reviewOfSystems")
+        );
+      });
+    });
+  </script>
+
+  <script>
+    $(".rosEye").on("submit", function () {
+      let Eyes = {};
+
+      let rosImpVisionYes = $("input[name='ImpVision']:checked");
+      let rosPeriVis = $("input[name='periVis']:checked");
+      let rosGlaucomaVis = $("input[name='glaucomaVis']:checked");
+      let rosEyesNotes = $("#eyesNotes");
+
+      Eyes[rosImpVisionYes.attr("name")] = rosImpVisionYes.val();
+      Eyes[rosPeriVis.attr("name")] = rosPeriVis.val();
+      Eyes[rosGlaucomaVis.attr("name")] = rosGlaucomaVis.val();
+      Eyes[rosEyesNotes.attr("name")] = rosEyesNotes.val();
+
+      console.log(Eyes);
     });
   </script>
 </form>

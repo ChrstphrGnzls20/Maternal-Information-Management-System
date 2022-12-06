@@ -1,4 +1,56 @@
 const LOCALSTORAGEKEY = "emr-data";
+function initializeEMRToLocalStorage() {
+  const EMRDATA = {
+    vitalSigns: {},
+    HPI: {},
+    patientHistory: {
+      pastMedicalHistory: {},
+      pregnancyHistory: {},
+      contraceptiveHistory: {},
+      gynecologicalHistory: {},
+      currentMedicationHistory: {},
+      preventiveCareHistory: {},
+      surgicalHistory: {},
+      allergyHistory: {},
+    },
+    reviewOfSystems: {
+      constitutional: {},
+      eyes: {},
+      earsNoseThroat: {},
+      breast: {},
+      cardiovascular: {},
+      respiratory: {},
+      gastrointestinal: {},
+      urinaryAndReproductive: {},
+      skin: {},
+      neurological: {},
+      musculoskeletal: {},
+      endocrine: {},
+      psychiatric: {},
+      bloodAndLymph: {},
+      allergy: {},
+    },
+    physicalExamination: {
+      fetalPresentation: {},
+      general: {},
+      internalExamination: {
+        papSmear: {},
+        vulvaVaginaCervix: {},
+      },
+    },
+    assessment: {},
+    laboratory: {},
+    plan: {
+      prescription: [],
+      carePlan: [],
+    },
+  };
+  let existingData = localStorage.getItem(LOCALSTORAGEKEY);
+  if (!existingData) {
+    localStorage.setItem(LOCALSTORAGEKEY, JSON.stringify(EMRDATA));
+  }
+}
+
 function getDataFromLocalStorage(
   objName,
   parentObjName = null,
@@ -45,21 +97,10 @@ function saveDataToLocalstorage(
     emrData[objName] = data;
   } else if (parentObjName && !grandParentObjName) {
     // DATA WITH NESTED ONE LEVEL
-    try {
-      emrData[parentObjName][objName] = data;
-    } catch {
-      emrData[parentObjName] = {};
-      emrData[parentObjName][objName] = data;
-    }
+    emrData[parentObjName][objName] = data;
   } else {
     // DATA WITH NESTED TWO LEVELS
-    try {
-      emrData[grandParentObjName][parentObjName][objName] = data;
-    } catch {
-      emrData[grandParentObjName] = {};
-      emrData[grandParentObjName][parentObjName] = {};
-      emrData[grandParentObjName][parentObjName][objName] = data;
-    }
+    emrData[grandParentObjName][parentObjName][objName] = data;
   }
 
   localStorage.setItem(LOCALSTORAGEKEY, JSON.stringify(emrData));

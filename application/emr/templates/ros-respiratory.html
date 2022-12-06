@@ -96,7 +96,7 @@
 
 </form> -->
 
-<form class="rosResp" data-form-target="EMR">
+<form class="rosResp" id="ros-resp" data-form-target="EMR">
   <div class="row mt-2">
     <h3 class="default-label col-12">ROS - Respiratory</h3>
   </div>
@@ -294,28 +294,40 @@
   </div>
 
   <script>
-    $(".rosResp").on("submit", function(){
-      let Respiratory = { };
+    $(function () {
+      let existingData = getDataFromLocalStorage(
+        (objName = "respiratory"),
+        (parentObjName = "reviewOfSystems")
+      );
 
-      let rosChronicCough = $("input[name='chronicCough']:checked");
-      let rosCoughBlood = $("input[name='coughingBlood']:checked");
-      let rosRespShortBreath = $("input[name='shortnessOfBreath']:checked");
-      let rosAsthma = $("input[name='Asthma']:checked");
-      let rosTBexpose = $("input[name='tbExposure']:checked");
-      let rosRespChills = $("input[name='respChills']:checked");
-      let rosRespNotes = $("#respNotes");
+      if (existingData) {
+        Object.entries(existingData).forEach(([key, value]) => {
+          // IF INPUT IS RADIO BUTTON
+          if (key === "respNotes") {
+            $("#respNotes").val(value);
+            return;
+          }
 
-      Respiratory[rosChronicCough.attr("name")] = (rosChronicCough.val());
-      Respiratory[rosCoughBlood.attr("name")] = (rosCoughBlood.val());
-      Respiratory[rosRespShortBreath.attr("name")] = (rosRespShortBreath.val());
-      Respiratory[rosAsthma.attr("name")] = (rosAsthma.val());
-      Respiratory[rosTBexpose.attr("name")] = (rosTBexpose.val());
-      Respiratory[rosRespChills.attr("name")] = (rosRespChills.val());
-      Respiratory[rosRespNotes.attr("name")] = (rosRespNotes.val());
-      
+          let radios = $(`input[name=${key}`);
 
-      console.log(Respiratory);
+          $(radios).each(function () {
+            let radioValue = $(this).prop("value");
+            if (radioValue === value) {
+              $(this).prop("checked", true);
+            }
+          });
+        });
+      }
+
+      $("#ros-resp").on("submit", function () {
+        let cleanedData = cleanData($(this).serializeArray());
+
+        saveDataToLocalstorage(
+          (data = cleanedData),
+          (objName = "respiratory"),
+          (parentObjName = "reviewOfSystems")
+        );
+      });
     });
   </script>
-
 </form>

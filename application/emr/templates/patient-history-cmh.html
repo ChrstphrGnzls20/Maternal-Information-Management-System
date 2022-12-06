@@ -6,7 +6,7 @@
   <h3>Current Medication</h3>
 
   <div class="container-md form-container bg-white m-2 p-2">
-    <table class="table table-borderless">
+    <table class="table table-borderless" id="current-medication-history-table">
       <thead class="thLabel">
         <tr>
           <th scope="col" width="5%"></th>
@@ -15,28 +15,7 @@
         </tr>
       </thead>
 
-      <tbody>
-        <tr id="tr-dummy">
-          <td>
-            <button
-              class="btn btn-success btn-add"
-              type="button"
-              data-bs-toggle="modal"
-              data-bs-target="#currentMedicationHistoryModal"
-            >
-              <span>
-                <i class="fa-solid fa-plus"></i>
-              </span>
-            </button>
-          </td>
-          <!-- <td>
-            <input type="text" name="drugName" class="form-control" />
-          </td>
-          <td>
-            <input type="text" name="drugDose" class="form-control datepicker" />
-          </td> -->
-        </tr>
-      </tbody>
+      <tbody></tbody>
     </table>
   </div>
 
@@ -145,21 +124,9 @@
       minViewMode: "years",
     });
 
-    let trIndex = 1;
     let mode = "";
-    let activeTrIndex = 0;
     let previousData = {};
     let currentMedicationHistory = [];
-
-    function generateFormGroup(data) {
-      return `
-      <input type='text' name='drugName' value='${data.drugName}' />
-      <input type='text' name='drugDose' value='${data.drugDose}' />
-      `;
-
-      // let form = $("form[data-form-target=EMR]");
-      // form.append(toInsert);
-    }
 
     function generateTableTDs(data) {
       return `
@@ -185,6 +152,56 @@
       `;
     }
 
+    function updateTable(dataArray) {
+      let tableBody = $("#current-medication-history-table tbody");
+      let trWithAddBtn = `<tr id="tr-dummy">
+          <td>
+            <button
+              class="btn btn-success btn-add"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#currentMedicationHistoryModal"
+            >
+              <span>
+                <i class="fa-solid fa-plus"></i>
+              </span>
+            </button>
+          </td>
+        </tr>`;
+
+      tableBody.empty();
+      tableBody.append(trWithAddBtn);
+
+      if (!dataArray.length) return;
+
+      dataArray.forEach(function (item) {
+        let TDs = generateTableTDs(item);
+
+        // APPEND GENERATED TR TO TABLE
+        let toAppend = `
+        <tr>
+          ${TDs}
+        </tr>
+        `;
+        $(toAppend).insertBefore("#tr-dummy");
+      });
+    }
+
+    // FUNCTIONALITY TO LOAD EXISTING DATA FROM LOCALSTORAGE
+    let existingData = getDataFromLocalStorage(
+      "currentMedicationHistory",
+      "patientHistory"
+    );
+
+    updateTable(currentMedicationHistory);
+
+    if (Object.keys(existingData).length) {
+      console.log(existingData);
+      currentMedicationHistory = [...existingData];
+
+      updateTable(currentMedicationHistory);
+    }
+
     // when add button (+) is clicked
     $("table").on("click", ".btn-add", function () {
       mode = "ADD";
@@ -196,19 +213,9 @@
     $("table").on("click", ".btn-edit", function () {
       mode = "EDIT";
       let trParent = $(this).parent().parent();
-      activeTrIndex = trParent.attr("data-row-index");
 
       clearModalTextFields((modalClass = ".modal"));
 
-      // let inputs = $(`div[data-row-index=${activeTrIndex}]`).find("input");
-      // // console.log(trParent.find("input[type=text]"));
-      // inputs.each(function () {
-      //   let name = $(this).attr("name");
-      //   let value = $(this).val();
-      //   $(`.modal input[name=${name}]`).val(value);
-      //   console.log(name, value);
-      //   previousData[name] = value;
-      // });
       let siblings = $(this).parent().siblings();
       let drugName = $(siblings[0]).text().trim();
       let drugDose = $(siblings[1]).text().trim();
@@ -225,10 +232,6 @@
     });
 
     $("table").on("click", ".btn-delete", function () {
-      let trParent = $(this).parent().parent();
-
-      trParent.remove();
-
       // REMOVE DELETED VALUE
       let siblings = $(this).parent().siblings();
       let drugName = $(siblings[0]).text().trim();
@@ -243,6 +246,8 @@
       currentMedicationHistory = currentMedicationHistory.filter((item) => {
         return !_.isEqual(item, previousData);
       });
+
+      updateTable(currentMedicationHistory);
     });
 
     // WHEN MODAL IS CLOSED
@@ -262,54 +267,19 @@
       let data = cleanData(submittedValues);
 
       if (mode === "ADD") {
-        generateFormGroup(data);
-        let TDs = generateTableTDs(data);
-
-        // append generated TR to table
-        let toAppend = `
-        <tr data-row-index=${trIndex}>
-          ${TDs}
-        </tr>
-        `;
-        $(toAppend).insertBefore("#tr-dummy");
-
-        // add fields to hidden div that holds form data
-        // let newFormGroup = generateFormGroup(data);
-        // toAppend = `
-        // <div data-row-index=${trIndex} style="display: none;">
-        //   ${newFormGroup}
-        // </div>
-        // `;
-
-        // let form = $("form[data-form-target=EMR]");
-        // form.append(toAppend);
-
         // APPEND ADDED VALUES TO EXISTING OBJECT
         currentMedicationHistory.push(data);
-        console.log(currentMedicationHistory);
 
-        trIndex++;
+        updateTable(currentMedicationHistory);
       } else {
-        // edit functionality
-        let trParent = $(`table tr[data-row-index=${activeTrIndex}]`);
-
-        // update table row values
-        trParent.empty();
-        let TDs = generateTableTDs(data);
-        trParent.append(TDs);
-
-        // update hidden form values
-        // let currentFormDiv = $(`div[data-row-index=${activeTrIndex}]`);
-
-        // currentFormDiv.empty();
-        // let newFormGroup = generateFormGroup(data);
-        // currentFormDiv.append(newFormGroup);
-
+        // EDIT FUNCTIONALITY
         // APPEND UPDATED VALUES TO EXISTING OBJECT
         currentMedicationHistory = currentMedicationHistory.filter((item) => {
           return !_.isEqual(item, previousData);
         });
         currentMedicationHistory.push(data);
+
+        updateTable(currentMedicationHistory);
       }
 
       $(".modal").modal("hide");
@@ -318,6 +288,11 @@
     // WHEN FORM IS SUBMITTED
     $("#current-medication-form").on("submit", function () {
       console.log(currentMedicationHistory);
+      saveDataToLocalstorage(
+        currentMedicationHistory,
+        "currentMedicationHistory",
+        "patientHistory"
+      );
     });
   });
 </script>

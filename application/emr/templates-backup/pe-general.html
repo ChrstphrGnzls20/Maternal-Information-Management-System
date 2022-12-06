@@ -52,7 +52,7 @@
             </th>
             <th>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="neHEENTPEPE" name="HEENTPE" checked value="HEENT was unexamined" aria-label="peHEENTNE">
+                <input class="form-check-input" type="radio" id="neHEENTPE" name="HEENTPE" checked value="HEENT was unexamined" aria-label="peHEENTNE">
               </div>
             </th>
             <td>HEENT</td>
@@ -347,7 +347,7 @@
     <div  class = "row">
       <div class="form-group col-12 mt-3">
       <label class = "form-label" for = "GeneralNotes">Notes</label>
-      <textarea class="form-control" id="General Notes" name = "GeneralNotes" rows="5" placeholder="Additional notes here"></textarea>
+      <textarea class="form-control" id="GeneralNotes" name = "GeneralNotes" rows="5" placeholder="Additional notes here"></textarea>
       </div>
     </div> 
 
@@ -368,8 +368,10 @@
     </div>
 </form>
 
-    <!-- <script>
-      let genPEVal = {
+    <script>
+      $(".genPE").on("submit", function(){
+
+        let genPEVals = {
         genPEGen: {},
         genPEHEENT: {},
         genPENeck: {},
@@ -384,51 +386,109 @@
         genPENeuro: {},
         genPEBreast: {}
        }
+        
+      let genGoodGenHealth = $("input[name='goodGenHealthPE']:checked");
+      let genGoodGenHealthNotes = $("#goodGenHealthNotes");
+      let genHEENTPE = $("input[name='HEENTPE']:checked");
+      let genHEENTNotes = $("#HEENTNotes");
+      let genNeckPE = $("input[name='NeckPE']:checked");
+      let genNeckNotes = $("#NeckNotes");
+      let genChestAndLungs = $("input[name='ChestandLungsPE']:checked");
+      let genChestAndLungsNotes = $("#ChestandLungsNotes");
+      let genCardiovascular = $("input[name='CardiovascularPE']:checked");
+      let genCardiovascularNotes = $("#CardiovascularNotes");
+      let genAbdomen = $("input[name='AbdomenPE']:checked");
+      let genAbdomenNotes = $("#AbdomenNotes");
+      let genGenitoUrinary = $("input[name='GenitourinaryPE']:checked");
+      let genGenitoUrinaryNotes = $("#GenitourinaryNotes");
+      let genRectal = $("input[name='RectalPE']:checked");
+      let genRectalNotes = $("#RectalNotes");
+      let genMusculoskeletal = $("input[name='MusculoskeletalPE']:checked");
+      let genMusculoskeletalNotes = $("#MusculoskeletalNotes");
+      let genLymphNode = $("input[name='LymphNodesPE']:checked");
+      let genLymphNodeNotes = $("#LymphNodesNotes");
+      let genSkin = $("input[name='SkinPE']:checked");
+      let genSkinNotes = $("#SkinNotes");
+      let genNeurological = $("input[name='NeurologicalPE']:checked");
+      let genNeurologicalNotes = $("#NeurologicalNotes");
+      let genBreast = $("input[name='BreastPE']:checked");
+      let genBreastNotes = $("#BreastNotes");
+      let genGenNotes = $('#GeneralNotes')
 
-      $(".genPE :input").change(function(){
-      let genPEName = $(this).attr("name");
-      if(genPEName == "goodGenHealthPE" || genPEName == "goodGenHealthNotes"){
-        genPEVal.genPEGen[genPEName] = $(this).val();
-      }
-      else if(genPEName == "HEENTPE" || genPEName == "HEENTNotes"){
-        genPEVal.genPEHEENT[genPEName] = $(this).val();
-      }
-      else if(genPEName == "NeckPE" || genPEName == "NeckNotes"){
-        genPEVal.genPENeck[genPEName] = $(this).val();
-      }
-      else if(genPEName == "ChestandLungsPE" || genPEName == "ChestandLungsNotes"){
-        genPEVal.genPEChest[genPEName] = $(this).val();
-      }
-      else if(genPEName == "CardiovascularPE" || genPEName == "CardiovascularNotes"){
-        genPEVal.genPECardio[genPEName] = $(this).val();
-      }
-      else if(genPEName == "AbdomenPE" || genPEName == "AbdomenNotes"){
-        genPEVal.genPEAbdomen[genPEName] = $(this).val();
-      }
-      else if(genPEName == "GenitourinaryPE" || genPEName == "GenitourinaryNotes"){
-        genPEVal.genPEUrinary[genPEName] = $(this).val();
-      }
-      else if(genPEName == "RectalPE" || genPEName == "RectalNotes"){
-        genPEVal.genPERectal[genPEName] = $(this).val();
-      }
-      else if(genPEName == "MusculoskeletalPE" || genPEName == "MusculoskeletalNotes"){
-        genPEVal.genPEMusculoSkeletal[genPEName] = $(this).val();
-      }
-      else if(genPEName == "LymphNodesPE" || genPEName == "LymphNodesNotes"){
-        genPEVal.genPELymph[genPEName] = $(this).val();
-      }
-      else if(genPEName == "SkinPE" || genPEName == "SkinNotes"){
-        genPEVal.genPESkin[genPEName] = $(this).val();
-      }
-      else if(genPEName == "NeurologicalPE" || genPEName == "NeurologicalNotes"){
-        genPEVal.genPENeuro[genPEName] = $(this).val();
-      }
-      else if(genPEName == "BreastPE" || genPEName == "BreastNotes"){
-        genPEVal.genPEBreast[genPEName] = $(this).val();
-      }
-      else{
-        genPEVal[genPEName] = $(this).val();
-      }
-      console.log(genPEVal);
+
+
+      genPEVals.genPEGen[genGoodGenHealth.attr("name")] = (genGoodGenHealth.val());
+      genPEVals.genPEGen[genGoodGenHealthNotes.attr("name")] = (genGoodGenHealthNotes.val());
+      genPEVals.genPEHEENT[genHEENTPE.attr("name")] = (genHEENTPE.val());
+      genPEVals.genPEHEENT[genHEENTNotes.attr("name")] = (genHEENTNotes.val());
+      genPEVals.genPENeck[genNeckPE.attr("name")] = (genNeckPE.val());
+      genPEVals.genPENeck[genNeckNotes.attr("name")] = (genNeckNotes.val());
+      genPEVals.genPEChest[genChestAndLungs.attr("name")] = (genChestAndLungs.val());
+      genPEVals.genPEChest[genChestAndLungsNotes.attr("name")] = (genChestAndLungsNotes.val());
+      genPEVals.genPECardio[genCardiovascular.attr("name")] = (genCardiovascular.val());
+      genPEVals.genPECardio[genCardiovascularNotes.attr("name")] = (genCardiovascularNotes.val());
+      genPEVals.genPEAbdomen[genAbdomen.attr("name")] = (genAbdomen.val());
+      genPEVals.genPEAbdomen[genAbdomenNotes.attr("name")] = (genAbdomenNotes.val());
+      genPEVals.genPEUrinary[genGenitoUrinary.attr("name")] = (genGenitoUrinary.val());
+      genPEVals.genPEUrinary[genGenitoUrinaryNotes.attr("name")] = (genGenitoUrinaryNotes.val());
+      genPEVals.genPERectal[genRectal.attr("name")] = (genRectal.val());
+      genPEVals.genPERectal[genRectalNotes.attr("name")] = (genRectalNotes.val());
+      genPEVals.genPEMusculoSkeletal[genMusculoskeletal.attr("name")] = (genMusculoskeletal.val());
+      genPEVals.genPEMusculoSkeletal[genMusculoskeletalNotes.attr("name")] = (genMusculoskeletalNotes.val());
+      genPEVals.genPELymph[genLymphNode.attr("name")] = (genLymphNode.val());
+      genPEVals.genPELymph[genLymphNodeNotes.attr("name")] = (genLymphNodeNotes.val());
+      genPEVals.genPESkin[genSkin.attr("name")] = (genSkin.val());
+      genPEVals.genPESkin[genSkinNotes.attr("name")] = (genSkinNotes.val());
+      genPEVals.genPENeuro[genNeurological.attr("name")] = (genNeurological.val());
+      genPEVals.genPENeuro[genNeurologicalNotes.attr("name")] = (genNeurologicalNotes.val());
+      genPEVals.genPEBreast[genBreast.attr("name")] = (genBreast.val());
+      genPEVals.genPEBreast[genBreastNotes.attr("name")] = (genBreastNotes.val());
+      genPEVals[genGenNotes.attr("name")] = (genGenNotes.val());
+      // let genPEName = $(this).attr("name");
+      // if(genPEName == "goodGenHealthPE" || genPEName == "goodGenHealthNotes"){
+      //   genPEVal.genPEGen[genPEName] = $(this).val();
+      // }
+      // else if(genPEName == "HEENTPE" || genPEName == "HEENTNotes"){
+      //   genPEVal.genPEHEENT[genPEName] = $(this).val();
+      // }
+      // else if(genPEName == "NeckPE" || genPEName == "NeckNotes"){
+      //   genPEVal.genPENeck[genPEName] = $(this).val();
+      // }
+      // else if(genPEName == "ChestandLungsPE" || genPEName == "ChestandLungsNotes"){
+      //   genPEVal.genPEChest[genPEName] = $(this).val();
+      // }
+      // else if(genPEName == "CardiovascularPE" || genPEName == "CardiovascularNotes"){
+      //   genPEVal.genPECardio[genPEName] = $(this).val();
+      // }
+      // else if(genPEName == "AbdomenPE" || genPEName == "AbdomenNotes"){
+      //   genPEVal.genPEAbdomen[genPEName] = $(this).val();
+      // }
+      // else if(genPEName == "GenitourinaryPE" || genPEName == "GenitourinaryNotes"){
+      //   genPEVal.genPEUrinary[genPEName] = $(this).val();
+      // }
+      // else if(genPEName == "RectalPE" || genPEName == "RectalNotes"){
+      //   genPEVal.genPERectal[genPEName] = $(this).val();
+      // }
+      // else if(genPEName == "MusculoskeletalPE" || genPEName == "MusculoskeletalNotes"){
+      //   genPEVal.genPEMusculoSkeletal[genPEName] = $(this).val();
+      // }
+      // else if(genPEName == "LymphNodesPE" || genPEName == "LymphNodesNotes"){
+      //   genPEVal.genPELymph[genPEName] = $(this).val();
+      // }
+      // else if(genPEName == "SkinPE" || genPEName == "SkinNotes"){
+      //   genPEVal.genPESkin[genPEName] = $(this).val();
+      // }
+      // else if(genPEName == "NeurologicalPE" || genPEName == "NeurologicalNotes"){
+      //   genPEVal.genPENeuro[genPEName] = $(this).val();
+      // }
+      // else if(genPEName == "BreastPE" || genPEName == "BreastNotes"){
+      //   genPEVal.genPEBreast[genPEName] = $(this).val();
+      // }
+      // else{
+      //   genPEVal[genPEName] = $(this).val();
+      // }
+
+      console.log(genPEVals);
+
       });
-    </script> -->
+    </script>

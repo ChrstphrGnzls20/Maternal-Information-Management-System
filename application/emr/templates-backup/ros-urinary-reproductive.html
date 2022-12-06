@@ -849,4 +849,64 @@
       data-next-page="ros-skin"
     />
   </div>
+
+  <script>
+              
+    $(".rosUrinary").on("submit", function(){
+      let UrinaryAndReproductive = { }
+
+      let rosKidney = $("input[name='kidneyStones']:checked");
+      let rosPelvicPain = $("input[name='pelvicPain']:checked");
+      let rosUrinateUrgency = $("input[name='urinateUrgency']:checked");
+      let rosBloating = $("input[name='bloating']:checked");
+      let rosFrequentUrination = $("input[name='frequentUrination']:checked");
+      let rosPeriodStopped = $("input[name='periodStopped']:checked");
+      let rosUrineLeak = $("input[name='urineLeak']:checked");
+      let rosTakingHormones = $("input[name='takingHormones']:checked");
+      let rosBurningUrine = $("input[name='burningUrine']:checked");
+      let rosHotFlshNightSweat= $("input[name='hotFlashNightSweat']:checked");
+      let rosPregnantPossible = $("input[name='pregnantPossible']:checked");
+      let rosLackofDesire = $("input[name='lackofDesire']:checked");
+      let rosPostCoitalBleeding = $("input[name='postCoitalBleed']:checked");
+      let rosUnusualDischarge = $("input[name='unusualDischarge']:checked");
+      let rosSignificantPMS= $("input[name='significantPMS']:checked");
+      let rosVaginalDryness= $("input[name='vaginalDryness']:checked");
+      let rosShortnessOfBreath = $("input[name='shortnessOfBreath']:checked");
+      let rosHysterectomy = $("input[name='Hysterectomy']:checked");
+      let rosIrregularPeriod = $("input[name='irregularPeriod']:checked");
+      let rosOvariesRemoved = $("input[name='ovariesRemoved']:checked");
+      let rosHeavyPeriod = $("input[name='heavyPeriod']:checked");
+      let rosPainfulIntercourse = $("input[name='urinaryPainfulIntercourse']:checked");
+      let rosUrinaryNotes = $("#urinaryNotes");
+
+      UrinaryAndReproductive[rosKidney.attr("name")] = (rosKidney.val());
+      UrinaryAndReproductive[rosPelvicPain.attr("name")] = (rosPelvicPain.val());
+      UrinaryAndReproductive[rosUrinateUrgency.attr("name")] = (rosUrinateUrgency.val());
+      UrinaryAndReproductive[rosBloating.attr("name")] = (rosBloating.val());
+      UrinaryAndReproductive[rosFrequentUrination.attr("name")] = (rosFrequentUrination.val());
+      UrinaryAndReproductive[rosPeriodStopped.attr("name")] = (rosPeriodStopped.val());
+      UrinaryAndReproductive[rosUrineLeak.attr("name")] = (rosUrineLeak.val());
+      UrinaryAndReproductive[rosTakingHormones.attr("name")] = (rosTakingHormones.val());
+      UrinaryAndReproductive[rosBurningUrine.attr("name")] = (rosBurningUrine.val());
+      UrinaryAndReproductive[rosHotFlshNightSweat.attr("name")] = (rosHotFlshNightSweat.val());
+      UrinaryAndReproductive[rosPregnantPossible.attr("name")] = (rosPregnantPossible.val());
+      UrinaryAndReproductive[rosLackofDesire.attr("name")] = (rosLackofDesire.val());
+      UrinaryAndReproductive[rosPostCoitalBleeding.attr("name")] = (rosPostCoitalBleeding.val());
+      UrinaryAndReproductive[rosUnusualDischarge.attr("name")] = (rosUnusualDischarge.val());
+      UrinaryAndReproductive[rosSignificantPMS.attr("name")] = (rosSignificantPMS.val());
+      UrinaryAndReproductive[rosVaginalDryness.attr("name")] = (rosVaginalDryness.val());
+      UrinaryAndReproductive[rosShortnessOfBreath.attr("name")] = (rosShortnessOfBreath.val());
+      UrinaryAndReproductive[rosHysterectomy.attr("name")] = (rosHysterectomy.val());
+      UrinaryAndReproductive[rosIrregularPeriod.attr("name")] = (rosIrregularPeriod.val());
+      UrinaryAndReproductive[rosOvariesRemoved.attr("name")] = (rosOvariesRemoved.val());
+      UrinaryAndReproductive[rosHeavyPeriod.attr("name")] = (rosHeavyPeriod.val());
+      UrinaryAndReproductive[rosPainfulIntercourse.attr("name")] = (rosPainfulIntercourse.val());
+      UrinaryAndReproductive[rosUrinaryNotes.attr("name")] = (rosUrinaryNotes.val());
+      
+      
+
+      console.log(UrinaryAndReproductive);
+    });
+  </script>
+
 </form>

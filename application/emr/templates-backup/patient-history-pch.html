@@ -1,4 +1,4 @@
-<form class="preventiveCareHistory" data-form-target="EMR">
+<form class="preventiveCareHistory" data-form-target="EMR" novalidate>
   <div class="row mt-2">
     <h3 class="default-label col-12">Preventive Care History</h3>
   </div>
@@ -51,6 +51,7 @@
               name="papSmeaNormalAbnormal"
               value="abnormal"
               aria-label="papsmearAbnormal"
+              disabled
             />
           </td>
           <td>
@@ -65,7 +66,7 @@
             />
           </td>
           <td>
-            <input type="text" class="form-control datepicker" />
+            <input type="text" class="form-control datepicker" disabled />
           </td>
         </tr>
 
@@ -104,6 +105,7 @@
               name="mammogramNormalAbnormal"
               value="abnormal"
               aria-label="mammogramAbnormal"
+              disabled
             />
           </td>
           <td>
@@ -118,7 +120,7 @@
             />
           </td>
           <td>
-            <input type="text" class="form-control datepicker" />
+            <input type="text" class="form-control datepicker" disabled />
           </td>
         </tr>
 
@@ -157,6 +159,7 @@
               name="colonoscopyNormalAbnormal"
               value="abnormal"
               aria-label="colonoscopyAbnormal"
+              disabled
             />
           </td>
           <td>
@@ -171,7 +174,7 @@
             />
           </td>
           <td>
-            <input type="text" class="form-control datepicker" />
+            <input type="text" class="form-control datepicker" disabled />
           </td>
         </tr>
 
@@ -210,6 +213,7 @@
               name="dexaNormalAbnormal"
               value="abnormal"
               aria-label="dexaAbnormal"
+              disabled
             />
           </td>
           <td>
@@ -224,7 +228,12 @@
             />
           </td>
           <td>
-            <input type="text" class="form-control datepicker" />
+            <input
+              type="text"
+              class="form-control datepicker"
+              disabled
+              required
+            />
           </td>
         </tr>
 
@@ -263,6 +272,7 @@
               name="colesterolTestNormalAbnormal"
               value="abnormal"
               aria-label="colesterolTestAbnormal"
+              disabled
             />
           </td>
           <td>
@@ -277,7 +287,7 @@
             />
           </td>
           <td>
-            <input type="text" class="form-control datepicker" />
+            <input type="text" class="form-control datepicker" disabled />
           </td>
         </tr>
       </tbody>
@@ -301,16 +311,6 @@
       console.log(pcHistoryVal);
     });
   </script> -->
-  <script>
-    loadDatepickers({
-      autoclose: true,
-      changeMonth: true,
-      changeYear: true,
-      format: "MM yyyy",
-      endDate: "+0d",
-      minViewMode: "months",
-    });
-  </script>
 
   <div class="d-flex justify-content-between mt-3 w-100">
     <input
@@ -328,3 +328,82 @@
     />
   </div>
 </form>
+
+<script>
+  loadDatepickers({
+    autoclose: true,
+    changeMonth: true,
+    changeYear: true,
+    format: "MM yyyy",
+    endDate: "+0d",
+    minViewMode: "months",
+  });
+
+  $(".preventiveCareHistory").validate({});
+
+  $("input[type=radio]:not(input[value=normal]):not(input[value=abnormal])").on(
+    "change",
+    function () {
+      let value = $(this).val();
+      let siblingRadioNo = $(this)
+        .parent()
+        .siblings()
+        .find("input[value=normal]");
+      let siblingRadioYes = $(this)
+        .parent()
+        .siblings()
+        .find("input[value=abnormal]");
+      let siblingDatepicker = $(this).parent().siblings().find(".datepicker");
+
+      setDatepickerValueToday(siblingDatepicker, (format = "MONTH"));
+
+      if (value === "yes") {
+        siblingDatepicker.attr("disabled", false);
+        siblingDatepicker.prop("required", true);
+        siblingRadioNo.attr("disabled", false);
+        siblingRadioYes.attr("disabled", false);
+        console.log(siblingDatepicker);
+        return;
+      }
+      siblingDatepicker.attr("disabled", true);
+      siblingDatepicker.prop("required", false);
+      siblingRadioNo.attr("disabled", true);
+      siblingRadioYes.attr("disabled", true);
+      siblingDatepicker.val(null);
+    }
+  );
+
+  $(".preventiveCareHistory").on("submit", function (evt) {
+    evt.preventDefault();
+    let preventiveCareHistory = [];
+
+    if ($(this).valid()) {
+      // GET VALUES FROM TR WITH 'YES' VALUE
+      $(".preventiveCareHistory input[value=yes]:checked").each(function () {
+        let name = $(this).attr("name");
+
+        let testResult = $(this)
+          .parent()
+          .siblings()
+          .find("input[type=radio]:checked")
+          .val();
+
+        let date = $(this).parent().siblings().find(".datepicker").val();
+
+        let tempObject = {};
+
+        tempObject[name] = testResult;
+        tempObject["date"] = date;
+        preventiveCareHistory.push(tempObject);
+      });
+      console.log(preventiveCareHistory);
+    }
+  });
+  /*
+    Structure of Data:
+    [
+      {papSmear: 'normal'|'abnormal', date: dateValue}
+      ...
+  ]
+  */
+</script>

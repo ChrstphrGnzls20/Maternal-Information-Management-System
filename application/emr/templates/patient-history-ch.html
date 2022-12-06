@@ -230,35 +230,57 @@
 </form>
 
 <script>
-  $(".contraceptiveHistory").on("submit", function () {
-    let contraceptiveHistory = {};
+  $(function () {
+    let existingData = getDataFromLocalStorage(
+      (objName = "contraceptiveHistory"),
+      (parentObjName = "patientHistory")
+    );
+    let radioKeys = ["sexuallyActive", "curMethodProblems"];
 
-    let chSexuallyActive = $("input[name='sexuallyActive']:checked");
-    let chQtyPartner = $("#qtyPartner");
-    let chPartnerYears = $("#partnerYr");
-    let chCurMethodProblems = $("input[name='curMethodProblems']:checked");
-    let chUsedMethods = $("input[name='usedMethods']:checked");
-    let phContraceptiveHistoryNotes = $("#otherMethod");
-    let usedMethods = [];
+    if (existingData) {
+      Object.entries(existingData).forEach(([key, value]) => {
+        let inputEl = $(`input[name=${key}], textarea[name=${key}]`);
+        // IF INPUT IS RADIO BUTTON
+        if (radioKeys.includes(key)) {
+          $(inputEl).each(function () {
+            if ($(this).prop("value") === value) {
+              $(this).prop("checked", true);
+              return;
+            }
+          });
+        } else if (key === "usedMethods") {
+          if (Array.isArray(value)) {
+            $(inputEl).each(function () {
+              console.log(value.includes($(this).prop("value")));
+              if (value.includes($(this).prop("value"))) {
+                $(this).prop("checked", true);
+                return;
+              }
+            });
+          } else {
+            $(inputEl).each(function () {
+              if ($(this).prop("value") === value) {
+                $(this).prop("checked", true);
+                return;
+              }
+            });
+          }
+        } else {
+          inputEl.val(value);
+        }
+      });
+    }
 
-    // FOR USED METHODS CHECKBOX
-    chUsedMethods.each(function () {
-      usedMethods.push($(this).val());
+    $("#contraceptive-history-form").on("submit", function () {
+      let ContraceptiveHistory = {};
+      let cleanedData = cleanData($(this).serializeArray());
+
+      saveDataToLocalstorage(
+        cleanedData,
+        "contraceptiveHistory",
+        "patientHistory"
+      );
     });
-
-    console.log(usedMethods);
-
-    contraceptiveHistory[chSexuallyActive.attr("name")] =
-      chSexuallyActive.val();
-    contraceptiveHistory[chQtyPartner.attr("name")] = chQtyPartner.val();
-    contraceptiveHistory[chPartnerYears.attr("name")] = chPartnerYears.val();
-    contraceptiveHistory[chCurMethodProblems.attr("name")] =
-      chCurMethodProblems.val();
-    contraceptiveHistory["usedMethods"] = usedMethods;
-    contraceptiveHistory[phContraceptiveHistoryNotes.attr("name")] =
-      phContraceptiveHistoryNotes.val();
-
-    console.log(contraceptiveHistory);
   });
 </script>
 

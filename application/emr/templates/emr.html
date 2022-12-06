@@ -246,6 +246,11 @@
 <!-- JQUERY UI -->
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
+<script>
+    let existingData = localStorage.getItem("emr-data")
+    initializeEMRToLocalStorage();
+</script>
+
 <!-- <script type="module" src="{{url_for('emr.static', filename='date-picker.js')}}" ></script> -->
 <!-- <script src="{{url_for('static', filename='emr/js/emr-data.js')}}" defer></script> -->
 

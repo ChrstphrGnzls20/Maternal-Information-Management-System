@@ -419,3 +419,12 @@ label.required::after {
   content: "*";
   color: red;
 }
+
+input[disabled],
+textarea[disabled] {
+  cursor: not-allowed;
+}
+
+input[type="radio"]:disabled {
+  cursor: default;
+}

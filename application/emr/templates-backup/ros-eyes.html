@@ -116,4 +116,25 @@
       data-next-page="ros-ent"
     />
   </div>
+
+  <script>
+              
+    $(".rosEye").on("submit", function(){
+      let Eyes = { }
+
+      let rosImpVisionYes = $("input[name='ImpVision']:checked");
+      let rosPeriVis = $("input[name='periVis']:checked");
+      let rosGlaucomaVis = $("input[name='glaucomaVis']:checked");
+      let rosEyesNotes = $("#eyesNotes");
+
+      Eyes[rosImpVisionYes.attr("name")] = (rosImpVisionYes.val());
+      Eyes[rosPeriVis.attr("name")] = (rosPeriVis.val());
+      Eyes[rosGlaucomaVis.attr("name")] = (rosGlaucomaVis.val());
+      Eyes[rosEyesNotes.attr("name")] = (rosEyesNotes.val());
+
+
+      console.log(Eyes);
+    });
+  </script>
+
 </form>

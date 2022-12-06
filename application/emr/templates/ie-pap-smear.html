@@ -1,5 +1,5 @@
 <!-- TODO: responsiveness of site when in md size -->
-<form class="papTest" data-form-target="EMR">
+<form class="papTest" id="papSmear-form" data-form-target="EMR">
   <div class="row">
     <h3 class="default-label">Pap Smear</h3>
   </div>
@@ -144,21 +144,65 @@
       data-next-page="ie-vag-vul-cer"
     />
   </div>
+</form>
 
- <script>
-              
-    $(".papTest").on("submit", function(){
-      let PapSmear = { }
+<script>
+  $(function () {
+    let existingData = getDataFromLocalStorage(
+      (objName = "papSmear"),
+      (parentObjName = "internalExamination"),
+      (grandParentObjName = "physicalExamination")
+    );
 
-      let iePapSmear = $("input[name='papSmear']:checked");
-      let iePapSmearNotes = $("#papSmearGenNotes");
+    console.log(existingData);
 
-      PapSmear[iePapSmear.attr("name")] = (iePapSmear.val());
-      PapSmear[iePapSmearNotes.attr("name")] = (iePapSmearNotes.val());
-      
+    if (Object.keys(existingData).length) {
+      // SET VALUES OF VAGINA
+      Object.entries(existingData).forEach(([key, value]) => {
+        if (key === "papSmearGenNotes") {
+          $("#papSmearGenNotes").val(value);
+          return;
+        }
+
+        let radios = $(`input[name=${key}`);
+
+        $(radios).each(function () {
+          let radioValue = $(this).prop("value");
+          if (radioValue === value) {
+            $(this).prop("checked", true);
+          }
+        });
+      });
+    }
+
+    $(".papTest").on("submit", function () {
+      // VAGINA
+      let Result = {};
+      checkedRadios = $("#papSmear-form input[type=radio]:checked");
+
+      checkedRadios.each(function () {
+        let nameProp = $(this).attr("name");
+        let value = $(this).val();
+
+        Result[nameProp] = value;
+      });
+
+      let resultNotes = $("#papSmearGenNotes").val();
+      Result["papSmearGenNotes"] = resultNotes;
+
+      // let VulvaVaginaCervix = [Vulva, Vagina, Cervix];
+      let PapSmear = {
+        ...Result,
+      };
 
       console.log(PapSmear);
-    });
-  </script>
 
-</form>
+      saveDataToLocalstorage(
+        (data = PapSmear),
+        (objName = "papSmear"),
+        (parentObjName = "internalExamination"),
+        (grandParentObjName = "physicalExamination")
+      );
+    });
+  });
+</script>

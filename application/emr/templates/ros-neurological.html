@@ -83,7 +83,7 @@
 
 </form> -->
 
-<form class="rosNeurological" data-form-target="EMR">
+<form class="rosNeurological" id="ros-neuro-form" data-form-target="EMR">
   <div class="row mt-2">
     <h3 class="default-label col-12">ROS - Neurological</h3>
   </div>
@@ -140,7 +140,7 @@
             type="radio"
             id="seizuresNo"
             name="seizures"
-            value="yes"
+            value="no"
             aria-label="seizuresNo"
             checked
           />
@@ -165,7 +165,7 @@
             type="radio"
             id="frequentHeadacheNo"
             name="frequentHeadache"
-            value="yes"
+            value="no"
             aria-label="frequentHeadacheNo"
             checked
           />
@@ -190,7 +190,7 @@
             type="radio"
             id="lightheadedOrDizzyNo"
             name="lightheadedOrDizzy"
-            value="yes"
+            value="no"
             aria-label="lightheadedOrDizzyNo"
             checked
           />
@@ -215,7 +215,7 @@
             type="radio"
             id="neuroMoodinessNo"
             name="neuroMoodiness"
-            value="yes"
+            value="no"
             aria-label="neuroMoodinessNo"
             checked
           />
@@ -259,25 +259,42 @@
   </div>
 
   <script>
-    $(".rosNeurological").on("submit", function(){
-    let Neurological = { }
-  
-      let rosTinglingOrNumb = $("input[name='tinglingorNumbness']:checked");
-      let rosSeizure = $("input[name='seizures']:checked");
-      let rosFreqHeadache = $("input[name='frequentHeadache']:checked");
-      let rosLightHeadorDizzy = $("input[name='lightheadedOrDizzy']:checked");
-      let rosMoodiness = $("input[name='neuroMoodiness']:checked");
-      let rosNeurologicalNotes = $("#neurologicalNotes");
+    $(function () {
+      let existingData = getDataFromLocalStorage(
+        (objName = "neurological"),
+        (parentObjName = "reviewOfSystems")
+      );
 
-      Neurological[rosTinglingOrNumb.attr("name")] = (rosTinglingOrNumb.val());
-      Neurological[rosSeizure.attr("name")] = (rosSeizure.val());
-      Neurological[rosFreqHeadache.attr("name")] = (rosFreqHeadache.val());
-      Neurological[rosLightHeadorDizzy.attr("name")] = (rosLightHeadorDizzy.val());
-      Neurological[rosMoodiness.attr("name")] = (rosMoodiness.val());
-      Neurological[rosNeurologicalNotes.attr("name")] = (rosNeurologicalNotes.val());
+      console.log(existingData);
+      if (existingData) {
+        Object.entries(existingData).forEach(([key, value]) => {
+          // IF INPUT IS RADIO BUTTON
+          if (key === "neurologicalNotes") {
+            $("#neurologicalNotes").val(value);
+            return;
+          }
 
-      console.log(Neurological);
+          let radios = $(`input[name=${key}`);
+
+          $(radios).each(function () {
+            let radioValue = $(this).prop("value");
+            if (radioValue === value) {
+              $(this).prop("checked", true);
+            }
+          });
+        });
+      }
+
+      $("#ros-neuro-form").on("submit", function () {
+        let Neurological = {};
+        let cleanedData = cleanData($(this).serializeArray());
+
+        saveDataToLocalstorage(
+          (data = cleanedData),
+          (objName = "neurological"),
+          (parentObjName = "reviewOfSystems")
+        );
+      });
     });
   </script>
-
 </form>

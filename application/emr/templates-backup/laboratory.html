@@ -227,6 +227,7 @@
       let today = new Date();
       $("#date-value").text(moment(today).format("MMMM DD, YYYY"));
 
+      // AJAX-REQUEST TO GET TEMPLATES FOR AUTOCOMPLETE FUNCTIONALITY
       $.ajax({
         type: "POST",
         url: "/emr/getTemplates",
@@ -236,7 +237,8 @@
         }),
         contentType: "application/json",
         dataType: "json",
-        success: function (response) {
+      })
+        .done(function (response) {
           var referralAutocompleteArray = [];
           let labTemplates = response.data;
           if (labTemplates) {
@@ -244,8 +246,6 @@
             Object.keys(response.data).forEach(function (key) {
               referralAutocompleteArray.push(key);
             });
-
-            // console.log($.autocomplete());
 
             $("#referralReason").autocomplete({
               clearButton: true,
@@ -267,18 +267,37 @@
               $(`input[value=${item}`).prop("checked", true);
             });
           });
-        },
+        })
+        .catch(function (xhr) {
+          console.log(xhr);
+        });
 
-        error: function (xhr) {
-          console.log("Error: " + xhr.responseText);
-        },
+      // GET VALUES
+      $("#referralDetails").on("submit", function () {
+        let reasonForReferral = $("#referralReason").val();
+        let tests = [];
+
+        $("input[name=tests]:checked").each(function () {
+          let value = $(this).val();
+          tests.push(value);
+        });
+
+        let referral = {
+          reasonForReferral: reasonForReferral,
+          tests: tests,
+        };
+
+        console.log(referral);
       });
     });
   </script>
 
-  <!-- Moment.js -->
-  <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
-
   <!-- jquery Autocomplete -->
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+  <!-- <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js"
+    integrity="sha512-TToQDr91fBeG4RE5RjMl/tqNAo35hSRR4cbIFasiV2AAMQ6yKXXYhdSdEpUcRE6bqsTiB+FPLPls4ZAFMoK5WA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script> -->
 </form>

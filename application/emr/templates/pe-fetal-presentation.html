@@ -1,5 +1,5 @@
 <!-- TODO: responsiveness of site when in md size -->
-<form class="fetalMeasure" data-form-target="EMR">
+<form class="fetalMeasure" id="fetalMeasure" data-form-target="EMR">
   <div class="row">
     <h3 class="default-label col-12">Fetal Measurements</h3>
   </div>
@@ -277,7 +277,7 @@
             type="radio"
             id="headpresentOcciput"
             name="headPresentation"
-            value="occiput"
+            value="occiput" 
             checked
           />
           <label class="form-check-label" for="headpresentOcciput">Occiput</label>
@@ -356,9 +356,68 @@
     }
     parent.append(toAppend);
   });
+
+  $(function () {
+    let existingData = getDataFromLocalStorage(
+      (objName = "fetalPresentation"),
+      (parentObjName = "physicalExamination")
+    );
+
+    let radioKeys = [
+      "fetalPresentation",
+      "headPresentation",
+      "breachType",
+      "wombPosition",
+      "mouldingVal",
+    ];
+
+    if (existingData) {
+      Object.entries(existingData).forEach(([key, value]) => {
+        let inputEl = $(`input[name=${key}], textarea[name=${key}]`);
+        // IF INPUT IS RADIO BUTTON
+        if (radioKeys.includes(key)) {
+          $(inputEl).each(function () {
+            if ($(this).prop("value") === value) {
+              $(this).prop("checked", true);
+              return;
+            }
+          });
+        } else if (key === "riskFactors") {
+          if (Array.isArray(value)) {
+            $(inputEl).each(function () {
+              console.log(value.includes($(this).prop("value")));
+              if (value.includes($(this).prop("value"))) {
+                $(this).prop("checked", true);
+                return;
+              }
+            });
+          } else {
+            $(inputEl).each(function () {
+              if ($(this).prop("value") === value) {
+                $(this).prop("checked", true);
+                return;
+              }
+            });
+          }
+        } else {
+          inputEl.val(value);
+        }
+      });
+    }
+
+    $("#fetalMeasure").on("submit", function () {
+      let cleanedData = cleanData($(this).serializeArray());
+
+      saveDataToLocalstorage(
+        (data = cleanedData),
+        (objName = "fetalPresentation"),
+        (parentObjName = "physicalExamination")
+      );
+    });
+  });
 </script>
 
-<script>
+<!-- <script>
   $(".fetalMeasure").on("submit", function () {
     let FetalPresentation = {};
 
@@ -397,4 +456,4 @@
     }
     console.log(FetalPresentation);
   });
-</script>
+</script> -->

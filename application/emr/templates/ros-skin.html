@@ -1,4 +1,4 @@
-<form class="rosSkin" data-form-target="EMR">
+<form class="rosSkin" id="ros-skin-form" data-form-target="EMR">
   <div class="row mt-2">
     <h3 class="default-label col-12">ROS - Integument (Skin)</h3>
   </div>
@@ -194,29 +194,51 @@
       data-next-page="ros-neurological"
     />
   </div>
-
-  <script>
-    $(".rosSkin").on("submit", function(){
-    let Skin = { }
-  
-      let rosRash = $("input[name='rash']:checked");
-      let rosItching = $("input[name='itching']:checked");
-      let rosHairGrowth = $("input[name='hairGrowthChange']:checked");
-      let rosNewSkin = $("input[name='newSkinLesions']:checked");
-      let rosRecentChanges = $("input[name='recentChangesToSkin']:checked");
-      let rosAcne = $("input[name='acne']:checked");
-      let rosSkinNotes = $("#skinNotes");
-
-      Skin[rosRash.attr("name")] = (rosRash.val());
-      Skin[rosItching.attr("name")] = (rosItching.val());
-      Skin[rosHairGrowth.attr("name")] = (rosHairGrowth.val());
-      Skin[rosNewSkin.attr("name")] = (rosNewSkin.val());
-      Skin[rosRecentChanges.attr("name")] = (rosRecentChanges.val());
-      Skin[rosAcne.attr("name")] = (rosAcne.val());
-      Skin[rosSkinNotes.attr("name")] = (rosSkinNotes.val());
-
-      console.log(Skin);
-    });
-  </script>
-
 </form>
+
+<script>
+  $(function () {
+    let existingData = getDataFromLocalStorage(
+      (objName = "skin"),
+      (parentObjName = "reviewOfSystems")
+    );
+    let radioKeys = [
+      "rash",
+      "itching",
+      "hairGrowthChange",
+      "newSkinLesions",
+      "recentChangesToSkin",
+      "acne",
+    ];
+
+    if (existingData) {
+      Object.entries(existingData).forEach(([key, value]) => {
+        // IF INPUT IS RADIO BUTTON
+        if (key === "skinNotes") {
+          $("#skinNotes").val(value);
+          return;
+        }
+
+        let radios = $(`input[name=${key}`);
+
+        $(radios).each(function () {
+          let radioValue = $(this).prop("value");
+          if (radioValue === value) {
+            $(this).prop("checked", true);
+          }
+        });
+      });
+    }
+
+    $("#ros-skin-form").on("submit", function () {
+      let Constitution = {};
+      let cleanedData = cleanData($(this).serializeArray());
+
+      saveDataToLocalstorage(
+        (data = cleanedData),
+        (objName = "skin"),
+        (parentObjName = "reviewOfSystems")
+      );
+    });
+  });
+</script>

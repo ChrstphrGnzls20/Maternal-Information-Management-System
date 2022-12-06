@@ -1,4 +1,8 @@
-<form class="rosBloodandLymph" data-form-target="EMR">
+<form
+  class="rosBloodandLymph"
+  id="ros-blood-and-lymph-form"
+  data-form-target="EMR"
+>
   <div class="row mt-2">
     <h3 class="default-label col-12">ROS - Blood and Lymph</h3>
   </div>
@@ -246,35 +250,43 @@
       data-next-page="ros-allergy"
     />
   </div>
-
-  <script>
-              
-    $(".rosBloodandLymph").on("submit", function(){
-      let BloodAndLymph = { }
-
-      let rosEasyBleed = $("input[name='easyBleed']:checked");
-      let rosEasyBruise = $("input[name='easyBruise']:checked");
-      let rosSlowHeal = $("input[name='slowHeal']:checked");
-      let rosBloodAnemia = $("input[name='anemia']:checked");
-      let rosBloodClot = $("input[name='bloodClot']:checked");
-      let rosPastTransfusion = $("input[name='pastTransfusion']:checked");
-      let rosEnlargedGlandsNodes = $("input[name='enlargedGlandsNodes']:checked");
-      let rosBloodLymphSuicide = $("input[name='bloodLymphSuicidal']:checked");
-      let rosBloodLymphNotes = $("#bloodandLymphNotes");
-
-      BloodAndLymph[rosEasyBleed.attr("name")] = (rosEasyBleed.val());
-      BloodAndLymph[rosEasyBruise.attr("name")] = (rosEasyBruise.val());
-      BloodAndLymph[rosSlowHeal.attr("name")] = (rosSlowHeal.val());
-      BloodAndLymph[rosBloodAnemia.attr("name")] = (rosBloodAnemia.val());
-      BloodAndLymph[rosBloodClot.attr("name")] = (rosBloodClot.val());
-      BloodAndLymph[rosPastTransfusion.attr("name")] = (rosPastTransfusion.val());
-      BloodAndLymph[rosEnlargedGlandsNodes.attr("name")] = (rosEnlargedGlandsNodes.val());
-      BloodAndLymph[rosBloodLymphSuicide.attr("name")] = (rosBloodLymphSuicide.val());
-      BloodAndLymph[rosBloodLymphNotes.attr("name")] = (rosBloodLymphNotes.val());
-      
-      
-
-      console.log(BloodAndLymph);
-    });
-  </script>
 </form>
+
+<script>
+  $(function () {
+    let existingData = getDataFromLocalStorage(
+      (objName = "bloodAndLymph"),
+      (parentObjName = "reviewOfSystems")
+    );
+
+    if (existingData) {
+      Object.entries(existingData).forEach(([key, value]) => {
+        // IF INPUT IS RADIO BUTTON
+        if (key === "bloodandLymphNotes") {
+          $("#bloodandLymphNotes").val(value);
+          return;
+        }
+
+        let radios = $(`input[name=${key}`);
+
+        $(radios).each(function () {
+          let radioValue = $(this).prop("value");
+          if (radioValue === value) {
+            $(this).prop("checked", true);
+          }
+        });
+      });
+    }
+
+    $("#ros-blood-and-lymph-form").on("submit", function () {
+      let BloodAndLymph = {};
+      let cleanedData = cleanData($(this).serializeArray());
+
+      saveDataToLocalstorage(
+        (data = cleanedData),
+        (objName = "bloodAndLymph"),
+        (parentObjName = "reviewOfSystems")
+      );
+    });
+  });
+</script>

@@ -15,6 +15,7 @@
           id="sActiveNo"
           name="sexuallyActive"
           value="Not sexually active"
+          checked
         />
         <label class="form-check-label" for="sActiveNo">No</label>
       </div>
@@ -34,27 +35,35 @@
 
   <div class="mt-3 row">
     <div class="col-6">
-      <label for="quantityPartners">How many lifetime partners?</label>
+      <label for="quantityPartners" class="form-label required"
+        >How many lifetime partners?</label
+      >
       <br />
       <input
         class="History-input form-control"
         type="number"
         id="qtyPartner"
         name="quantityPartners"
-        min="1"
+        value="0"
+        min="0"
         max="10"
+        required
       />
     </div>
     <div class="col-6">
-      <label for="quantityPartners">How many in the last year?</label>
+      <label for="quantityPartners" class="form-label required"
+        >How many in the last year?</label
+      >
       <br />
       <input
         class="History-input form-control"
         type="number"
         id="partnerYr"
         name="partnerYears"
-        min="1"
+        value="0"
+        min="0"
         max="10"
+        required
       />
     </div>
   </div>
@@ -70,6 +79,7 @@
           id="methodProblemNo"
           name="curMethodProblems"
           value="There are no problems with current method"
+          checked
         />
         <label class="form-check-label" for="methodProblemNo">No</label>
       </div>
@@ -218,6 +228,83 @@
     />
   </div>
 </form>
+
+<script>
+  $(".contraceptiveHistory").on("submit", function () {
+    let contraceptiveHistory = {};
+
+    let chSexuallyActive = $("input[name='sexuallyActive']:checked");
+    let chQtyPartner = $("#qtyPartner");
+    let chPartnerYears = $("#partnerYr");
+    let chCurMethodProblems = $("input[name='curMethodProblems']:checked");
+    let chUsedMethods = $("input[name='usedMethods']:checked");
+    let phContraceptiveHistoryNotes = $("#otherMethod");
+    let usedMethods = [];
+
+    // FOR USED METHODS CHECKBOX
+    chUsedMethods.each(function () {
+      usedMethods.push($(this).val());
+    });
+
+    console.log(usedMethods);
+
+    contraceptiveHistory[chSexuallyActive.attr("name")] =
+      chSexuallyActive.val();
+    contraceptiveHistory[chQtyPartner.attr("name")] = chQtyPartner.val();
+    contraceptiveHistory[chPartnerYears.attr("name")] = chPartnerYears.val();
+    contraceptiveHistory[chCurMethodProblems.attr("name")] =
+      chCurMethodProblems.val();
+    contraceptiveHistory["usedMethods"] = usedMethods;
+    contraceptiveHistory[phContraceptiveHistoryNotes.attr("name")] =
+      phContraceptiveHistoryNotes.val();
+
+    console.log(contraceptiveHistory);
+  });
+</script>
+
+<!-- <script>
+  let cHistoryVal = {
+            methodsUsed: []
+          }
+
+            $(".contraceptiveHistory :input[type='checkbox']").change(function(){
+              let cHistoryName = $(this).attr("name");
+              
+              if (cHistoryName === 'usedMethods'){
+                let value = $(this).val()
+                if(cHistoryVal.methodsUsed.includes(value)){
+                  let sortMethod = cHistoryVal.methodsUsed.filter(item => value !== item);
+                  cHistoryVal.methodsUsed = sortMethod
+                  console.log(cHistoryVal);
+                  return
+                }
+                cHistoryVal.methodsUsed.push($(this).val());
+              }
+
+              else {
+                cHistoryVal[cHistoryName] = $(this).val();
+              }
+
+            })
+
+            $("#contraceptive-history-form").on("submit", function(){
+              let sexuallyActive = $("input[name='sexuallyActive']:checked");
+              let partnerYears = $("input[name='partnerYears']");
+              let quantityPartners = $("input[name='quantityPartners']");
+              let curMethodProblems = $("input[name='curMethodProblems']:checked");
+              let OtherMethod = $("textarea[name='OtherMethod']");
+
+              cHistoryVal[sexuallyActive.attr("name")] = sexuallyActive.val()
+              cHistoryVal[partnerYears.attr("name")] = partnerYears.val()
+              cHistoryVal[quantityPartners.attr("name")] = quantityPartners.val()
+              cHistoryVal[curMethodProblems.attr("name")] = curMethodProblems.val()
+
+              if(OtherMethod.val()){
+                cHistoryVal.methodsUsed.push(OtherMethod.val())
+              }
+            })
+
+  </script> -->
 
 <!-- <script>
     let cHistoryVal = {

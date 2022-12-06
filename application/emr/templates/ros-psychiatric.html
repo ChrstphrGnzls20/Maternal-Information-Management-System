@@ -122,7 +122,7 @@
 
 </form> -->
 
-<form class="rosPsychiatric" data-form-target="EMR">
+<form class="rosPsychiatric" id="ros-psych-form" data-form-target="EMR">
   <div class="row mt-2">
     <h3 class="default-label col-12">ROS - Psychological</h3>
   </div>
@@ -179,7 +179,7 @@
             type="radio"
             id="DepressionNo"
             name="Depression"
-            value="yes"
+            value="no"
             aria-label="DepressionNo"
             checked
           />
@@ -204,7 +204,7 @@
             type="radio"
             id="diffSleepingNo"
             name="diffSleeping"
-            value="yes"
+            value="no"
             aria-label="diffSleepingNo"
             checked
           />
@@ -229,7 +229,7 @@
             type="radio"
             id="excessAngerNo"
             name="excessAnger"
-            value="yes"
+            value="no"
             aria-label="excessAngerNo"
             checked
           />
@@ -254,7 +254,7 @@
             type="radio"
             id="memoryLossAndConfusionNo"
             name="memoryLossAndConfusion"
-            value="yes"
+            value="no"
             aria-label="memoryLossAndConfusionNo"
             checked
           />
@@ -279,7 +279,7 @@
             type="radio"
             id="NervousnessNo"
             name="Nervousness"
-            value="yes"
+            value="no"
             aria-label="NervousnessNo"
             checked
           />
@@ -304,7 +304,7 @@
             type="radio"
             id="psychMoodinessNo"
             name="psychMoodiness"
-            value="yes"
+            value="no"
             aria-label="psychMoodinessNo"
             checked
           />
@@ -329,7 +329,7 @@
             type="radio"
             id="sucidalAndHomicidalNo"
             name="sucidalAndHomicidal"
-            value="yes"
+            value="no"
             aria-label="sucidalAndHomicidalNo"
             checked
           />
@@ -371,35 +371,43 @@
       data-next-page="ros-blood"
     />
   </div>
-
-  <script>
-              
-    $(".rosPsychiatric ").on("submit", function(){
-      let Psychiatric = { }
-
-      let rosAnxious = $("input[name='Anxiety']:checked");
-      let rosDepression = $("input[name='Depression']:checked");
-      let rosDiffSleeping = $("input[name='diffSleeping']:checked");
-      let rosExcessAnger = $("input[name='excessAnger']:checked");
-      let rosMemoryLoss = $("input[name='memoryLossAndConfusion']:checked");
-      let rosNervousness = $("input[name='Nervousness']:checked");
-      let rosMoodiness = $("input[name='psychMoodiness']:checked");
-      let rosSuicidalAndHomicidal = $("input[name='sucidalAndHomicidal']:checked");
-      let rosPsychNotes = $("#psychologicalNotes");
-
-      Psychiatric[rosAnxious.attr("name")] = (rosAnxious.val());
-      Psychiatric[rosDepression.attr("name")] = (rosDepression.val());
-      Psychiatric[rosDiffSleeping.attr("name")] = (rosDiffSleeping.val());
-      Psychiatric[rosExcessAnger.attr("name")] = (rosExcessAnger.val());
-      Psychiatric[rosMemoryLoss.attr("name")] = (rosMemoryLoss.val());
-      Psychiatric[rosNervousness.attr("name")] = (rosNervousness.val());
-      Psychiatric[rosMoodiness.attr("name")] = (rosMoodiness.val());
-      Psychiatric[rosSuicidalAndHomicidal.attr("name")] = (rosSuicidalAndHomicidal.val());
-      Psychiatric[rosPsychNotes.attr("name")] = (rosPsychNotes.val());
-      
-
-      console.log(Psychiatric);
-    });
-  </script>
-
 </form>
+
+<script>
+  $(function () {
+    let existingData = getDataFromLocalStorage(
+      (objName = "psychiatric"),
+      (parentObjName = "reviewOfSystems")
+    );
+
+    if (existingData) {
+      Object.entries(existingData).forEach(([key, value]) => {
+        // IF INPUT IS RADIO BUTTON
+        if (key === "psychologicalNotes") {
+          $("#psychologicalNotes").val(value);
+          return;
+        }
+
+        let radios = $(`input[name=${key}`);
+
+        $(radios).each(function () {
+          let radioValue = $(this).prop("value");
+          if (radioValue === value) {
+            $(this).prop("checked", true);
+          }
+        });
+      });
+    }
+
+    $("#ros-psych-form").on("submit", function () {
+      let Psychiatric = {};
+      let cleanedData = cleanData($(this).serializeArray());
+
+      saveDataToLocalstorage(
+        (data = cleanedData),
+        (objName = "psychiatric"),
+        (parentObjName = "reviewOfSystems")
+      );
+    });
+  });
+</script>

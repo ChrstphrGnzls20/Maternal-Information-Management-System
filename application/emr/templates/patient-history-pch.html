@@ -4,7 +4,10 @@
   </div>
 
   <div style="overflow-x: auto">
-    <table class="table table-borderless table-responsive" id="ph-pch-table">
+    <table
+      class="table table-borderless table-responsive"
+      id="preventive-care-history-table"
+    >
       <thead>
         <tr align="middle">
           <th scope="col" width="10%">Yes</th>
@@ -48,7 +51,7 @@
               class="form-check-input"
               type="radio"
               id="papSmearAbnormal"
-              name="papSmeaNormalAbnormal"
+              name="papSmearNormalAbnormal"
               value="abnormal"
               aria-label="papsmearAbnormal"
               disabled
@@ -59,14 +62,19 @@
               class="form-check-input"
               type="radio"
               id="papSmearNormal"
-              name="papSmeaNormalAbnormal"
+              name="papSmearNormalAbnormal"
               value="normal"
               aria-label="papsmearNormal"
               checked
             />
           </td>
           <td>
-            <input type="text" class="form-control datepicker" disabled />
+            <input
+              type="text"
+              name="papSmearDate"
+              class="form-control datepicker"
+              disabled
+            />
           </td>
         </tr>
 
@@ -120,7 +128,12 @@
             />
           </td>
           <td>
-            <input type="text" class="form-control datepicker" disabled />
+            <input
+              type="text"
+              name="mammogramDate"
+              class="form-control datepicker"
+              disabled
+            />
           </td>
         </tr>
 
@@ -174,7 +187,12 @@
             />
           </td>
           <td>
-            <input type="text" class="form-control datepicker" disabled />
+            <input
+              type="text"
+              name="colonoscopyDate"
+              class="form-control datepicker"
+              disabled
+            />
           </td>
         </tr>
 
@@ -231,6 +249,7 @@
             <input
               type="text"
               class="form-control datepicker"
+              name="dexaDate"
               disabled
               required
             />
@@ -287,7 +306,12 @@
             />
           </td>
           <td>
-            <input type="text" class="form-control datepicker" disabled />
+            <input
+              type="text"
+              name="colesterolTestDate"
+              class="form-control datepicker"
+              disabled
+            />
           </td>
         </tr>
       </tbody>
@@ -303,14 +327,6 @@
       ></textarea>
     </div>
   </div>
-  <!-- <script>
-    let pcHistoryVal = {};
-    $(".preventiveCareHistory :input").change(function () {
-      let pcHistoryName = $(this).attr("name");
-      pcHistoryVal[pcHistoryName] = $(this).val();
-      console.log(pcHistoryVal);
-    });
-  </script> -->
 
   <div class="d-flex justify-content-between mt-3 w-100">
     <input
@@ -330,20 +346,57 @@
 </form>
 
 <script>
-  loadDatepickers({
-    autoclose: true,
-    changeMonth: true,
-    changeYear: true,
-    format: "MM yyyy",
-    endDate: "+0d",
-    minViewMode: "months",
-  });
+  $(function () {
+    loadDatepickers({
+      autoclose: true,
+      changeMonth: true,
+      changeYear: true,
+      format: "MM yyyy",
+      endDate: "+0d",
+      minViewMode: "months",
+    });
 
-  $(".preventiveCareHistory").validate({});
+    let existingData = getDataFromLocalStorage(
+      "preventiveCareHistory",
+      "patientHistory"
+    );
 
-  $("input[type=radio]:not(input[value=normal]):not(input[value=abnormal])").on(
-    "change",
-    function () {
+    if (Object.keys(existingData).length) {
+      existingData.forEach(function (item, idx) {
+        for (const [key, value] of Object.entries(item)) {
+          if (key.includes("Date")) {
+            $(`input[name=${key}]`).prop("disabled", false);
+            $(`input[name=${key}]`).val(value);
+          }
+
+          if (key === "Notes") {
+            $(`textarea[name=${key}]`).val(value);
+          }
+
+          let yesNoBtns = $(`input[name=${key}]`);
+          $(yesNoBtns).each(function () {
+            if ($(this).prop("value") === "yes") {
+              $(this).prop("checked", true);
+            }
+          });
+          let normalAbnormalBtns = $(`input[name=${key}NormalAbnormal]`);
+          $(normalAbnormalBtns).each(function () {
+            $(this).prop("disabled", false);
+            if ($(this).prop("value") === value) {
+              $(this).prop("checked", true);
+            }
+          });
+        }
+      });
+    }
+
+    $(".datepicker").on("keydown", function (e) {
+      e.preventDefault();
+    });
+
+    $(
+      "input[type=radio]:not(input[value=normal]):not(input[value=abnormal])"
+    ).on("change", function () {
       let value = $(this).val();
       let siblingRadioNo = $(this)
         .parent()
@@ -370,40 +423,44 @@
       siblingRadioNo.attr("disabled", true);
       siblingRadioYes.attr("disabled", true);
       siblingDatepicker.val(null);
-    }
-  );
+    });
 
-  $(".preventiveCareHistory").on("submit", function (evt) {
-    evt.preventDefault();
-    let preventiveCareHistory = [];
+    $(".preventiveCareHistory").on("submit", function (evt) {
+      evt.preventDefault();
+      let preventiveCareHistory = [];
 
-    if ($(this).valid()) {
-      // GET VALUES FROM TR WITH 'YES' VALUE
-      $(".preventiveCareHistory input[value=yes]:checked").each(function () {
-        let name = $(this).attr("name");
+      if ($(this).valid()) {
+        // GET VALUES FROM TR WITH 'YES' VALUE
+        $(".preventiveCareHistory input[value=yes]:checked").each(function () {
+          let name = $(this).attr("name");
 
-        let testResult = $(this)
-          .parent()
-          .siblings()
-          .find("input[type=radio]:checked")
-          .val();
+          let testResult = $(this)
+            .parent()
+            .siblings()
+            .find("input[type=radio]:checked")
+            .val();
 
-        let date = $(this).parent().siblings().find(".datepicker").val();
+          let date = $(this).parent().siblings().find(".datepicker").val();
 
-        let tempObject = {};
+          let tempObject = {};
 
-        tempObject[name] = testResult;
-        tempObject["date"] = date;
-        preventiveCareHistory.push(tempObject);
-      });
-      console.log(preventiveCareHistory);
-    }
+          tempObject[name] = testResult;
+          tempObject[`${name}Date`] = date;
+          preventiveCareHistory.push(tempObject);
+        });
+
+        // APPEND ADDITIONAL NOTES
+        let Notes = $("textarea[name=Notes]").val();
+
+        preventiveCareHistory.push({ Notes });
+        console.log(preventiveCareHistory);
+
+        saveDataToLocalstorage(
+          preventiveCareHistory,
+          "preventiveCareHistory",
+          "patientHistory"
+        );
+      }
+    });
   });
-  /*
-    Structure of Data:
-    [
-      {papSmear: 'normal'|'abnormal', date: dateValue}
-      ...
-  ]
-  */
 </script>

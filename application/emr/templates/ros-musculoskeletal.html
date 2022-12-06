@@ -83,7 +83,7 @@
 
 
 </form> -->
-<form class="rosMusculoskeletal" data-form-target="EMR">
+<form class="rosMusculoskeletal" id="ros-musculoskeletal-form"" data-form-target="EMR">
   <div class="row mt-2">
     <h3 class="default-label col-12">ROS - Musculoskeletal</h3>
   </div>
@@ -140,7 +140,7 @@
             type="radio"
             id="skeletalSwellingNo"
             name="skeletalSwelling"
-            value="yes"
+            value="no"
             aria-label="skeletalSwellingNo"
             checked
           />
@@ -165,7 +165,7 @@
             type="radio"
             id="limitofMotionNo"
             name="limitofMotion"
-            value="yes"
+            value="no"
             aria-label="limitofMotionNo"
             checked
           />
@@ -190,7 +190,7 @@
             type="radio"
             id="muscleCrampNo"
             name="muscleCramp"
-            value="yes"
+            value="no"
             aria-label="muscleCrampNo"
             checked
           />
@@ -215,7 +215,7 @@
             type="radio"
             id="backPainNo"
             name="backPain"
-            value="yes"
+            value="no"
             aria-label="backPainNo"
             checked
           />
@@ -257,29 +257,48 @@
       data-next-page="ros-endocrine"
     />
   </div>
+</form>
 
   <script>
               
-    $(".rosMusculoskeletal").on("submit", function(){
-      let MusculoSkeletal = { }
+     $(function(){
 
-      let rosJointPain = $("input[name='jointPain']:checked");
-      let rosSkeletalSwell = $("input[name='skeletalSwelling']:checked");
-      let rosMotionLimit = $("input[name='limitofMotion']:checked");
-      let rosCrampedMuscle = $("input[name='muscleCramp']:checked");
-      let rosBackPain = $("input[name='backPain']:checked");
-      let rosMuscleNotes = $("#musculoskeletalNotes");
+        let existingData = getDataFromLocalStorage(
+        (objName = "musculoskeletal"),
+        (parentObjName = "reviewOfSystems"),
+        );
+            
+            if (existingData){
+            Object.entries(existingData).forEach(([key, value]) => {
+            // IF INPUT IS RADIO BUTTON
+            if (key === "musculoskeletalNotes") {
+            $("#musculoskeletalNotes").val(value);
+            return;
+            }
 
-      MusculoSkeletal[rosJointPain.attr("name")] = (rosJointPain.val());
-      MusculoSkeletal[rosSkeletalSwell.attr("name")] = (rosSkeletalSwell.val());
-      MusculoSkeletal[rosMotionLimit.attr("name")] = (rosMotionLimit.val());
-      MusculoSkeletal[rosCrampedMuscle.attr("name")] = (rosCrampedMuscle.val());
-      MusculoSkeletal[rosBackPain.attr("name")] = (rosBackPain.val());
-      MusculoSkeletal[rosMuscleNotes.attr("name")] = (rosMuscleNotes.val());
-      
+        let radios = $(`input[name=${key}`);
 
-      console.log(MusculoSkeletal);
-    });
+        $(radios).each(function () {
+          let radioValue = $(this).prop("value");
+          if (radioValue === value) {
+            $(this).prop("checked", true);
+          }
+          });
+        });
+        }
+
+          $("#ros-musculoskeletal-form").on("submit", function () {
+          let Musculoskeletal = {};
+          let cleanedData = cleanData($(this).serializeArray());
+
+          saveDataToLocalstorage(
+          (data = cleanedData),
+          (objName = "musculoskeletal"),
+          (parentObjName = "reviewOfSystems")
+          );
+
+        });
+      })
   </script>
 
-</form>
+

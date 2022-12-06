@@ -128,24 +128,24 @@
           <input
             class="form-check-input"
             type="radio"
-            id="jointSwellingYes"
-            name="jointSwelling"
+            id="skeletalSwellingYes"
+            name="skeletalSwelling"
             value="yes"
-            aria-label="jointSwellingYes"
+            aria-label="skeletalSwellingYes"
           />
         </td>
         <td>
           <input
             class="form-check-input"
             type="radio"
-            id="jointSwellingNo"
-            name="jointSwelling"
+            id="skeletalSwellingNo"
+            name="skeletalSwelling"
             value="yes"
-            aria-label="jointSwellingNo"
+            aria-label="skeletalSwellingNo"
             checked
           />
         </td>
-        <td>Joint Swelling</td>
+        <td>Skeletal Swelling</td>
       </tr>
 
       <tr>
@@ -153,24 +153,24 @@
           <input
             class="form-check-input"
             type="radio"
-            id="diabetesYes"
-            name="diabetes"
+            id="limitofMotionYes"
+            name="limitofMotion"
             value="yes"
-            aria-label="diabetesYes"
+            aria-label="limitofMotionYes"
           />
         </td>
         <td>
           <input
             class="form-check-input"
             type="radio"
-            id="diabetesNo"
-            name="diabetes"
+            id="limitofMotionNo"
+            name="limitofMotion"
             value="yes"
-            aria-label="diabetesNo"
+            aria-label="limitofMotionNo"
             checked
           />
         </td>
-        <td>Diabetes</td>
+        <td>Limit of Motion</td>
       </tr>
 
       <tr>
@@ -203,24 +203,24 @@
           <input
             class="form-check-input"
             type="radio"
-            id="skinDrynessYes"
-            name="skinDryness"
+            id="backPainYes"
+            name="backPain"
             value="yes"
-            aria-label="skinDrynessYes"
+            aria-label="backPainYes"
           />
         </td>
         <td>
           <input
             class="form-check-input"
             type="radio"
-            id="skinDrynessNo"
-            name="skinDryness"
+            id="backPainNo"
+            name="backPain"
             value="yes"
-            aria-label="skinDrynessNo"
+            aria-label="backPainNo"
             checked
           />
         </td>
-        <td>Skin Dryness</td>
+        <td>Back Pain</td>
       </tr>
     </tbody>
   </table>
@@ -257,4 +257,29 @@
       data-next-page="ros-endocrine"
     />
   </div>
+
+  <script>
+              
+    $(".rosMusculoskeletal").on("submit", function(){
+      let MusculoSkeletal = { }
+
+      let rosJointPain = $("input[name='jointPain']:checked");
+      let rosSkeletalSwell = $("input[name='skeletalSwelling']:checked");
+      let rosMotionLimit = $("input[name='limitofMotion']:checked");
+      let rosCrampedMuscle = $("input[name='muscleCramp']:checked");
+      let rosBackPain = $("input[name='backPain']:checked");
+      let rosMuscleNotes = $("#musculoskeletalNotes");
+
+      MusculoSkeletal[rosJointPain.attr("name")] = (rosJointPain.val());
+      MusculoSkeletal[rosSkeletalSwell.attr("name")] = (rosSkeletalSwell.val());
+      MusculoSkeletal[rosMotionLimit.attr("name")] = (rosMotionLimit.val());
+      MusculoSkeletal[rosCrampedMuscle.attr("name")] = (rosCrampedMuscle.val());
+      MusculoSkeletal[rosBackPain.attr("name")] = (rosBackPain.val());
+      MusculoSkeletal[rosMuscleNotes.attr("name")] = (rosMuscleNotes.val());
+      
+
+      console.log(MusculoSkeletal);
+    });
+  </script>
+
 </form>

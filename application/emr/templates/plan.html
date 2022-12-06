@@ -33,22 +33,7 @@
         </tr>
       </thead>
 
-      <tbody align="middle">
-        <tr id="tr-dummy">
-          <td>
-            <button
-              class="btn btn-success btn-add"
-              type="button"
-              data-bs-toggle="modal"
-              data-bs-target="#prescriptionModal"
-            >
-              <span>
-                <i class="fa-solid fa-plus"></i>
-              </span>
-            </button>
-          </td>
-        </tr>
-      </tbody>
+      <tbody align="middle"></tbody>
     </table>
   </div>
 
@@ -129,6 +114,7 @@
       <!--Modal content-->
       <div class="modal-content">
         <div class="modal-header">
+          <h3 class="mb-0 modal-header-text"></h3>
           <button
             type="button"
             class="btn-close"
@@ -222,15 +208,6 @@
               ></textarea>
             </div>
           </div>
-
-          <!-- <script>
-                let intExamVal = { }
-                $(".prescriptionModaal :input").change(function(){
-                let intExamName = $(this).attr("name");
-                intExamVal[intExamName] = $(this).val();
-                console.log(intExamVal);
-                });
-                </script> -->
         </div>
         <div class="modal-footer">
           <button
@@ -328,8 +305,59 @@
       `;
     }
 
+    function updateTable(dataArray) {
+      let tableBody = $("#prescription-table tbody");
+      let trWithAddBtn = `<tr id="tr-dummy">
+          <td>
+            <button
+              class="btn btn-success btn-add"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#prescriptionModal"
+            >
+              <span>
+                <i class="fa-solid fa-plus"></i>
+              </span>
+            </button>
+          </td>
+        </tr>`;
+
+      tableBody.empty();
+      tableBody.append(trWithAddBtn);
+
+      if (!dataArray.length) return;
+
+      dataArray.forEach(function (item) {
+        let TDs = generateTableTDs(item);
+
+        // APPEND GENERATED TR TO TABLE
+        let toAppend = `
+        <tr>
+          ${TDs}
+        </tr>
+        `;
+        $(toAppend).insertBefore("#tr-dummy");
+      });
+    }
+
+    // FUNCTIONALITY TO LOAD EXISTING DATA FROM LOCALSTORAGE
+    let existingData = getDataFromLocalStorage("plan");
+    console.log(existingData);
+    carePlan = existingData["carePlan"];
+    prescription = existingData["prescription"];
+
+    updateTable(prescription);
+
+    if (Object.keys(prescription).length) {
+      console.log(prescription);
+
+      updateTable(prescription);
+    }
+
     // when add button (+) is clicked
     $("#prescription-table").on("click", ".btn-add", function () {
+      // CHANGE MODAL HEADER TEXT
+      $(".modal-header-text").text("Add new medicine");
       mode = "ADD";
 
       clearModalTextFields((modalClass = ".modal"));
@@ -337,18 +365,13 @@
 
     // when edit button is clicked
     $("#prescription-table").on("click", ".btn-edit", function () {
+      // CHANGE MODAL HEADER TEXT
+      $(".modal-header-text").text("Edit prescription");
+
       mode = "EDIT";
       let trParent = $(this).parent().parent();
       activeTrIndex = trParent.attr("data-row-index");
       clearModalTextFields((modalClass = ".modal"));
-
-      // let inputs = $(`div[data-row-index=${activeTrIndex}]`).find("input");
-      // // console.log(trParent.find("input[type=text]"));
-      // inputs.each(function () {
-      //   let name = $(this).attr("name");
-      //   let value = $(this).val();
-      //   $(`.modal input[name=${name}]`).val(value);
-      // });
 
       let siblings = $(this).parent().siblings();
       let medicineName = $(siblings[0]).text().trim();
@@ -384,10 +407,6 @@
     });
 
     $("#prescription-table").on("click", ".btn-delete", function () {
-      let trParent = $(this).parent().parent();
-
-      trParent.remove();
-
       // REMOVE DELETED VALUE
       let siblings = $(this).parent().siblings();
       let medicineName = $(siblings[0]).text().trim();
@@ -410,6 +429,8 @@
       prescription = prescription.filter((item) => {
         return !_.isEqual(item, previousData);
       });
+
+      updateTable(prescription);
     });
 
     // when submitting modal form
@@ -422,60 +443,31 @@
       let data = cleanData(submittedValues);
 
       if (mode === "ADD") {
-        generateFormGroup(data);
-        let TDs = generateTableTDs(data);
-
-        // append generated TR to table
-        let toAppend = `
-        <tr data-row-index=${trIndex}>
-          ${TDs}
-        </tr>
-        `;
-        $(toAppend).insertBefore("#tr-dummy");
-
-        // add fields to hidden div that holds form data
-        // let newFormGroup = generateFormGroup(data);
-        // toAppend = `
-        // <div data-row-index=${trIndex} style="display: none;">
-        //   ${newFormGroup}
-        // </div>
-        // `;
-
-        // let form = $("form[data-form-target=EMR]");
-        // form.append(toAppend);
-
         // APPEND VALUES TO EXISTING OBJECT
         prescription.push(data);
 
-        trIndex++;
+        updateTable(prescription);
       } else {
-        // edit functionality
-        let trParent = $(`table tr[data-row-index=${activeTrIndex}]`);
-
-        // update table row values
-        trParent.empty();
-        let TDs = generateTableTDs(data);
-        trParent.append(TDs);
-
-        // update hidden form values
-        // let currentFormDiv = $(`div[data-row-index=${activeTrIndex}]`);
-
-        // currentFormDiv.empty();
-        // let newFormGroup = generateFormGroup(data);
-        // currentFormDiv.append(newFormGroup);
-
+        // EDIT FUNCTIONALITY
         // APPEND UPDATED VALUES TO EXISTING OBJECT
         prescription = prescription.filter((item) => {
           return !_.isEqual(item, previousData);
         });
         prescription.push(data);
+
+        updateTable(prescription);
       }
 
       $("#prescriptionModal").modal("hide");
     });
 
     $("#plan-form").on("submit", function () {
+      let plan = {
+        prescription,
+        carePlan: {},
+      };
       console.log(prescription);
+      saveDataToLocalstorage(plan, "plan");
     });
   });
 </script>

@@ -8,7 +8,7 @@
     <div class="form-group col">
       <label for="fundalHeight" class="form-label">Fundal Height (in cm)</label>
       <input
-        type="text"
+        type="number"
         class="form-control"
         id="fundalHeight"
         name="fundalHeight"
@@ -20,10 +20,12 @@
         >Fetal Heart Rate (BPM)</label
       >
       <input
-        type="text"
+        type="number"
         class="form-control"
         id="fetalHeartRate"
         name="fetalHeartRate"
+        min="1"
+        max="200"
       />
     </div>
   </div>
@@ -353,5 +355,46 @@
       toAppend = "";
     }
     parent.append(toAppend);
+  });
+</script>
+
+<script>
+  $(".fetalMeasure").on("submit", function () {
+    let FetalPresentation = {};
+
+    let fundHeight = $("#fundalHeight");
+    let fetalHeartRate = $("#fetalHeartRate");
+    let fetalPresent = $("input[name='fetalPresentation']:checked");
+    let headPresent = $("input[name='headPresentation']:checked");
+    let breechPresent = $("input[name='breachType']:checked");
+    let wombPos = $("input[name='wombPosition']:checked");
+    let mouldingValue = $("input[name='mouldingVal']:checked");
+    let intFetalNote = $("#fetalNotes");
+
+    if (fetalPresent.val() == "head") {
+      FetalPresentation[fundHeight.attr("name")] = fundHeight.val();
+      FetalPresentation[fetalHeartRate.attr("name")] = fetalHeartRate.val();
+      FetalPresentation[fetalPresent.attr("name")] = fetalPresent.val();
+      FetalPresentation[headPresent.attr("name")] = headPresent.val();
+      FetalPresentation[wombPos.attr("name")] = wombPos.val();
+      FetalPresentation[mouldingValue.attr("name")] = mouldingValue.val();
+      FetalPresentation[intFetalNote.attr("name")] = intFetalNote.val();
+    } else if (fetalPresent.val() == "breech") {
+      FetalPresentation[fundHeight.attr("name")] = fundHeight.val();
+      FetalPresentation[fetalHeartRate.attr("name")] = fetalHeartRate.val();
+      FetalPresentation[fetalPresent.attr("name")] = fetalPresent.val();
+      FetalPresentation[breechPresent.attr("name")] = breechPresent.val();
+      FetalPresentation[wombPos.attr("name")] = wombPos.val();
+      FetalPresentation[mouldingValue.attr("name")] = mouldingValue.val();
+      FetalPresentation[intFetalNote.attr("name")] = intFetalNote.val();
+    } else {
+      FetalPresentation[fundHeight.attr("name")] = fundHeight.val();
+      FetalPresentation[fetalHeartRate.attr("name")] = fetalHeartRate.val();
+      FetalPresentation[fetalPresent.attr("name")] = fetalPresent.val();
+      FetalPresentation[wombPos.attr("name")] = wombPos.val();
+      FetalPresentation[mouldingValue.attr("name")] = mouldingValue.val();
+      FetalPresentation[intFetalNote.attr("name")] = intFetalNote.val();
+    }
+    console.log(FetalPresentation);
   });
 </script>
