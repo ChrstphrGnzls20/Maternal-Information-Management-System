@@ -20,10 +20,10 @@
       </h5>
     </div>
 
-    <div class="table-responsive"></div>
     <div
       class="container bg-white p-4 rounded-2 border-3 border border-dark mb-3"
       style="max-width: 1400px"
+      id="vital-signs"
     >
       <h3>
         Vital Signs
@@ -31,16 +31,13 @@
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
       </h3>
-      <p>
-        Patient heights at 180cm and weighting 65kg has a respiration rate of
-        24BPM, Blood Pressure of 115/90 a clear sign of hypertension stage with
-        an oxygen saturation of 95% and a normal temperature of 35.5 C
-      </p>
+      <div></div>
     </div>
 
     <div
       class="container bg-white p-4 rounded-2 border-3 border border-dark mb-3"
       style="max-width: 1400px"
+      id="HPI"
     >
       <h3>
         HPI & Notes
@@ -48,22 +45,13 @@
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
       </h3>
-      <p>
-        The chief complaint was a stinging pain followed by a jolt of pain
-        whenever they move centered on her lower abdomen. The severity of the
-        pain was moderate, with the issue starting 3 days ago, happening every
-        after 5 hours. The issue was subtle at first but suddenly became worse.
-        <br /><br />
-        The issue according to the patient was aggravated by stressful
-        situations and was oftentimes relived by rest and relaxation. Some risk
-        factors which may be attributed may be their Alcohol consumption. Bodily
-        functions are slightly affected by condition
-      </p>
+      <div></div>
     </div>
 
     <div
       class="container bg-white p-4 rounded-2 border-3 border border-dark mb-3"
       style="max-width: 1400px"
+      id="ROS"
     >
       <h3>
         ROS<button
@@ -74,19 +62,13 @@
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
       </h3>
-      <p>
-        Constitutional ROS of patient don’t have a good general health that
-        experience weight gain, fatigue, and chills. Eyes has impaired vision.
-        Has clear signs of chronic sinus and sore throat. Itching breast,
-        swelling, and nipple discharge. Examination also shows that the patient
-        has irregular heartbeat and rapid heart rate. Patient also cough blood
-        and asthma. Lastly patient experience nausea and Abdominal pain.
-      </p>
+      <div></div>
     </div>
 
     <div
       class="container bg-white p-4 rounded-2 border-3 border border-dark mb-3"
       style="max-width: 1400px"
+      id="patient-history"
     >
       <h3>
         Patient History<button
@@ -97,16 +79,13 @@
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
       </h3>
-      <p>
-        Patient has pill controlled, and diet controlled disease and has a
-        relative (Grandmother) with high blood and heart complication disease
-        history.
-      </p>
+      <div></div>
     </div>
 
     <div
       class="container bg-white p-4 rounded-2 border-3 border border-dark mb-3"
       style="max-width: 1400px"
+      id="physical-exam"
     >
       <h3>
         PE<button
@@ -117,17 +96,7 @@
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
       </h3>
-      <p>
-        Fundal height of patient is 29cm in size and the fetal heart rate is
-        130BPM. The fetal is presenting the breech part type frank and the womb
-        has a left occiput anterior position with moulding of 0. <br /><br />
-        Fetal Presentation shows a normal health in general with no
-        complications.
-        <br /><br />
-        Internal Examination pap smear has a result of ASC-US. <br /><br />
-        Internal examination shows a rigidity in clitoris, full rectum, and
-        Prolapse with a cervix that has length of 2cm and dilation of 5cm
-      </p>
+      <p></p>
     </div>
 
     <div
@@ -143,18 +112,13 @@
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
       </h3>
-      <p>
-        Patient is experiencing abnomral vaginal discharge, spotting between
-        periods, frequent urination, pain during ovulation, and abdominal pain
-        on both sides and now diagnosed with salpingitis and ovarian cysts
-        <br /><br />
-        Notes:
-      </p>
+      <p></p>
     </div>
 
     <div
       class="container bg-white p-4 rounded-2 border-3 border border-dark mb-3"
       style="max-width: 1400px"
+      id="laboratory"
     >
       <h3>
         Laboratory
@@ -162,15 +126,13 @@
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
       </h3>
-      <p>
-        HIV Screening - Negative <br /><br />
-        HBsAg Test - Negative
-      </p>
+      <p></p>
     </div>
 
     <div
       class="container bg-white p-4 rounded-2 border-3 border border-dark mb-3"
       style="max-width: 1400px"
+      id="plan"
     >
       <h3>
         Plan
@@ -178,18 +140,10 @@
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
       </h3>
-      <p>
-        400 mcg/tab of Folic Acid every day for 14 days. Do not consume without
-        eating annything, recommended to be eaten after meals <br /><br />
-        10 mg/tab of Ingavit B6. 14 pieces meant to be consumed once a day after
-        breakfast, for 14 weeks. Meant to supplement and fight morning sickness
-        <br /><br />
-        Small meals are recommended and eating slowly is commonly suggested.
-        chew your food well and avoid dishes that bother your body. While
-        exercise is good, ease up on exercise routines and avoid stress. Rest in
-        be and do minimal work as possible
-      </p>
+      <p></p>
     </div>
     <br />
   </div>
 </form>
+
+<script src="{{url_for('emr.static', filename='summary.js')}}"></script>

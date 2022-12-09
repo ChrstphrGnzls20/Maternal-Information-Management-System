@@ -212,7 +212,7 @@
             type="number"
             class="form-control w-75"
             id="nummberofDuration"
-            name="durationEpisode"
+            name="durationOfEpisode"
             aria-label="durationofDuration"
             value="1"
             min="1"
@@ -226,7 +226,7 @@
             type="radio"
             id="durationMins"
             name="duration"
-            value="Minutes"
+            value="minutes"
             checked
           />
           <label class="form-check-label" for="durationMins">Minutes</label>
@@ -238,7 +238,7 @@
             type="radio"
             id="durationHours"
             name="duration"
-            value="Hours"
+            value="hours"
           />
           <label class="form-check-label" for="durationHours">Hours</label>
         </div>
@@ -249,7 +249,7 @@
             type="radio"
             id="durationDays"
             name="duration"
-            value="Days"
+            value="days"
           />
           <label class="form-check-label" for="durationDays">Days</label>
         </div>
@@ -260,7 +260,7 @@
             type="radio"
             id="durationIndf"
             name="duration"
-            value="Indefinite"
+            value="indefinite"
           />
           <label class="form-check-label" for="durationIndf">Indefinite</label>
         </div>
@@ -277,7 +277,7 @@
           type="radio"
           id="freqEvFewMins"
           name="frequency"
-          value="FewMin"
+          value="everyFewMinutes"
           checked
         />
         <label class="form-check-label" for="freqEvFewMins"
@@ -291,7 +291,7 @@
           type="radio"
           id="freqEvFewHours"
           name="frequency"
-          value="FewHours"
+          value="everyFewHours"
         />
         <label class="form-check-label" for="freqEvFewHours">
           Every Few Hours</label
@@ -304,7 +304,7 @@
           type="radio"
           id="freqEvFewDays"
           name="frequency"
-          value="FewDay"
+          value="everyFewDays"
         />
         <label class="form-check-label" for="freqEvFewDays"
           >Every Few Days</label
@@ -317,7 +317,7 @@
           type="radio"
           id="freqNoPat"
           name="frequency"
-          value="NoPattern"
+          value="noPattern"
         />
         <label class="form-check-label" for="freqNoPat">No Pattern</label>
       </div>
@@ -328,7 +328,7 @@
           type="radio"
           id="freqMinutely"
           name="frequency"
-          value="Minutely"
+          value="everyMinute"
         />
         <label class="form-check-label" for="freqMinutely">Every Minute</label>
       </div>
@@ -339,7 +339,7 @@
           type="radio"
           id="freqHourly"
           name="frequency"
-          value="Hourly"
+          value="hourly"
         />
         <label class="form-check-label" for="freqHourly">Hourly</label>
       </div>
@@ -350,7 +350,7 @@
           type="radio"
           id="freqDaily"
           name="frequency"
-          value="Daily"
+          value="daily"
         />
         <label class="form-check-label" for="freqDaily">Daily</label>
       </div>
@@ -361,7 +361,7 @@
           type="radio"
           id="freqWeekly"
           name="frequency"
-          value="Weekly"
+          value="weekly"
         />
         <label class="form-check-label" for="freqWeekly">Weekly</label>
       </div>
@@ -377,7 +377,7 @@
           type="radio"
           id="progSuddenBet"
           name="progression"
-          value="SudGetBetter"
+          value="suddenly getting better"
           checked
         />
         <label class="form-check-label" for="progSuddenBet"
@@ -391,7 +391,7 @@
           type="radio"
           id="progSuddenWorse"
           name="progression"
-          value="SudGetWorse"
+          value="suddenly getting worse"
         />
         <label class="form-check-label" for="progSuddenWorse"
           >Suddenly getting worse</label
@@ -404,7 +404,7 @@
           type="radio"
           id="progGradualBet"
           name="progression"
-          value="GradGetBetter"
+          value="gradually getting better"
         />
         <label class="form-check-label" for="progGradualBet"
           >Gradually getting better</label
@@ -417,7 +417,7 @@
           type="radio"
           id="progGradualWorse"
           name="progression"
-          value="GradGetWorse"
+          value="gradually getting worse"
         />
         <label class="form-check-label" for="progGradualWorse"
           >Gradually getting worse</label
@@ -430,7 +430,7 @@
           type="radio"
           id="progStagnant"
           name="progression"
-          value="Stagnant"
+          value="stagnant"
         />
         <label class="form-check-label" for="progStagnant"
           >Stagnant/No Change</label
@@ -445,30 +445,24 @@
 
   <div class="row mt-3">
     <div class="form-group">
-      <label for="aggravatedByFactor" class="form-label required"
-        >Aggravated by</label
-      >
+      <label for="aggravatedByFactor" class="form-label">Aggravated by</label>
       <input
         type="text"
         class="form-control form-control-md"
         id="aggravatedByFactor"
         name="aggrevatedBy"
-        required
       />
     </div>
   </div>
 
   <div class="row mt-3">
     <div class="form-group">
-      <label for="relievedByFactor" class="form-label required"
-        >Relieved by</label
-      >
+      <label for="relievedByFactor" class="form-label">Relieved by</label>
       <input
         type="text"
         class="form-control form-control-md"
         id="relievedByFactor"
         name="relievedBy"
-        required
       />
     </div>
   </div>
@@ -482,7 +476,7 @@
           type="checkbox"
           id="riskAlcohol"
           name="riskFactors"
-          value="Alcohol"
+          value="alcohol"
         />
         <label class="form-check-label" for="riskAlcohol"
           >Alcohol Consumption</label
@@ -495,7 +489,7 @@
           type="checkbox"
           id="riskSmoking"
           name="riskFactors"
-          value="Smoking"
+          value="smoking"
         />
         <label class="form-check-label" for="riskSmoking">Smoking</label>
       </div>
@@ -506,7 +500,7 @@
           type="checkbox"
           id="riskExercise"
           name="riskFactors"
-          value="Unexercise"
+          value="lack of exercise"
         />
         <label class="form-check-label" for="riskExercise"
           >Lack of Exercise</label
@@ -519,7 +513,7 @@
           type="checkbox"
           id="riskDrugs"
           name="riskFactors"
-          value="Drugs"
+          value="drugs"
         />
         <label class="form-check-label" for="riskDrugs">Drugs</label>
       </div>
@@ -537,7 +531,7 @@
           type="radio"
           id="bodyFuncMins"
           name="bodilyFunctionEffect"
-          value="Minutes"
+          value="minutes"
           checked
         />
         <label class="form-check-label" for="bodyFuncMins">Minutes</label>
@@ -549,7 +543,7 @@
           type="radio"
           id="bodyFuncHours"
           name="bodilyFunctionEffect"
-          value="Hours"
+          value="hours"
         />
         <label class="form-check-label" for="bodyFuncHours">Hours</label>
       </div>
@@ -560,7 +554,7 @@
           type="radio"
           id="bodyFuncDays"
           name="bodilyFunctionEffect"
-          value="Days"
+          value="days"
         />
         <label class="form-check-label" for="bodyFuncDays">Days</label>
       </div>
@@ -571,7 +565,7 @@
           type="radio"
           id="bodyFuncIndf"
           name="bodilyFunctionEffect"
-          value="Indefinite"
+          value="indefinite"
         />
         <label class="form-check-label" for="bodyFuncIndf">Indefinite</label>
       </div>
@@ -584,7 +578,7 @@
       <textarea
         class="form-control"
         id="HPINotes"
-        name="notes"
+        name="additionalNotes"
         rows="5"
         placeholder="Additional notes here"
       ></textarea>
@@ -646,6 +640,9 @@
               return;
             }
           });
+        } else if (key === "durationOfEpisode") {
+          $("input[name=durationOfEpisode]").val(value[0]);
+          $(`input[value=${value[1]}`).prop("checked", true);
         } else if (key === "riskFactors") {
           if (Array.isArray(value)) {
             $(inputEl).each(function () {
@@ -706,6 +703,13 @@
       // HPI[RiskFactors.attr("name")] = RiskFactors.val();
       // HPI[BodilyFunctionEffect.attr("name")] = BodilyFunctionEffect.val();
       // HPI[HPInotes.attr("name")] = HPInotes.val();
+
+      cleanedData["durationOfEpisode"] = [
+        cleanedData["durationOfEpisode"],
+        cleanedData["duration"],
+      ];
+
+      delete cleanedData["duration"];
 
       saveDataToLocalstorage(cleanedData, "HPI");
     });

@@ -322,7 +322,7 @@
       <textarea
         class="form-control"
         id="notes"
-        name="Notes"
+        name="additionalNotes"
         rows="3"
       ></textarea>
     </div>
@@ -450,9 +450,9 @@
         });
 
         // APPEND ADDITIONAL NOTES
-        let Notes = $("textarea[name=Notes]").val();
+        let notes = $("textarea[name=additionalNotes]").val();
 
-        preventiveCareHistory.push({ Notes });
+        preventiveCareHistory.push({ notes });
         console.log(preventiveCareHistory);
 
         saveDataToLocalstorage(
