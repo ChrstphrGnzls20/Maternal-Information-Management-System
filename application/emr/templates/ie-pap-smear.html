@@ -12,7 +12,7 @@
         <input
           class="form-check-input"
           type="radio"
-          name="papSmear"
+          name="result"
           id="papNormal"
           value="normal"
           checked
@@ -24,7 +24,7 @@
         <input
           class="form-check-input"
           type="radio"
-          name="papSmear"
+          name="result"
           id="papASCUS"
           value="ASC-US"
         />
@@ -35,7 +35,7 @@
         <input
           class="form-check-input"
           type="radio"
-          name="papSmear"
+          name="result"
           id="papAGC"
           value="AGC"
         />
@@ -46,7 +46,7 @@
         <input
           class="form-check-input"
           type="radio"
-          name="papSmear"
+          name="result"
           id="papASCH"
           value="ASC-H"
         />
@@ -59,7 +59,7 @@
         <input
           class="form-check-input"
           type="radio"
-          name="papSmear"
+          name="result"
           id="papHSIL"
           value="HSIL"
         />
@@ -70,7 +70,7 @@
         <input
           class="form-check-input"
           type="radio"
-          name="papSmear"
+          name="result"
           id="papAIS"
           value="AIS"
         />
@@ -81,7 +81,7 @@
         <input
           class="form-check-input"
           type="radio"
-          name="papSmear"
+          name="result"
           id="papCervicalCancer"
           value="cervical cancer"
         />
@@ -94,7 +94,7 @@
         <input
           class="form-check-input"
           type="radio"
-          name="papSmear"
+          name="result"
           id="papUnsatisfactory"
           value="unsatisfactory"
         />
@@ -107,13 +107,13 @@
 
   <div class="row mt-3">
     <div class="form-group">
-      <label for="papSmearGenNotes" class="form-label" id="papGenNotes"
+      <label for="papSmearNotes" class="form-label" id="papGenNotes"
         >Notes</label
       >
       <textarea
         class="form-control"
-        id="papSmearGenNotes"
-        name="papSmearGenNotes"
+        id="papSmearNotes"
+        name="papSmearNotes"
         rows="5"
         placeholder="Additional notes here"
       ></textarea>
@@ -159,8 +159,8 @@
     if (Object.keys(existingData).length) {
       // SET VALUES OF VAGINA
       Object.entries(existingData).forEach(([key, value]) => {
-        if (key === "papSmearGenNotes") {
-          $("#papSmearGenNotes").val(value);
+        if (key === "papSmearNotes") {
+          $("#papSmearNotes").val(value);
           return;
         }
 
@@ -187,8 +187,8 @@
         Result[nameProp] = value;
       });
 
-      let resultNotes = $("#papSmearGenNotes").val();
-      Result["papSmearGenNotes"] = resultNotes;
+      let resultNotes = $("#papSmearNotes").val();
+      Result["papSmearNotes"] = resultNotes;
 
       // let VulvaVaginaCervix = [Vulva, Vagina, Cervix];
       let PapSmear = {

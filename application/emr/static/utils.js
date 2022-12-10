@@ -32,10 +32,14 @@ function initializeEMRToLocalStorage() {
     },
     physicalExamination: {
       fetalPresentation: {},
-      general: {},
+      general: [],
       internalExamination: {
         papSmear: {},
-        vulvaVaginaCervix: {},
+        vulvaVaginaCervix: {
+          Vulva: [],
+          Vagina: {},
+          Cervix: {},
+        },
       },
     },
     assessment: {},

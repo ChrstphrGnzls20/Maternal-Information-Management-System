@@ -80,6 +80,7 @@ function viewAppointmentSummaryModal(appointment, status) {
   modalBody.append(content);
 }
 
+// IMPORTANT: STATUS CHANGE TO PENDING OR ACCEPTED
 function checkForExistingAppointment(patientID) {
   const searchParam = $.param({ status: "pending" });
   return $.ajax({

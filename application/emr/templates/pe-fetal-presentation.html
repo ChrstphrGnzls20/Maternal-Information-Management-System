@@ -11,7 +11,7 @@
         type="number"
         class="form-control"
         id="fundalHeight"
-        name="fetaleasurements"
+        name="fetalMeasurements"
       />
     </div>
 
@@ -255,19 +255,18 @@
 </form>
 
 <script>
-  $("input[name=fetalPresentation").on("change", function () {
-    let value = $(this).val();
+  $(function () {
+    function generateDynamicFetalPresentation(value) {
+      let parent = $("#fetalPresentationFollowup");
+      parent.empty();
+      parent.removeClass("mt-3");
+      let toAppend = "";
 
-    let parent = $("#fetalPresentationFollowup");
-    parent.empty();
-    parent.removeClass("mt-3");
-    let toAppend = "";
+      console.log(parent);
 
-    console.log(parent);
-
-    if (value === "head") {
-      parent.addClass("mt-3");
-      toAppend = `
+      if (value === "head") {
+        parent.addClass("mt-3");
+        toAppend = `
       <label class="default-label">If head, how is it presented?</label>
 
       <div class="row row-cols-1 row-cols-md-3 mx-2">
@@ -305,9 +304,9 @@
           <label class="form-check-label" for="headpresentFace">Face</label>
         </div>
       </div>`;
-    } else if (value === "breech") {
-      parent.addClass("mt-3");
-      toAppend = `
+      } else if (value === "breech") {
+        parent.addClass("mt-3");
+        toAppend = `
       <label class="default-label">If Breech? What Breech is it?</label>
 
       <div class="row row-cols-1 row-cols-md-3 mx-2">
@@ -351,13 +350,12 @@
           >
         </div>
       </div>`;
-    } else {
-      toAppend = "";
+      } else {
+        toAppend = "";
+      }
+      parent.append(toAppend);
     }
-    parent.append(toAppend);
-  });
 
-  $(function () {
     let existingData = getDataFromLocalStorage(
       (objName = "fetalPresentation"),
       (parentObjName = "physicalExamination")
@@ -379,31 +377,23 @@
           $(inputEl).each(function () {
             if ($(this).prop("value") === value) {
               $(this).prop("checked", true);
-              return;
+
+              if (key === "fetalPresentation") {
+                generateDynamicFetalPresentation(value);
+              }
             }
           });
-        } else if (key === "riskFactors") {
-          if (Array.isArray(value)) {
-            $(inputEl).each(function () {
-              console.log(value.includes($(this).prop("value")));
-              if (value.includes($(this).prop("value"))) {
-                $(this).prop("checked", true);
-                return;
-              }
-            });
-          } else {
-            $(inputEl).each(function () {
-              if ($(this).prop("value") === value) {
-                $(this).prop("checked", true);
-                return;
-              }
-            });
-          }
         } else {
           inputEl.val(value);
         }
       });
     }
+
+    $("input[name=fetalPresentation").on("change", function () {
+      let value = $(this).val();
+
+      generateDynamicFetalPresentation(value);
+    });
 
     $("#fetalMeasure").on("submit", function () {
       let cleanedData = cleanData($(this).serializeArray());

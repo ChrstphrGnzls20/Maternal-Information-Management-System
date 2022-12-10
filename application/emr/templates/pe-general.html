@@ -123,7 +123,7 @@
                 class="form-check-input"
                 type="radio"
                 id="Neck"
-                name="Neck"
+                name="neck"
                 value="normal"
                 aria-label="peNeckYes"
               />
@@ -135,7 +135,7 @@
                 class="form-check-input"
                 type="radio"
                 id="notNeck"
-                name="Neck"
+                name="neck"
                 value="abnormal"
                 aria-label="peNeckNo"
               />
@@ -147,7 +147,7 @@
                 class="form-check-input"
                 type="radio"
                 id="neNeck"
-                name="Neck"
+                name="neck"
                 checked
                 value="not examined"
                 aria-label="peNeckNE"
@@ -160,7 +160,7 @@
               <textarea
                 class="form-control"
                 id="NeckNotes"
-                name="NeckNotes"
+                name="neckNotes"
                 disabled
               ></textarea>
             </div>
@@ -688,7 +688,7 @@
       <textarea
         class="form-control"
         id="additionalNote"
-        name="generalNote"
+        name="additionalNotes"
         rows="5"
         placeholder="Additional notes here"
       ></textarea>
@@ -741,12 +741,12 @@
           if (key.includes("Note")) {
             $(`textarea[name=${key}]`).prop("disabled", false);
             $(`textarea[name=${key}]`).val(value);
+            console.log($(`textarea[name=${key}]`));
           } else {
             let radioEl = $(`input[name=${key}]`);
             $(radioEl).each(function () {
               if ($(this).val() === value) {
                 $(this).prop("checked", true);
-                return;
               }
             });
           }
@@ -774,11 +774,9 @@
       let generalPE = [];
       Object.entries(cleanedData).forEach(([key, value]) => {
         let tempObject = { [key]: value };
-        if (key.includes("Notes")) return;
+        if (key.includes("Notes") && key !== "additionalNotes") return;
 
-        if (cleanedData[`${key}Notes`]) {
-          tempObject[`${key}Notes`] = cleanedData[`${key}Notes`];
-        }
+        tempObject[`${key}Notes`] = cleanedData[`${key}Notes`];
         generalPE.push(tempObject);
       });
 

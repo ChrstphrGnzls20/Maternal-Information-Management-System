@@ -67,7 +67,6 @@
           class="form-control me-1"
           id="vitalSystolic"
           name="bpSystolic"
-          value="70"
           min="70"
           max="190"
           required
@@ -78,7 +77,6 @@
           class="form-control ms-1"
           id="vitalDiastolic"
           name="bpDiastolic"
-          value="40"
           min="40"
           max="100"
           required
@@ -187,11 +185,16 @@
         let oxygenSaturation = $("#vitalOxySat").val();
         let heartRate = $("#vitalHeartRate").val();
 
+        let bloodPressure = "";
+
+        if (systolicBP && diastolicBP)
+          bloodPressure = `${systolicBP}/${diastolicBP}`;
+
         vitalSigns = {
           height,
           weight,
           temperature: temp,
-          bloodPressure: `${systolicBP}/${diastolicBP}`,
+          bloodPressure,
           respirationRate,
           oxygenSaturation,
           heartRate,
