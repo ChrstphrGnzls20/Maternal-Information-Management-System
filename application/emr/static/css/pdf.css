@@ -1,0 +1,21 @@
+.indent-1 {
+  margin-left: 20px;
+}
+.indent-2 {
+  margin-left: 30px;
+}
+
+p {
+  margin-bottom: 5px !important;
+}
+
+.tab-1 {
+  position: absolute;
+  left: 100px;
+}
+
+.ros-cat,
+.gen-PE-cat,
+.cat {
+  text-transform: capitalize;
+}

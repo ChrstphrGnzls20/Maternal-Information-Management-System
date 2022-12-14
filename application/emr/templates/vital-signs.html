@@ -94,7 +94,7 @@
         id="vitalRespRate"
         name="respirationRate"
         min="10"
-        max="25"
+        max="30"
         required
       />
     </div>
@@ -146,12 +146,12 @@
       // CHECK FIRST IF THE DATA EXISTS IN LOCALSTORAGE
       let existingData = getDataFromLocalStorage("vitalSigns");
 
-      if (existingData) {
+      if (Object.keys(existingData).length) {
         Object.entries(existingData).forEach(([key, value]) => {
-          if (key === "BP") {
+          if (key === "bloodPressure") {
             let [BPSystolic, BPDiastolic] = value.split("/");
-            $("input[name=vitalSystolic]").val(BPSystolic);
-            $("input[name=vitalDiastolic]").val(BPDiastolic);
+            $("input[name=bpSystolic]").val(BPSystolic);
+            $("input[name=bpDiastolic]").val(BPDiastolic);
           }
           $(`input[name=${key}]`).val(value);
         });

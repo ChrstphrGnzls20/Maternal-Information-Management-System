@@ -19,9 +19,6 @@ function loadDatepickers(options) {
 
 function getDaysDiffToday(date) {
   let value = moment(date, "MM/DD/YYYY");
-  // console.log();
-  // let today = moment().format("MM/DD/YYYY");
-
   return moment().diff(value, "days");
 }
 

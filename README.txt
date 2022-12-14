@@ -10,3 +10,10 @@ TODO:
             - add functions to care plan section
         - Summary:
             - provide data representations based on data inputted by doctor on the rest of the EMR pages
+    - SCHEDULING
+        - create a calendar interface in plotting schedules
+
+    SOAP NOTES: 
+        - History: PMH, preg history, current medication, 
+        - Plan: lab test, prescription 
+        - 

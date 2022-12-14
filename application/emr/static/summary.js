@@ -3,9 +3,21 @@ $(function () {
 
   const camelToCapitalized = (text) =>
     `${text[0].toUpperCase()}${text.replace(/([A-Z])/g, " $1").slice(1)}`;
+
+  const capitalizeText = (text) => ``;
   //VITAL SIGNS
   function interpretVitalSigns(data) {
     if (!Object.keys(data).length) return;
+
+    let {
+      height,
+      weight,
+      temperature,
+      bloodPressure,
+      respirationRate,
+      oxygenSaturation,
+      heartRate,
+    } = data;
 
     let measurementsMap = {
       height: "cm",
@@ -17,22 +29,76 @@ $(function () {
       heartRate: "bpm (beats per min)",
     };
 
-    Object.entries(data).forEach(([key, value]) => {
-      let category = camelToCapitalized(key);
+    let BMI = calculateBMI(parseInt(height) / 100, parseInt(weight));
 
-      let htmlToAppend = `
-      <p class="mb-1">
-        <b class="summary-cat-title">${category}:</b> ${value || ""}${
-        value ? measurementsMap[key] : ""
-      }
-      </p>`;
+    let BMIInterpretation =
+      interpretBMI(BMI) !== "normal"
+        ? `<span class='text-danger fw-bold'>(${interpretBMI(BMI)})</span>`
+        : "<span class='fw-bold'>(normal)</span>";
 
-      $("#vital-signs div").append(htmlToAppend);
-    });
+    let temperatureInterpretation =
+      interpretTemperature(temperature) !== "normal"
+        ? `<span class='text-danger fw-bold'>(${interpretTemperature(
+            temperature
+          )})</span>`
+        : "<span class='fw-bold'>(normal)</span>";
+
+    let [systolic, diastolic] = bloodPressure.split("/");
+    let BPInterpretation =
+      interpretBP(systolic, diastolic) !== "normal"
+        ? `<span class='text-danger fw-bold'>(${interpretBP(
+            systolic,
+            diastolic
+          )})</span>`
+        : "<span class='fw-bold'>(normal)</span>";
+
+    let respirationRateInterpretation =
+      respirationRate < 12 || respirationRate > 25
+        ? "<span class='text-danger fw-bold'>(abnormal)</span>"
+        : "<span class='fw-bold'>(normal)</span>";
+
+    let oxygenSaturationInterpretation =
+      parseInt(oxygenSaturation) < 95
+        ? "<span class='text-danger fw-bold'>(abnormal)</span>"
+        : "<span class='fw-bold'>(normal)</span>";
+
+    let heartRateInterpretation =
+      60 > parseInt(heartRate) > 100
+        ? "<span class='text-danger fw-bold'>(abnormal)</span>"
+        : "<span class='fw-bold'>(normal)</span>";
+
+    $(`
+      <p class='mb-1'><b class="summary-cat-title">Height:</b> ${height}${
+      measurementsMap["height"]
+    }</p>
+      <p class='mb-1'><b class="summary-cat-title">Weight:</b> ${weight}${
+      measurementsMap["weight"]
+    }</p>
+      <p class='mb-1'><b class="summary-cat-title">BMI:</b> ${BMI} ${
+      BMIInterpretation ? BMIInterpretation : ""
+    }</p>
+      <p class='mb-1'><b class="summary-cat-title">Temperature:</b> ${temperature}${
+      measurementsMap["temperature"]
+    } ${temperatureInterpretation}</p>
+      <p class='mb-1'><b class="summary-cat-title">Blood Pressure:</b> ${bloodPressure}${
+      measurementsMap["bloodPressure"]
+    } ${BPInterpretation ? BPInterpretation : ""}</p>
+      <p class='mb-1'><b class="summary-cat-title">Respiration Rate:</b> ${respirationRate}${
+      measurementsMap["respirationRate"]
+    } ${respirationRate ? respirationRateInterpretation : ""}</p>
+      <p class='mb-1'><b class="summary-cat-title">Oxygen Saturation:</b> ${oxygenSaturation}${
+      measurementsMap["oxygenSaturation"]
+    } ${oxygenSaturation ? oxygenSaturationInterpretation : ""}</p>
+      <p class='mb-1'><b class="summary-cat-title">Heart Rate:</b> ${heartRate}${
+      measurementsMap["heartRate"]
+    } ${heartRateInterpretation}</p>
+    `).appendTo($("#vital-signs div"));
   }
 
   //HPI
   function interpretHPI(data) {
+    if (!Object.keys(data).length) return;
+
     Object.entries(data).forEach(([key, value]) => {
       let category = camelToCapitalized(key);
       // SPECIAL CASE FOR DURATION
@@ -55,6 +121,8 @@ $(function () {
 
   //PATIENT HISTORY
   function interpretPatientHistory(data) {
+    if (!Object.keys(data).length) return;
+
     function interpretPregnancyHistory(data) {
       if (!Object.keys(data).length) return;
       let pregnancyHistoryDiv = $(
@@ -248,14 +316,10 @@ $(function () {
 
   //PE
   function interpretPE(data) {
+    if (!Object.entries(data).length) return;
     function interpretFetalPresentation(dataObject) {
       if (!Object.keys(dataObject).length) return;
 
-      // let htmlToAppend = `
-      // <div class='mb-3 fetalPresentation'>
-      //   <h4><b>Fetal Presentation</b></h4>
-      // </div>`;
-      // $("#physical-exam div#fetalPresentation").append(htmlToAppend);
       Object.entries(dataObject).forEach(([key, value]) => {
         if (Array.isArray(value)) {
           value = value.join(", ");
@@ -274,13 +338,6 @@ $(function () {
 
       let additionalNotes = "";
 
-      // let htmlToAppend = `
-      // <div>
-      //   <h4 id="general-exam-title"><b>General Examination</b></h4>
-      //   <div class='mb-3 row row-cols-1 row-cols-md-2 align-content-stretch' id="general-exam">
-      //   </div>
-      // </div>`;
-      // $("#physical-exam div#generalExam").append(htmlToAppend);
       dataArray.forEach((item) => {
         const currentCategory = Object.keys(item)[0];
         if (currentCategory !== "additionalNotes") {
@@ -396,15 +453,6 @@ $(function () {
             }
           }
         }
-
-        // let htmlToAppend = `
-        // <div>
-        // <p class="mb-1">
-        //   <b class="summary-cat-title">${category}:</b> ${camelToFlat(value)}
-        // </p>
-        // </div>`;
-
-        // $("#physical-exam").append(htmlToAppend);
       }
     }
 
@@ -456,13 +504,205 @@ $(function () {
     });
   }
 
+  function interpretPlan(data) {
+    if (!Object.keys(data).length) return;
+    function interpretPrescription(dataArray) {
+      if (!dataArray.length) return;
+
+      dataArray.forEach((item, idx) => {
+        let container = $(`
+        <div class="mb-3">
+          <h5 class="fw-bold">Item ${idx + 1}:</h5>
+          <p class="mb-1"><b>Medicine Name:</b> ${camelToFlat(
+            item["medicineName"]
+          )}</p>
+          <p class="mb-1"><b>Type:</b> ${camelToFlat(item["medicineType"])}</p>
+          <p class="mb-1"><b>Dosage:</b> ${camelToFlat(
+            item["medicineDosage"]
+          )}${camelToFlat(item["medicineMeasurement"])}</p>
+          <p class="mb-1"><b>Frequency:</b> ${camelToFlat(
+            item["medicineFrequency"]
+          )}x a day for ${camelToFlat(item["medicinePeriod"])} days</p>
+          <p class="mb-1"><b>Instructions:</b> <br/>${camelToFlat(
+            item["medicineInstructions"]
+          )}</p>
+        </div>
+        `);
+        $(container).appendTo($("#prescription .contents"));
+      });
+    }
+
+    function interpretCarePlan(data) {
+      if (!Object.keys(data).length) return;
+
+      let followUpDate = data["followUpDate"] ? data["followUpDate"] : "";
+      let followUpDay = "";
+      let followUpTime = "";
+      if (followUpDate) {
+        followUpDay = moment(data["followUpDate"]).format("LL");
+        followUpTime = moment(data["followUpDate"]).format("hh:mm a");
+      }
+
+      let container = $(`
+        <div class="mb-3">
+          <p class="mb-1"><b>Patient Status: </b>${data["patientStatus"]}</p>
+          <p class="mb-1"><b>Follow-up Date: </b>${
+            followUpDate ? `${followUpDay} at ${followUpTime}` : "Not specified"
+          }</p>
+          <p class="mb-1"><b>Care Plan: </b>
+          <br />
+          ${data["carePlanNotes"]}</p>
+        </div>
+        `);
+      $(container).appendTo($("#care-plan .contents"));
+    }
+
+    for (const [key, items] of Object.entries(data)) {
+      if (key.toLowerCase() === "prescription") {
+        interpretPrescription(items);
+      } else {
+        interpretCarePlan(items);
+      }
+    }
+  }
+
+  $("#finish-checkup").on("click", function (e) {
+    e.preventDefault();
+
+    function checkIfObjectIsEmpty(object) {
+      return Object.keys(object).length ? true : false;
+    }
+
+    function checkIfArrayIsEmpty(array) {
+      return array.length ? true : false;
+    }
+
+    let vitalSignsData = getDataFromLocalStorage("vitalSigns");
+    let HPIData = getDataFromLocalStorage("HPI");
+    let PEData = getDataFromLocalStorage("physicalExamination");
+    let fetalPresentation = PEData["fetalPresentation"];
+    let generalPhysicalExam = PEData["general"];
+    let papSmear = PEData["internalExamination"]["papSmear"];
+    let vulva = PEData["internalExamination"]["vulvaVaginaCervix"]["Vulva"];
+    let vagina = PEData["internalExamination"]["vulvaVaginaCervix"]["Vagina"];
+    let cervix = PEData["internalExamination"]["vulvaVaginaCervix"]["Cervix"];
+    let planData = getDataFromLocalStorage("plan");
+    let presciptionData = planData["prescription"];
+    let carePlanData = planData["carePlan"];
+
+    let emptyValues = [];
+
+    if (!checkIfObjectIsEmpty(vitalSignsData)) {
+      emptyValues.push("Vital Signs");
+    }
+
+    if (!checkIfObjectIsEmpty(HPIData)) {
+      emptyValues.push("History of Present Illness");
+    }
+
+    if (
+      !checkIfObjectIsEmpty(fetalPresentation) &&
+      !checkIfArrayIsEmpty(generalPhysicalExam) &&
+      !checkIfObjectIsEmpty(papSmear) &&
+      !checkIfArrayIsEmpty(vulva) &&
+      !checkIfObjectIsEmpty(vagina) &&
+      !checkIfObjectIsEmpty(cervix)
+    ) {
+      emptyValues.push("Physical Exam");
+    }
+
+    if (
+      !checkIfArrayIsEmpty(presciptionData) &&
+      !checkIfObjectIsEmpty(carePlanData)
+    ) {
+      emptyValues.push("Care Plan");
+    }
+
+    if (emptyValues.length) {
+      let toAppend = $(
+        "<p>You haven't filled out the following pages:<br/></p>"
+      );
+
+      emptyValues.forEach(function (item) {
+        toAppend.append($(`<p class="mb-0 fw-bold">${item}</p>`));
+      });
+
+      $("#finishCheckupModal .modal-body").empty();
+
+      $("#finishCheckupModal .modal-title").html(
+        "<h3 class='mb-0'>Warning</h3>"
+      );
+      $("#finishCheckupModal .modal-body").html($(toAppend));
+      $("#finishCheckupModal .modal-footer").html(`
+      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+        Close
+      </button>`);
+    } else {
+      $("#finishCheckupModal .modal-title").html(
+        "<h3 class='mb-0'>Confirmation</h3>"
+      );
+      $("#finishCheckupModal .modal-body").html(
+        "<p>Are you sure you would like to finish this checkup documentation?</p>"
+      );
+      $("#finishCheckupModal .modal-footer").html(`
+      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+        Close
+      </button>
+      <button type="button" class="btn btn-success" id="end-checkup-btn" >
+        Yes, I would like to
+      </button>
+      `);
+    }
+    $("#finishCheckupModal").modal("show");
+  });
+
+  $("#finishCheckupModal .modal-footer").on(
+    "click",
+    "#end-checkup-btn",
+    function () {
+      let emrData = getDataFromLocalStorage();
+
+      let splitLocation = location.href.split("/");
+      let patientID = splitLocation[splitLocation.length - 1];
+      let doctorID = localStorage.getItem("id");
+      emrData["patientID"] = patientID;
+      emrData["doctorID"] = doctorID;
+      addNewCheckup(emrData)
+        .then(function (response) {
+          if (response) {
+            // CREATING FOLLOW UP APPOINTMENT
+            try {
+              let followUpDate = new Date(emrData.plan.carePlan.followUpDate);
+              // SET DEFAULT TIME TO 8 AM
+              // followUpDate.setHours(followUpDate.getHours() + 8);
+
+              let newAppointment = {
+                patient_id: patientID,
+                doctor_id: doctorID,
+                appointmentDate: followUpDate.toISOString(),
+              };
+
+              // IMPORTANT: FIX AJAX CALL/RESPONSE
+              createFollowUpAppointment(newAppointment);
+            } catch (e) {
+              console.log(e);
+            }
+          }
+        })
+        .catch(function (xhr) {
+          console.log(xhr);
+        });
+    }
+  );
+
   let vitalSignsData = getDataFromLocalStorage("vitalSigns");
   let HPIData = getDataFromLocalStorage("HPI");
   let patientHistoryData = getDataFromLocalStorage("patientHistory");
   let ROSData = getDataFromLocalStorage("reviewOfSystems");
   let PEData = getDataFromLocalStorage("physicalExamination");
-  let assessmentData = getDataFromLocalStorage("Assessment");
+  let assessmentData = getDataFromLocalStorage("assessment");
   let laboratoryData = getDataFromLocalStorage("laboratory");
+  let planData = getDataFromLocalStorage("plan");
 
   if (Object.keys(vitalSignsData).length) {
     interpretVitalSigns(vitalSignsData);
@@ -490,5 +730,9 @@ $(function () {
 
   if (Object.keys(laboratoryData).length) {
     interpretLaboratory(laboratoryData);
+  }
+
+  if (Object.keys(planData).length) {
+    interpretPlan(planData);
   }
 });

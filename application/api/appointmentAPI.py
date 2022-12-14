@@ -70,8 +70,9 @@ def addAppointment():
 
 # TODO: CANCEL APPOINTMENT
 
-
 # @appointmentAPI.route("/<string:appointmentID>/cancel", methods=["PATCH"])
+
+
 @appointmentAPI.route("/<string:appointmentID>", methods=["PATCH"])
 def editAppointment(appointmentID: str):
     if request.method == "PATCH":
@@ -85,12 +86,3 @@ def editAppointment(appointmentID: str):
             return make_response(jsonify(result), 404)
         # THROW A 401(UNAUTHORIZED) ERROR IF THE ACTION IS NOT VALID
         return make_response({}, 401)
-
-
-# @appointmentAPI.route("/tests")
-# def tests():
-#     additionalFilters = {}
-#     for key, value in request.args.items():
-#         additionalFilters[key] = value
-#         # print(key, value)
-#     return additionalFilters

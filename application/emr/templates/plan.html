@@ -1,22 +1,8 @@
 <form id="plan-form" data-form-target="EMR">
-  <!-- <div  class = "row">
-    <div class = "form-group">
-    <label class = "default-label col-md-4">Prescription</label>
-    <button type="button" class="btn btn-success col-md-1 offset-md-6 align-self-end">Add</button>
-    </div>
-    </div> -->
   <div
     class="d-flex flex-row justify-content-between align-items-center bg-white m-1"
   >
     <h3 class="mb-0">Prescription</h3>
-    <!-- <button
-      type="button"
-      class="btn btn-outline-dark float-end add-emp-btn"
-      data-bs-toggle="modal"
-      data-bs-target="#prescriptionModal"
-    >
-      ADD NEW PRESCRIPTION
-    </button> -->
   </div>
 
   <div class="table-responsive mt-3">
@@ -29,6 +15,7 @@
           <th scope="col" width="10%">Dosage</th>
           <th scope="col" width="5%">Measurement</th>
           <th scope="col" width="15%">Frequency</th>
+          <th scope="col" width="15%">Period</th>
           <th scope="col" width="20%">Instructions</th>
         </tr>
       </thead>
@@ -40,29 +27,43 @@
   <h3 class="mt-3">Care Plan</h3>
 
   <div class="row row-cols-1 row-cols-md-2">
-    <div class="col form-group d-flex flex-column">
-      <label for="follow-up" class="form-label">Follow-up Date</label>
-      <input
-        type="text"
-        class="form-control datepicker"
-        id="follow-up-datepicker"
-      />
-    </div>
-
     <div class="form-group">
-      <label for="patient-status-select" class="form-label"
+      <label for="patient-status-select" class="form-label required"
         >Patient Status</label
       >
       <select class="form-select" id="patient-status-select">
-        <option selected value="regular monitoring">Regular Monitoring</option>
+        <option selected value="regular checkup">Regular Checkup</option>
         <option value="follow-up">For Follow-up</option>
         <option value="high risk">High Risk</option>
       </select>
+    </div>
+    <div class="col form-group d-flex flex-column">
+      <div>
+        <label for="follow-up-datepicker" class="form-label"
+          >Follow-up Date and Time</label
+        >
+        <div class="d-flex flex-row">
+          <input
+            type="text"
+            class="me-2 form-control datepicker"
+            id="follow-up-datepicker"
+            placeholder="Date"
+          />
+          <input
+            type="text"
+            class="form-control timepicker"
+            id="follow-up-time"
+            placeholder="Time"
+            disabled
+          />
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="row mt-2">
     <div class="form-group col-12">
+      <label for="carePlanNotes" class="form-label">Patient Education</label>
       <textarea
         class="form-control"
         id="carePlanNotes"
@@ -77,6 +78,8 @@
       <button
         type="button"
         class="btn btn-primary ms-2"
+        data-bs-toggle="modal"
+        data-bs-target="#viewCarePlanModal"
         id="view-care-plan-btn"
       >
         View care plan templates
@@ -84,6 +87,7 @@
       <button
         type="button"
         class="btn btn-secondary ms-2"
+        id="add-to-templates"
         data-bs-toggle="modal"
         data-bs-target="#addCarePlanModal"
       >
@@ -189,13 +193,30 @@
           <div class="row mt-3">
             <div class="form-group col-12">
               <label for="medicineFrequency" class="form-label"
-                >Medicine Frequency</label
+                >Medicine Frequency <b>(per day)</b></label
               >
               <input
-                type="text"
+                type="number"
                 class="form-control"
                 id="medicineFrequency"
                 name="medicineFrequency"
+                min="1"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="form-group col-12">
+              <label for="medicinePeriod" class="form-label"
+                >Take for how many days?
+              </label>
+              <input
+                type="number"
+                class="form-control"
+                id="medicinePeriod"
+                name="medicinePeriod"
+                min="1"
                 required
               />
             </div>
@@ -265,7 +286,7 @@
         <div class="modal-body">
           <div class="row">
             <div class="form-group">
-              <label for="add-care-plan-title" class="form-label"
+              <label for="add-care-plan-title" class="form-label required"
                 >Care Plan For</label
               >
               <input
@@ -273,13 +294,14 @@
                 class="form-control"
                 id="add-care-plan-title"
                 name="carePlanTitle"
+                required
               />
             </div>
           </div>
 
           <div class="row mt-3">
             <div class="form-group col-12">
-              <label for="add-care-plan-text" class="form-label"
+              <label for="add-care-plan-text" class="form-label required"
                 >Care Plan</label
               >
               <textarea
@@ -287,6 +309,7 @@
                 id="add-care-plan-text"
                 name="carePlanText"
                 rows="5"
+                required
               ></textarea>
             </div>
           </div>
@@ -311,6 +334,80 @@
   </div>
 </div>
 
+<!-- VIEW CARE PLAN MODAL -->
+<div
+  class="modal fade"
+  id="viewCarePlanModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="viewCarePlanModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <form id="add-care-plan-form">
+      <!--Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="mb-0 modal-header-text">View care plan templates</h3>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="form-group">
+              <label for="view-care-plan-title" class="form-label"
+                >Care Plan For</label
+              >
+              <select
+                class="form-select"
+                name="viewCarePlanTitle"
+                id="view-care-plan-select"
+              ></select>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="form-group col-12">
+              <label for="add-care-plan-text" class="form-label"
+                >Care Plan</label
+              >
+              <textarea
+                class="form-control"
+                id="view-care-plan-text"
+                name="carePlanText"
+                rows="5"
+                readonly
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            id="cancelBtn"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            id="useBtn"
+            class="btn btn-success"
+            data-bs-dismiss="modal"
+          >
+            Use template
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- LOADASH -->
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
@@ -320,14 +417,24 @@
 ></script>
 
 <!-- FOR PRESCRIPTION -->
-<script>
+<script defer>
   $(function () {
     loadDatepickers({
       autoclose: true,
       changeMonth: true,
       changeYear: true,
-      format: "MM dd, yyyy",
+      format: "MM d, yyyy",
       startDate: "+1d",
+    });
+
+    $(".timepicker").timepicker({
+      step: 30,
+      minTime: "8am",
+      maxTime: "5pm",
+      defaultTime: "08",
+      forceRoundTime: true,
+      timeFormat: "h:i A",
+      scrollbar: false,
     });
 
     let trIndex = 1;
@@ -346,9 +453,6 @@
       <input type='text' name='medicineFrequency' value="${data.medicineFrequency}" />
       <input type='text' name='medicineInstructions' value="${data.medicineInstructions}" />
       `;
-
-      // let form = $("form[data-form-target=EMR]");
-      // form.append(toInsert);
     }
 
     function generateTableTDs(data) {
@@ -358,12 +462,12 @@
               data-bs-target="#prescriptionModal">
           <span>
             <i class="fa-solid fa-pen"></i>
-          </span>      
+          </span>
         </button>
         <button type="button" class="btn btn-danger btn-delete">
           <span>
             <i class="fa-solid fa-x"></i>
-          </span>      
+          </span>
         </button>
       </td>
       <td>
@@ -379,7 +483,10 @@
         ${data.medicineMeasurement}
       </td>
       <td>
-        ${data.medicineFrequency}
+        ${data.medicineFrequency} x a day
+      </td>
+      <td>
+        for ${data.medicinePeriod} days
       </td>
       <td>
         ${data.medicineInstructions}
@@ -424,19 +531,59 @@
 
     // FUNCTIONALITY TO LOAD EXISTING DATA FROM LOCALSTORAGE
     let existingData = getDataFromLocalStorage("plan");
+
     console.log(existingData);
     carePlan = existingData["carePlan"];
     prescription = existingData["prescription"];
 
     updateTable(prescription);
 
-    if (Object.keys(prescription).length) {
+    if (prescription.length) {
       console.log(prescription);
 
       updateTable(prescription);
     }
 
+    if (Object.keys(carePlan).length) {
+      if (carePlan["followUpDate"]) {
+        let followUpDate = moment(carePlan["followUpDate"]).format("LL");
+        let followUpTime = moment(carePlan["followUpDate"]).format("hh:mm a");
+
+        $("#follow-up-datepicker").val(followUpDate);
+        $("#follow-up-time").val(followUpTime);
+        $("#follow-up-time").prop("disabled", false);
+      }
+
+      $("#carePlanNotes").val(carePlan["carePlanNotes"]);
+      $(
+        `#patient-status-select option[value='${carePlan["patientStatus"]}'`
+      ).attr("selected", "selected");
+    }
+
     // PRESCRIPTION FUNCTIONALITIES
+    $("#follow-up-datepicker").on("keydown", function (e) {
+      if (e.keyCode == 8 || e.keyCode == 46) {
+        $(this).val("");
+        $(this).trigger("change");
+      }
+      e.preventDefault();
+    });
+
+    $("#follow-up-time").on("keydown", function (e) {
+      e.preventDefault();
+    });
+
+    $("#follow-up-datepicker").on("change", function () {
+      console.log("CHANGED");
+      if ($(this).val() != "") {
+        $("#follow-up-time").timepicker("setTime", "8");
+        $("#follow-up-time").prop("disabled", false);
+        return;
+      }
+      $("#follow-up-time").val("");
+      $("#follow-up-time").prop("disabled", true);
+    });
+
     // when add button (+) is clicked
     $("#prescription-table").on("click", ".btn-add", function () {
       // CHANGE MODAL HEADER TEXT
@@ -461,8 +608,16 @@
       let medicineType = $(siblings[1]).text().trim();
       let medicineDosage = $(siblings[2]).text().trim();
       let medicineMeasurement = $(siblings[3]).text().trim();
-      let medicineFrequency = $(siblings[4]).text().trim();
-      let medicineInstructions = $(siblings[5]).text().trim();
+      let medicineFrequency = $(siblings[4])
+        .text()
+        .replace(" x a day", "")
+        .trim();
+      let medicinePeriod = $(siblings[5])
+        .text()
+        .replace("for ", "")
+        .replace(" days", "")
+        .trim();
+      let medicineInstructions = $(siblings[6]).text().trim();
 
       // POPULATE MODAL FIELDS
       $("#prescriptionModal input[name=medicineName]").val(medicineName);
@@ -474,19 +629,23 @@
       $("#prescriptionModal input[name=medicineFrequency]").val(
         medicineFrequency
       );
+      $("#prescriptionModal input[name=medicinePeriod]").val(medicinePeriod);
       $("#prescriptionModal textarea[name=medicineInstructions]").val(
         medicineInstructions
       );
 
       Object.assign(
         previousData,
-        { medicineName: medicineName },
-        { medicineType: medicineType },
-        { medicineDosage: medicineDosage },
-        { medicineMeasurement: medicineMeasurement },
-        { medicineFrequency: medicineFrequency },
-        { medicineInstructions: medicineInstructions }
+        { medicineName },
+        { medicineType },
+        { medicineDosage },
+        { medicineMeasurement },
+        { medicineFrequency },
+        { medicinePeriod },
+        { medicineInstructions }
       );
+
+      console.log(previousData);
     });
 
     $("#prescription-table").on("click", ".btn-delete", function () {
@@ -496,16 +655,26 @@
       let medicineType = $(siblings[1]).text().trim();
       let medicineDosage = $(siblings[2]).text().trim();
       let medicineMeasurement = $(siblings[3]).text().trim();
-      let medicineFrequency = $(siblings[4]).text().trim();
-      let medicineInstructions = $(siblings[5]).text().trim();
+      let medicineFrequency = $(siblings[4])
+        .text()
+        .replace(" x a day", "")
+        .trim();
+      let medicinePeriod = $(siblings[5])
+        .text()
+        .replace("for ", "")
+        .replace(" days", "")
+        .trim();
+      let medicineInstructions = $(siblings[6]).text().trim();
 
       Object.assign(
         previousData,
-        { medicineName: medicineName },
-        { medicineType: medicineType },
-        { medicineDosage: medicineDosage },
-        { medicineMeasurement: medicineMeasurement },
-        { medicineFrequency: medicineFrequency },
+        { medicineName },
+        { medicineType },
+        { medicineDosage },
+        { medicineMeasurement },
+        { medicineFrequency },
+        { medicinePeriod },
+
         { medicineInstructions: medicineInstructions }
       );
 
@@ -545,11 +714,28 @@
     });
 
     $("#plan-form").on("submit", function () {
+      let followUpDay = $("#follow-up-datepicker").val();
+      let followUpTime = $("#follow-up-time").val();
+
+      console.log(followUpDay, followUpTime);
+      let followUpDate = "";
+      if (followUpDay && followUpTime) {
+        followUpDate = new Date(`${followUpDay} ${followUpTime}`).toISOString();
+      }
+
+      let patientStatus = $("#patient-status-select").val();
+      let carePlanNotes = $("#carePlanNotes").val();
+
+      let carePlan = {
+        followUpDate,
+        patientStatus,
+        carePlanNotes,
+      };
+
       let plan = {
         prescription,
-        carePlan: {},
+        carePlan,
       };
-      console.log(prescription);
       saveDataToLocalstorage(plan, "plan");
     });
   });
@@ -581,6 +767,12 @@
       });
     }
 
+    let selectedCarePlan = {};
+
+    $("#add-to-templates").on("click", function () {
+      $("#add-care-plan-text").val($("#carePlanNotes").val());
+    });
+
     $("#add-care-plan-form").on("submit", function (e) {
       e.preventDefault();
       let cleanedData = cleanData($(this).serializeArray());
@@ -601,26 +793,58 @@
     });
 
     $("#view-care-plan-btn").on("click", function () {
-      getCarePlans((doctorID = "123123"), (carePlanID = "DrxoEjA5yD"))
+      selectedCarePlan = {};
+
+      // CLEAR TEXTAREA
+      $("#view-care-plan-text").val("");
+
+      getCarePlans((doctorID = "123123"))
         .then(function (response) {
-          console.log(response);
+          let data = response;
+
+          // CLEAR SELECT
+          $("#view-care-plan-select").empty();
+          $("<option value=''>Select care plan</option>").appendTo(
+            $("#view-care-plan-select")
+          );
+
+          data.forEach(function (item) {
+            $(
+              `<option value='${item["carePlanTitle"]}' data-id=${item["_id"]}>${item["carePlanTitle"]}</option>`
+            ).appendTo($("#view-care-plan-select"));
+          });
+
+          // DELETE ALL EVENT HANDLER OF SELECT BEFORE ADDING NEW ONE
+          $("#view-care-plan-select").off("change");
+
+          $("#view-care-plan-select").on("change", function () {
+            console.log("I CHANGED");
+            let selectedOptionId = $(this).find(":selected").data("id");
+
+            selectedCarePlan =
+              data.find((item) => item["_id"] === selectedOptionId) || {};
+
+            if (!Object.keys(selectedCarePlan).length) {
+              $("#view-care-plan-text").val("");
+            }
+            $("#view-care-plan-text").val(selectedCarePlan["carePlanText"]);
+          });
         })
         .catch(function (xhr) {
           console.log(xhr);
         });
     });
+
+    $("#useBtn").on("click", function () {
+      if (!Object.keys(selectedCarePlan).length) return;
+      let toAppendText = selectedCarePlan["carePlanText"];
+
+      let currentCarePlanNote = $("#carePlanNotes").val();
+
+      $("#carePlanNotes").val(`${currentCarePlanNote}\n${toAppendText}`);
+
+      console.log(currentCarePlanNote);
+      console.log(toAppendText);
+    });
   });
 </script>
-
-<!-- 
-{
-  "_id": "6393fd1abddc38efc3b9f86a",
-  "doctorId": "fkldsajfklas",
-  "carePlanTitle": "",
-  "carePlanText": "",  
-  "meta": {
-    "createdDate": "",
-    "modifiedDate": "",    
-  }  
-}
--->

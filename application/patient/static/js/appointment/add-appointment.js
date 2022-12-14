@@ -47,22 +47,7 @@ $(function () {
 
       //events for testing
       //TODO: fetch all dates that have events from the selected practitioner and disable it
-      events: [
-        // {
-        //   title: "event1",
-        //   start: "2022-12-01",
-        // },
-        // {
-        //   title: "event2",
-        //   start: "2022-01-05",
-        //   end: "2022-12-07",
-        // },
-        // {
-        //   title: "event3",
-        //   start: "2022-12-09T12:30:00",
-        //   allDay: false, // will make the time show
-        // },
-      ],
+      events: [],
     }
   );
 

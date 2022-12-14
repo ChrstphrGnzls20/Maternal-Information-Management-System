@@ -282,8 +282,10 @@
       });
     }
 
+    // FIXME:
     $("#referralDetails").on("submit", function () {
       let cleanedData = cleanData($(this).serializeArray());
+      console.log(cleanedData);
       saveDataToLocalstorage(cleanedData, "laboratory");
     });
   });

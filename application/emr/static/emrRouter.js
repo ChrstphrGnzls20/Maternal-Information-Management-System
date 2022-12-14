@@ -1,9 +1,9 @@
 $(function () {
   // let activeEMRView = "vital-signs";
-  let getEMRContent = function (target) {
+  function getEMRContent(target) {
     $.ajax({
       method: "GET",
-      url: `/emr/${target}`,
+      url: `/emr/template/${target}`,
       dataType: "json",
       contentType: "application/json",
       success: function (html) {
@@ -22,64 +22,15 @@ $(function () {
         // set activeEMRView
         localStorage.setItem("activeEMRView", target);
 
-        if (activeEMRView === "patient-history-pch") {
-          // console.log("HELLO");
-        }
-
         if (activeEMRView === "plan") {
           $("#patient-status-select").on("change", function () {
             // TODO: to fix
             let value = $(this).val();
           });
         }
-
-        if (activeEMRView === "laboratory") {
-          // $.ajax({
-          //   type: "POST",
-          //   url: "/emr/getTemplates",
-          //   data: JSON.stringify({
-          //     doctorId: "123456",
-          //     category: "laboratory",
-          //   }),
-          //   contentType: "application/json",
-          //   dataType: "json",
-          //   success: function (response) {
-          //     var referralAutocompleteArray = [];
-          //     let labTemplates = response.data;
-          //     if (labTemplates) {
-          //       console.log(response.data);
-          //       Object.keys(response.data).forEach(function (key) {
-          //         referralAutocompleteArray.push(key);
-          //       });
-          //       // console.log($.autocomplete());
-          //       $("#referralReason").autocomplete({
-          //         clearButton: true,
-          //         source: referralAutocompleteArray,
-          //         selectFirst: true,
-          //       });
-          //     }
-          //     $("#referralReason").on("change", function () {
-          //       let value = $(this).val();
-          //       let data = labTemplates[value];
-          //       // uncheck checked first
-          //       $(`input[type=checkbox]`).each(function () {
-          //         $(this).prop("checked", false);
-          //       });
-          //       // check according to data array
-          //       data.forEach(function (item) {
-          //         $(`input[value=${item}`).prop("checked", true);
-          //       });
-          //     });
-          //   },
-          //   error: function (xhr) {
-          //     console.log("Error: " + xhr.responseText);
-          //   },
-          // });
-        }
-        // loadDatepickers();
       },
     });
-  };
+  }
 
   $("#emr-content").on(
     "click",

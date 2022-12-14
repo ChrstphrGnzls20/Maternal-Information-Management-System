@@ -38,3 +38,8 @@ def appointments():
 @doctor.route("/patients")
 def patients():
     return render_template("dashboard.html", contentTemplate="/patient.html", sidebarItems=sidebarItems, activeSidebar="PATIENTS")
+
+
+@doctor.route("/patients/facesheet/<string:id>")
+def facesheet(id):
+    return render_template("facesheet.html")

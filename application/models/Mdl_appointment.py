@@ -68,6 +68,14 @@ class Appointment(object):
         collection.insert_one(data)
         return data
 
+    # def addFollowupAppoinment(self, data: dict) -> dict:
+    #     collection = mongo.db[self.dbName]
+    #     data["_id"] = self.generateAppointmentID()
+    #     data["createdDate"] = str(datetime.now().isoformat())
+    #     data["status"] = "accepted"
+    #     collection.insert_one(data)
+    #     return data
+
     def editAppointment(self, appointmentID: str, payload: dict) -> dict:
         collection = mongo.db[self.dbName]
         try:
