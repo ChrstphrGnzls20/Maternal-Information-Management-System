@@ -20,6 +20,11 @@ sidebarItems = [
         "icon": "bi bi-calendar-week",
         "route": "/doctor/patients",
     },
+    {
+        "label": "SCHEDULE",
+        "icon": "bi bi-calendar-week",
+        "route": "/doctor/schedule",
+    },
 ]
 
 
@@ -38,6 +43,11 @@ def appointments():
 @doctor.route("/patients")
 def patients():
     return render_template("dashboard.html", contentTemplate="/patient.html", sidebarItems=sidebarItems, activeSidebar="PATIENTS")
+
+
+@doctor.route("/schedule")
+def schedule():
+    return render_template("dashboard.html", contentTemplate="/schedule.html", sidebarItems=sidebarItems, activeSidebar="SCHEDULE")
 
 
 @doctor.route("/patients/facesheet/<string:id>")

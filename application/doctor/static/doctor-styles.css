@@ -58,3 +58,11 @@ table tr {
 .btn.btn-emr:hover {
   background-color: #256d85;
 }
+
+.custom-bg {
+  background-color: #f3f5f7;
+}
+
+.form-container {
+  max-width: 1500px !important;
+}

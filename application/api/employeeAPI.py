@@ -13,6 +13,8 @@ employeeObj = Employee()
 
 employeeAPI = Blueprint('employeeAPI', __name__)
 
+# 127.0.0.1:5000/api/employees?role=doctor
+
 
 @employeeAPI.route("/<string:employeeID>", methods=["GET", "PATCH"])
 @employeeAPI.route("/", methods=["GET", "POST"])
