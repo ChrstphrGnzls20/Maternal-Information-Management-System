@@ -2,10 +2,12 @@ from flask import Blueprint, jsonify, make_response, render_template, request
 
 import json
 
-import pdfkit
 
 # models
-from ..models.Mdl_emr import EMR, SOAPParser
+from ..models.Mdl_emr import EMR, SOAPParser, generatePrescription
+from ..models.Mdl_patient import Patient
+from ..models.Mdl_doctor import Doctor
+from ..models.Mdl_employee import Employee
 
 emr = Blueprint('emr',  __name__, template_folder="templates",
                 static_folder="static")
@@ -15,7 +17,6 @@ emrObj = EMR()
 
 @emr.route("/<string:id>")
 def dashboard(id):
-
     return render_template("emr.html")
 
 
@@ -73,24 +74,44 @@ def SOAP(checkupID: str):
 
         data: dict = data[0]
         soapObj = SOAPParser(data)
-        # INTERPRETATION BEGINS
-        headers = soapObj.fillSOAPHeader()
-        vitals = soapObj.interpretVitalSigns()
-        subjective = soapObj.interpretSubjective()
-        objective = soapObj.interpretObjective()
-        assessment = soapObj.interpretAssessment()
-        plan = soapObj.interpretPlan()
+        SOAPPdf = soapObj.generatePDF()
+        return SOAPPdf
 
-        print(json.dumps(objective, indent=2))
 
-        # rendered = render_template(
-        #     "SOAP.html", headers=headers, vitals=vitals, subjective=subjective, HPI=subjective['HPI'], generalPE=objective['general PE'], assessment=assessment, plan=plan)
-        rendered = render_template(
-            "SOAP.html", headers=headers, vitals=vitals, subjective=subjective, objective=objective, assessment=assessment, plan=plan)
-        pdf = pdfkit.from_string(rendered, False)
-        response = make_response(pdf)
-        response.headers['content-Type'] = 'application/pdf'
-        response.headers['content-Disposition'] = f"inline: filename='{data['_id']}'.pdf"
-        return response
+@emr.route("/prescription/<string:checkupID>")
+def issuePrescription(checkupID):
+    if request.method == "GET":
+        data: list[dict] = emrObj.retrieveCheckup(filter={"_id": checkupID}, returnFields={
+                                                  "plan": 1, "patientID": 1, "doctorID": 1, "completedDate": 1, "assessment.diagnosis": 1})
 
-        return rendered
+        if not data:
+            return make_response("No checkup found", 404)
+
+        data = data[0]
+
+        dateCreated = data['completedDate']
+
+        patientObj = Patient()
+        patientBasicInformation = patientObj.findPatient(
+            filter={"_id": data['patientID']}, returnFields={"basicInformation.name": 1, "basicInformation.bday": 1, "basicInformation.mobile": 1, "basicInformation.address": 1})
+
+        if not patientBasicInformation:
+            return make_response("Cannot find patient information", 404)
+
+        patientBasicInformation = patientBasicInformation[0]['basicInformation']
+
+        doctorObj = Employee()
+        doctorInformation = doctorObj.retrieveEmployees(
+            filter={"_id": data['doctorID']}, returnFields={"name": 1})
+
+        if not doctorInformation:
+            return make_response("Cannot find doctor information", 404)
+
+        doctorInformation = doctorInformation[0]
+
+        # FIXME:
+        # return generatePrescription(data, patientBasicInformation[])
+        prescription = generatePrescription(
+            data, patientBasicInformation, doctorInformation, dateCreated)
+
+        return prescription

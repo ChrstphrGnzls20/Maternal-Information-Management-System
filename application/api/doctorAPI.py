@@ -38,12 +38,13 @@ def addOrRetrieveSchedules(doctorID: str = None):
             resultArray = []
             try:
                 for item in data:
-                    result = schedObj.addSchedule(item)
-                    resultArray.append(result)
-                    # if all(hasattr(item, attr) for attr in requiredFields):
-                    #     result = schedObj.addSchedule(item)
-                    # else:
-                    #     return make_response(jsonify("Incomplete attributes!"), 400)
+                    # result = schedObj.addSchedule(item)
+                    # resultArray.append(result)
+                    if all(hasattr(item, attr) for attr in requiredFields):
+                        result = schedObj.addSchedule(item)
+                        resultArray.append(result)
+                    else:
+                        return make_response(jsonify("Incomplete information!"), 400)
                 return make_response(jsonify(resultArray), 200)
             except Exception as err:
                 return make_response("An error has occurred: \n" + str(err), 500)

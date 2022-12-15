@@ -19,3 +19,48 @@ p {
 .cat {
   text-transform: capitalize;
 }
+
+/* PRESCRIPTION */
+
+.center {
+  text-align: center;
+}
+
+.doctorDetailHeader {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 8px;
+  margin-bottom: 0px;
+}
+
+table {
+  width: 100%;
+}
+
+table,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+th {
+  font-size: 20px;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.divContainer {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
+  padding: 10px;
+}
+
+.header-table {
+  border: none;
+}

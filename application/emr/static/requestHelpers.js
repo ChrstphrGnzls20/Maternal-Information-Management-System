@@ -8,6 +8,16 @@ function addNewCheckup(data) {
   });
 }
 
+function preApproveAppointment(appointmentID, payload) {
+  return $.ajax({
+    method: "PATCH",
+    url: `${API_BASE_URL}/appointments/${appointmentID}`,
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(payload),
+  });
+}
+
 function createFollowUpAppointment(data) {
   return $.ajax({
     method: "POST",
@@ -15,33 +25,5 @@ function createFollowUpAppointment(data) {
     data: JSON.stringify(data),
     dataType: "json",
     contentType: "application/json",
-  })
-    .then(function (response) {
-      let { _id } = response;
-
-      let payload = {
-        status: "accepted",
-        additionalInfo: {
-          note: "",
-        },
-      };
-      $.ajax({
-        method: "PATCH",
-        url: `${API_BASE_URL}/appointments/${_id}`,
-        contentType: "application/json",
-        dataType: "json",
-        data: JSON.stringify(payload),
-      })
-        .then(function (_) {
-          localStorage.removeItem("activeEMRView");
-          localStorage.removeItem("emr-data");
-          location.href = `/doctor/patients`;
-        })
-        .catch(function (xhr) {
-          console.log(xhr);
-        });
-    })
-    .catch(function (xhr) {
-      console.log(xhr);
-    });
+  });
 }

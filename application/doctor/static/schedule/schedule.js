@@ -12,7 +12,6 @@ $(function () {
       let parsedEnd = moment(end).subtract(1, "days").format("MM/DD/YYYY");
 
       $("#dateInput").val(`${parsedStart} - ${parsedEnd}`);
-
       $("#offcanvas").offcanvas("show");
     },
   });

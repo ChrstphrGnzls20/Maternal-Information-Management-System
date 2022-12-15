@@ -1,13 +1,91 @@
+from flask import make_response, render_template
 from ..extensions import mongo
 import json
 import shortuuid
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import re
+import pdfkit
+
 
 # IMPORT NEEDED MODELS
 from .Mdl_employee import Employee
 from .Mdl_patient import Patient
+from .Mdl_address import Address
+
+# HELPERS
+
+
+def calculateAge(bday: datetime) -> int:
+    now = datetime.utcnow()
+    now = now.date()
+
+    parsedBday = datetime.strptime(bday, "%m/%d/%Y")
+
+    # Get the difference between the current date and the birthday
+    age = relativedelta(now, parsedBday)
+    age = age.years
+
+    return age
+
+
+def generatePrescription(prescriptionData: dict, patientInfo: dict, doctorInfo: dict, dateAdministered: str) -> None:
+    if not prescriptionData['plan']['prescription']:
+        return make_response("No prescribed medicine", 404)
+    prescription = prescriptionData['plan']['prescription']
+    resultForPrescription = []
+    for index, item in enumerate(prescription):
+        tempObj = {}
+        for key, value in item.items():
+            if key == "medicinePeriod":
+                # COMPUTE MEDICINE AMOUNT
+                tempObj['medicineAmount'] = int(
+                    prescription[index]['medicineFrequency']) * value
+
+                value = int(value)
+                if value % 30 == 0:
+                    value = f'{value // 30} month/s'
+                elif value % 7 == 0:
+                    value = f'{value // 7} month/s'
+            tempObj[key] = value
+
+        resultForPrescription.append(tempObj)
+
+    date = datetime.fromisoformat(
+        dateAdministered).date().strftime(format="%B %d, %Y")
+
+    age = calculateAge(patientInfo['bday'])
+
+    patientInfo['age'] = age
+
+    address: dict = patientInfo['address']
+    addressObj = Address()
+
+    # regVal = json.loads(addressObj.getSpecific("regions", "regCode", address['regions']))[0]['regDesc'].lower()
+    # provinceVal = json.loads(addressObj.getSpecific(
+    #     "provinces", "provCode", address['provinces']))[0]['provDesc'].lower()
+    cityVal = json.loads(addressObj.getSpecific(
+        "cities", "citymunCode", address['cities']))[0]['citymunDesc'].lower()
+    barangayVal = json.loads(addressObj.getSpecific(
+        "barangays", "brgyCode", address['barangays']))[0]['brgyDesc']
+    streetAddress = address['street'].lower()
+
+    addressStr = f'{streetAddress.title()} {barangayVal}, {cityVal.title()}'
+    patientInfo['address'] = addressStr
+    diagnosis = prescriptionData['assessment']['diagnosis']
+    rendered = render_template(
+        "prescription-pdf.html", date=date, patient=patientInfo, diagnosis=diagnosis, doctor=doctorInfo, prescription=resultForPrescription)
+
+    pdf = pdfkit.from_string(rendered, False)
+    response = make_response(pdf)
+    response.headers['content-Type'] = 'application/pdf'
+    filename = f'{datetime.date(datetime.now())} - prescription - {patientInfo["name"]}.pdf'
+    response.headers[
+        'content-Disposition'] = 'inline; filename="{}"'.format(filename)
+
+    return response
+
+    return rendered
 
 
 class SOAPParser(object):
@@ -23,20 +101,9 @@ class SOAPParser(object):
             return result.lower()
         return ""
 
-    @staticmethod
-    def calculateAge(bday: datetime) -> int:
-        now = datetime.utcnow()
-        now = now.date()
+    # PRIVATE HELPER FUNCTIONS FOR CREATING PDF
 
-        parsedBday = datetime.strptime(bday, "%m/%d/%Y")
-
-        # Get the difference between the current date and the birthday
-        age = relativedelta(now, parsedBday)
-        age = age.years
-
-        return age
-
-    def fillSOAPHeader(self):
+    def __fillSOAPHeader(self):
         resultObject = {}
         try:
             completedDate = self.data['completedDate']
@@ -66,7 +133,7 @@ class SOAPParser(object):
             resultObject['provider'] = provider
             resultObject['patient'] = patientName
             # CALCULATE AGE
-            resultObject['age'] = self.calculateAge(
+            resultObject['age'] = calculateAge(
                 patient['basicInformation']['bday'])
 
         except Exception as ex:
@@ -74,7 +141,7 @@ class SOAPParser(object):
         finally:
             return resultObject
 
-    def interpretVitalSigns(self) -> dict:
+    def __interpretVitalSigns(self) -> dict:
         resultObject = {}
         try:
             vitalSigns = self.data['vitalSigns']
@@ -88,7 +155,7 @@ class SOAPParser(object):
         finally:
             return resultObject
 
-    def interpretSubjective(self) -> dict:
+    def __interpretSubjective(self) -> dict:
         resultObject = {
             'HPI': {},
             'ROS': {},
@@ -172,7 +239,7 @@ class SOAPParser(object):
             resultObject['ROS'] = resultForROS
             return resultObject
 
-    def interpretObjective(self) -> dict:
+    def __interpretObjective(self) -> dict:
         resultObject = {}
         try:
             PE = self.data['physicalExamination']
@@ -195,7 +262,7 @@ class SOAPParser(object):
         finally:
             return resultObject
 
-    def interpretAssessment(self) -> dict:
+    def __interpretAssessment(self) -> dict:
         resultObject = {}
 
         try:
@@ -208,7 +275,7 @@ class SOAPParser(object):
         finally:
             return resultObject
 
-    def interpretPlan(self) -> dict:
+    def __interpretPlan(self) -> dict:
         resultObject = {}
         try:
             plan = self.data['plan']
@@ -268,6 +335,28 @@ class SOAPParser(object):
             print(ex)
         finally:
             return resultObject
+
+    def generatePDF(self):
+        # INTERPRETATION BEGINS
+        headers = self.__fillSOAPHeader()
+        vitals = self.__interpretVitalSigns()
+        subjective = self.__interpretSubjective()
+        objective = self.__interpretObjective()
+        assessment = self.__interpretAssessment()
+        plan = self.__interpretPlan()
+
+        # rendered = render_template(
+        #     "SOAP.html", headers=headers, vitals=vitals, subjective=subjective, HPI=subjective['HPI'], generalPE=objective['general PE'], assessment=assessment, plan=plan)
+        rendered = render_template(
+            "SOAP.html", headers=headers, vitals=vitals, subjective=subjective, objective=objective, assessment=assessment, plan=plan)
+        pdf = pdfkit.from_string(rendered, False)
+        response = make_response(pdf)
+        filename = f'{datetime.date(datetime.now())} - SOAP - {headers["patient"]}.pdf'
+        response.headers['content-Type'] = 'application/pdf'
+        response.headers['content-Disposition'] = 'inline; filename="{}"'.format(
+            filename)
+
+        return response
 
 
 class EMR(object):

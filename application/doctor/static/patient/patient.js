@@ -6,6 +6,7 @@ $(function () {
       let data = response;
 
       data.forEach(function (item) {
+        // TODO: MISSING ATTRs (trimester, monitoringStatus, lastVisitDate)
         let lastVisitDate = item.lastVisitDate ? item.lastVisitDate : "";
         let monitoringStatus = item.monitoringStatus
           ? item.monitoringStatus

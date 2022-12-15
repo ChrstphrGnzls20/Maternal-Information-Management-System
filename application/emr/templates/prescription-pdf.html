@@ -1,20 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bootstrap demo</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('emr.static', filename='css/pdf.css', _external=True)}}"
+    />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
+    <title>Prescription</title>
   </head>
+
   <body>
-    <div>
-      <h1>Name: {{name}}</h1>
-      <p>Age: {{age}}</p>
+    <h1 class="text-center mb-4">Prescription</h1>
+    <div class="divContainer">
+      <table class="header-table table-borderless mb-3">
+        <tbody>
+          <tr>
+            <td><b>Date of Checkup:</b> {{date}}</td>
+            <td><b>Address:</b> {{patient.address}}</td>
+          </tr>
+          <tr>
+            <td><b>Name:</b> {{patient.name}}</td>
+            <td><b>Contact Number:</b> {{patient.mobile}}</td>
+          </tr>
+          <tr>
+            <td><b>Age:</b> {{patient.age}} years old</td>
+            <td><b>Diagnosis:</b> {{diagnosis}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h1><b>Rx</b></h1>
+      <table class="mb-3">
+        <thead align="middle">
+          <th>Item no.</th>
+          <th>Description</th>
+          <th>Dosage</th>
+          <th>Amount</th>
+          <th>Frequency of Dosage</th>
+          <th>Duration</th>
+          <th>Instruction</th>
+        </thead>
+
+        <tbody>
+          {% for medicine in prescription %}
+          <tr align="middle">
+            <td>{{loop.index}}</td>
+            <td>{{medicine.medicineName}}</td>
+            <td>
+              {{medicine.medicineDosage}}/{{medicine.medicineMeasurement}}
+            </td>
+            <td>{{medicine.medicineAmount}}</td>
+            <td>{{medicine.medicineFrequency}} x a day</td>
+            <td>{{medicine.medicinePeriod}}</td>
+            <td>{{medicine.medicineInstructions}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <br />
+      <div>
+        <h5><b>Prescribed By:</b> {{doctor.name}}</h5>
+        <h5><b>License #:</b> {{doctor._id}}</h5>
+        <h5><b>PTR #:</b></h5>
+      </div>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

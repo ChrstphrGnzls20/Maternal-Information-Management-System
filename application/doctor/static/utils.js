@@ -17,6 +17,18 @@ function generateAppointmentTrs(appointment) {
               <li><a class="dropdown-item" id='accept-appointment-btn' href="" data-appointment-id=${appointment._id} data-bs-toggle="modal" data-bs-target="#acceptApptModal">Accept Appointment</a></li>
           </ul>
         </div>`;
+  } else if (appointment.status === "accepted") {
+    // TODO: implement cancel for doctor
+    statusEl = `
+    <div class="btn-group position-static">
+      <span type="button" class="border-0 p-0 fw-bold btn btn-white dropdown-toggle text-capitalize text-success" data-bs-toggle="dropdown" aria-expanded="false">
+        ${appointment.status}
+      </span>
+      <ul class="dropdown-menu ">
+          
+          <li><a class="dropdown-item" id='cancel-appointment-btn' href="" data-appointment-id=${appointment._id} data-bs-toggle="modal" data-bs-target="#acceptApptModal">Cancel Appointment</a></li>
+      </ul>
+    </div>`;
   } else if (
     appointment.status === "canceled" ||
     appointment.status === "rejected"
@@ -51,12 +63,14 @@ function generatePatientTr(patient) {
     patient;
 
   let statusType = "";
-  if (monitoringStatus.toLowerCase() === "regular checkup") {
-    statusType = "status-span status-1";
-  } else if (monitoringStatus.toLowerCase() === "follow-up") {
-    statusType = "status-span status -2";
-  } else if (monitoringStatus.toLowerCase() === "close monitoring") {
-    statusType = "status-span status-3";
+  if (monitoringStatus) {
+    if (monitoringStatus.toLowerCase() === "regular checkup") {
+      statusType = "status-span status-1";
+    } else if (monitoringStatus.toLowerCase() === "follow-up") {
+      statusType = "status-span status -2";
+    } else if (monitoringStatus.toLowerCase() === "close monitoring") {
+      statusType = "status-span status-3";
+    }
   }
 
   return `
@@ -116,7 +130,7 @@ let fetchDoctorAppointments = (doctorID, searchParams) => {
 function fetchPatients(doctorID) {
   return $.ajax({
     method: "GET",
-    url: `${API_BASE_URL}/doctor/${doctorID}/patients`,
+    url: `${API_BASE_URL}/doctors/${doctorID}/patients`,
     dataType: "json",
     contentType: "application/json",
   });
