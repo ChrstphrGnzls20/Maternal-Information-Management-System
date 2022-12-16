@@ -688,7 +688,6 @@ $(function () {
           });
         }
       });
-      $("#finishCheckupModal").modal("show");
 
       /*
         <div class="form-group">
@@ -702,6 +701,7 @@ $(function () {
         </div>
       */
     }
+    $("#finishCheckupModal").modal("show");
   });
 
   $("#finishCheckupModal .modal-footer").on(
@@ -740,6 +740,8 @@ $(function () {
                   appointmentDate: followUpDate.toISOString(),
                 };
 
+                window.open(`/emr/SOAP/${newCheckupId}`, "_blank");
+
                 createFollowUpAppointment(newAppointment)
                   .then(function (response) {
                     let { _id } = response;
@@ -756,8 +758,12 @@ $(function () {
                         localStorage.removeItem("activeEMRView");
                         localStorage.removeItem("emr-data");
                         // OPEN NEW WINDOW OF SOAP BEFORE REDIRECTING
-                        window.open(`/emr/SOAP/${newCheckupId}`);
-                        location.href = `/doctor/patients`;
+                        window.open(
+                          `/emr/chargingForm/${newCheckupId}`,
+                          "_blank"
+                        );
+
+                        location.href = `/doctor/patients/${patientID}`;
                       })
                       .catch(function (xhr) {
                         console.log(xhr);
@@ -770,8 +776,8 @@ $(function () {
                 localStorage.removeItem("activeEMRView");
                 localStorage.removeItem("emr-data");
                 // OPEN NEW WINDOW OF SOAP BEFORE REDIRECTING
-                window.open(`/emr/SOAP/${newCheckupId}`);
-                location.href = `/doctor/patients`;
+                window.open(`/emr/chargingForm/${newCheckupId}`, "_blank");
+                location.href = `/doctor/patients/${patientID}`;
               }
             }
           })

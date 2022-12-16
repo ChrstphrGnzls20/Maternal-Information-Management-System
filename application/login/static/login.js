@@ -15,8 +15,6 @@ $(function () {
   let splitURL = currentURL.split("/");
   let currentEntity = splitURL[splitURL.length - 1];
 
-  console.log(currentEntity);
-
   $loginForm = $(".login-form");
 
   $loginForm.validate({

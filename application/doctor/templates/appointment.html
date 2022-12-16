@@ -192,5 +192,65 @@
   </div>
 </div>
 
+<!-- Cancel Modal -->
+<div
+  class="modal fade"
+  id="cancelApptModal"
+  tabindex="-1"
+  aria-labelledby="cancelApptModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cancelApptModalLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <p class="mb-0 cancellation-number">
+            Are you sure you want to <b>cancel</b> this appointment?
+          </p>
+          <span class="text-muted"
+            >Note: This will be immediately cancelled.</span
+          >
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="cancelReason" class="form-label"
+            >Reason (optional):</label
+          >
+
+          <textarea
+            class="form-control"
+            name="cancelReason"
+            id="cancelReason"
+            cols="30"
+            rows="5"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          No
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          id="confirm-cancel-appointment-btn"
+        >
+          Yes, cancel it
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="{{url_for('doctor.static', filename='/utils.js')}}"></script>
 <script src="{{url_for('doctor.static', filename='/appointment/appointment.js')}}"></script>

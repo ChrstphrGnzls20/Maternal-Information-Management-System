@@ -35,26 +35,30 @@ def verifyOTP(otp):
         return make_response(jsonify({'code': "SUCCESS"}), 201)
     return make_response(jsonify({"errorMsg": "Incorrect OTP!"}), 422)
 
+# FIXME: INSTEAD OF ENTITY FOR DOCTOR IS EMPLOYEE, ASSIGN THE CORRECT ENTTIY FOR USER-ROLE AUTHENTICATION
+
 
 @authAPI.route("/login/<string:entity>", methods=["POST"])
 def loginAttempt(entity: str):
+    print(session)
     # FOR VERIFYING LOGIN CREDENTIALS
     if request.method == "POST":
+        dbName = entity
         loginCred = json.loads(request.data)
         print(loginCred)
-        if entity != 'patient':
-            entity = 'employee'
-        loginObj = Login(entity=entity)
+        if dbName != 'patient':
+            dbName = 'employee'
+        loginObj = Login(entity=dbName)
         result = loginObj.login(loginCred=loginCred)
         # IF THE LOGIN CREDENTIAL IS CORRECT
         if result:
             loginData = result[0]
             print(loginData)
             # SAVE SESSION
-            session['_id'] = loginData['_id']
+            session['id'] = loginData['_id']
             if entity == "patient":
-                session['userRole'] = 'patient'
+                session['entity'] = 'patient'
             else:
-                session['userRole'] = entity
+                session['entity'] = entity
             return make_response(jsonify(result), 201)
         return make_response(jsonify(result), 401)

@@ -44,9 +44,11 @@ def init_app():
     Session(app)
 
     """Initialize plugins"""
-    mongo.init_app(app)
+    # mongo.init_app(app)
     # TODO: implement OTP using flask_mail
     mail.init_app(app)
+
+    print(app)
 
     with app.app_context():
         # Include routes
@@ -62,6 +64,8 @@ def init_app():
 
     @app.route('/')
     def index():
+        session.clear()
+
         return render_template('index.html')
 
     @app.route('/logout')

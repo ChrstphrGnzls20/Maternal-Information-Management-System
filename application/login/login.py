@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, session
 
 login = Blueprint('login', __name__, template_folder="templates",
                   static_folder="static")
@@ -13,6 +13,7 @@ login = Blueprint('login', __name__, template_folder="templates",
 
 @login.route('/<string:entity>')
 def loginPage(entity):
+    session.clear()
     return render_template("login.html", title="Login", entity=entity)
 
 

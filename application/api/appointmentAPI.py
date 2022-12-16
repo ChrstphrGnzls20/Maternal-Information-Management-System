@@ -23,7 +23,12 @@ def getAppointments(entity: str, userID: str, appointmentID: str = None):
     # CHECK IF STATUS IS SPECIFIED
     status = request.args.get("status", None)
     if status:
-        filters['status'] = status
+        statusArray = status.split("|")
+        if len(statusArray) > 1:
+            filters['$or'] = [{"status": statusArray[0]},
+                              {"status": statusArray[1]}]
+        else:
+            filters['status'] = status
 
     # CHECK FOR APPOINTMENT ID
     appointmentID = request.args.get("search_id", None)

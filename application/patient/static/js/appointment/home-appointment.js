@@ -65,10 +65,22 @@ function viewAppointmentSummaryModal(appointment, status) {
   let timeModified = moment(appointment.additionalInfo.dateModified).format(
     "hh:mm a"
   );
-  let toBeDisplayedName =
-    status === "rejected"
-      ? appointment.doctor_name
-      : `${appointment.patient_name} (You)`;
+  let toBeDisplayedName;
+  let userID = localStorage.getItem("id");
+  if (
+    status === "canceled" &&
+    appointment.additionalInfo.modifierID === userID
+  ) {
+    toBeDisplayedName = `${appointment.patient_name} (You)`;
+  } else if (status === "canceled" && appointment.patient_name !== userID) {
+    toBeDisplayedName = `${appointment.doctor_name}`;
+  } else {
+    toBeDisplayedName = appointment.doctor_name;
+  }
+  // toBeDisplayedName =
+  //   status === "rejected"
+  //     ? appointment.doctor_name
+  //     : `${appointment.patient_name} (You)`;
 
   let content = `
       <p>Appoinment <b>${appointment._id}</b> was ${appointment.status} by <b>${toBeDisplayedName}</b> on <b>${dateModified} at ${timeModified}</b>.</p>
@@ -80,9 +92,8 @@ function viewAppointmentSummaryModal(appointment, status) {
   modalBody.append(content);
 }
 
-// IMPORTANT: STATUS CHANGE TO PENDING OR ACCEPTED
 function checkForExistingAppointment(patientID) {
-  const searchParam = $.param({ status: "pending" });
+  const searchParam = $.param({ status: "pending|accepted" });
   return $.ajax({
     method: "GET",
     url: `${API_BASE_URL}/appointments/patient/${patientID}?${searchParam}`,
@@ -91,11 +102,13 @@ function checkForExistingAppointment(patientID) {
   });
 }
 
-// TODO: revise accordingly to provide a friendlier UX
 function checkForRecentCancellation(appointments) {
   let hasRecentCancellation = 0;
   appointments.forEach(function (item) {
-    if (item.status === "canceled") {
+    if (
+      item.status === "canceled" &&
+      item.additionalInfo.modifierID === localStorage.getItem("id")
+    ) {
       let canceledDate = moment(item.additionalInfo.dateModified, "YYYY-MM-DD");
       let dateDiff = parseInt(moment().diff(canceledDate, "days"));
       if (dateDiff === 0) {
@@ -159,10 +172,16 @@ $(function () {
         let scheduleTime = moment(data.appointmentDate).format("hh:mm a");
         let modal = $("#existingAppointmentModal");
         let modalBody = $("#existingAppointmentModal .modal-body");
+        let statusString;
+        if (data.status.toLowerCase() === "pending") {
+          statusString = "waiting for approval";
+        } else if (data.status.toLowerCase() === "accepted") {
+          statusString = "that was accepted";
+        }
         modalBody.empty();
         modalBody.append(`
         <p>
-          You have an appointment waiting for approval <b>(ref: ${data._id})</b> scheduled on <b>${scheduleDate} at ${scheduleTime}</b>.</p> 
+          You have an appointment ${statusString}  <b>(ref: ${data._id})</b> scheduled on <b>${scheduleDate} at ${scheduleTime}</b>.</p> 
         <p>Either cancel it or wait for the doctor to approve/reject your pending appointment.
         </p>`);
         $(modal).modal("show");

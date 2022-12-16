@@ -12,46 +12,46 @@ let selectedAppointment = {};
 
 //initialize FullCalendar
 $(function () {
-  let calendar = new FullCalendar.Calendar(
-    document.getElementById("calendar"),
-    {
-      initialView: "dayGridMonth",
-      headerToolbar: {
-        left: "prev,next today",
-        center: "title",
-        right: "dayGridMonth",
-      },
-      validRange: {
-        start: new Date(moment().add(1, "days")),
-      },
-      weekends: false,
-      //better support for comp and mobile
-      dateClick: function (info) {
-        // set the values
-        selectedPractitioner = pracSelect.val();
-        let selectedPractitionerName = $(
-          `#prac-select option[value=${selectedPractitioner}]`
-        ).text();
-        selectedDate = info.date;
+  // let calendar = new FullCalendar.Calendar(
+  //   document.getElementById("calendar"),
+  //   {
+  //     initialView: "dayGridMonth",
+  //     headerToolbar: {
+  //       left: "prev,next today",
+  //       center: "title",
+  //       right: "dayGridMonth",
+  //     },
+  //     validRange: {
+  //       start: new Date(moment().add(1, "days")),
+  //     },
+  //     weekends: false,
+  //     //better support for comp and mobile
+  //     dateClick: function (info) {
+  //       // set the values
+  //       selectedPractitioner = pracSelect.val();
+  //       let selectedPractitionerName = $(
+  //         `#prac-select option[value=${selectedPractitioner}]`
+  //       ).text();
+  //       selectedDate = info.date;
 
-        practInput.val(selectedPractitionerName);
-        let dateToDisplay = moment(info.date).format("MMMM DD, YYYY");
-        dateInput.val(dateToDisplay);
-        createApptModal.modal("show");
-        calendar.unselect();
-      },
-      selectAllow: function (selectInfo) {
-        console.log(selectInfo);
-        return false;
-      },
+  //       practInput.val(selectedPractitionerName);
+  //       let dateToDisplay = moment(info.date).format("MMMM DD, YYYY");
+  //       dateInput.val(dateToDisplay);
+  //       createApptModal.modal("show");
+  //       calendar.unselect();
+  //     },
+  //     selectAllow: function (selectInfo) {
+  //       console.log(selectInfo);
+  //       return false;
+  //     },
 
-      //events for testing
-      //TODO: fetch all dates that have events from the selected practitioner and disable it
-      events: [],
-    }
-  );
+  //     //events for testing
+  //     //TODO: fetch all dates that have events from the selected practitioner and disable it
+  //     events: [],
+  //   }
+  // );
 
-  calendar.render();
+  // calendar.render();
 
   // timepicker
   //TODO: up for changes based on client's time
@@ -72,12 +72,61 @@ $(function () {
 
   // listen when practitioner changes
   $("#prac-select").on("change", function () {
+    let doctorID = $(this).val();
     console.log($(this).val());
-    if ($(this).val()) {
-      $("#calendar").removeClass("invisible");
-      return;
+    // if ($(this).val()) {
+    //   $("#calendar").removeClass("invisible");
+    //   return;
+    // }
+    // $("#calendar").addClass("invisible");
+    if (doctorID) {
+      let calendar = new FullCalendar.Calendar(
+        document.getElementById("calendar"),
+        {
+          initialView: "dayGridMonth",
+          headerToolbar: {
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth",
+          },
+          validRange: {
+            start: new Date(moment().add(1, "days")),
+          },
+          weekends: false,
+          //better support for comp and mobile
+          dateClick: function (info) {
+            // set the values
+            selectedPractitioner = pracSelect.val();
+            let selectedPractitionerName = $(
+              `#prac-select option[value=${selectedPractitioner}]`
+            ).text();
+            selectedDate = info.date;
+
+            practInput.val(selectedPractitionerName);
+            let dateToDisplay = moment(info.date).format("MMMM DD, YYYY");
+            dateInput.val(dateToDisplay);
+            createApptModal.modal("show");
+            calendar.unselect();
+          },
+          selectAllow: function (selectInfo) {
+            console.log(selectInfo);
+            return false;
+          },
+          eventSources: {
+            url: `${API_BASE_URL}/doctors/schedules/${doctorID}`,
+            type: "get",
+            success: function (response, param1) {
+              console.log(response);
+              console.log(param1);
+            },
+          },
+        }
+      );
+
+      // calendar.addEventSource()
+
+      calendar.render();
     }
-    $("#calendar").addClass("invisible");
   });
 
   // listen on form submit

@@ -45,6 +45,56 @@
       </div>
     </div>
 
+    <div class="table-responsive mt-5">
+      <h3>Checkup Summary</h3>
+      <table class="table table-bordered col-12 mt-3">
+        <thead>
+          <tr>
+            <th scope="col">Date of Check-up</th>
+            <th scope="col">Doctor in charge</th>
+            <th scope="col">Diagnosis</th>
+            <th scope="col">Prescription</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for checkup in checkUps%}
+          <tr>
+            <!-- {{checkup}} -->
+            <td>
+              <a href="/emr/SOAP/{{checkup._id}}" target="_blank"
+                >{{checkup.completedDate}}</a
+              >
+            </td>
+            <td>{{checkup.doctorName}}</td>
+            <td>
+              {% if checkup.diagnosis %}{{checkup.diagnosis}}{% else %}{{"Not
+              specified"}}{% endif %}
+            </td>
+            {% if checkup.plan.prescription %}
+            <td>
+              <a href="/emr/prescription/{{checkup._id}}" target="_blank"
+                >Check prescription here</a
+              >
+            </td>
+            {% else %}
+            <td>No prescription</td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+          <!-- <tr>
+            <td><a href="#">19/08/2022</a></td>
+            <td>Wayne Chico Amazan</td>
+            <td>Morning Sickness</td>
+          </tr>
+          <tr>
+            <td><a href="#">03/10/2022</a></td>
+            <td>Wayne Chico Amazan</td>
+            <td>Unusual Paleness</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+
     <div class="row mt-5">
       <div class="text-center">
         <button

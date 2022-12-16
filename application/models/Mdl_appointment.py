@@ -13,6 +13,8 @@ from .Mdl_employee import Employee
 doctorObj = Employee()
 patientObj = Patient()
 
+collection = mongo['appointment']
+
 
 class Appointment(object):
     def __init__(self) -> None:
@@ -28,7 +30,7 @@ class Appointment(object):
         return self.generateAppointmentID()
 
     def retrieveAppointments(self, filter: dict = {}, returnFields: dict = {}, limit: int = 0, pageNumber: int = 0, sort: tuple = ("_id", 1)) -> list:
-        collection = mongo.db[self.dbName]
+        # collection = mongo.db[self.dbName]
         resultsArr = []
         results = collection.find(filter, returnFields).sort(sort[0], sort[1]).skip(
             ((pageNumber - 1) * self.appointmentPerPage) if pageNumber > 0 else 0).limit(limit)
@@ -47,11 +49,12 @@ class Appointment(object):
             result['patient_name'] = patient['basicInformation']['name']
 
             resultsArr.append(result)
-
         return resultsArr
 
     def getAvailableClinicians(self) -> list:
-        collection = mongo.db.employee
+        # collection = mongo.db.employee
+        collection = mongo['employee']
+
         results = collection.find(
             {"role": "doctor", "status": "active"}, {"_id": 1, "name": 1})
         resultArr = []
@@ -61,7 +64,7 @@ class Appointment(object):
         return resultArr
 
     def addAppointment(self, data: dict) -> dict:
-        collection = mongo.db[self.dbName]
+        # collection = mongo.db[self.dbName]
         data["_id"] = self.generateAppointmentID()
         data["createdDate"] = str(datetime.now().isoformat())
         data["status"] = "pending"
@@ -77,7 +80,7 @@ class Appointment(object):
     #     return data
 
     def editAppointment(self, appointmentID: str, payload: dict) -> dict:
-        collection = mongo.db[self.dbName]
+        # collection = mongo.db[self.dbName]
         try:
             # INSERT EXTRA INFORMATION
             print(payload)

@@ -15,6 +15,9 @@ class MissingAttributeError(Exception):
     pass
 
 
+collection = mongo['schedule']
+
+
 class Schedule(object):
     def __init__(self) -> None:
         pass
@@ -29,7 +32,7 @@ class Schedule(object):
 
     # IMPORTANT: SAVE UTC DATE FROM FRONT END TO DB
     def findSchedule(self, filter: dict = {}, returnFields: dict = {}):
-        collection = mongo.db.schedule
+        # collection = mongo.db.schedule
 
         try:
             resultsArray = []
@@ -58,7 +61,7 @@ class Schedule(object):
             print(ex)
 
     def addSchedule(self, scheduleDetails: dict) -> dict:
-        collection = mongo.db.schedule
+        # collection = mongo.db.schedule
 
         try:
             localTz = pytz.timezone("Asia/Manila")
@@ -91,7 +94,7 @@ class Schedule(object):
             print(ex)
 
     def editSchedule(self, scheduleID: str, dataToUpdate: dict):
-        collection = mongo.db.schedule
+        # collection = mongo.db.schedule
         print(dataToUpdate)
         result = collection.find_one_and_update(
             filter={"_id": scheduleID}, update={'$set': dataToUpdate}, upsert=True, return_document=ReturnDocument.AFTER)

@@ -43,7 +43,7 @@ $(function () {
 
   $(".appointments-table").on(
     "click",
-    "#reject-appointment-btn, #accept-appointment-btn",
+    "#reject-appointment-btn, #accept-appointment-btn, #cancel-appointment-btn",
     function () {
       selectedAppointmentID = $(this).attr("data-appointment-id");
       console.log(selectedAppointmentID);
@@ -71,6 +71,23 @@ $(function () {
       status: "rejected",
       additionalInfo: {
         note: note,
+        modifierID: doctorID,
+      },
+    });
+  });
+
+  // WHEN THE USER CANCELS THE APPOINTMENT
+  $("#confirm-cancel-appointment-btn").on("click", function () {
+    console.log("rejected!!!");
+
+    let note = $("#cancelReason").val();
+    // editAppointment(selectedAppointmentID, { status: "rejected", note: note });
+
+    editAppointment(selectedAppointmentID, {
+      status: "canceled",
+      additionalInfo: {
+        note: note,
+        modifierID: doctorID,
       },
     });
   });

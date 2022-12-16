@@ -2,6 +2,7 @@
 # Imported Libraries
 from ..extensions import mail
 from ..extensions import mongo
+# from ..extensions import client
 from pymongo import ReturnDocument
 # from uuid import uuid4
 import shortuuid
@@ -26,6 +27,8 @@ Model for patient transactions:
 - OTP generation and verification 
 - account modification (TODO: implement)
 """
+
+collection = mongo['patient']
 
 
 class Patient(object):
@@ -60,7 +63,7 @@ class Patient(object):
         return str(unverifiedOTP) == str(self.OTP)
 
     def register(self, data: dict) -> str:
-        collection = mongo.db.patient
+        # collection = mongo.db.patient
 
         # attach additional information
         data['_id'] = self.getRandomPatientID()
@@ -73,16 +76,20 @@ class Patient(object):
         return result.inserted_id
 
     def findPatient(self, filter: dict, returnFields: dict = {}, limit: int = 0, pageNumber: int = 0) -> list:
-        collection = mongo.db.patient
+        # print(client.list_database_names())
+        # collection = mongo['patient']
+        # collection = mongo.db.patient
+        print(filter)
         resultArray = []
         results = collection.find(filter, returnFields).limit(limit).skip(
             ((pageNumber - 1) * self.patientPerPage) if pageNumber > 0 else 0)
         for result in results:
             resultArray.append(result)
+        # print(resultArray)
         return resultArray
 
     def updatePatientStatus(self, patientID: str, status: str) -> None:
-        collection = mongo.db.patient
+        # collection = mongo.db.patient
         try:
             collection.update_one(filter={"_id": patientID}, update={
                                   '$set': {'status': status}}, upsert=True)
@@ -90,7 +97,7 @@ class Patient(object):
             print(ex)
 
     def addNewCheckupID(self, patientID: str, checkupID: str) -> list:
-        collection = mongo.db.patient
+        # collection = mongo.db.patient
         try:
             collection.update_one(filter={"_id": patientID}, update={
                                   '$addToSet': {'checkupIDs': checkupID}})

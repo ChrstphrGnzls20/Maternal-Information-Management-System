@@ -4,10 +4,11 @@ import json
 
 
 # models
-from ..models.Mdl_emr import EMR, SOAPParser, generatePrescription
+from ..models.Mdl_emr import EMR, SOAPParser, generatePrescription, generateChargingForm
 from ..models.Mdl_patient import Patient
 from ..models.Mdl_doctor import Doctor
 from ..models.Mdl_employee import Employee
+from ..models.Mdl_clinicService import ClinicService
 
 emr = Blueprint('emr',  __name__, template_folder="templates",
                 static_folder="static")
@@ -115,3 +116,40 @@ def issuePrescription(checkupID):
             data, patientBasicInformation, doctorInformation, dateCreated)
 
         return prescription
+
+
+@emr.route("/chargingForm/<string:checkupID>")
+def issueChargingForm(checkupID):
+    if request.method == "GET":
+        data: list[dict] = emrObj.retrieveCheckup(filter={"_id": checkupID}, returnFields={
+            "patientID": 1, "doctorID": 1, "completedDate": 1, "servicesPerformed": 1})
+
+        if not data:
+            return make_response("No checkup found", 404)
+
+        data = data[0]
+
+        dateCreated = data['completedDate']
+
+        patientObj = Patient()
+        patientBasicInformation = patientObj.findPatient(
+            filter={"_id": data['patientID']}, returnFields={"basicInformation.name": 1, })
+
+        if not patientBasicInformation:
+            return make_response("Cannot find patient information", 404)
+
+        patientBasicInformation = patientBasicInformation[0]['basicInformation']
+
+        doctorObj = Employee()
+        doctorInformation = doctorObj.retrieveEmployees(
+            filter={"_id": data['doctorID']}, returnFields={"name": 1})
+
+        if not doctorInformation:
+            return make_response("Cannot find doctor information", 404)
+
+        doctorInformation = doctorInformation[0]
+
+        result = generateChargingForm(
+            data['servicesPerformed'], patientInfo=patientBasicInformation, doctorInfo=doctorInformation, dateCreated=dateCreated)
+
+        return result

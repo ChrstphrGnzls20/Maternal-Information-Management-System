@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint, make_response, jsonify, request
 import json
+import datetime
 
 # MODELS
 from ..models.Mdl_doctor import Doctor
@@ -52,10 +53,28 @@ def addOrRetrieveSchedules(id: str = None):
 
     elif request.method == "GET":
         if id:
-            result = schedObj.findSchedule(filter={"doctorID": id})
+            results = schedObj.findSchedule(filter={"doctorID": id})
+            args = request.args
+            if args:
+                # startDate = datetime.datetime.strptime(
+                #     args['start'], "%Y-%m-%d")
+                startDate = args['start']
+                parsedStartDate = datetime.datetime.fromisoformat(startDate)
+                endDate = args['end']
+                parsedEndDate = datetime.datetime.fromisoformat(endDate)
+                print(parsedStartDate, parsedEndDate)
+                newResult = []
+                for result in results:
+                    resultStartDate = datetime.datetime.fromisoformat(
+                        result['start'])
+                    if parsedEndDate >= resultStartDate >= parsedStartDate:
+                        result['title'] = "On duty"
+                        # result['allDay'] = True
+                        newResult.append(result)
+                results = newResult
         else:
-            result = schedObj.findSchedule()
-        return make_response(jsonify(result), 200)
+            results = schedObj.findSchedule()
+        return make_response(jsonify(results), 200)
 
     elif request.method == "PATCH":
         data: list[dict] = json.loads(request.data)

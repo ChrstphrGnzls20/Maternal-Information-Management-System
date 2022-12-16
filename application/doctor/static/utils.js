@@ -25,8 +25,7 @@ function generateAppointmentTrs(appointment) {
         ${appointment.status}
       </span>
       <ul class="dropdown-menu ">
-          
-          <li><a class="dropdown-item" id='cancel-appointment-btn' href="" data-appointment-id=${appointment._id} data-bs-toggle="modal" data-bs-target="#acceptApptModal">Cancel Appointment</a></li>
+          <li><a class="dropdown-item" id='cancel-appointment-btn' href="" data-appointment-id=${appointment._id} data-bs-toggle="modal" data-bs-target="#cancelApptModal">Cancel Appointment</a></li>
       </ul>
     </div>`;
   } else if (
@@ -191,10 +190,21 @@ function viewAppointmentSummaryModal(appointment, status) {
   let timeModified = moment(appointment.additionalInfo.dateModified).format(
     "hh:mm a"
   );
-  let toBeDisplayedName =
-    status === "rejected"
-      ? `${appointment.doctor_name} (You)`
-      : appointment.patient_name;
+  let toBeDisplayedName;
+  let userID = localStorage.getItem("id");
+  if (
+    appointment.status === "canceled" &&
+    appointment.additionalInfo.modifierID === userID
+  ) {
+    toBeDisplayedName = `${appointment.patient_name}`;
+  } else if (
+    appointment.status === "canceled" &&
+    appointment.patient_name !== userID
+  ) {
+    toBeDisplayedName = `${appointment.doctor_name} (You)`;
+  } else {
+    toBeDisplayedName = appointment.doctor_name;
+  }
 
   let content = `
         <p>Appoinment <b>${appointment._id}</b> was ${appointment.status} by <b>${toBeDisplayedName}</b> on <b>${dateModified} at ${timeModified}</b>.</p>

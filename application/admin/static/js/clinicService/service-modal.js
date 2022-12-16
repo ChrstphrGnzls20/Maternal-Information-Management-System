@@ -100,7 +100,7 @@ function generateModalContent(mode) {
               <div class="form-group mt-3">
                 <label for="servicePrice" class="form-label required">Price</label>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control"
                   id="servicePrice"
                   name="price"
@@ -121,7 +121,12 @@ function generateModalContent(mode) {
                   required
                 >
                   <option selected value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
+                  ${
+                    mode == "ADD"
+                      ? null
+                      : "<option value='Inactive'>Inactive</option>"
+                  }
+                  
                 </select>
               </div>
             </div>

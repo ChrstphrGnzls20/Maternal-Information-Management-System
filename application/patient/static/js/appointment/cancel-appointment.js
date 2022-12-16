@@ -11,6 +11,16 @@ $(function () {
   });
 
   $("#confirm-cancel-appointment-btn").on("click", function () {
+    if (localStorage.getItem("cancellationMadeToday") > 2) {
+      let modal = $("#existingAppointmentModal");
+      let modalBody = $("#existingAppointmentModal .modal-body");
+      modalBody.empty();
+      modalBody.append(`
+      <p>You have canceled several appointments today. </p> 
+      <p>Please try again tomorrow.</p>`);
+      $(modal).modal("show");
+      return;
+    }
     let cancelReason = $("#cancelReason").val();
 
     $.ajax({
@@ -22,6 +32,7 @@ $(function () {
         status: "canceled",
         additionalInfo: {
           note: cancelReason,
+          modifierID: localStorage.getItem("id"),
         },
       }),
     })

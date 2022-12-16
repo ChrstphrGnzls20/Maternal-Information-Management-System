@@ -9,11 +9,13 @@ class Login(object):
         self.dbName = entity
 
     def login(self, loginCred: dict) -> dict:
-        collection = mongo.db[self.dbName]
+        print(self.dbName)
+        collection = mongo[self.dbName]
         resultArray = []
         try:
-            result = collection.find_one_or_404(
+            result = collection.find_one(
                 {"email": loginCred['email']}, {"_id": 1, "email": 1, "password": 1})
+            print(result)
             if result:
                 print(result)
                 if sha256_crypt.verify(loginCred['password'], result['password']):

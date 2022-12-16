@@ -12,6 +12,7 @@ import pdfkit
 from .Mdl_employee import Employee
 from .Mdl_patient import Patient
 from .Mdl_address import Address
+from .Mdl_clinicService import ClinicService
 
 # HELPERS
 
@@ -85,6 +86,34 @@ def generatePrescription(prescriptionData: dict, patientInfo: dict, doctorInfo: 
     return response
 
     return rendered
+
+
+def generateChargingForm(clinicServices: list, patientInfo: dict, doctorInfo: dict, dateCreated: str) -> None:
+    print(clinicServices, patientInfo, doctorInfo, dateCreated)
+    date = datetime.fromisoformat(
+        dateCreated).date().strftime(format="%B %d, %Y")
+
+    # FETCH NECESSARY INFO OF CLINIC SERVICES
+    serviceObj = ClinicService()
+    newClinicServiceInfo = []
+    for service in clinicServices:
+        service = int(service)
+        completeServiceInfo = serviceObj.retrieveClinicServices(
+            filter={"_id": service}, returnFields={"name": 1, "price": 1})
+        if len(completeServiceInfo):
+            newClinicServiceInfo.append(completeServiceInfo[0])
+
+    print(newClinicServiceInfo)
+    rendered = render_template(
+        "chargingForm.html", patientInfo=patientInfo, doctorInfo=doctorInfo, date=date, clinicServices=newClinicServiceInfo)
+
+    pdf = pdfkit.from_string(rendered, False)
+    response = make_response(pdf)
+    response.headers['content-Type'] = 'application/pdf'
+    filename = f'{datetime.date(datetime.now())} - chargingForm - {patientInfo["name"]}.pdf'
+    response.headers[
+        'content-Disposition'] = 'inline; filename="{}"'.format(filename)
+    return response
 
 
 class SOAPParser(object):
@@ -299,7 +328,7 @@ class SOAPParser(object):
                             if key == "medicinePeriod":
                                 # COMPUTE MEDICINE AMOUNT
                                 tempObj['medicineAmount'] = int(
-                                    prescription[index]['medicineFrequency']) * value
+                                    prescription[index]['medicineFrequency']) * int(value)
 
                                 value = int(value)
                                 if value % 30 == 0:
@@ -358,6 +387,9 @@ class SOAPParser(object):
         return response
 
 
+collection = mongo['checkup']
+
+
 class EMR(object):
     def __init__(self) -> None:
         pass
@@ -371,12 +403,12 @@ class EMR(object):
 
     @staticmethod
     def getTemplates(filter: dict, fields: dict) -> dict:
-        collection = mongo.db.autocomplete
+        collection = mongo['autocomplete']
         result = collection.find_one(filter, fields)
         return result
 
     def retrieveCheckup(self, filter: dict = {}, returnFields: dict = {}) -> list:
-        collection = mongo.db["checkup"]
+        # collection = mongo.db["checkup"]
         results = collection.find(filter, returnFields)
         resultsArray = []
 
@@ -388,7 +420,7 @@ class EMR(object):
     def addNewCheckup(self, data: dict) -> dict:
         data['_id'] = self.generateCheckupID()
         data['completedDate'] = str(datetime.now().isoformat())
-        collection = mongo.db['checkup']
+        # collection = mongo.db['checkup']
         inserted_id = collection.insert_one(data).inserted_id
 
         # ADD CHECKUP ID TO DOCUMENT OF PATIENT
@@ -406,6 +438,9 @@ class EMR(object):
             return {}
 
 
+carePlanCollection = mongo['careplan']
+
+
 class CarePlan(object):
     def __init__(self) -> None:
         pass
@@ -418,8 +453,8 @@ class CarePlan(object):
         return self.generateCarePlanID()
 
     def getCarePlans(self, filter: dict, returnFields: dict = {}) -> list:
-        collection = mongo.db["careplan"]
-        results = collection.find(filter, returnFields)
+        # collection = mongo.db["careplan"]
+        results = carePlanCollection.find(filter, returnFields)
         resultsArray = []
 
         for result in results:
@@ -428,11 +463,11 @@ class CarePlan(object):
         return resultsArray
 
     def addCarePlan(self, newCarePlan: dict) -> dict:
-        collection = mongo.db["careplan"]
+        # collection = mongo.db["careplan"]
 
         # ATTACH AUTO GENERATED ID
         newCarePlan["_id"] = self.generateCarePlanID()
-        inserted_id = collection.insert_one(newCarePlan).inserted_id
+        inserted_id = carePlanCollection.insert_one(newCarePlan).inserted_id
 
         if inserted_id:
             return newCarePlan

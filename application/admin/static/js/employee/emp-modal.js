@@ -174,8 +174,13 @@ function generateModalContent(mode) {
                 data-summary-label="Status"
                 required
                 >
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
+                    <option value="active" selected>Active</option>
+                    ${
+                      mode == "ADD"
+                        ? ""
+                        : '<option value="inactive">Inactive</option>'
+                    }
+                    
                 </select>
             </div>
 

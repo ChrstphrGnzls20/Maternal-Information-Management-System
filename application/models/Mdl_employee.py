@@ -4,6 +4,8 @@ import json
 from passlib.hash import sha256_crypt
 import shortuuid
 
+collection = mongo['employee']
+
 
 class Employee(object):
     # A CLASS FOR EXECUTING EMPLOYEE'S FUNCTIONS (ADD, EDIT)
@@ -20,7 +22,7 @@ class Employee(object):
         return self.generateRandomEmpID()
 
     def retrieveEmployees(self, filter: dict = {}, returnFields: dict = {}, limit: int = 0, pageNumber: int = 0) -> list:
-        collection = mongo.db[self.dbName]
+        # collection = mongo.db[self.dbName]
         result = collection.find(filter, returnFields).limit(limit).skip(
             ((pageNumber - 1) * self.employeePerPage) if pageNumber > 0 else 0)
         employees = []
@@ -29,7 +31,7 @@ class Employee(object):
         return employees
 
     def addEmployee(self, employeeData: dict) -> str:
-        collection = mongo.db[self.dbName]
+        # collection = mongo.db[self.dbName]
         try:
             result = self.retrieveEmployees(
                 filter={"_id": employeeData["_id"]})
@@ -50,7 +52,7 @@ class Employee(object):
 
     def editEmployee(self, _id: str, updatedData: dict) -> dict:
         # TODO: when license ID is edited, check for existing to avoid record dupllication
-        collection = mongo.db[self.dbName]
+        # collection = mongo.db[self.dbName]
         findQuery = {"_id": _id}
         updateQuery = {}
         prevData = collection.find_one(findQuery)

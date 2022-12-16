@@ -1,8 +1,18 @@
+'''
+ATLAS Email: cgonzalesmain@gmail.com
+ATLAS PWD: Maternityclinic123
+
+'''
+
 
 class Settings:
-    MONGO_URI = 'mongodb://localhost:27017/MCIMS'
     # FOR PRODUCTION USE BELOW CONNECTION TO MONGO ATLAS
-    # MONGO_URI = 'mongodb+srv://cbgonzales:Ninefinity09@mcims.tbko90w.mongodb.net/?retryWrites=true&w=majority'
+    # MONGO_URI = 'mongodb://localhost:27017/MCIMS'
+    # username = urllib.parse.quote_plus('cbgonzales')
+    # password = urllib.parse.quote_plus("Maternityclinic123")
+    MONGO_URI = 'mongodb+srv://cgonzales:maternityclinic@mcims.o6iroqu.mongodb.net/?retryWrites=true&w=majority'
+    # MONGO_URI = "mongodb+srv://cbgonzales:passwordpassword@cluster0.fndpseh.mongodb.net/?retryWrites=true&w=majority"
+    MONGO_CONNECT = True
     DEBUG = True
     SESSION_PERMANENT = False
     SESSION_TYPE = "filesystem"

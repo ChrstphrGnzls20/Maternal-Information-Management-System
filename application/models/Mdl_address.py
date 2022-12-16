@@ -9,7 +9,8 @@ class Address(object):
 
     @staticmethod
     def getAll(addressType: str) -> json:
-        collection = mongo.db[addressType]
+        # collection = mongo.db[addressType]
+        collection = mongo[addressType]
         resultsArr = []
         results = collection.find({}, {"_id": 0})
         for result in results:
@@ -19,7 +20,9 @@ class Address(object):
 
     @staticmethod
     def getAllWithFilter(addressType, key, value):
-        collection = mongo.db[addressType]
+        # collection = mongo.db[addressType]
+        collection = mongo[addressType]
+
         resultsArr = []
         results = collection.find({key: value}, {"_id": 0})
 
@@ -34,7 +37,9 @@ class Address(object):
     @staticmethod
     def getSpecific(addressType, key, value):
         print(addressType, key, value)
-        collection = mongo.db[addressType]
+        # collection = mongo.db[addressType]
+        collection = mongo[addressType]
+
         resultsArr = []
         results = collection.find({key: value}, {"_id": 0})
 

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="{{url_for('emr.static', filename='css/pdf.css', _external=True)}}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <title>Charging Form</title>
+  </head>
+
+  <body>
+    <div class="Lab Referral Form">
+      <h1 class="mt-1 text-center">Charging Form</h1>
+      <div class="mt-5">
+        <p class=""><b>Patient Name:</b> {{patientInfo.name}}:</p>
+        <p class=""><b>Date:</b> {{date}}</p>
+      </div>
+
+      <table class="table table-bordered col-10 offset-1 mt-5 mb-5">
+        <thead>
+          <tr align="middle">
+            <th scope="col">#</th>
+            <th scope="col">Services Availed</th>
+            <th scope="col">Pricing</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% set subTotal = [0] %} {% for service in clinicServices %}
+          <tr align="middle">
+            <td scope="row">{{loop.index}}</td>
+            <td>{{service.name}}</td>
+            <td>&#x20B1; {{"{:,.2f}".format(service.price|float)}}</td>
+          </tr>
+          {% set _ = subTotal.append(subTotal.pop() + service.price|int) %} {%
+          endfor %}
+          <tr>
+            <td></td>
+            <td></td>
+            <td class="text-left ms-auto">
+              <b>Sub Total: &#x20B1; {{"{:,.2f}".format(subTotal[0])}} </b>
+              <br />
+              <b>Professional Fee: &#x20B1;</b>
+              <br />
+              <b>Grand Total: &#x20B1;</b>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="mt-3">
+        <p class=""><b>Doctor Name:</b> {{doctorInfo.name}}:</p>
+        <p class=""><b>Financier Signature:</b></p>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

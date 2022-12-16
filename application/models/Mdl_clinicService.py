@@ -6,6 +6,8 @@ import random
 
 # TODO: the below class is the updated format for models, edit all other classes/models to be consistent when responding/returning data
 
+collection = mongo['clinicService']
+
 
 class ClinicService(object):
     def __init__(self):
@@ -21,7 +23,7 @@ class ClinicService(object):
         return self.generateID()
 
     def retrieveClinicServices(self, filter: dict = {}, returnFields: dict = {}, limit: int = 0, pageNumber: int = 0) -> list:
-        collection = mongo.db[self.dbName]
+        # collection = mongo.db[self.dbName]
         resultArray = []
         # results = collection.find(filter)
         results = collection.find(filter, returnFields).limit(limit).skip(
@@ -31,13 +33,13 @@ class ClinicService(object):
         return resultArray
 
     def addClinicService(self, data: dict) -> dict:
-        collection = mongo.db[self.dbName]
+        # collection = mongo.db[self.dbName]
         data["_id"] = self._id
         collection.insert_one(data)
         return data
 
     def editClinicService(self, serviceID: int, newData: dict) -> dict:
-        collection = mongo.db[self.dbName]
+        # collection = mongo.db[self.dbName]
         newData["_id"] = serviceID
         # the function called returns an array with exactly one item
         prevData = self.retrieveClinicServices(filter={"_id": serviceID})[0]
