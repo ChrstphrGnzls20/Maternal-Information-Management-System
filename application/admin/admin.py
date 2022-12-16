@@ -16,12 +16,12 @@ sidebarItems = [
     {
         "label": "DASHBOARD",
         "icon": "bi bi-house-door",
-        "route": "/admin/dashboard/",
+        "route": "/admin/",
     },
     {
         "label": "EMPLOYEES",
         "icon": "bi bi-calendar-week",
-        "route": "/admin/",
+        "route": "/admin/employees",
     },
     {
         "label": "CLINIC SERVICES",
@@ -31,10 +31,13 @@ sidebarItems = [
 ]
 
 
-# @admin.route("/admin/dashboard/employee")
-# NOTE: use above, below is for testing only
 @admin.route("/")
-def dashboard():
+def adminDashboard():
+    return render_template("dashboard.html", contentTemplate="/adminDashboard.html", sidebarItems=sidebarItems, activeSidebar="DASHBOARD", employees=employeeObj.retrieveEmployees())
+
+
+@admin.route("/employees")
+def employees():
     # if not session.get('_id') and not session.get("role") == "admin":
     #     return redirect("/admin/login")
     return render_template("dashboard.html", contentTemplate="/employees.html", sidebarItems=sidebarItems, activeSidebar="EMPLOYEES", employees=employeeObj.retrieveEmployees())

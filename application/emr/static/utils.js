@@ -52,6 +52,7 @@ function initializeEMRToLocalStorage() {
   let existingData = localStorage.getItem(LOCALSTORAGEKEY);
   if (!existingData) {
     localStorage.setItem(LOCALSTORAGEKEY, JSON.stringify(EMRDATA));
+    localStorage.setItem("activeEMRView", "vital-signs");
   }
 }
 

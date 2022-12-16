@@ -9,56 +9,73 @@
   id="offcanvas"
   aria-labelledby="offcanvasLabel"
 >
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasLabel">Plot schedule</h5>
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="offcanvas"
-      aria-label="Close"
-    ></button>
-  </div>
-  <div class="offcanvas-body">
-    <div class="row mb-3">
-      <div class="form-group col-12">
-        <label for="dateInput" class="form-label fw-bold required"
-          >Date of Shift</label
-        >
-        <input
-          type="text"
-          class="form-control"
-          id="dateInput"
-          name="dateInput"
-          disabled
-        />
-      </div>
+  <form id="createScheduleForm">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasLabel">Plot schedule</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
     </div>
+    <div class="offcanvas-body">
+      <div class="row mb-3">
+        <div class="form-group col-12">
+          <label for="dateInput" class="form-label fw-bold required"
+            >Date of Shift</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="dateInput"
+            name="dateInput"
+            disabled
+          />
+        </div>
+      </div>
 
-    <div class="row mb-3">
-      <div class="form-group">
-        <label for="start-time" class="form-label fw-bold required"
-          >Start Time:</label
-        >
-        <input type="text" class="time start form-control" id="start-time" />
+      <div class="row mb-3">
+        <div class="form-group">
+          <label for="start-time" class="form-label fw-bold required"
+            >Start Time:</label
+          >
+          <input
+            type="text"
+            class="time start form-control"
+            id="start-time"
+            required
+          />
+        </div>
       </div>
-    </div>
-    <div class="row mb-3">
-      <div class="form-group">
-        <label for="end-time" class="form-label fw-bold required"
-          >End Time:</label
-        >
-        <input type="text" class="time end form-control" id="end-time" />
+      <div class="row mb-3">
+        <div class="form-group">
+          <label for="end-time" class="form-label fw-bold required"
+            >End Time:</label
+          >
+          <input
+            type="text"
+            class="time end form-control"
+            id="end-time"
+            required
+          />
+        </div>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="d-flex justify-content-end mt-5">
-        <button type="button" id="confirmBtn" class="btn btn-success ms-2">
-          Confirm
-        </button>
+      <div class="row">
+        <div class="d-flex justify-content-end mt-5">
+          <!-- <button type="submit" id="confirmBtn" class="btn btn-success ms-2">
+            Confirm
+          </button> -->
+          <input
+            type="submit"
+            class="btn btn-success"
+            value="Create Schedule"
+          />
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>
 
 <div class="d-flex custom-bg justify-content-center p-2 bd-highlight">
@@ -68,6 +85,72 @@
     </form>
   </div>
 </div>
+
+<!-- Confirmation modal -->
+<div
+  class="modal fade"
+  id="confirmationSchedule"
+  tabindex="-1"
+  aria-labelledby="confirmationLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirmation</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body">
+          <!-- date -->
+          <div class="row">
+            <h5>
+              <b>Schedule Date: </b> &emsp;<span id="conf-sched-date"></span>
+            </h5>
+          </div>
+
+          <!-- start time -->
+          <div class="row">
+            <h5>
+              <b>Start Time: </b>&emsp;&emsp;&emsp;<span
+                id="conf-start-time"
+              ></span>
+            </h5>
+          </div>
+
+          <!-- end time -->
+          <div class="row">
+            <h5>
+              <b>End Time:</b>&emsp;&emsp;&emsp;&emsp;<span
+                id="conf-end-time"
+              ></span>
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-bs-dismiss="modal"
+          id="cancel-schedule-btn"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-success" id="add-schedule-btn">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
@@ -80,3 +163,49 @@
 <script src="https://cdn.jsdelivr.net/npm/timepicker@1.14.0/jquery.timepicker.js"></script>
 
 <script src="{{url_for('doctor.static', filename='/schedule/schedule.js')}}"></script>
+<script>
+  $(function () {
+    var calendarEl = document.getElementById("calendar");
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "dayGridMonth",
+      selectable: true,
+      selectHelper: true,
+      validRange: {
+        start: new Date(moment())
+        // start: new Date(moment().add(1, "days")),
+      },
+      select: function ({ start, end, jsEvent, view }) {
+
+        selectedStartDate = start;
+        selectedEndDate = end;
+
+        let parsedStart = moment(start).format("MM/DD/YYYY");
+        let parsedEnd = moment(end).subtract(1, "days").format("MM/DD/YYYY");
+
+        if (parsedStart === parsedEnd) {
+          $("#dateInput").val(`${parsedStart}`);
+        } else {
+          $("#dateInput").val(`${parsedStart} - ${parsedEnd}`);
+        }
+
+        // $("#dateInput").val(`${parsedStart} - ${parsedEnd}`);
+
+        createScheduleCanvas.offcanvas("show");
+      },
+      // events: [],
+      events: [
+        {% for event in events %}{
+          title: "{{event._id}}",
+          start: "{{event.start}}",
+        },{% endfor %}
+      ],
+      eventTimeFormat: {
+        hour: 'numeric',
+        minute: '2-digit',
+        meridiem: 'short'
+      }
+    });
+
+    calendar.render();
+  });
+</script>

@@ -1,8 +1,8 @@
-<div class="accordion" id="accordionExample">
-    <h1>First Timer?</h1>
+<div class="accordion" id="faqAccordion">
+  <h1>First Timer?</h1>
 
-    {% for item in content %}
-    <!-- <div class="border border-dark card mb-3">
+  {% for item in content %}
+  <!-- <div class="border border-dark card mb-3">
         <div class="card-header" id="heading-{{loop.index}}">
             <h2 class="clearfix mb-0">
                 <a class="btn btn-link" data-toggle="collapse" data-target="#collapse-{{loop.index}}" aria-expanded="true" aria-controls="collapse-{{loop.index}}">{{item.title}}<i class="material-icons">add</i></a>									
@@ -13,94 +13,29 @@
         </div>
     </div> -->
 
-    <div class="accordion-item mb-3">
-        <div class="border border-dark card ">
-        <h2 class="accordion-header" id="heading-{{item.idx}}">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{item.idx}}" aria-expanded="true" aria-controls="collapse-{{item.idx}}">
-            <strong>{{item.title}}</strong>
-          </button>
-        </h2>
-        <div id="collapse-{{item.idx}}" class="accordion-collapse collapse" aria-labelledby="heading-{{item.idx}}" data-bs-parent="#accordionExample">
-          <div class="accordion-body fs-5 pt-0">
-            {{item.body}}
-          </div>
-        </div>
-    </div>
+  <div class="accordion-item mb-3">
+    <div class="border border-dark card">
+      <h2 class="accordion-header" id="heading-{{item.idx}}">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapse-{{item.idx}}"
+          aria-expanded="true"
+          aria-controls="collapse-{{item.idx}}"
+        >
+          <strong>{{item.title}}</strong>
+        </button>
+      </h2>
+      <div
+        id="collapse-{{item.idx}}"
+        class="accordion-collapse collapse"
+        aria-labelledby="heading-{{item.idx}}"
+        data-bs-parent="#faqAccordion"
+      >
+        <div class="accordion-body fs-5 pt-0">{{item.body}}</div>
       </div>
-    {% endfor %}
-    <!-- <br>
-    <div class="border border-dark card">
-        <div class="card-header" id="headingTwo">
-            <h2 class="mb-0">
-                <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">How often do i need Pap smear?<i class="material-icons">add</i></a>
-            </h2>
-        </div>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-            <div class="card-body">Women with a healthy, normal immune system between the ages of 21 and 29 need a Pap smear every two years.
-                <br><br>
-                Between the ages of 30 and 64, a Pap test should be given every three to five years based on the patient’s HPV status and past medical history.
-                <br><br>
-                After 65 you may not need a Pap test anymore.
-                <br><br>
-                Women with certain medical conditions or who are pregnant may require additional Pap testing.</div>
-        </div>
     </div>
-    <br>
-    <div class="border border-dark card">
-        <div class="card-header" id="headingThree">
-            <h2 class="mb-0">
-                <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">What should I do if I miss a birth conntrol pill?<i class="material-icons">add</i></a>                     
-            </h2>
-        </div>
-        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-            <div class="card-body">Birth control pills should be taken at the same time every day. If you realize that you have forgotten to take your pill that day, take it as soon as possible. If you do not realize until the next day, take two pills at your normal time. Birth control loses its effect when it is not taken every day, it is recommended to use a backup form of contraception after missing a day.</div>
-        </div>
-    </div>
-    <br>
-    <div class="border border-dark card">
-        <div class="card-header" id="headingFour">
-            <h2 class="mb-0">
-                <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">Should I be tested for Human Papillomavirus (HPV)?<i class="material-icons">add</i></a>                               
-            </h2>
-        </div>
-        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-            <div class="card-body">Starting at age 30, women should have an HPV test along with their Pap test.</div>
-        </div>
-    </div>
-    <br>
-    <div class="border border-dark card">
-        <div class="card-header" id="headingFive">
-            <h2 class="mb-0">
-                <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">When should I make my first prenatal appointment?<i class="material-icons">add</i></a>                               
-            </h2>
-        </div>
-        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
-            <div class="card-body">If you believe you are pregnant, you should schedule an appointment to confirm at once. Your first prenatal appointment should be within six to eight weeks after your last menstrual cycle.</div>
-        </div>
-    </div>
-    <br>
-    <div class="border border-dark card">
-        <div class="card-header" id="headingSix">
-            <h2 class="mb-0">
-                <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">Can I exercise while pregnant?<i class="material-icons">add</i></a>                               
-            </h2>
-        </div>
-        <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
-            <div class="card-body">If you already have a regular exercise program, you may continue your exercise routine if approved by our medical staff. You should not start a strenuous workout regimen and stay away from activities with high risk of falling or injury. Remember to always be hydrated during your workout.</div>
-        </div>
-    </div>
-    <br>
-    <div class="border border-dark card">
-        <div class="card-header" id="headingSeven">
-            <h2 class="mb-0">
-                <a class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">Can I drink caffeine while pregnant?<i class="material-icons">add</i></a>                               
-            </h2>
-        </div>
-        <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
-            <div class="card-body">
-                Caffeine intake should be limited during pregnancy. Do not drink more than 200 mg a day (around two cups of coffee).
-                
-                </div>
-        </div>
-    </div> -->
+  </div>
+  {% endfor %}
 </div>

@@ -173,37 +173,40 @@
 
       $("#vital-signs-form").on("submit", function (evt) {
         evt.preventDefault();
-        let vitalSigns = {};
-        // if ($(this).valid()) {
-        let height = $("#vitalHeight").val();
-        let weight = $("#vitalWeight").val();
-        let BMI = $("#vitalBMI").val();
-        let temp = $("#vitalTemp").val();
-        let systolicBP = $("#vitalSystolic").val();
-        let diastolicBP = $("#vitalDiastolic").val();
-        let respirationRate = $("#vitalRespRate").val();
-        let oxygenSaturation = $("#vitalOxySat").val();
-        let heartRate = $("#vitalHeartRate").val();
 
-        let bloodPressure = "";
+        if ($(this).valid()) {
+          let vitalSigns = {};
+          // if ($(this).valid()) {
+          let height = $("#vitalHeight").val();
+          let weight = $("#vitalWeight").val();
+          let BMI = $("#vitalBMI").val();
+          let temp = $("#vitalTemp").val();
+          let systolicBP = $("#vitalSystolic").val();
+          let diastolicBP = $("#vitalDiastolic").val();
+          let respirationRate = $("#vitalRespRate").val();
+          let oxygenSaturation = $("#vitalOxySat").val();
+          let heartRate = $("#vitalHeartRate").val();
 
-        if (systolicBP && diastolicBP)
-          bloodPressure = `${systolicBP}/${diastolicBP}`;
+          let bloodPressure = "";
 
-        vitalSigns = {
-          height,
-          weight,
-          temperature: temp,
-          bloodPressure,
-          respirationRate,
-          oxygenSaturation,
-          heartRate,
-        };
-        // }
-        console.log(vitalSigns);
+          if (systolicBP && diastolicBP)
+            bloodPressure = `${systolicBP}/${diastolicBP}`;
 
-        // SAVE TO LOCALSTORAGE BEFORE LEAVING PAGE
-        saveDataToLocalstorage(vitalSigns, "vitalSigns");
+          vitalSigns = {
+            height,
+            weight,
+            temperature: temp,
+            bloodPressure,
+            respirationRate,
+            oxygenSaturation,
+            heartRate,
+          };
+          // }
+          console.log(vitalSigns);
+
+          // SAVE TO LOCALSTORAGE BEFORE LEAVING PAGE
+          saveDataToLocalstorage(vitalSigns, "vitalSigns");
+        }
 
         // DESTROY OBJECT
       });

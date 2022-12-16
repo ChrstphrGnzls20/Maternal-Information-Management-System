@@ -1,0 +1,163 @@
+<!-- CUSTOM CSS -->
+<link
+  rel="stylesheet"
+  href="{{url_for('admin.static', filename='/styles.css')}}"
+/>
+
+<!-- CHART JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>
+
+<div class="d-flex justify-content-center">
+  <div class="container-xl bg-white mt-2 p-4" id="printContent">
+    <div class="shadow p-3 mb-3">
+      <form>
+        <div class="d-flex justify-content-between mb-3">
+          <h3 class="mb-2">Weekly Checkup Tally</h3>
+          <div class="form-group d-flex align-items-center w-50">
+            <label
+              for="dateFilter"
+              class="form-label fw-bold mb-0 flex-shrink-0 me-2"
+              >Date Range:</label
+            >
+            <input
+              type="text"
+              class="form-control datepicker"
+              id="dateRangePicker"
+              readonly
+            />
+          </div>
+        </div>
+      </form>
+      <div class="graphs">
+        <canvas id="weeklyCheckUpTally"></canvas>
+      </div>
+    </div>
+
+    <div class="shadow p-3">
+      <h3 class="mb-2">Weekly Service Use</h3>
+      <div class="graphs">
+        <canvas id="weeklyServiceReport"></canvas>
+      </div>
+    </div>
+
+    <div class="shadow p-3">
+      <h2 class="mt-3">Weekly Duty Time Arrivals for Doctors</h2>
+      <div class="mt-5">
+        <canvas id="weeklyTimeIn"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <form class="addCarePlan" action="/action_page.php">
+      <h2>Dashboard</h2>
+
+      <div class="row row-cols-1 row-cols-md-3">
+        <div class="form-group d-flex flex-row align-items-center">
+          <label for="search" class="form-label mb-0 me-3"
+            >Search Patient</label
+          >
+          <input
+            class="form-control"
+            id="search"
+            name="nameSearch"
+            aria-label="SearchEmployeeInput"
+            placeholder="Patient's name"
+          />
+        </div>
+
+        <div
+          class="form-group d-flex flex-row align-items-center justify-content-end"
+        >
+          <label for="sortSelect" class="form-label mb-0 me-3"
+            >Search by Doctor
+          </label>
+          <select
+            class="form-select"
+            id="sortSelect"
+            aria-label="SelectEmployee"
+          >
+            <option selected>Select the doctor's name here</option>
+            <option value="regular">Wayne Chico Amazan</option>
+            <option value="follow-up">Johnny Sinatra</option>
+            <option value="monitoring">Khyle Ramirez</option>
+          </select>
+        </div>
+
+        <div
+          class="form-group d-flex flex-row align-items-center justify-content-end"
+        >
+          <label for="startDate" class="form-label required">Date Picker</label>
+          <input
+            type="text"
+            class="form-control datepicker"
+            id="templateStartDate"
+            name="startDate"
+            required
+          />
+        </div>
+      </div>
+    </form>
+    <div class="table-responsive">
+      <table class="table patient-summary-table" style="overflow-x: auto">
+        <thead>
+          <tr class="align-middle">
+            <th scope="col">Patient Name</th>
+            <th scope="col">Last Visit Date</th>
+            <th scope="col">Trimester</th>
+            <th scope="col">Contact No.</th>
+            <th scope="col" width="30%" style="white-space: nowrap">
+              Monitoring Status
+            </th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr></tr>
+          <tr>
+            <td>Kevin Hart</td>
+            <td>08/21/2022</td>
+            <td>1st Trimester</td>
+            <td>09123456789</td>
+            <td>
+              <span class="status-span status-3">Close Monitoring</span>
+            </td>
+            <td>
+              <button class="btn btn-emr" aria-labelledby="EMR">
+                <i class="fa-solid fa-chart-line"></i>
+              </button>
+              <button
+                class="btn btn-basic-info"
+                aria-labelledby="Basic Information"
+              >
+                <i class="fa-solid fa-folder-open"></i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Dwayne Johnson</td>
+            <td>08/21/2022</td>
+            <td>1st Trimester</td>
+            <td>09987654321</td>
+            <td>
+              <span class="status-span status-2">For Follow-up</span>
+            </td>
+            <td>
+              <button class="btn btn-primary btn-emr" aria-labelledby="EMR">
+                <i class="fa-solid fa-chart-line"></i>
+              </button>
+              <button
+                class="btn btn-basic-info"
+                aria-labelledby="Basic Information"
+              >
+                <i class="fa-solid fa-folder-open"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div> -->
+
+<script src="{{url_for('admin.static', filename='/js/requestHelper.js')}}"></script>
+<script src="{{url_for('admin.static', filename='/js/dashboard/dashboard.js')}}"></script>

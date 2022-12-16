@@ -2,6 +2,7 @@
 # Imported Libraries
 from ..extensions import mail
 from ..extensions import mongo
+from pymongo import ReturnDocument
 # from uuid import uuid4
 import shortuuid
 from passlib.hash import sha256_crypt
@@ -63,7 +64,7 @@ class Patient(object):
 
         # attach additional information
         data['_id'] = self.getRandomPatientID()
-        data['registeredDate'] = datetime.utcnow()
+        data['registeredDate'] = str(datetime.now().isoformat())
 
         # password hashing
         data['password'] = sha256_crypt.encrypt(data['password'])
@@ -79,6 +80,48 @@ class Patient(object):
         for result in results:
             resultArray.append(result)
         return resultArray
+
+    def updatePatientStatus(self, patientID: str, status: str) -> None:
+        collection = mongo.db.patient
+        try:
+            collection.update_one(filter={"_id": patientID}, update={
+                                  '$set': {'status': status}}, upsert=True)
+        except Exception as ex:
+            print(ex)
+
+    def addNewCheckupID(self, patientID: str, checkupID: str) -> list:
+        collection = mongo.db.patient
+        try:
+            collection.update_one(filter={"_id": patientID}, update={
+                                  '$addToSet': {'checkupIDs': checkupID}})
+            newCheckupIDs = collection.find(
+                {"_id": patientID}, {"_id": 0, "checkupIDs": 1})
+
+            return newCheckupIDs
+        except Exception as ex:
+            print(ex)
+
+    # def editPatient(self, _id: str, updatedData: dict) -> dict:
+    #     # TODO: when license ID is edited, check for existing to avoid record dupllication
+    #     collection = mongo.db['patient']
+    #     updateQuery = {}
+    #     prevData = collection.find_one({"_id": _id})
+
+    #     if not prevData:
+    #         return {}
+    #     for key in updatedData.keys():
+    #         if (updatedData[key] != prevData[key]):
+    #             updateQuery[key] = updatedData[key]
+    #     try:
+    #         result = collection.find_one_and_update(
+    #             findQuery, {"$set": updateQuery}, return_document=ReturnDocument.AFTER)
+    #         # structuredData = {"code": "SUCCESS",
+    #         #                   "data": json.loads(json.dumps(result))}
+    #     except Exception:
+    #         result = {}
+    #     finally:
+    #         return result
+
         # try:
         #     collection.find_one_or_404(filter, return_fields)
         #     return {

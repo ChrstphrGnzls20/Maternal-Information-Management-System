@@ -4,6 +4,7 @@ import pdfkit
 
 # MODELS
 from ..models.Mdl_emr import EMR, CarePlan
+from ..models.Mdl_patient import Patient
 
 emrAPI = Blueprint("emrAPI", __name__)
 
@@ -34,14 +35,46 @@ def index():
 
 @emrAPI.route("/<string:patientID>/<string:checkupID>")
 @emrAPI.route("/<string:patientID>")
-def retrieveCheckup(patientID, checkupID=None):
+@emrAPI.route("/")
+def retrieveCheckup(patientID=None, checkupID=None):
     if request.method == "GET":
-        print(patientID)
-        if checkupID == None:
-            result = emrObj.retrieveCheckup(filter={"patientID": patientID})
+        if patientID:
+            print(patientID)
+            if checkupID == None:
+                result = emrObj.retrieveCheckup(
+                    filter={"patientID": patientID})
+            else:
+                result = emrObj.retrieveCheckup(
+                    filter={"_id": checkupID, "patientID": patientID})
+        # FIXME:
         else:
-            result = emrObj.retrieveCheckup(
-                filter={"_id": checkupID, "patientID": patientID})
+            emrReturnFields = {
+                "assessment.diagnosis": 1,
+                "plan.carePlan": 1, "patientID": 1, "completedDate": 1
+            }
+            patientReturnFields = {"_id": 0, "basicInformation.name": 1,
+                                   "basicInformation.mobile": 1, "basicInformation.bday": 1, }
+            # patientReturnFields = {
+            #     "_id": 0,
+            #     "basicInformation": 1
+            # }
+            resultArray = []
+            results = emrObj.retrieveCheckup(
+                filter={}, returnFields=emrReturnFields)
+            patientObj = Patient()
+            for result in results:
+                patientID = result['patientID']
+                patientInfo = patientObj.findPatient(
+                    filter={"_id": patientID}, returnFields=patientReturnFields)[0]
+
+                patientInfo = patientInfo['basicInformation']
+                # APPEND NECESSARY DETAILS
+                result['patientName'] = patientInfo['name']
+                result['bday'] = patientInfo['bday']
+                result['mobile'] = patientInfo['mobile']
+
+                resultArray.append(result)
+            result = resultArray
 
         return make_response(jsonify(result), 200)
     return make_response(jsonify(result), 405)

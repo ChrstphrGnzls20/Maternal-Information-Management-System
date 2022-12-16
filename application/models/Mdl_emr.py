@@ -39,16 +39,15 @@ def generatePrescription(prescriptionData: dict, patientInfo: dict, doctorInfo: 
         for key, value in item.items():
             if key == "medicinePeriod":
                 # COMPUTE MEDICINE AMOUNT
+                value = int(value)
                 tempObj['medicineAmount'] = int(
                     prescription[index]['medicineFrequency']) * value
 
-                value = int(value)
                 if value % 30 == 0:
                     value = f'{value // 30} month/s'
                 elif value % 7 == 0:
-                    value = f'{value // 7} month/s'
+                    value = f'{value // 7} week/s'
             tempObj[key] = value
-
         resultForPrescription.append(tempObj)
 
     date = datetime.fromisoformat(
@@ -285,8 +284,10 @@ class SOAPParser(object):
 
             # LABORATORY
             if laboratory:
-                tests = laboratory['tests']
-                laboratory['tests'] = ', '.join(tests)
+                pass
+                # tests = laboratory['tests'] or []
+                # if tests:
+                #     laboratory['tests'] = ', '.join(tests)
 
             # PRESCRIPTION
             resultForPrescription = []
@@ -304,7 +305,7 @@ class SOAPParser(object):
                                 if value % 30 == 0:
                                     value = f'{value // 30} month/s'
                                 elif value % 7 == 0:
-                                    value = f'{value // 7} month/s'
+                                    value = f'{value // 7} week/s'
                             tempObj[key] = value
 
                         resultForPrescription.append(tempObj)
@@ -314,7 +315,7 @@ class SOAPParser(object):
             # CARE PLAN
             resultForPlan = {}
             for key, value in carePlan.items():
-                if key == 'followUpDate':
+                if key == 'followUpDate' and value:
                     # PARSE DATE
                     date = datetime.fromisoformat(value.replace(
                         "Z", "")) + timedelta(hours=8)
@@ -345,8 +346,6 @@ class SOAPParser(object):
         assessment = self.__interpretAssessment()
         plan = self.__interpretPlan()
 
-        # rendered = render_template(
-        #     "SOAP.html", headers=headers, vitals=vitals, subjective=subjective, HPI=subjective['HPI'], generalPE=objective['general PE'], assessment=assessment, plan=plan)
         rendered = render_template(
             "SOAP.html", headers=headers, vitals=vitals, subjective=subjective, objective=objective, assessment=assessment, plan=plan)
         pdf = pdfkit.from_string(rendered, False)
@@ -376,7 +375,7 @@ class EMR(object):
         result = collection.find_one(filter, fields)
         return result
 
-    def retrieveCheckup(self, filter: dict, returnFields: dict = {}) -> list:
+    def retrieveCheckup(self, filter: dict = {}, returnFields: dict = {}) -> list:
         collection = mongo.db["checkup"]
         results = collection.find(filter, returnFields)
         resultsArray = []
@@ -392,9 +391,19 @@ class EMR(object):
         collection = mongo.db['checkup']
         inserted_id = collection.insert_one(data).inserted_id
 
-        if inserted_id:
-            return data
-        return {}
+        # ADD CHECKUP ID TO DOCUMENT OF PATIENT
+        try:
+            patientObj = Patient()
+            patientObj.addNewCheckupID(data['patientID'], data["_id"])
+
+            # PATIENT STATUS
+            patientStatus = data['plan']['carePlan']['patientStatus']
+            patientObj.updatePatientStatus(data['patientID'], patientStatus)
+
+            if inserted_id:
+                return data
+        except Exception:
+            return {}
 
 
 class CarePlan(object):

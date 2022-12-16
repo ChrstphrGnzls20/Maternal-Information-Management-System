@@ -27,3 +27,12 @@ function createFollowUpAppointment(data) {
     contentType: "application/json",
   });
 }
+
+function fetchClinicServices() {
+  return $.ajax({
+    method: "GET",
+    url: `${API_BASE_URL}/clinic-services`,
+    dataType: "json",
+    contentType: "application/json",
+  });
+}

@@ -1,3 +1,4 @@
+from ..models.Mdl_schedule import Schedule
 from flask import Flask, Blueprint, render_template, session, redirect
 
 doctor = Blueprint("doctor", __name__, static_folder="static",
@@ -47,7 +48,14 @@ def patients():
 
 @doctor.route("/schedule")
 def schedule():
-    return render_template("dashboard.html", contentTemplate="/schedule.html", sidebarItems=sidebarItems, activeSidebar="SCHEDULE")
+    doctorID = session.get('_id')
+    schedObj = Schedule()
+    events = schedObj.findSchedule(filter={"doctorID": doctorID})
+    # print(events)
+    # events = [
+    #     {'id': '123', 'start': "2022-12-22", 'title': "random"}
+    # ]
+    return render_template("dashboard.html", contentTemplate="/schedule.html", sidebarItems=sidebarItems, activeSidebar="SCHEDULE", events=events)
 
 
 @doctor.route("/patients/facesheet/<string:id>")

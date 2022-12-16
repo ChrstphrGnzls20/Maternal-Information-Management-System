@@ -12,6 +12,7 @@ from application.emr.emr import emr
 from application.address.address import address
 from application.api.api import api
 from application.doctor.doctor import doctor
+from application.secretary.secretary import secretary
 
 """Extensions/Plugins"""
 # pymongo
@@ -56,6 +57,7 @@ def init_app():
         app.register_blueprint(address, url_prefix="/address")
         app.register_blueprint(emr, url_prefix="/emr")
         app.register_blueprint(api, url_prefix='/api')
+        app.register_blueprint(secretary, url_prefix='/secretary')
     # from . import models
 
     @app.route('/')

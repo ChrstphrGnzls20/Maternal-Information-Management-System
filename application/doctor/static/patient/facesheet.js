@@ -174,9 +174,14 @@ $(function () {
 
         // BP
         let [systolic, diastolic] = bloodPressure.split("/");
+        if (!diastolic) {
+          diastolic = 0;
+        }
         BPData.labels.push(checkUpDate);
         BPData.values.systolic.push(systolic);
         BPData.values.diastolic.push(diastolic);
+
+        console.log(bloodPressure.split("/"));
 
         // HEART RATE
         HRData.labels.push(checkUpDate);
@@ -194,6 +199,8 @@ $(function () {
     });
 
   $("#go-to-emr").on("click", function () {
+    localStorage.removeItem("activeEMRView");
+    localStorage.removeItem("emr-data");
     location.href = `/emr/${patientID}`;
   });
 });

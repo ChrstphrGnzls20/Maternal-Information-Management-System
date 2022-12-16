@@ -1,7 +1,8 @@
+from ..models.Mdl_emr import EMR
 from ..models.Mdl_patient import Patient
 from ..models.Mdl_appointment import Appointment
 from flask import Blueprint, render_template, session, redirect, request, make_response, jsonify
-import json
+import datetime
 
 patient = Blueprint('patient', __name__, template_folder="templates",
                     static_folder="static")
@@ -126,7 +127,38 @@ def createAppointment():
 
 @patient.route("/consultations")
 def homeConsultations():
-    return render_template("dashboard.html", contentTemplate="/home-consultations.html",  sidebarItems=sidebarItems, activeSidebar="CONSULTATIONS")
+    id = session.get('_id')
+    emrObj = EMR()
+    checkups = emrObj.retrieveCheckup(filter={"patientID": id}, returnFields={
+        "plan": 1, "assessment.diagnosis": 1, "completedDate": 1})
+
+    for checkup in checkups:
+        checkup['completedDate'] = datetime.datetime.fromisoformat(
+            checkup['completedDate']).strftime("%B %d, %Y")
+
+        prescription = checkup['plan']['prescription']
+        resultForPrescription = []
+        for index, item in enumerate(prescription):
+            tempObj = {}
+            for key, value in item.items():
+                if key == "medicinePeriod":
+                    # COMPUTE MEDICINE AMOUNT
+                    tempObj['medicineAmount'] = int(
+                        prescription[index]['medicineFrequency']) * value
+
+                    value = int(value)
+                    if value % 30 == 0:
+                        value = f'{value // 30} month/s'
+                    elif value % 7 == 0:
+                        value = f'{value // 7} week/s'
+                tempObj[key] = value
+            resultForPrescription.append(tempObj)
+
+        checkup['plan']['prescription'] = resultForPrescription
+
+        print(checkup)
+
+    return render_template("dashboard.html", contentTemplate="/home-consultations.html",  sidebarItems=sidebarItems, activeSidebar="CONSULTATIONS", checkups=checkups)
 
 
 # TODO: CREATE MECHANISM FOR CHECKING/DELEGATING DOCTOR FOR EACH PATIENT

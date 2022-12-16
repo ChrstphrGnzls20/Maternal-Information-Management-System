@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bootstrap demo</title>
+    <title>SOAP</title>
     <link
       rel="stylesheet"
       href="{{url_for('emr.static', filename='css/pdf.css', _external=True)}}"
@@ -178,10 +178,14 @@
                   {% set laboratory = plan['laboratory'] %} 
 
                   {% if laboratory %}
-                  <div class="indent-1">
-                    <p><b>Referral reason:</b> {{laboratory.referralReason}}</p>
-                    <p><b>Tests:</b> {{laboratory.tests}}</p>
-                  </div>
+                    {% if laboratory['tests'] %}
+                    <div class="indent-1">
+                      <p><b>Referral reason:</b> {{laboratory.referralReason}}</p>
+                      <p><b>Tests:</b> {{laboratory.tests}}</p>
+                    </div>
+                    {% else %}
+                    <p>No tests administered.</p>
+                    {% endif %}
                   {% else %}
                   <p>No tests administered.</p>
                   {% endif %}
@@ -230,9 +234,12 @@
                 <div class="indent-1">
                   <p>
                     <b>Follow-up Checkup Date:</b>
-                    <!-- prettier-ignore -->
+                    {% if carePlan['follow up date'] %}
                     {{carePlan['follow up date']['date']}} at 
                       {{carePlan['follow up date']['time']}}
+                    {% else %}
+                      Not specified
+                    {% endif %}
                   </p>
                   <p><b>Patient Status:</b> {{carePlan['patient status']}}</p>
                   <p>

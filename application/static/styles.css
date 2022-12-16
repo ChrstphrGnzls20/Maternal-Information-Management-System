@@ -337,7 +337,8 @@ body {
   margin-top: 60px; /* Add space above accordion */
 }
 
-.accordion-body {
+#faqAccordion .accordion-body {
+  margin-top: 10px;
   white-space: pre-line;
 }
 

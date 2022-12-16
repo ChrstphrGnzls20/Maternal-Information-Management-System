@@ -19,7 +19,7 @@ class Employee(object):
             return patientID
         return self.generateRandomEmpID()
 
-    def retrieveEmployees(self, filter: dict = {}, returnFields: dict = {}, limit: int = 0, pageNumber: int = 0) -> dict:
+    def retrieveEmployees(self, filter: dict = {}, returnFields: dict = {}, limit: int = 0, pageNumber: int = 0) -> list:
         collection = mongo.db[self.dbName]
         result = collection.find(filter, returnFields).limit(limit).skip(
             ((pageNumber - 1) * self.employeePerPage) if pageNumber > 0 else 0)
