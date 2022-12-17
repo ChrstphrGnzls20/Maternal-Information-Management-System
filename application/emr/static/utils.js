@@ -1,58 +1,73 @@
 const LOCALSTORAGEKEY = "emr-data";
 function initializeEMRToLocalStorage() {
-  const EMRDATA = {
-    vitalSigns: {},
-    HPI: {},
-    patientHistory: {
-      pastMedicalHistory: {},
-      pregnancyHistory: {},
-      contraceptiveHistory: {},
-      gynecologicalHistory: {},
-      currentMedicationHistory: {},
-      preventiveCareHistory: {},
-      surgicalHistory: {},
-      allergyHistory: {},
-    },
-    reviewOfSystems: {
-      constitutional: {},
-      eyes: {},
-      earsNoseThroat: {},
-      breast: {},
-      cardiovascular: {},
-      respiratory: {},
-      gastrointestinal: {},
-      urinaryAndReproductive: {},
-      skin: {},
-      neurological: {},
-      musculoskeletal: {},
-      endocrine: {},
-      psychiatric: {},
-      bloodAndLymph: {},
-      allergy: {},
-    },
-    physicalExamination: {
-      fetalPresentation: {},
-      general: [],
-      internalExamination: {
-        papSmear: {},
-        vulvaVaginaCervix: {
-          Vulva: [],
-          Vagina: {},
-          Cervix: {},
-        },
-      },
-    },
-    assessment: {},
-    laboratory: {},
-    plan: {
-      prescription: [],
-      carePlan: [],
-    },
-  };
+  const patientID = location.href.split("/").pop();
   let existingData = localStorage.getItem(LOCALSTORAGEKEY);
   if (!existingData) {
-    localStorage.setItem(LOCALSTORAGEKEY, JSON.stringify(EMRDATA));
-    localStorage.setItem("activeEMRView", "vital-signs");
+    $.ajax({
+      method: "GET",
+      url: `${API_BASE_URL}/patients/${patientID}/history`,
+      contentType: "application/json",
+      dataType: "json",
+    })
+      .then(function (response) {
+        let history = response[0].patientHistory;
+        console.log(history);
+
+        const EMRDATA = {
+          vitalSigns: {},
+          HPI: {},
+          patientHistory: {
+            pastMedicalHistory: history.pastMedicalHistory || {},
+            pregnancyHistory: history.pregnancyHistory || {},
+            contraceptiveHistory: history.contraceptiveHistory || {},
+            gynecologicalHistory: history.gynecologicalHistory || {},
+            currentMedicationHistory: history.currentMedicationHistory || {},
+            preventiveCareHistory: history.preventiveCareHistory || {},
+            surgicalHistory: history.surgicalHistory || {},
+            allergyHistory: history.allergyHistory || {},
+          },
+          reviewOfSystems: {
+            constitutional: {},
+            eyes: {},
+            earsNoseThroat: {},
+            breast: {},
+            cardiovascular: {},
+            respiratory: {},
+            gastrointestinal: {},
+            urinaryAndReproductive: {},
+            skin: {},
+            neurological: {},
+            musculoskeletal: {},
+            endocrine: {},
+            psychiatric: {},
+            bloodAndLymph: {},
+            allergy: {},
+          },
+          physicalExamination: {
+            fetalPresentation: {},
+            general: [],
+            internalExamination: {
+              papSmear: {},
+              vulvaVaginaCervix: {
+                Vulva: [],
+                Vagina: {},
+                Cervix: {},
+              },
+            },
+          },
+          assessment: {},
+          laboratory: {},
+          plan: {
+            prescription: [],
+            carePlan: [],
+          },
+        };
+        localStorage.setItem(LOCALSTORAGEKEY, JSON.stringify(EMRDATA));
+        localStorage.setItem("activeEMRView", "vital-signs");
+      })
+      .catch(function (xhr) {
+        console.log(xhr);
+      });
   }
 }
 

@@ -8,6 +8,25 @@ function addNewCheckup(data) {
   });
 }
 
+function updatePatientHistory(patientID, payload) {
+  return $.ajax({
+    method: "PATCH",
+    url: `${API_BASE_URL}/patients/${patientID}/history`,
+    data: JSON.stringify(payload),
+    dataType: "json",
+    contentType: "application/json",
+  });
+}
+
+function fetchPatientHistory(patientID) {
+  return $.ajax({
+    method: "GET",
+    url: `${API_BASE_URL}/patients/${patientID}/history`,
+    dataType: "json",
+    contentType: "application/json",
+  });
+}
+
 function preApproveAppointment(appointmentID, payload) {
   return $.ajax({
     method: "PATCH",

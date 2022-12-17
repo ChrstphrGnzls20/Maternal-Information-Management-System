@@ -108,6 +108,28 @@ class Patient(object):
         except Exception as ex:
             print(ex)
 
+    def updatePatientHistory(self, patientID: str, updateObject: list[dict]):
+        try:
+            resultArray = []
+            for item in updateObject:
+                keys = list(item.keys())
+                for key in keys:
+                    print(f'patientHistory.{key}')
+                    updateQuery = {}
+                    result = collection.find(
+                        {"_id": patientID, f'patientHistory.{key}': {"$exists": True}})
+                    if len(list(result)):
+                        collection.find_one_and_update(filter={"_id": patientID}, update={
+                                                       '$set': {f'patientHistory.{key}': item[key]}})
+                    else:
+                        collection.find_one_and_update(filter={"_id": patientID}, update={
+                                                       '$set': {f'patientHistory.{key}': item[key]}}, upsert=True)
+                print(key)
+                resultArray.append([])
+            return resultArray
+        except Exception as ex:
+            print(ex)
+
     # def editPatient(self, _id: str, updatedData: dict) -> dict:
     #     # TODO: when license ID is edited, check for existing to avoid record dupllication
     #     collection = mongo.db['patient']

@@ -722,6 +722,18 @@ $(function () {
         let doctorID = localStorage.getItem("id");
         emrData["patientID"] = patientID;
         emrData["doctorID"] = doctorID;
+
+        const patientHistory = emrData["patientHistory"];
+        delete emrData["patientHistory"];
+
+        updatePatientHistory(patientID, patientHistory)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (xhr) {
+            console.log(xhr);
+          });
+
         addNewCheckup(emrData)
           .then(function ({ _id }) {
             if (_id) {
@@ -739,8 +751,6 @@ $(function () {
                   doctor_id: doctorID,
                   appointmentDate: followUpDate.toISOString(),
                 };
-
-                window.open(`/emr/SOAP/${newCheckupId}`, "_blank");
 
                 createFollowUpAppointment(newAppointment)
                   .then(function (response) {
@@ -763,7 +773,7 @@ $(function () {
                           "_blank"
                         );
 
-                        location.href = `/doctor/patients/${patientID}`;
+                        location.href = `/doctor/patients/facesheet/${patientID}`;
                       })
                       .catch(function (xhr) {
                         console.log(xhr);
@@ -777,7 +787,7 @@ $(function () {
                 localStorage.removeItem("emr-data");
                 // OPEN NEW WINDOW OF SOAP BEFORE REDIRECTING
                 window.open(`/emr/chargingForm/${newCheckupId}`, "_blank");
-                location.href = `/doctor/patients/${patientID}`;
+                location.href = `/doctor/patients/facesheet/${patientID}`;
               }
             }
           })
@@ -791,6 +801,8 @@ $(function () {
   let vitalSignsData = getDataFromLocalStorage("vitalSigns");
   let HPIData = getDataFromLocalStorage("HPI");
   let patientHistoryData = getDataFromLocalStorage("patientHistory");
+
+  console.log(JSON.stringify(patientHistoryData));
   let ROSData = getDataFromLocalStorage("reviewOfSystems");
   let PEData = getDataFromLocalStorage("physicalExamination");
   let assessmentData = getDataFromLocalStorage("assessment");
