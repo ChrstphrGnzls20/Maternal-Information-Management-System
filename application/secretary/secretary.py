@@ -12,7 +12,7 @@ sidebarItems = [
     # {
     #     "label": "VITAL SIGNS",
     #     "icon": "bi bi-calendar-week",
-    #     "route": "/doctor/appointments",
+    #     "route": "/secretary/vital-signs",
     # },
 ]
 
@@ -20,3 +20,8 @@ sidebarItems = [
 @secretary.route("/")
 def secretaryDashboard():
     return render_template("dashboard.html", contentTemplate="/secretaryHome.html", sidebarItems=sidebarItems, activeSidebar="DASHBOARD")
+
+
+# @secretary.route("/vital-signs")
+# def vitalSigns():
+#     return render_template("dashboard.html", contentTemplate="/vitalSigns.html", sidebarItems=sidebarItems, activeSidebar="VITAL SIGNS")

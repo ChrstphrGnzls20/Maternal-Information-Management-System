@@ -88,65 +88,65 @@ function errorAlert(alertText) {
   `;
 }
 
-registerDataDummy = [
-  {
-    loginCred: [
-      { email: "christophereksdi@gmail.com" },
-      { pwd: "123123" },
-      { pwd2: "123123" },
-    ],
-  },
-  {
-    basic: [
-      { fName: "Christopher" },
-      { mName: "Berador" },
-      { lName: "Gonzales" },
-      { bday: "03/23/2001" },
-      { age: "21" },
-      { bloodType: "O+" },
-      { mobile: "09618241439" },
-      { email: "cgonzalesmain@gmail.com" },
-      { regions: "13" },
-      { provinces: "1374" },
-      { cities: "137404" },
-      { barangays: "137404040" },
-      { street: "Block 19 Lot 8" },
-    ],
-  },
-  {
-    contactRef: [
-      { crFname: "Christopher" },
-      { crLname: "Gonzales" },
-      { crMobile: "09618241439" },
-      { crEmail: "cgonzalesmain@gmail.com" },
-    ],
-  },
-];
+// registerDataDummy = [
+//   {
+//     loginCred: [
+//       { email: "christophereksdi@gmail.com" },
+//       { pwd: "123123" },
+//       { pwd2: "123123" },
+//     ],
+//   },
+//   {
+//     basic: [
+//       { fName: "Christopher" },
+//       { mName: "Berador" },
+//       { lName: "Gonzales" },
+//       { bday: "03/23/2001" },
+//       { age: "21" },
+//       { bloodType: "O+" },
+//       { mobile: "09618241439" },
+//       { email: "cgonzalesmain@gmail.com" },
+//       { regions: "13" },
+//       { provinces: "1374" },
+//       { cities: "137404" },
+//       { barangays: "137404040" },
+//       { street: "Block 19 Lot 8" },
+//     ],
+//   },
+//   {
+//     contactRef: [
+//       { crFname: "Christopher" },
+//       { crLname: "Gonzales" },
+//       { crMobile: "09618241439" },
+//       { crEmail: "cgonzalesmain@gmail.com" },
+//     ],
+//   },
+// ];
 
-// populate inputs with dummy values
-$(".register-form > .login-cred-form input").each(function (index) {
-  let currentInput = $(this);
-  let key = $(this).attr("name");
-  // $currentInput.prop("disabled", true);
+// // populate inputs with dummy values
+// $(".register-form > .login-cred-form input").each(function (index) {
+//   let currentInput = $(this);
+//   let key = $(this).attr("name");
+//   // $currentInput.prop("disabled", true);
 
-  currentInput.val(registerDataDummy[0]["loginCred"][index][key]);
-});
+//   currentInput.val(registerDataDummy[0]["loginCred"][index][key]);
+// });
 
-$(
-  ".register-form > .basic-form input, .register-form > .basic-form select"
-).each(function (index) {
-  let currentInput = $(this);
-  let key = $(this).attr("name");
-  // $currentInput.prop("disabled", true);
+// $(
+//   ".register-form > .basic-form input, .register-form > .basic-form select"
+// ).each(function (index) {
+//   let currentInput = $(this);
+//   let key = $(this).attr("name");
+//   // $currentInput.prop("disabled", true);
 
-  currentInput.val(registerDataDummy[1]["basic"][index][key]);
-});
+//   currentInput.val(registerDataDummy[1]["basic"][index][key]);
+// });
 
-$("input[name=occupation]").val("STUDENT");
+// $("input[name=occupation]").val("STUDENT");
 
-$(".register-form > .contact-ref-form input").each(function (index) {
-  let currentInput = $(this);
-  let key = $(this).attr("name");
+// $(".register-form > .contact-ref-form input").each(function (index) {
+//   let currentInput = $(this);
+//   let key = $(this).attr("name");
 
-  currentInput.val(registerDataDummy[2]["contactRef"][index][key]);
-});
+//   currentInput.val(registerDataDummy[2]["contactRef"][index][key]);
+// });

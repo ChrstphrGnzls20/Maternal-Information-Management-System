@@ -85,7 +85,6 @@ class Patient(object):
             ((pageNumber - 1) * self.patientPerPage) if pageNumber > 0 else 0)
         for result in results:
             resultArray.append(result)
-        # print(resultArray)
         return resultArray
 
     def updatePatientStatus(self, patientID: str, status: str) -> None:

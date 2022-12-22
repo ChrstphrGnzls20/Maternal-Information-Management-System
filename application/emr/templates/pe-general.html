@@ -737,11 +737,9 @@
     if (Object.keys(existingData).length) {
       existingData.forEach(function (item, idx) {
         for (const [key, value] of Object.entries(item)) {
-          console.log(key, value);
           if (key.includes("Note")) {
             $(`textarea[name=${key}]`).prop("disabled", false);
             $(`textarea[name=${key}]`).val(value);
-            console.log($(`textarea[name=${key}]`));
           } else {
             let radioEl = $(`input[name=${key}]`);
             $(radioEl).each(function () {
@@ -758,8 +756,6 @@
       let value = $(this).val();
       let name = $(this).attr("name");
       let notesEl = $(`textarea[name=${name}Notes`);
-
-      console.log(value);
 
       if (value === "not examined") {
         $(notesEl).prop("disabled", true);

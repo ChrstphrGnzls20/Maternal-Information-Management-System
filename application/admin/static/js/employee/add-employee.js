@@ -93,23 +93,23 @@ function attachValidators(formEl) {
 }
 
 $(function () {
-  function loadDummy() {
-    let dummyValues = {
-      _id: "123456",
-      fName: "Wayne",
-      mName: "Chico",
-      lName: "Amazan",
-      mobile: "09123456789",
-      role: "doctor",
-      // status: "aActive",
-      email: "example@gmail.com",
-      password: "123123",
-      pwd2: "123123",
-    };
-    $("#emp-modal :input[type!=submit]").each(function () {
-      $(this).val(dummyValues[$(this).attr("name")]);
-    });
-  }
+  // function loadDummy() {
+  //   let dummyValues = {
+  //     _id: "123456",
+  //     fName: "Wayne",
+  //     mName: "Chico",
+  //     lName: "Amazan",
+  //     mobile: "09123456789",
+  //     role: "doctor",
+  //     // status: "aActive",
+  //     email: "example@gmail.com",
+  //     password: "123123",
+  //     pwd2: "123123",
+  //   };
+  //   $("#emp-modal :input[type!=submit]").each(function () {
+  //     $(this).val(dummyValues[$(this).attr("name")]);
+  //   });
+  // }
 
   let currentMode = "";
   let submittedValues = {};
@@ -128,7 +128,7 @@ $(function () {
 
     // SHOW ADD-EMPLOYEE-MODAL
     employeeModal.modal("show");
-    loadDummy();
+    // loadDummy();
   });
 
   // EXECUTE WHEN THE ROLE SELECT CHANGES WHILE ADDING AN EMPLOYEE

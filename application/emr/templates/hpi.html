@@ -137,69 +137,6 @@
           <label class="form-check-label" for="onsetGradual">Gradual</label>
         </div>
       </div>
-
-      <!-- <div class="d-flex flex-column mt-3">
-        <label class="default-label required">How Long?</label>
-        <div class="row row-cols-1 row-cols-md-5 mx-2 mx-md-0">
-          <div class="form-group">
-            <input
-              type="number"
-              class="form-control form-control-lg w-75"
-              id="nummberofHowLong"
-              name="nummberofHowLong"
-              aria-label="howLongDuration"
-              value="1"
-              min="1"
-              max="10"
-            />
-          </div>
-  
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              id="howLongDays"
-              name="HPIHowLong"
-              value="Days"
-              checked
-            />
-            <label class="form-check-label" for="howLongDays">Days</label>
-          </div>
-  
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              id="howLongWeeks"
-              name="HPIHowLong"
-              value="Weeks"
-            />
-            <label class="form-check-label" for="howLongWeeks">Weeks</label>
-          </div>
-  
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              id="howLongMonths"
-              name="HPIHowLong"
-              value="Months"
-            />
-            <label class="form-check-label" for="howLongMonths">Months</label>
-          </div>
-  
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              id="howLongYears"
-              name="HPIHowLong"
-              value="Years"
-            />
-            <label class="form-check-label" for="howLongYears">Years</label>
-          </div>
-        </div>
-      </div> -->
     </div>
 
     <div class="d-flex flex-column mt-3">
@@ -276,10 +213,20 @@
           <input
             class="form-check-input"
             type="radio"
+            id="freqNoPat"
+            name="frequency"
+            value="noPattern"
+            checked
+          />
+          <label class="form-check-label" for="freqNoPat">No Pattern</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
             id="freqEvFewMins"
             name="frequency"
             value="everyFewMinutes"
-            checked
           />
           <label class="form-check-label" for="freqEvFewMins"
             >Every Few Minutes</label
@@ -310,17 +257,6 @@
           <label class="form-check-label" for="freqEvFewDays"
             >Every Few Days</label
           >
-        </div>
-
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            id="freqNoPat"
-            name="frequency"
-            value="noPattern"
-          />
-          <label class="form-check-label" for="freqNoPat">No Pattern</label>
         </div>
 
         <div class="form-check">
@@ -378,10 +314,22 @@
           <input
             class="form-check-input"
             type="radio"
+            id="progStagnant"
+            name="progression"
+            value="stagnant"
+            checked
+          />
+          <label class="form-check-label" for="progStagnant"
+            >Stagnant/No Change</label
+          >
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
             id="progSuddenBet"
             name="progression"
             value="suddenly getting better"
-            checked
           />
           <label class="form-check-label" for="progSuddenBet"
             >Suddenly getting better</label
@@ -424,19 +372,6 @@
           />
           <label class="form-check-label" for="progGradualWorse"
             >Gradually getting worse</label
-          >
-        </div>
-
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            id="progStagnant"
-            name="progression"
-            value="stagnant"
-          />
-          <label class="form-check-label" for="progStagnant"
-            >Stagnant/No Change</label
           >
         </div>
       </div>
@@ -532,10 +467,20 @@
           <input
             class="form-check-input"
             type="radio"
+            id="bodyFuncIndf"
+            name="bodilyFunctionEffect"
+            value="indefinite"
+            checked
+          />
+          <label class="form-check-label" for="bodyFuncIndf">Indefinite</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
             id="bodyFuncMins"
             name="bodilyFunctionEffect"
             value="minutes"
-            checked
           />
           <label class="form-check-label" for="bodyFuncMins">Minutes</label>
         </div>
@@ -560,17 +505,6 @@
             value="days"
           />
           <label class="form-check-label" for="bodyFuncDays">Days</label>
-        </div>
-
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            id="bodyFuncIndf"
-            name="bodilyFunctionEffect"
-            value="indefinite"
-          />
-          <label class="form-check-label" for="bodyFuncIndf">Indefinite</label>
         </div>
       </div>
     </div>

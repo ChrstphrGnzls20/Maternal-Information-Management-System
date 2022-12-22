@@ -1,0 +1,289 @@
+<div
+  class="d-flex container-xl flex-column custom-bg justify-content-center p-2 bd-highlight"
+>
+  <div class="bg-white m-3 p-3 shadow">
+    <form class="vitalSign">
+      <h2 class="mb-2">Acquire Vital Signs</h2>
+      <div class="row mt-3">
+        <div class="form-group col-md-4">
+          <label for="patientName" class="form-label required"
+            >Patient Name</label
+          >
+          <select
+            class="form-select"
+            name="patientSelect"
+            id="patientSelect"
+          ></select>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="form-group col-md-4">
+          <label for="vitalHeight" class="form-label required"
+            >Height (in centimeters)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="vitalHeight"
+            name="height"
+            min="100"
+            max="200"
+            required
+          />
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="vitalWeight" class="form-label required"
+            >Weight (in kilograms)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="vitalWeight"
+            name="weight"
+            min="30"
+            max="200"
+            required
+          />
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="vitalBMI" class="form-label">BMI</label>
+          <input
+            type="number"
+            class="form-control"
+            id="vitalBMI"
+            name="BMI"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="form-group col-md-4">
+          <label for="vitalTemp" class="form-label required"
+            >Temperature (in Celcius)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="vitalTemp"
+            name="temperature"
+            min="35"
+            max="45"
+            required
+          />
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="vitalSystolic" class="form-label required"
+            >Blood Pressure</label
+          >
+          <div class="d-flex flex-row">
+            <input
+              type="number"
+              class="form-control me-1"
+              id="vitalSystolic"
+              name="bpSystolic"
+              min="70"
+              max="190"
+              required
+            />
+            <label class="default-label align-self-center">/</label>
+            <input
+              type="number"
+              class="form-control ms-1"
+              id="vitalDiastolic"
+              name="bpDiastolic"
+              min="40"
+              max="100"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="vitalRespRate" class="form-label required"
+            >Respiratory Rate (BPM)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="vitalRespRate"
+            name="respirationRate"
+            min="10"
+            max="30"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="form-group col-md-4">
+          <label for="vitalOxySat" class="form-label required"
+            >Oxygen Saturation(%)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="vitalOxySat"
+            name="oxygenSaturation"
+            min="80"
+            max="100"
+            required
+          />
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="vitalHeartRate" class="form-label required"
+            >Heart Rate (Beats PM)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="vitalHeartRate"
+            name="heartRate"
+            min="40"
+            max="200"
+            required
+          />
+        </div>
+
+        <div class="row">
+          <div class="d-flex justify-content-end mt-5">
+            <button type="button" id="cancelBtn" class="btn btn-danger">
+              Cancel
+            </button>
+            <!-- <button type="button" id="confirmBtn" class="btn btn-success ms-2">
+              Confirm
+            </button> -->
+            <input type="submit" class="ms-2 btn btn-success" value="Confirm" />
+          </div>
+        </div>
+      </div>
+      <!-- <script>
+        $(".vitalSign").validate({
+          messages: {
+            required: "Please fill out this field.",
+          },
+
+          submitHandler: function (form) {
+            form.submit();
+          },
+        });
+
+        $("#confirmBtn").on("click", function () {
+          let formValues = $(".vitalSign");
+
+          let vsVal = {
+            BloodPressure: {},
+          };
+
+          let vitalsignHeight = $("#vitalHeight");
+          let vitalsignWeight = $("#vitalWeight");
+          let vitalsignBMI = $("#vitalBMI");
+          let vitalsignTemp = $("#vitalTemp");
+          let vitalSignSys = $("#vitalSystolic");
+          let vitalsignDias = $("#vitalDiastolic");
+          let vitalsignRespRate = $("#vitalRespRate");
+          let vitalsignOxySat = $("#vitalOxySat");
+          let vitalsignHeartRate = $("#vitalHeartRate");
+
+          if (formValues.valid()) {
+            vsVal[vitalsignHeight.attr("name")] = vitalsignHeight.val();
+            vsVal[vitalsignWeight.attr("name")] = vitalsignWeight.val();
+            vsVal[vitalsignBMI.attr("name")] = vitalsignBMI.val();
+            vsVal[vitalsignTemp.attr("name")] = vitalsignTemp.val();
+            vsVal.BloodPressure[vitalSignSys.attr("name")] = vitalSignSys.val();
+            vsVal.BloodPressure[vitalsignDias.attr("name")] =
+              vitalsignDias.val();
+            vsVal[vitalsignRespRate.attr("name")] = vitalsignRespRate.val();
+            vsVal[vitalsignOxySat.attr("name")] = vitalsignOxySat.val();
+            vsVal[vitalsignHeartRate.attr("name")] = vitalsignHeartRate.val();
+
+            console.log(vsVal);
+          }
+        });
+      </script> -->
+    </form>
+  </div>
+</div>
+
+<script src="{{url_for('secretary.static', filename='/requestHelpers.js')}}"></script>
+
+<script>
+  $(function () {
+    fetchPatients()
+      .then(function (response) {
+        if (response) {
+          let data = response;
+          data.forEach(function (item) {
+            $("#patientSelect").append(
+              $("<option>", {
+                value: item._id,
+                text: item.name,
+              })
+            );
+          });
+        }
+      })
+      .catch(function (xhr) {
+        console.log(xhr);
+      });
+
+    // CALCULATE BMI EVERYTIME HEIGHT/WEIGHT CHANGES
+    $("#vitalHeight, #vitalWeight").on("change", function () {
+      let heightInMeters = parseInt($("#vitalHeight").val()) / 100;
+      let weightInKg = parseInt($("#vitalWeight").val());
+      let BMI = (weightInKg / heightInMeters ** 2).toFixed(2);
+
+      $("#vitalBMI").val(BMI);
+    });
+
+    $(".vitalSign").on("submit", function (e) {
+      e.preventDefault();
+
+      let patientID = $("#patientSelect").val();
+      console.log(patientID);
+      if ($(this).valid()) {
+        let vitalSigns = {};
+        // if ($(this).valid()) {
+        let height = $("#vitalHeight").val();
+        let weight = $("#vitalWeight").val();
+        let BMI = $("#vitalBMI").val();
+        let temp = $("#vitalTemp").val();
+        let systolicBP = $("#vitalSystolic").val();
+        let diastolicBP = $("#vitalDiastolic").val();
+        let respirationRate = $("#vitalRespRate").val();
+        let oxygenSaturation = $("#vitalOxySat").val();
+        let heartRate = $("#vitalHeartRate").val();
+
+        let bloodPressure = "";
+
+        if (systolicBP && diastolicBP)
+          bloodPressure = `${systolicBP}/${diastolicBP}`;
+
+        vitalSigns = {
+          id: patientID,
+          height,
+          weight,
+          temperature: temp,
+          bloodPressure,
+          respirationRate,
+          oxygenSaturation,
+          heartRate,
+        };
+
+        console.log(vitalSigns);
+
+        saveVitalSigns(vitalSigns)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (xhr) {
+            console.log(xhr);
+          });
+      }
+    });
+  });
+</script>

@@ -38,7 +38,7 @@ $(function () {
     function (evt) {
       evt.preventDefault();
       let nextPage = $(this).attr("data-next-page");
-      let form = $(this).parent().parent();
+      let form = $("form[data-form-target=EMR]");
       if (form.valid()) {
         form.trigger("submit", [nextPage]);
       }

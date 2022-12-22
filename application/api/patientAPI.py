@@ -12,7 +12,7 @@ patientObj = Patient()
 
 
 @patientAPI.route("/<string:patientID>", methods=["GET"])
-@patientAPI.route("/", methods=["POST"])
+@patientAPI.route("/", methods=["POST", "GET"])
 def addOrRetrievePatient(patientID=None):
     # FOR RETRIEVING PATIENT WITH THE GIVEN PATIENT ID
     if request.method == "GET" and patientID:
@@ -32,7 +32,23 @@ def addOrRetrievePatient(patientID=None):
         result = patientObj.register(data)
         if result:
             return make_response(jsonify(result), 201)
-    return make_response(jsonify({"errorMsg": "There was an error processing your request. Please try again later."}, 500))
+        return make_response(jsonify({"errorMsg": "There was an error processing your request. Please try again later."}, 500))
+
+    elif request.method == "GET" and not patientID:
+        resultArray = []
+        results = patientObj.findPatient(filter={}, returnFields={
+                                         "basicInformation.name": 1})
+        for result in results:
+            print(result)
+            patientName = {
+                '_id': result['_id'],
+                'name': result['basicInformation']['name']
+            }
+            resultArray.append(patientName)
+
+        if len(resultArray):
+            return make_response(jsonify(resultArray), 201)
+        return make_response(jsonify({"errorMsg": "There was an error processing your request. Please try again later."}, 500))
 
 
 @patientAPI.route("/<string:patientID>/pmh", methods=["GET"])

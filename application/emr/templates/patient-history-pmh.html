@@ -139,26 +139,28 @@
     let PMH = getDataFromLocalStorage("pastMedicalHistory", "patientHistory");
     console.log(PMH);
 
-    PMH.forEach(function (item) {
-      let keys = Object.keys(item);
-      console.log(keys[0] === "other");
-      if (keys[0] === "other") {
-        $("textarea[name='other']").val(item[keys[0]]);
-      }
-
-      // IF IT HAS RELATIONSHIP
-      if (keys.length > 1) {
-        $(`select[name=${keys[0]}-relationship`).prop("disabled", false);
-      } else {
-        $(`select[name=${keys[0]}-relationship`).prop("disabled", false);
-      }
-
-      $(`input[name=${keys[0]}]`).each(function () {
-        if ($(this).attr("value") == item[keys[0]]) {
-          $(this).prop("checked", true);
+    if (PMH.length) {
+      PMH.forEach(function (item) {
+        let keys = Object.keys(item);
+        console.log(keys[0] === "other");
+        if (keys[0] === "other") {
+          $("textarea[name='other']").val(item[keys[0]]);
         }
+
+        // IF IT HAS RELATIONSHIP
+        if (keys.length > 1) {
+          $(`select[name=${keys[0]}-relationship`).prop("disabled", false);
+        } else {
+          $(`select[name=${keys[0]}-relationship`).prop("disabled", false);
+        }
+
+        $(`input[name=${keys[0]}]`).each(function () {
+          if ($(this).attr("value") == item[keys[0]]) {
+            $(this).prop("checked", true);
+          }
+        });
       });
-    });
+    }
 
     $("#past-medical-history-form input[type*='radio']").on(
       "change",

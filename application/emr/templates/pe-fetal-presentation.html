@@ -1,242 +1,275 @@
 <!-- TODO: responsiveness of site when in md size -->
+<h3 class="default-label col-12">Fetal Measurements</h3>
+
+<div class="form-group mb-2">
+  <div class="d-flex align-items-center">
+    <span class="fs-5 me-3">Examined?</span>
+    <div class="form-group me-2">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="isExamined"
+        id="not-examined"
+        value="not examined"
+        checked
+      />
+      <label for="not-examined" class="form-label mb-0">No</label>
+    </div>
+    <div class="form-group">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="isExamined"
+        id="examined"
+        value="examined"
+      />
+      <label for="examined" class="form-label mb-0">Yes</label>
+    </div>
+  </div>
+</div>
 <form class="fetalMeasure" id="fetalMeasure" data-form-target="EMR">
-  <div class="row">
-    <h3 class="default-label col-12">Fetal Measurements</h3>
-  </div>
+  <div class="collapsable" style="display: none">
+    <div class="row"></div>
 
-  <div class="row row-cols-1 row-cols-md-2 gx-5 gy-3 gy-md-0">
-    <div class="form-group col">
-      <label for="fundalHeight" class="form-label">Fundal Height (in cm)</label>
-      <input
-        type="number"
-        class="form-control"
-        id="fundalHeight"
-        name="fetalMeasurements"
-      />
-    </div>
-
-    <div class="form-group col">
-      <label for="fetalHeartRate" class="form-label"
-        >Fetal Heart Rate (BPM)</label
-      >
-      <input
-        type="number"
-        class="form-control"
-        id="fetalHeartRate"
-        name="fetalHeartRate"
-        min="1"
-        max="200"
-      />
-    </div>
-  </div>
-
-  <div class="row mt-4">
-    <h3 class="default-label col-12">Presentation</h3>
-  </div>
-
-  <div class="d-flex flex-column" id="fetalPresentationParent">
-    <label class="default-label">Which Part is Presenting?</label>
-
-    <div class="row row-cols-1 row-cols-md-3 mx-2">
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="presentingHead"
-          name="fetalPresentation"
-          value="head"
-          checked
-        />
-        <label class="form-check-label" for="presentingHead">Head</label>
-      </div>
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="presentingBreech"
-          name="fetalPresentation"
-          value="breech"
-        />
-        <label class="form-check-label" for="presentingBreech">Breech</label>
-      </div>
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="presentingShoulder"
-          name="fetalPresentation"
-          value="shoulder"
-        />
-        <label class="form-check-label" for="presentingShoulder"
-          >Shoulder</label
+    <div class="row row-cols-1 row-cols-md-2 gx-5 gy-3 gy-md-0">
+      <div class="form-group col">
+        <label for="fundalHeight" class="form-label"
+          >Fundal Height (in cm)</label
         >
-      </div>
-    </div>
-  </div>
-
-  <div class="d-flex flex-column mt-3" id="fetalPresentationFollowup">
-    <label class="default-label">If head, how is it presented?</label>
-
-    <div class="row row-cols-1 row-cols-md-3 mx-2">
-      <div class="form-check">
         <input
-          class="form-check-input"
-          type="radio"
-          id="headpresentOcciput"
-          name="headPresentation"
-          value="occiput"
-          checked
+          type="number"
+          class="form-control"
+          id="fundalHeight"
+          name="fetalMeasurements"
         />
-        <label class="form-check-label" for="headpresentOcciput">Occiput</label>
       </div>
 
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="headpresentBrow"
-          name="headPresentation"
-          value="brow"
-        />
-        <label class="form-check-label" for="headpresentBrow">Brow</label>
-      </div>
-
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="headpresentFace"
-          name="headPresentation"
-          value="face"
-        />
-        <label class="form-check-label" for="headpresentFace">Face</label>
-      </div>
-    </div>
-  </div>
-
-  <div class="d-flex flex-column mt-3">
-    <label class="default-label">Womb Position?</label>
-
-    <div class="row row-cols-1 row-cols-md-4 mx-2">
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="wombPosLeftOCA"
-          name="wombPosition"
-          value="left OCA"
-          checked
-        />
-        <label class="form-check-label" for="wombPosLeftOCA"
-          >Left Occiput Anterior</label
+      <div class="form-group col">
+        <label for="fetalHeartRate" class="form-label"
+          >Fetal Heart Rate (BPM)</label
         >
-      </div>
-
-      <div class="form-check">
         <input
-          class="form-check-input"
-          type="radio"
-          id="wombPosRightOCA"
-          name="wombPosition"
-          value="right OCA"
+          type="number"
+          class="form-control"
+          id="fetalHeartRate"
+          name="fetalHeartRate"
+          min="1"
+          max="200"
         />
-        <label class="form-check-label" for="wombPosRightOCA"
-          >Right Occiput Anterior</label
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <h3 class="default-label col-12">Presentation</h3>
+    </div>
+
+    <div class="d-flex flex-column" id="fetalPresentationParent">
+      <label class="default-label">Which Part is Presenting?</label>
+
+      <div class="row row-cols-1 row-cols-md-3 mx-2">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="presentingHead"
+            name="fetalPresentation"
+            value="head"
+            checked
+          />
+          <label class="form-check-label" for="presentingHead">Head</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="presentingBreech"
+            name="fetalPresentation"
+            value="breech"
+          />
+          <label class="form-check-label" for="presentingBreech">Breech</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="presentingShoulder"
+            name="fetalPresentation"
+            value="shoulder"
+          />
+          <label class="form-check-label" for="presentingShoulder"
+            >Shoulder</label
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column mt-3" id="fetalPresentationFollowup">
+      <label class="default-label">If head, how is it presented?</label>
+
+      <div class="row row-cols-1 row-cols-md-3 mx-2">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="headpresentOcciput"
+            name="headPresentation"
+            value="occiput"
+            checked
+          />
+          <label class="form-check-label" for="headpresentOcciput"
+            >Occiput</label
+          >
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="headpresentBrow"
+            name="headPresentation"
+            value="brow"
+          />
+          <label class="form-check-label" for="headpresentBrow">Brow</label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="headpresentFace"
+            name="headPresentation"
+            value="face"
+          />
+          <label class="form-check-label" for="headpresentFace">Face</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column mt-3">
+      <label class="default-label">Womb Position?</label>
+
+      <div class="row row-cols-1 row-cols-md-4 mx-2">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="wombPosLeftOCA"
+            name="wombPosition"
+            value="left OCA"
+            checked
+          />
+          <label class="form-check-label" for="wombPosLeftOCA"
+            >Left Occiput Anterior</label
+          >
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="wombPosRightOCA"
+            name="wombPosition"
+            value="right OCA"
+          />
+          <label class="form-check-label" for="wombPosRightOCA"
+            >Right Occiput Anterior</label
+          >
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="wombPosPosterior"
+            name="wombPosition"
+            value="posterior"
+          />
+          <label class="form-check-label" for="wombPosPosterior"
+            >Posterior</label
+          >
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="wombPosTranvsverseLie"
+            name="wombPosition"
+            value="transverse lie"
+          />
+          <label class="form-check-label" for="wombPosTranvsverseLie"
+            >Transverse Lie</label
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column mt-3">
+      <label class="default-label">Moulding</label>
+
+      <div class="row row-cols-1 row-cols-md-4 mx-2">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="mouldingZero"
+            name="moulding"
+            value="0"
+            checked
+          />
+          <label class="form-check-label" for="mouldingZero">0</label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="mouldingOne"
+            name="moulding"
+            value="1+"
+          />
+          <label class="form-check-label" for="mouldingOne">1+</label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="mouldingTwo"
+            name="moulding"
+            value="2+"
+          />
+          <label class="form-check-label" for="mouldingTwo">2+</label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="mouldingThree"
+            name="moulding"
+            value="3+"
+          />
+          <label class="form-check-label" for="mouldingThree">3+</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="form-group col-12">
+        <label for="fetalNotes" class="form-label" id="fetalNoteLabel"
+          >Notes</label
         >
-      </div>
-
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="wombPosPosterior"
-          name="wombPosition"
-          value="posterior"
-        />
-        <label class="form-check-label" for="wombPosPosterior">Posterior</label>
-      </div>
-
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="wombPosTranvsverseLie"
-          name="wombPosition"
-          value="transverse lie"
-        />
-        <label class="form-check-label" for="wombPosTranvsverseLie"
-          >Transverse Lie</label
-        >
+        <textarea
+          class="form-control"
+          id="fetalNotes"
+          name="fetalNotes"
+          rows="5"
+          placeholder="Additional notes here"
+        ></textarea>
       </div>
     </div>
   </div>
-
-  <div class="d-flex flex-column mt-3">
-    <label class="default-label">Moulding</label>
-
-    <div class="row row-cols-1 row-cols-md-4 mx-2">
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="mouldingZero"
-          name="moulding"
-          value="0"
-          checked
-        />
-        <label class="form-check-label" for="mouldingZero">0</label>
-      </div>
-
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="mouldingOne"
-          name="moulding"
-          value="1+"
-        />
-        <label class="form-check-label" for="mouldingOne">1+</label>
-      </div>
-
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="mouldingTwo"
-          name="moulding"
-          value="2+"
-        />
-        <label class="form-check-label" for="mouldingTwo">2+</label>
-      </div>
-
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="mouldingThree"
-          name="moulding"
-          value="3+"
-        />
-        <label class="form-check-label" for="mouldingThree">3+</label>
-      </div>
-    </div>
-  </div>
-
-  <div class="row mt-3">
-    <div class="form-group col-12">
-      <label for="fetalNotes" class="form-label" id="fetalNoteLabel"
-        >Notes</label
-      >
-      <textarea
-        class="form-control"
-        id="fetalNotes"
-        name="fetalNotes"
-        rows="5"
-        placeholder="Additional notes here"
-      ></textarea>
-    </div>
-  </div>
-
   <div class="d-flex justify-content-between mt-3 w-100">
     <input
       type="submit"
@@ -261,8 +294,6 @@
       parent.empty();
       parent.removeClass("mt-3");
       let toAppend = "";
-
-      console.log(parent);
 
       if (value === "head") {
         parent.addClass("mt-3");
@@ -356,6 +387,42 @@
       parent.append(toAppend);
     }
 
+    function hideCollapsable() {
+      $(".collapsable").slideUp();
+
+      $(
+        ".collapsable input:not(input[type=submit]), .collapsable textarea"
+      ).each(function () {
+        $(this).prop("disabled", true);
+      });
+
+      isExamined = false;
+    }
+
+    function showCollapsable() {
+      $(".collapsable").slideDown();
+      $(
+        ".collapsable input:not(input[type=submit]), .collapsable textarea"
+      ).each(function () {
+        $(this).prop("disabled", false);
+      });
+      isExamined = true;
+    }
+
+    let isExamined;
+
+    // SLIDE UP COLLAPSABLE INITIALLY AND DISABLE FIELDS
+
+    // SLIDE DOWN COLLAPSABLE IF EXAMINED
+    $("input[name=isExamined]").on("change", function () {
+      let value = $(this).val();
+      if (value === "examined") {
+        showCollapsable();
+      } else {
+        hideCollapsable();
+      }
+    });
+
     let existingData = getDataFromLocalStorage(
       (objName = "fetalPresentation"),
       (parentObjName = "physicalExamination")
@@ -366,7 +433,8 @@
       "headPresentation",
       "breachType",
       "wombPosition",
-      "mouldingVal",
+      "moulding",
+      "isExamined",
     ];
 
     if (existingData) {
@@ -381,6 +449,14 @@
               if (key === "fetalPresentation") {
                 generateDynamicFetalPresentation(value);
               }
+
+              if (key === "isExamined") {
+                if (value === "examined") {
+                  showCollapsable();
+                } else {
+                  hideCollapsable();
+                }
+              }
             }
           });
         } else {
@@ -391,12 +467,22 @@
 
     $("input[name=fetalPresentation").on("change", function () {
       let value = $(this).val();
-
+      console.log(value);
       generateDynamicFetalPresentation(value);
     });
 
-    $("#fetalMeasure").on("submit", function () {
-      let cleanedData = cleanData($(this).serializeArray());
+    $("#fetalMeasure").on("submit", function (e) {
+      let cleanedData;
+      if (isExamined) {
+        cleanedData = cleanData($(this).serializeArray());
+        cleanedData["isExamined"] = "examined";
+      } else {
+        cleanedData = {
+          isExamined: "not examined",
+        };
+      }
+
+      console.log(cleanedData);
 
       saveDataToLocalstorage(
         (data = cleanedData),
@@ -406,44 +492,3 @@
     });
   });
 </script>
-
-<!-- <script>
-  $(".fetalMeasure").on("submit", function () {
-    let FetalPresentation = {};
-
-    let fundHeight = $("#fundalHeight");
-    let fetalHeartRate = $("#fetalHeartRate");
-    let fetalPresent = $("input[name='fetalPresentation']:checked");
-    let headPresent = $("input[name='headPresentation']:checked");
-    let breechPresent = $("input[name='breachType']:checked");
-    let wombPos = $("input[name='wombPosition']:checked");
-    let mouldingValue = $("input[name='mouldingVal']:checked");
-    let intFetalNote = $("#fetalNotes");
-
-    if (fetalPresent.val() == "head") {
-      FetalPresentation[fundHeight.attr("name")] = fundHeight.val();
-      FetalPresentation[fetalHeartRate.attr("name")] = fetalHeartRate.val();
-      FetalPresentation[fetalPresent.attr("name")] = fetalPresent.val();
-      FetalPresentation[headPresent.attr("name")] = headPresent.val();
-      FetalPresentation[wombPos.attr("name")] = wombPos.val();
-      FetalPresentation[mouldingValue.attr("name")] = mouldingValue.val();
-      FetalPresentation[intFetalNote.attr("name")] = intFetalNote.val();
-    } else if (fetalPresent.val() == "breech") {
-      FetalPresentation[fundHeight.attr("name")] = fundHeight.val();
-      FetalPresentation[fetalHeartRate.attr("name")] = fetalHeartRate.val();
-      FetalPresentation[fetalPresent.attr("name")] = fetalPresent.val();
-      FetalPresentation[breechPresent.attr("name")] = breechPresent.val();
-      FetalPresentation[wombPos.attr("name")] = wombPos.val();
-      FetalPresentation[mouldingValue.attr("name")] = mouldingValue.val();
-      FetalPresentation[intFetalNote.attr("name")] = intFetalNote.val();
-    } else {
-      FetalPresentation[fundHeight.attr("name")] = fundHeight.val();
-      FetalPresentation[fetalHeartRate.attr("name")] = fetalHeartRate.val();
-      FetalPresentation[fetalPresent.attr("name")] = fetalPresent.val();
-      FetalPresentation[wombPos.attr("name")] = wombPos.val();
-      FetalPresentation[mouldingValue.attr("name")] = mouldingValue.val();
-      FetalPresentation[intFetalNote.attr("name")] = intFetalNote.val();
-    }
-    console.log(FetalPresentation);
-  });
-</script> -->

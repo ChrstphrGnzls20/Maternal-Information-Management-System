@@ -5,6 +5,7 @@ import pdfkit
 # MODELS
 from ..models.Mdl_emr import EMR, CarePlan
 from ..models.Mdl_patient import Patient
+from ..models.Mdl_vitalsigns import VitalSigns
 
 emrAPI = Blueprint("emrAPI", __name__)
 
@@ -78,6 +79,23 @@ def retrieveCheckup(patientID=None, checkupID=None):
 
         return make_response(jsonify(result), 200)
     return make_response(jsonify(result), 405)
+
+
+@emrAPI.route("/vital-signs/<string:patientID>", methods=["GET"])
+@emrAPI.route("/vital-signs", methods=["POST"])
+def addOrRetrieveVitalSigns(patientID: str = None):
+    vsObj = VitalSigns()
+    if request.method == "POST":
+        data = json.loads(request.data)
+
+        result = vsObj.addVitalSigns(data)
+        return make_response(jsonify(result), 200)
+
+    elif request.method == "GET" and not patientID:
+        result = vsObj.findVitalSigns(patientID=patientID)
+        return make_response(jsonify(result), 200)
+
+    return make_response(jsonify({}), 401)
 
 
 @emrAPI.route("/care-plan/<string:doctorID>/<string:carePlanID>", methods=["GET"])

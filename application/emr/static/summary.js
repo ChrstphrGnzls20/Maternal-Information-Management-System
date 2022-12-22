@@ -324,10 +324,21 @@ $(function () {
         if (Array.isArray(value)) {
           value = value.join(", ");
         }
-        let htmlItem = `
+
+        if (key === "isExamined") {
+          if (value === "examined") {
+          } else {
+            let htmlItem = `
           <p class="mb-1"><b>${camelToCapitalized(key)}:</b> ${value}</p>`;
 
-        $(`div#fetalPresentation div.contents`).append(htmlItem);
+            $(`div#fetalPresentation div.contents`).append(htmlItem);
+          }
+        } else {
+          let htmlItem = `
+          <p class="mb-1"><b>${camelToCapitalized(key)}:</b> ${value}</p>`;
+
+          $(`div#fetalPresentation div.contents`).append(htmlItem);
+        }
       });
     }
 
