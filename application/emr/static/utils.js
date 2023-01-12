@@ -8,6 +8,12 @@ function initializeEMRToLocalStorage() {
       url: `${API_BASE_URL}/patients/${patientID}/history`,
       contentType: "application/json",
       dataType: "json",
+      beforeSend: function () {
+        $(".loader-ctr").toggleClass("d-none");
+      },
+      complete: function () {
+        $(".loader-ctr").toggleClass("d-none");
+      },
     })
       .then(function (response) {
         let history = response[0].patientHistory;
@@ -25,6 +31,7 @@ function initializeEMRToLocalStorage() {
             preventiveCareHistory: history.preventiveCareHistory || {},
             surgicalHistory: history.surgicalHistory || {},
             allergyHistory: history.allergyHistory || {},
+            menstrualHistory: history.menstrualHistory || {},
           },
           reviewOfSystems: {
             constitutional: {},

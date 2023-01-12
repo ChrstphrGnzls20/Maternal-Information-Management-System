@@ -121,16 +121,3 @@ def addCarePlan():
         if result:
             return make_response(jsonify(result), 200)
         return make_response(500)
-
-
-@emrAPI.route("/getPDF")
-def getPDF():
-    config = pdfkit.configuration(
-        wkhtmltopdf="D:\\wkhtmltopdf\\bin\\wkhtmltopdf.exe")
-    html = render_template("prescription-pdf.html", name="WAYNE", age="21")
-
-    pdf = pdfkit.from_string(html, False, configuration=config)
-    response = make_response(pdf)
-    response.headers['content-Type'] = 'application/pdf'
-    response.headers['content-Disposition'] = 'inline: filename=hello.pdf'
-    return response

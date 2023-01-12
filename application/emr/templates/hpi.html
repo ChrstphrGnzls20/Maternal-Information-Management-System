@@ -1,10 +1,41 @@
 <!-- TODO: responsiveness of site when in md size -->
 <form id="hpi-form" data-form-target="EMR">
-  <div id="gyn-form">
-    <div class="row">
-      <h3 class="default-label col-12">History of Present Illness</h3>
-    </div>
+  <h3 class="default-label col-12">History of Present Illness</h3>
 
+  <div class="form-group mb-3">
+    <label for="checkupType" class="form-label">Type of Checkup</label>
+    <select class="form-select" name="checkupType" id="checkupType">
+      <option value="initial">Initial Checkup</option>
+      <option value="follow-up">Follow-up Checkup</option>
+      <!-- FOLLOW UP CHECKUP WITH NEW SYMPTOMS ARISE -->
+      <!-- <option value="initial">Initial Checkup</option> -->
+    </select>
+  </div>
+  <div class="collapsable">
+    <div class="row row-cols-1 row-cols-md-3 gy-2 mb-3">
+      <div class="form-group">
+        <label for="LMP" class="form-label required"
+          >Last Menstrual Cycle (LMP)</label
+        >
+        <input
+          type="text"
+          class="form-control datepicker"
+          id="LMP"
+          name="LMP"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="EDD" class="form-label required"
+          >Estimated Date of Delivery</label
+        >
+        <input type="text" class="form-control" id="EDD" name="EDD" disabled />
+      </div>
+      <div class="form-group">
+        <label for="AOG" class="form-label required">Age of Gestation</label>
+        <input type="text" class="form-control" id="AOG" name="AOG" disabled />
+      </div>
+    </div>
     <div class="row row-cols-2 gy-2">
       <div class="form-group">
         <label for="chiefComplaintHPI" class="form-label required"
@@ -50,10 +81,6 @@
         />
       </div>
     </div>
-
-    <div class="row row-cols-2 mt-3"></div>
-
-    <div class="row row row-cols-2 mt-3"></div>
 
     <div class="d-flex flex-column mt-3">
       <label class="form-label required">Severity</label>
@@ -541,6 +568,62 @@
 </form>
 <script>
   $(function () {
+    let isExamined = true;
+    function hideCollapsable() {
+      $(".collapsable").slideUp();
+
+      $(
+        ".collapsable input:not(input[type=submit]), .collapsable textarea"
+      ).each(function () {
+        $(this).prop("disabled", true);
+      });
+
+      isExamined = false;
+    }
+
+    function showCollapsable() {
+      $(".collapsable").slideDown();
+      $(
+        ".collapsable input:not(input[type=submit]), .collapsable textarea"
+      ).each(function () {
+        if (!["EDD", "AOG"].includes($(this).attr("name"))) {
+          $(this).prop("disabled", false);
+        }
+      });
+      isExamined = true;
+    }
+
+    function calculateEDD(LMP) {
+      LMP = moment(LMP, "MM/DD/YYYY");
+
+      let EDD;
+
+      EDD = LMP.add(7, "days");
+      EDD = EDD.subtract(3, "months");
+      return EDD.add(1, "years").format("MMMM DD, YYYY");
+    }
+
+    function calculateAOG(LMP) {
+      LMP = moment(LMP, "MM/DD/YYYY");
+
+      let today = moment();
+      let AOG;
+      let weeks = parseInt(today.diff(LMP, "weeks"));
+      let days = parseInt(today.diff(LMP, "days")) - weeks * 7;
+
+      if (weeks > 0 && days > 0) {
+        AOG = `${weeks} ${weeks > 1 ? "weeks" : "week"}, ${days} ${
+          days > 1 ? "days" : "day"
+        }`;
+      } else if (weeks > 0 && days <= 0) {
+        AOG = `${weeks} ${weeks > 1 ? "weeks" : "week"}`;
+      } else {
+        AOG = `${days} days`;
+      }
+
+      return AOG;
+    }
+
     loadDatepickers({
       autoclose: true,
       changeMonth: true,
@@ -549,7 +632,6 @@
       endDate: "+0d",
     });
 
-    let existingData = getDataFromLocalStorage("HPI");
     let radioKeys = [
       "severity",
       "onset",
@@ -557,18 +639,43 @@
       "frequency",
       "progression",
       "bodilyFunctionEffect",
+      "checkupType",
     ];
-    // let inputKeys = [
-    //   "chiefComplaint",
-    //   "startDate",
-    //   "location",
-    //   "quality",
-    //   "aggrevatedBy",
-    //   "relievedBy",
-    //   "notes",
-    // ];
-    if (existingData) {
+
+    let existingData = getDataFromLocalStorage("HPI");
+
+    // SLIDE DOWN COLLAPSABLE IF EXAMINED
+    $("#checkupType").on("change", function () {
+      let value = $(this).val();
+      console.log(value);
+      if (value === "follow-up") {
+        hideCollapsable();
+      } else {
+        showCollapsable();
+      }
+    });
+
+    $("#LMP").on("change", function () {
+      $("#EDD").val(calculateEDD($(this).val()));
+      $("#AOG").val(calculateAOG($(this).val()));
+    });
+
+    if (Object.keys(existingData).length) {
       Object.entries(existingData).forEach(([key, value]) => {
+        if (key === "checkupType") {
+          $(`option[value=${value}]`).prop("selected", true);
+          if (value === "follow-up") {
+            hideCollapsable();
+          } else {
+            showCollapsable();
+          }
+        }
+
+        if (key === "LMP") {
+          $("#EDD").val(calculateEDD(value));
+          $("#AOG").val(calculateAOG(value));
+        }
+
         let inputEl = $(`input[name=${key}], textarea[name=${key}]`);
         // IF INPUT IS RADIO BUTTON
         if (radioKeys.includes(key)) {
@@ -579,8 +686,17 @@
             }
           });
         } else if (key === "durationOfEpisode") {
-          $("input[name=durationOfEpisode]").val(value[0]);
-          $(`input[value=${value[1]}`).prop("checked", true);
+          console.log(value);
+          if (value.length > 1) {
+            $("input[name=durationOfEpisode]").val(value[0]);
+            $(`input[value=${value[1]}]`).prop("checked", true);
+            $("input[name=durationOfEpisode]").prop("disabled", false);
+          } else {
+            $(`input[value=${value[0]}]`).prop("checked", true);
+            $("input[name=durationOfEpisode]").val("");
+
+            $("input[name=durationOfEpisode]").prop("disabled", true);
+          }
         } else if (key === "riskFactors") {
           if (Array.isArray(value)) {
             $(inputEl).each(function () {
@@ -604,50 +720,35 @@
       });
     }
 
+    $("input[name=duration]").on("change", function () {
+      let value = $(this).val();
+
+      if (value === "indefinite") {
+        $("input[name=durationOfEpisode]").val("");
+        $("input[name=durationOfEpisode]").prop("disabled", true);
+      } else {
+        $("input[name=durationOfEpisode]").prop("disabled", false);
+      }
+    });
+
     $("#hpi-form").on("submit", function () {
       let HPI = {};
       let cleanedData = cleanData($(this).serializeArray());
 
-      // let ChiefComplaint = $("input[name='chiefComplaint']");
-      // let HPIStartDate = $("#HPIStartDate");
-      // let Location = $("input[name='location']");
-      // let Quality = $("input[name='quality']");
-      // let Severity = $("input[name='severity']:checked");
-      // let DurationEpisode = $("input[name='durationEpisode']");
-      // let Duration = $("input[name='duration']:checked");
-      // let Onset = $("input[name='onset']:checked");
-      // let Frequency = $("input[name='frequency']:checked");
-      // let Progression = $("input[name='progression']:checked");
-      // let AggravatedByFactor = $("#aggravatedByFactor");
-      // let RelievedByFactor = $("#relievedByFactor");
-      // let RiskFactors = $("input[name='riskFactors']:checked");
-      // let BodilyFunctionEffect = $(
-      //   "input[name='bodilyFunctionEffect']:checked"
-      // );
-      // let HPInotes = $("#HPINotes");
+      if (isExamined) {
+        console.log(cleanedData);
 
-      // HPI[ChiefComplaint.attr("name")] = ChiefComplaint.val();
-      // HPI[HPIStartDate.attr("name")] = HPIStartDate.val();
-      // HPI[Location.attr("name")] = Location.val();
-      // HPI[Quality.attr("name")] = Quality.val();
-      // HPI[Severity.attr("name")] = Severity.val();
-      // HPI[Onset.attr("name")] = Onset.val();
-      // HPI[DurationEpisode.attr("name")] = DurationEpisode.val();
-      // HPI[Duration.attr("name")] = Duration.val();
-      // HPI[Frequency.attr("name")] = Frequency.val();
-      // HPI[Progression.attr("name")] = Progression.val();
-      // HPI[AggravatedByFactor.attr("name")] = AggravatedByFactor.val();
-      // HPI[RelievedByFactor.attr("name")] = RelievedByFactor.val();
-      // HPI[RiskFactors.attr("name")] = RiskFactors.val();
-      // HPI[BodilyFunctionEffect.attr("name")] = BodilyFunctionEffect.val();
-      // HPI[HPInotes.attr("name")] = HPInotes.val();
+        if (cleanedData["durationOfEpisode"]) {
+          cleanedData["durationOfEpisode"] = [
+            cleanedData["durationOfEpisode"],
+            cleanedData["duration"],
+          ];
+        } else {
+          cleanedData["durationOfEpisode"] = [cleanedData["duration"]];
+        }
 
-      cleanedData["durationOfEpisode"] = [
-        cleanedData["durationOfEpisode"],
-        cleanedData["duration"],
-      ];
-
-      delete cleanedData["duration"];
+        delete cleanedData["duration"];
+      }
 
       saveDataToLocalstorage(cleanedData, "HPI");
     });

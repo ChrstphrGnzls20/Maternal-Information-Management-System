@@ -1,122 +1,150 @@
 <!-- TODO: responsiveness of site when in md size -->
 <form class="papTest" id="papSmear-form" data-form-target="EMR">
-  <div class="row">
-    <h3 class="default-label">Pap Smear</h3>
-  </div>
+  <h3 class="default-label">Pap Smear</h3>
 
-  <div class="d-flex flex-column justify-content-center align-items-center">
-    <label class="align-self-start mt-4 fs-5 text-black">Result</label>
-
-    <div class="row row-cols-1 row-cols-md-4 mt-2 p-3 w-100">
-      <div class="form-check">
+  <div class="form-group mb-2">
+    <div class="d-flex align-items-center">
+      <span class="fs-5 me-3">Conducted?</span>
+      <div class="form-group me-2">
         <input
-          class="form-check-input"
           type="radio"
-          name="result"
-          id="papNormal"
-          value="normal"
+          class="form-check-input"
+          name="isConducted"
+          id="not-conducted"
+          value="not conducted"
           checked
         />
-        <label class="form-check-label" for="papNormal"> Normal </label>
+        <label for="not-conducted" class="form-label mb-0">No</label>
       </div>
-
-      <div class="form-check">
+      <div class="form-group">
         <input
-          class="form-check-input"
           type="radio"
-          name="result"
-          id="papASCUS"
-          value="ASC-US"
-        />
-        <label class="form-check-label" for="papASCUS"> ASC-US </label>
-      </div>
-
-      <div class="form-check">
-        <input
           class="form-check-input"
-          type="radio"
-          name="result"
-          id="papAGC"
-          value="AGC"
+          name="isConducted"
+          id="conducted"
+          value="conducted"
         />
-        <label class="form-check-label" for="papAGC"> AGC </label>
-      </div>
-
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="result"
-          id="papASCH"
-          value="ASC-H"
-        />
-        <label class="form-check-label" for="papASCH"> ASC-H </label>
-      </div>
-    </div>
-
-    <div class="row row-cols-1 row-cols-md-4 mt-2 p-3 w-100">
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="result"
-          id="papHSIL"
-          value="HSIL"
-        />
-        <label class="form-check-label" for="papHSIL"> HSIL </label>
-      </div>
-
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="result"
-          id="papAIS"
-          value="AIS"
-        />
-        <label class="form-check-label" for="papAIS"> AIS </label>
-      </div>
-
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="result"
-          id="papCervicalCancer"
-          value="cervical cancer"
-        />
-        <label class="form-check-label" for="papCervicalCancer">
-          Cervical Cancer
-        </label>
-      </div>
-
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="result"
-          id="papUnsatisfactory"
-          value="unsatisfactory"
-        />
-        <label class="form-check-label" for="papUnsatisfactory">
-          Unsatisfactory
-        </label>
+        <label for="conducted" class="form-label mb-0">Yes</label>
       </div>
     </div>
   </div>
-
-  <div class="row mt-3">
-    <div class="form-group">
-      <label for="papSmearNotes" class="form-label" id="papGenNotes"
-        >Notes</label
+  <div class="collapsable" style="display: none">
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <label class="align-self-start mt-2 fs-5 text-black fw-bold"
+        >Result</label
       >
-      <textarea
-        class="form-control"
-        id="papSmearNotes"
-        name="papSmearNotes"
-        rows="5"
-        placeholder="Additional notes here"
-      ></textarea>
+
+      <div class="row row-cols-1 row-cols-md-4 mt-2 p-3 w-100">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="result"
+            id="papNormal"
+            value="normal"
+            checked
+          />
+          <label class="form-check-label" for="papNormal"> Normal </label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="result"
+            id="papASCUS"
+            value="ASC-US"
+          />
+          <label class="form-check-label" for="papASCUS"> ASC-US </label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="result"
+            id="papAGC"
+            value="AGC"
+          />
+          <label class="form-check-label" for="papAGC"> AGC </label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="result"
+            id="papASCH"
+            value="ASC-H"
+          />
+          <label class="form-check-label" for="papASCH"> ASC-H </label>
+        </div>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-4 mt-2 p-3 w-100">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="result"
+            id="papHSIL"
+            value="HSIL"
+          />
+          <label class="form-check-label" for="papHSIL"> HSIL </label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="result"
+            id="papAIS"
+            value="AIS"
+          />
+          <label class="form-check-label" for="papAIS"> AIS </label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="result"
+            id="papCervicalCancer"
+            value="cervical cancer"
+          />
+          <label class="form-check-label" for="papCervicalCancer">
+            Cervical Cancer
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="result"
+            id="papUnsatisfactory"
+            value="unsatisfactory"
+          />
+          <label class="form-check-label" for="papUnsatisfactory">
+            Unsatisfactory
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="form-group">
+        <label for="papSmearNotes" class="form-label" id="papGenNotes"
+          >Notes</label
+        >
+        <textarea
+          class="form-control"
+          id="papSmearNotes"
+          name="papSmearNotes"
+          rows="5"
+          placeholder="Additional notes here"
+        ></textarea>
+      </div>
     </div>
   </div>
 
@@ -148,6 +176,40 @@
 
 <script>
   $(function () {
+    function hideCollapsable() {
+      $(".collapsable").slideUp();
+
+      $(
+        ".collapsable input:not(input[type=submit]), .collapsable textarea"
+      ).each(function () {
+        $(this).prop("disabled", true);
+      });
+
+      isConducted = false;
+    }
+
+    function showCollapsable() {
+      $(".collapsable").slideDown();
+      $(
+        ".collapsable input:not(input[type=submit]), .collapsable textarea"
+      ).each(function () {
+        $(this).prop("disabled", false);
+      });
+      isConducted = true;
+    }
+
+    let isConducted;
+
+    // SLIDE DOWN COLLAPSABLE IF EXAMINED
+    $("input[name=isConducted]").on("change", function () {
+      let value = $(this).val();
+      if (value === "conducted") {
+        showCollapsable();
+      } else {
+        hideCollapsable();
+      }
+    });
+
     let existingData = getDataFromLocalStorage(
       (objName = "papSmear"),
       (parentObjName = "internalExamination"),
@@ -159,6 +221,13 @@
     if (Object.keys(existingData).length) {
       // SET VALUES OF VAGINA
       Object.entries(existingData).forEach(([key, value]) => {
+        if (key === "isConducted") {
+          if (value === "conducted") {
+            showCollapsable();
+          } else {
+            hideCollapsable();
+          }
+        }
         if (key === "papSmearNotes") {
           $("#papSmearNotes").val(value);
           return;
@@ -176,22 +245,26 @@
     }
 
     $(".papTest").on("submit", function () {
-      // VAGINA
+      let PapSmear;
       let Result = {};
-      checkedRadios = $("#papSmear-form input[type=radio]:checked");
+      if (isConducted) {
+        checkedRadios = $("#papSmear-form input[type=radio]:checked");
 
-      checkedRadios.each(function () {
-        let nameProp = $(this).attr("name");
-        let value = $(this).val();
+        checkedRadios.each(function () {
+          let nameProp = $(this).attr("name");
+          let value = $(this).val();
 
-        Result[nameProp] = value;
-      });
+          Result[nameProp] = value;
+        });
 
-      let resultNotes = $("#papSmearNotes").val();
-      Result["papSmearNotes"] = resultNotes;
+        let resultNotes = $("#papSmearNotes").val();
+        Result["papSmearNotes"] = resultNotes;
 
-      // let VulvaVaginaCervix = [Vulva, Vagina, Cervix];
-      let PapSmear = {
+        // let VulvaVaginaCervix = [Vulva, Vagina, Cervix];
+      } else {
+        Result["isConducted"] = "not conducted";
+      }
+      PapSmear = {
         ...Result,
       };
 

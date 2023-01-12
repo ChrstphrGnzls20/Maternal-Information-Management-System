@@ -28,6 +28,11 @@ sidebarItems = [
         "icon": "bi bi-calendar-week",
         "route": "/admin/clinic-rates",
     },
+    {
+        "label": "CLINIC REPORTS",
+        "icon": "bi bi-file-earmark-bar-graph",
+        "route": "/admin/reports",
+    },
 ]
 
 
@@ -48,6 +53,11 @@ def clinicRatesDashboard():
     # if not session.get('_id') and not session.get("role") == "admin":
     #     return redirect("/admin/login")
     return render_template("dashboard.html", contentTemplate="/clinic-rates.html", sidebarItems=sidebarItems, activeSidebar="CLINIC SERVICES", services=serviceObj.retrieveClinicServices())
+
+
+@admin.route("/reports")
+def clinicReportsDashboard():
+    return render_template("dashboard.html", contentTemplate="/clinic-reports.html",  sidebarItems=sidebarItems, activeSidebar="CLINIC REPORTS")
 
 #####################
 #

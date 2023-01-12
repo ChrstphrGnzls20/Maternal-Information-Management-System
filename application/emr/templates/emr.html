@@ -48,6 +48,11 @@
             </a>
         </li>
         <li>
+            <a class="btn emr-cat emr-sub-cat" data-target="patient-history-mh">
+                Menstrual History
+            </a>
+        </li>
+        <li>
             <a class="btn emr-cat emr-sub-cat" data-target="patient-history-ph">
                 Pregnancy History
             </a>
@@ -239,9 +244,11 @@
     <!-- Page Content  -->
     <div id="emr-wrapper" class="container-fluid p-2 p-md-3">
         <!-- wrapper -->
-        <div class="container-lg bg-white py-3 shadow" id='emr-content'></div>
+        <div class="container-xl bg-white py-3 shadow" id='emr-content'></div>
     </div>
 </div>
+
+{% include "loader.html" %}
 
 <!-- Moment.js -->
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>

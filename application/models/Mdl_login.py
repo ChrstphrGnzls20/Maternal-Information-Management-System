@@ -13,8 +13,12 @@ class Login(object):
         collection = mongo[self.dbName]
         resultArray = []
         try:
-            result = collection.find_one(
-                {"email": loginCred['email']}, {"_id": 1, "email": 1, "password": 1})
+            if self.dbName == 'patient':
+                result = collection.find_one(
+                    {"email": loginCred['email']}, {"_id": 1, "email": 1, "password": 1, "basicInformation.name": 1})
+            else:
+                result = collection.find_one(
+                    {"email": loginCred['email']}, {"_id": 1, "email": 1, "password": 1, "name": 1})
             print(result)
             if result:
                 print(result)

@@ -56,6 +56,10 @@ def loginAttempt(entity: str):
             print(loginData)
             # SAVE SESSION
             session['id'] = loginData['_id']
+            if dbName == 'patient':
+                session['name'] = loginData['basicInformation']['name']
+            else:
+                session['name'] = loginData['name']
             if entity == "patient":
                 session['entity'] = 'patient'
             else:

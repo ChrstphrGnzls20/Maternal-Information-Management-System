@@ -100,7 +100,8 @@ $(function () {
     if (!Object.keys(data).length) return;
 
     Object.entries(data).forEach(([key, value]) => {
-      let category = camelToCapitalized(key);
+      let category = "LMP";
+      if (key !== "LMP") category = camelToCapitalized(key);
       // SPECIAL CASE FOR DURATION
       if (key.includes("duration")) {
         value = value.join(" ");
@@ -208,6 +209,7 @@ $(function () {
       </div>`;
       $("#patient-history > div").append(htmlToAppend);
       Object.entries(dataObject).forEach(([key, value]) => {
+        console.log(value);
         if (Array.isArray(value)) {
           value = value.join(", ");
         }
@@ -231,6 +233,7 @@ $(function () {
           "currentMedicationHistory",
           "preventiveCareHistory",
           "surgicalHistory",
+          "pastMedicalHistory",
         ].includes(key)
       ) {
         interpretHistoryUsingArray(key, items);
@@ -403,7 +406,7 @@ $(function () {
 
       for (const [key, items] of Object.entries(data)) {
         if (key === "papSmear") {
-          if (!Object.keys(items).length) {
+          if (!Object.keys(items).length || Object.keys(items).length <= 1) {
             $("#papSmear .contents").append(
               $(`
             <p class="mb-1">Not Examined</p>
@@ -425,7 +428,7 @@ $(function () {
 
         for (const [key, value] of Object.entries(items)) {
           if (key === "Vulva") {
-            if (!value.length) {
+            if (!value.length || value.length <= 1) {
               $(`#${key.toLowerCase()} .contents`).append(
                 `<p class="mb-1">Not Examined</p>`
               );
@@ -435,6 +438,8 @@ $(function () {
               let vulvaHtml = "";
 
               let category = Object.keys(item)[0];
+
+              if (category === "isExamined") return;
 
               $(`<div class="mb-2" id=${category}></div>`).appendTo(
                 $("#vulva .contents")
@@ -447,13 +452,17 @@ $(function () {
               $(vulvaHtml).appendTo($(`div#${category}`));
             });
           } else {
-            if (!Object.entries(value).length) {
+            if (
+              !Object.entries(value).length ||
+              Object.entries(value).length <= 1
+            ) {
               $(`#${key.toLowerCase()} .contents`).append(
                 `<p class="mb-1">Not Examined</p>`
               );
               continue;
             }
             for (const [k, v] of Object.entries(value)) {
+              if (k === "isExamined") continue;
               $(`
               <p class="mb-0">
                 <b>${camelToCapitalized(k)}:</b>
@@ -733,8 +742,7 @@ $(function () {
         let doctorID = localStorage.getItem("id");
         emrData["patientID"] = patientID;
         emrData["doctorID"] = doctorID;
-
-        const patientHistory = emrData["patientHistory"];
+        const patientHistory = [emrData["patientHistory"]];
         delete emrData["patientHistory"];
 
         updatePatientHistory(patientID, patientHistory)

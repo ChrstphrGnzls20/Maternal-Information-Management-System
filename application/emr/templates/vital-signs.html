@@ -147,15 +147,18 @@
       // CHECK FIRST IF THE DATA EXISTS IN LOCALSTORAGE
       let existingData = getDataFromLocalStorage("vitalSigns");
 
-      if (Object.keys(existingData).length) {
-        Object.entries(existingData).forEach(([key, value]) => {
-          if (key === "bloodPressure") {
-            let [BPSystolic, BPDiastolic] = value.split("/");
-            $("input[name=bpSystolic]").val(BPSystolic);
-            $("input[name=bpDiastolic]").val(BPDiastolic);
-          }
-          $(`input[name=${key}]`).val(value);
-        });
+      console.log(existingData);
+      if (existingData) {
+        if (Object.keys(existingData).length) {
+          Object.entries(existingData).forEach(([key, value]) => {
+            if (key === "bloodPressure") {
+              let [BPSystolic, BPDiastolic] = value.split("/");
+              $("input[name=bpSystolic]").val(BPSystolic);
+              $("input[name=bpDiastolic]").val(BPDiastolic);
+            }
+            $(`input[name=${key}]`).val(value);
+          });
+        }
 
         // RE-CALCULATE BMI
         let heightInMeters = parseInt($("#vitalHeight").val()) / 100;
@@ -208,8 +211,6 @@
           // SAVE TO LOCALSTORAGE BEFORE LEAVING PAGE
           saveDataToLocalstorage(vitalSigns, "vitalSigns");
         }
-
-        // DESTROY OBJECT
       });
     });
   </script>

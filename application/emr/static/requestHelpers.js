@@ -9,6 +9,7 @@ function addNewCheckup(data) {
 }
 
 function updatePatientHistory(patientID, payload) {
+  console.log(payload);
   return $.ajax({
     method: "PATCH",
     url: `${API_BASE_URL}/patients/${patientID}/history`,

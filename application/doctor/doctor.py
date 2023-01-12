@@ -37,21 +37,21 @@ sidebarItems = [
 def doctorDashboard():
     print(session)
     if session.get('id') and session.get("entity") == "doctor":
-        return render_template("dashboard.html", contentTemplate="/home.html", sidebarItems=sidebarItems, activeSidebar="DASHBOARD")
+        return render_template("dashboard.html", contentTemplate="/home.html", sidebarItems=sidebarItems, activeSidebar="DASHBOARD", name=session.get('name'))
     return redirect("/login/doctor")
 
 
 @doctor.route("/appointments")
 def appointments():
     if session.get('id') and session.get("entity") == "doctor":
-        return render_template("dashboard.html", contentTemplate="/appointment.html", sidebarItems=sidebarItems, activeSidebar="APPOINTMENTS")
+        return render_template("dashboard.html", contentTemplate="/appointment.html", sidebarItems=sidebarItems, activeSidebar="APPOINTMENTS", name=session.get('name'))
     return redirect("/login/doctor")
 
 
 @doctor.route("/patients")
 def patients():
     if session.get('id') and session.get("entity") == "doctor":
-        return render_template("dashboard.html", contentTemplate="/patient.html", sidebarItems=sidebarItems, activeSidebar="PATIENTS")
+        return render_template("dashboard.html", contentTemplate="/patient.html", sidebarItems=sidebarItems, activeSidebar="PATIENTS", name=session.get('name'))
     return redirect("/login/doctor")
 
 
@@ -65,7 +65,7 @@ def schedule():
         # events = [
         #     {'id': '123', 'start': "2022-12-22", 'title': "random"}
         # ]
-        return render_template("dashboard.html", contentTemplate="/schedule.html", sidebarItems=sidebarItems, activeSidebar="SCHEDULE", events=events)
+        return render_template("dashboard.html", contentTemplate="/schedule.html", sidebarItems=sidebarItems, activeSidebar="SCHEDULE", events=events, name=session.get('name'))
     return redirect("/login/doctor")
 
 
@@ -87,5 +87,5 @@ def facesheet(patientID):
 
             del checkup['assessment']
             parsedDateCheckups.append(checkup)
-        return render_template("facesheet.html", checkUps=parsedDateCheckups)
+        return render_template("facesheet.html", checkUps=parsedDateCheckups, name=session.get('name'))
     return redirect("/login/doctor")

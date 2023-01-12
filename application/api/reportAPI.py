@@ -1,4 +1,7 @@
-from flask import Flask, Blueprint, make_response, jsonify
+from flask import Flask, Blueprint, make_response, jsonify, request
+import datetime
+import calendar
+import json
 
 # MODELS
 from ..models.Mdl_employee import Employee
@@ -86,3 +89,43 @@ def clinicServiceTally():
                     break
 
     return make_response(jsonify(clinicServiceWithCount), 200)
+
+
+@reportAPI.route("/number-of-patient-tally")
+def patientCheckupTally():
+    startingMonth = request.args.get("month", None)
+    year = int(request.args.get("year", None))
+
+    if startingMonth and year:
+        startingMonthInt = datetime.datetime.strptime(
+            startingMonth, "%B").month
+
+        # numOfDaysInGivenMonth = calendar.monthrange(year, startingMonthInt)[1]
+
+        listOfCheckups = emrObj.retrieveCheckup(
+            filter={}, returnFields={"completedDate": 1})
+
+        # create a dictionary with the days of the given month (NOTE: Sunday excluded)
+        daysArray = calendar.monthcalendar(year, startingMonthInt)
+
+        daysDictionary = {}
+        for weeks in daysArray:
+            for idx, day in enumerate(weeks):
+
+                if day != 0 and idx <= 5:
+                    daysDictionary[day] = 0
+                    continue
+
+        # filter out dates based on the given month
+        for checkup in listOfCheckups:
+            checkupMonth = datetime.datetime.fromisoformat(
+                checkup['completedDate']).month
+            checkupDay = datetime.datetime.fromisoformat(
+                checkup['completedDate']).day
+
+            if checkupMonth == startingMonthInt:
+                daysDictionary[checkupDay] += 1
+                # resultArray.append(checkup)
+
+        return make_response(jsonify(daysDictionary), 200)
+    return make_response(jsonify({}), 404)

@@ -110,11 +110,12 @@ class Patient(object):
     def updatePatientHistory(self, patientID: str, updateObject: list[dict]):
         try:
             resultArray = []
+            print(updateObject)
             for item in updateObject:
+                print(item)
                 keys = list(item.keys())
                 for key in keys:
                     print(f'patientHistory.{key}')
-                    updateQuery = {}
                     result = collection.find(
                         {"_id": patientID, f'patientHistory.{key}': {"$exists": True}})
                     if len(list(result)):
@@ -123,7 +124,7 @@ class Patient(object):
                     else:
                         collection.find_one_and_update(filter={"_id": patientID}, update={
                                                        '$set': {f'patientHistory.{key}': item[key]}}, upsert=True)
-                print(key)
+                print(resultArray)
                 resultArray.append([])
             return resultArray
         except Exception as ex:

@@ -6,9 +6,7 @@ import json
 # models
 from ..models.Mdl_emr import EMR, SOAPParser, generatePrescription, generateChargingForm
 from ..models.Mdl_patient import Patient
-from ..models.Mdl_doctor import Doctor
 from ..models.Mdl_employee import Employee
-from ..models.Mdl_clinicService import ClinicService
 
 emr = Blueprint('emr',  __name__, template_folder="templates",
                 static_folder="static")
@@ -74,6 +72,14 @@ def SOAP(checkupID: str):
             return make_response("No checkup found", 404)
 
         data: dict = data[0]
+        patientObj = Patient()
+        patientID: str = data['patientID']
+        # GET HISTORY
+        patientHistory: dict = patientObj.findPatient(
+            filter={'_id': patientID}, returnFields={"_id": 0, "patientHistory": 1})[0]
+        patientHistory = patientHistory['patientHistory']
+        # ATTACH HISTORY
+        data['patientHistory'] = patientHistory
         soapObj = SOAPParser(data)
         SOAPPdf = soapObj.generatePDF()
         return SOAPPdf

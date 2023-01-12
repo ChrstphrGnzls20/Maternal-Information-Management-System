@@ -1,0 +1,157 @@
+<form id="menstrual-history" data-form-target="EMR">
+  <h3 class="default-label col-12">Menstrual History</h3>
+  <div class="row row-cols-1 row-cols-md-2 gy-2">
+    <div class="form-group">
+      <label for="ageOfMenarche" class="form-label required"
+        >Age of First Period</label
+      >
+      <input
+        type="number"
+        class="form-control"
+        name="ageOfMenarche"
+        id="ageOfMenarche"
+        min="1"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="isPeriodRegular" class="form-label required"
+        >Is the patient's period regular?</label
+      >
+      <div class="form-group">
+        <span class="me-5">
+          <input
+            type="radio"
+            class="form-check-input"
+            name="isPeriodRegular"
+            id="isPeriodRegular-No"
+            value="no"
+            checked
+          />
+          <label for="isPeriodRegular-No">No</label>
+        </span>
+        <span>
+          <input
+            type="radio"
+            class="form-check-input"
+            name="isPeriodRegular"
+            id="isPeriodRegular-Yes"
+            value="yes"
+          />
+          <label for="isPeriodRegular-Yes">Yes</label>
+        </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="periodInterval" class="form-label required"
+        >Period interval (in days)</label
+      >
+      <input
+        type="number"
+        class="form-control"
+        name="periodInterval"
+        id="periodInterval"
+        min="0"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="daysOfBleeding" class="form-label required"
+        >How many days does the patient bleed?</label
+      >
+      <input
+        type="number"
+        class="form-control"
+        name="daysOfBleeding"
+        id="daysOfBleeding"
+        min="0"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="painDuringPeriod" class="form-label required"
+        >Does the patient experience pain during their period?</label
+      >
+      <div class="form-group mt-1">
+        <span class="me-5">
+          <input
+            type="radio"
+            class="form-check-input"
+            name="painDuringPeriod"
+            id="painDuringPeriod-No"
+            value="no"
+            checked
+          />
+          <label for="isPeriodRegular-No">No</label>
+        </span>
+        <span>
+          <input
+            type="radio"
+            class="form-check-input"
+            name="painDuringPeriod"
+            id="painDuringPeriod-Yes"
+            value="yes"
+          />
+          <label for="painDuringPeriod-Yes">Yes</label>
+        </span>
+      </div>
+      
+    </div>
+   
+  </div>
+  <div class="row mt-3">
+    <div class="form-group ">
+      <label for="fname" class="form-label">Additional Notes</label>
+      <textarea
+        class="form-control"
+        id="additionalNotes"
+        name="additionalNotes"
+        rows="5"
+      ></textarea>
+    </div>
+  <div class="d-flex justify-content-between mt-3 w-100">
+    <input
+      type="submit"
+      class="btn btn-custom-tertiary emr-prev-btn px-5"
+      value="Previous"
+      data-next-page="patient-history-pmh"
+    />
+
+    <input
+      type="submit"
+      class="btn btn-success btn-custom-primary px-5 emr-next-btn"
+      value="Next"
+      data-next-page="patient-history-ph"
+    />
+  </div>
+</form>
+
+<script>
+  $(function () {
+    loadDatepickers({
+      autoclose: true,
+      changeMonth: true,
+      changeYear: true,
+      format: "mm/dd/yyyy",
+      endDate: "+0d",
+    });
+    let existingData = getDataFromLocalStorage(
+      "menstrualHistory",
+      "patientHistory"
+    );
+    if (existingData) {
+      Object.entries(existingData).forEach(([key, value]) => {
+        let inputEl = $(`input[name=${key}], textarea[name=${key}]`);
+        inputEl.val(value);
+      });
+    }
+
+    $("form[data-form-target=EMR]").on("submit", function (e) {
+      e.preventDefault();
+      let values = $(this).serializeArray();
+      let cleanedData = cleanData(values);
+
+      saveDataToLocalstorage(cleanedData, "menstrualHistory", "patientHistory");
+    });
+  });
+</script>

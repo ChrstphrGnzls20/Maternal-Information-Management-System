@@ -48,6 +48,8 @@ def generatePrescription(prescriptionData: dict, patientInfo: dict, doctorInfo: 
                     value = f'{value // 30} month/s'
                 elif value % 7 == 0:
                     value = f'{value // 7} week/s'
+                else:
+                    value = f'{value} day/s'
             tempObj[key] = value
         resultForPrescription.append(tempObj)
 
@@ -184,6 +186,8 @@ class SOAPParser(object):
             return resultObject
 
     def __interpretSubjective(self) -> dict:
+        print(json.dumps(self.data['patientHistory'], indent=2))
+        # GET PATIENT HISTORY FROM PATIENT'S DOCUMENT
         resultObject = {
             'HPI': {},
             'ROS': {},
@@ -193,7 +197,6 @@ class SOAPParser(object):
         resultForROS = {}
 
         try:
-
             HPI = self.data['HPI'] or {}
             patientHistory = self.data['patientHistory']
             pregnancyHistory = patientHistory['pregnancyHistory'] or []
@@ -335,6 +338,8 @@ class SOAPParser(object):
                                     value = f'{value // 30} month/s'
                                 elif value % 7 == 0:
                                     value = f'{value // 7} week/s'
+                                else:
+                                    value = f'{value} day/s'
                             tempObj[key] = value
 
                         resultForPrescription.append(tempObj)
@@ -420,6 +425,7 @@ class EMR(object):
     def addNewCheckup(self, data: dict) -> dict:
         data['_id'] = self.generateCheckupID()
         data['completedDate'] = str(datetime.now().isoformat())
+        print(json.dumps(data, indent=2))
         # collection = mongo.db['checkup']
         inserted_id = collection.insert_one(data).inserted_id
 

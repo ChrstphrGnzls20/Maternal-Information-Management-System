@@ -1,109 +1,114 @@
-<div class="accordion mt-5" id="accordionExample">
-  {% for checkup in checkups %}
-  <div class="accordion-item mb-3">
-    <div class="border border-dark">
-      <h2 class="accordion-header" id="headingOne">
-        <button
-          class="accordion-button collapsed"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapse-{{checkup._id}}"
-          aria-expanded="true"
-          aria-controls="collapse-{{checkup._id}}"
-        >
-          {{checkup.completedDate}}
-        </button>
-      </h2>
-      <div
-        id="collapse-{{checkup._id}}"
-        class="accordion-collapse collapse"
-        aria-labelledby="headingOne"
-        data-bs-parent="#accordionExample"
-        aria-labelledby="heading-{{checkup._id}}"
-      >
-        <div class="accordion-body">
-          <p class="text-capitalize">
-            <b>Diagnosis:</b> {{checkup.assessment.diagnosis}}
-          </p>
-          <div class="form-group col-12">
-            <label
-              for="medicineInstructionArea"
-              class="form-label"
-              id="textPatientEducation"
-              ><b>Patient Education</b></label
+<div class="p-3 m-md-2 mt-4 mt-md-4 shadow-lg" id="home-appt">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1 class="">Consultations</h1>
+    <div class="accordion mt-5" id="accordionExample">
+      {% for checkup in checkups %}
+      <div class="accordion-item mb-3">
+        <div class="border border-dark">
+          <h2 class="accordion-header" id="headingOne">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapse-{{checkup._id}}"
+              aria-expanded="true"
+              aria-controls="collapse-{{checkup._id}}"
             >
-            {% if checkup.plan.carePlan.carePlanNotes != "" %}
-            <textarea
-              class="form-control"
-              id="patientEducation"
-              name="medicalInstructionArea"
-              rows="5"
-              readonly
-            >
+              {{checkup.completedDate}}
+            </button>
+          </h2>
+          <div
+            id="collapse-{{checkup._id}}"
+            class="accordion-collapse collapse"
+            aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample"
+            aria-labelledby="heading-{{checkup._id}}"
+          >
+            <div class="accordion-body">
+              <p class="text-capitalize">
+                <b>Diagnosis:</b> {{checkup.assessment.diagnosis}}
+              </p>
+              <div class="form-group col-12">
+                <label
+                  for="medicineInstructionArea"
+                  class="form-label"
+                  id="textPatientEducation"
+                  ><b>Patient Education</b></label
+                >
+                {% if checkup.plan.carePlan.carePlanNotes != "" %}
+                <textarea
+                  class="form-control"
+                  id="patientEducation"
+                  name="medicalInstructionArea"
+                  rows="5"
+                  readonly
+                >
 {{checkup.plan.carePlan.carePlanNotes}}</textarea
-            >
-            {% else %}
-            <textarea
-              class="form-control"
-              id="patientEducation"
-              name="medicalInstructionArea"
-              rows="5"
-              readonly
-            >
+                >
+                {% else %}
+                <textarea
+                  class="form-control"
+                  id="patientEducation"
+                  name="medicalInstructionArea"
+                  rows="5"
+                  readonly
+                >
 Not specified</textarea
-            >
-            {% endif %}
-          </div>
+                >
+                {% endif %}
+              </div>
 
-          <div class="table-responsive mt-3">
-            <h3>Prescription</h3>
-            {% if checkup.plan.prescription %}
-            <table class="table table-borderless" id="prescription-table">
-              <thead
-                align="middle"
-                style="background-color: rgba(0, 0, 0, 0.05)"
-              >
-                <tr>
-                  <!-- <th scope="col" width="10%">Medicine Name</th>
+              <div class="table-responsive mt-3">
+                <h3>Prescription</h3>
+                {% if checkup.plan.prescription %}
+                <table class="table table-borderless" id="prescription-table">
+                  <thead
+                    align="middle"
+                    style="background-color: rgba(0, 0, 0, 0.05)"
+                  >
+                    <tr>
+                      <!-- <th scope="col" width="10%">Medicine Name</th>
                   <th scope="col" width="10%">Type</th>
                   <th scope="col" width="10%">Dosage</th>
                   <th scope="col" width="15%">Amount</th>
                   <th scope="col" width="15%">Frequency of Dosage</th>
                   <th scope="col" width="20%">Instructions</th> -->
-                  <th>Medicine Name</th>
-                  <th>Medicine Type</th>
-                  <th>Dosage</th>
-                  <th>Amount</th>
-                  <th>Frequency of Dosage</th>
-                  <th>Duration</th>
-                  <th>Instruction</th>
-                </tr>
-              </thead>
+                      <th>Medicine Name</th>
+                      <th>Medicine Type</th>
+                      <th>Dosage</th>
+                      <th>Amount</th>
+                      <th>Frequency of Dosage</th>
+                      <th>Duration</th>
+                      <th>Instruction</th>
+                    </tr>
+                  </thead>
 
-              <tbody align="middle">
-                {% for medicine in checkup.plan.prescription %}
-                <tr>
-                  <td>{{medicine.medicineName}}</td>
-                  <td>{{medicine.medicineType}}</td>
-                  <td>
-                    {{medicine.medicineDosage}}/{{medicine.medicineMeasurement}}
-                  </td>
-                  <td>{{medicine.medicineAmount}}</td>
-                  <td>{{medicine.medicineFrequency}} x a day</td>
-                  <td>{{medicine.medicinePeriod}}</td>
-                  <td>{{medicine.medicineInstructions}}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-            {% else %}
-            <p>No prescription given</p>
-            {% endif%}
+                  <tbody align="middle">
+                    {% for medicine in checkup.plan.prescription %}
+                    <tr>
+                      <td>{{medicine.medicineName}}</td>
+                      <td>{{medicine.medicineType}}</td>
+                      <td>
+                        {{medicine.medicineDosage}}/{{medicine.medicineMeasurement}}
+                      </td>
+                      <td>{{medicine.medicineAmount}}</td>
+                      <td>{{medicine.medicineFrequency}} x a day</td>
+                      <td>{{medicine.medicinePeriod}}</td>
+                      <td>{{medicine.medicineInstructions}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                {% else %}
+                <p>No prescription given</p>
+                {% endif%}
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      {% endfor %}
     </div>
   </div>
-
-  {% endfor %}
 </div>

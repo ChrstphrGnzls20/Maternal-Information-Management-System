@@ -1,7 +1,7 @@
 from ..models.Mdl_emr import EMR
 from ..models.Mdl_patient import Patient
 from ..models.Mdl_appointment import Appointment
-from flask import Blueprint, render_template, session, redirect, request, make_response, jsonify
+from flask import Blueprint, render_template, session, redirect, request, make_response, jsonify, session
 import datetime
 
 patient = Blueprint('patient', __name__, template_folder="templates",
@@ -68,6 +68,7 @@ def registerSuccess():
 @patient.route('/')
 def dashboard():
     if session.get('id') and session.get("entity") == 'patient':
+        print(session)
         content = [
             {
                 'idx': 0,
@@ -106,21 +107,21 @@ def dashboard():
                 'body': "Caffeine intake should be limited during pregnancy. Do not drink more than 200 mg a day (around two cups of coffee).",
             },
         ]
-        return render_template("dashboard.html", contentTemplate="/faq.html", content=content, sidebarItems=sidebarItems, activeSidebar="DASHBOARD")
+        return render_template("dashboard.html", contentTemplate="/faq.html", content=content, sidebarItems=sidebarItems, activeSidebar="DASHBOARD", name=session.get('name'))
     return redirect("/login/patient")
 
 
 @patient.route('/appointments/')
 def homeAppointment():
     if session.get('id') and session.get("entity") == 'patient':
-        return render_template("dashboard.html", contentTemplate="/home-appointment.html",  sidebarItems=sidebarItems, activeSidebar="APPOINTMENTS")
+        return render_template("dashboard.html", contentTemplate="/home-appointment.html",  sidebarItems=sidebarItems, activeSidebar="APPOINTMENTS", name=session.get('name'))
     return redirect("/login/patient")
 
 
 @patient.route('/appointments/create')
 def createAppointment():
     if session.get('id') and session.get("entity") == 'patient':
-        return render_template("dashboard.html", contentTemplate="/create-appointment.html",  sidebarItems=sidebarItems, activeSidebar="APPOINTMENTS", clinicians=appointmentObj.getAvailableClinicians())
+        return render_template("dashboard.html", contentTemplate="/create-appointment.html",  sidebarItems=sidebarItems, activeSidebar="APPOINTMENTS", clinicians=appointmentObj.getAvailableClinicians(), name=session.get('name'))
     return redirect("/login/patient")
 
 
@@ -158,7 +159,7 @@ def homeConsultations():
 
             print(checkup)
 
-        return render_template("dashboard.html", contentTemplate="/home-consultations.html",  sidebarItems=sidebarItems, activeSidebar="CONSULTATIONS", checkups=checkups)
+        return render_template("dashboard.html", contentTemplate="/home-consultations.html",  sidebarItems=sidebarItems, activeSidebar="CONSULTATIONS", checkups=checkups, name=session.get('name'))
     return redirect("/login/patient")
 
 

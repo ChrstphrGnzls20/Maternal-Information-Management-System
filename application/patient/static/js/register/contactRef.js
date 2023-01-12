@@ -34,6 +34,13 @@ $("#cr-prev-btn").on("click", function (e) {
   slHistFormEl.bsShow();
 });
 
+$(".register-form-btn-submit").on("click", function (e) {
+  e.preventDefault();
+  $(this).prop("disabled", true);
+
+  registerForm.trigger("submit");
+});
+
 // EXECUTE WHEN THE CONFIRM-BTN ON SUMMARY IS CLICKED
 registerForm.on("submit", function (evt) {
   evt.preventDefault();
@@ -42,7 +49,12 @@ registerForm.on("submit", function (evt) {
 
   // BUILD NAME AS ONE PROPERTY
   let name = `${basicInformation.fName} ${basicInformation.mName} ${basicInformation.lName}`;
-
+  console.log(
+    basicInformation.fName,
+    basicInformation.mName,
+    basicInformation.lName,
+    name
+  );
   basicInformation["name"] = name;
   delete basicInformation["fName"];
   delete basicInformation["mName"];

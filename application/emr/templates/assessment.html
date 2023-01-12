@@ -69,7 +69,7 @@
 
   <script>
     $(function () {
-      let existingData = getDataFromLocalStorage("Assessment");
+      let existingData = getDataFromLocalStorage("assessment");
       if (existingData) {
         Object.entries(existingData).forEach(([key, value]) => {
           let inputEl = $(`input[name=${key}], textarea[name=${key}]`);
