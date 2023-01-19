@@ -9,86 +9,256 @@
 <div class="d-flex justify-content-center">
   <div class="container-xl bg-white mt-2 p-4" id="printContent">
     <div class="shadow p-3 mb-3">
-      <form>
-        <div class="mb-3">
-          <h3 class="mb-2">Patient Reports</h3>
-          <div class="report">
-            <h4>Patient Visits</h4>
-            <div class="form-group d-flex align-items-center">
-              <div class="row">
-                <div class="col-12 col-md-6">
-                  <div class="row mb-3">
-                    <label
-                      for="visitMonthPicker"
-                      class="col-sm-3 col-form-label"
-                      >Month:</label
-                    >
-                    <div class="col-sm-9">
-                      <select
-                        name="month"
-                        class="form-select"
-                        id="visitMonthPicker"
-                      >
-                        <option value="January">January</option>
-                        <option value="February">February</option>
-                        <option value="March">March</option>
-                        <option value="April">April</option>
-                        <option value="May">May</option>
-                        <option value="June">June</option>
-                        <option value="July">July</option>
-                        <option value="August">August</option>
-                        <option value="September">September</option>
-                        <option value="October">October</option>
-                        <option value="November">November</option>
-                        <option value="December">December</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-12 col-md-6">
-                  <div class="row mb-3">
-                    <label for="visitYearPicker" class="col-sm-2 col-form-label"
-                      >Year:</label
-                    >
-                    <div class="col-sm-10">
-                      <input
-                        type="text"
-                        class="form-control datepicker yearPicker"
-                        id="visitYearPicker"
-                      />
-                    </div>
-                  </div>
-                </div>
+      <h3 class="mb-2 fw-bold">Patient Reports</h3>
+      <div class="report">
+        <h4>Patient Visits</h4>
+        <div class="row align-items-center">
+          <div class="col-12 col-md-4">
+            <div class="row">
+              <label for="visitMonthPicker" class="col-sm-2 col-form-label"
+                >Month:</label
+              >
+              <div class="col-sm-10">
+                <select name="month" class="form-select" id="visitMonthPicker">
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </select>
               </div>
             </div>
-            <!-- CHART HERE -->
-            <div class="graphs">
-              <canvas id="monthlyPatientVisits"></canvas>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="row">
+              <label for="visitYearPicker" class="col-sm-2 col-form-label"
+                >Year:</label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control datepicker yearPicker"
+                  id="visitYearPicker"
+                />
+              </div>
             </div>
           </div>
+
+          <div class="col-12 col-md-4 d-flex justify-content-end">
+            <button class="btn btn-danger d-flex align-items-center">
+              Generate PDF
+              <i class="fa-sm ms-1 bi bi-file-pdf"></i>
+            </button>
+          </div>
         </div>
-      </form>
-      <div class="graphs">
-        <canvas id="weeklyCheckUpTally"></canvas>
+        <!-- CHART HERE -->
+        <div class="graphs" id="monthlyPatientVisitsCtr">
+          <canvas id="monthlyPatientVisits" height="350"></canvas>
+        </div>
       </div>
     </div>
 
-    <div class="shadow p-3">
-      <h3 class="mb-2">Clinic Service Reports</h3>
-      <div class="graphs">
-        <canvas id="weeklyServiceReport"></canvas>
+    <div class="shadow p-3 mb-3">
+      <h3 class="mb-2 fw-bold">Clinic Service Reports</h3>
+      <div class="report">
+        <h4>Montly Service Tally</h4>
+        <div class="row align-items-center">
+          <div class="col-12 col-md-4">
+            <div class="row">
+              <label
+                for="serviceTallyMonthPicker"
+                class="col-sm-2 col-form-label"
+                >Month:</label
+              >
+              <div class="col-sm-10">
+                <select
+                  name="month"
+                  class="form-select"
+                  id="serviceTallyMonthPicker"
+                >
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="row">
+              <label
+                for="serviceTallyYearPicker"
+                class="col-sm-2 col-form-label"
+                >Year:</label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control datepicker yearPicker"
+                  id="serviceTallyYearPicker"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4 d-flex justify-content-end">
+            <button class="btn btn-danger d-flex align-items-center">
+              Generate PDF
+              <i class="fa-sm ms-1 bi bi-file-pdf"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="graphs" id="monthlyServiceTallyCtr">
+        <canvas id="monthlyServiceTally" height="350"></canvas>
       </div>
     </div>
 
-    <div class="shadow p-3">
-      <h2 class="mt-3">Doctors Reports</h2>
-      <div class="mt-5">
-        <canvas id="weeklyTimeIn"></canvas>
+    <div class="shadow p-3 mb-3">
+      <h2 class="mt-3 fw-bold">Doctors Reports</h2>
+      <div class="report">
+        <h4>Montly Checkup Tally</h4>
+        <div class="row align-items-center">
+          <div class="col-12 col-md-4">
+            <div class="row">
+              <label
+                for="checkupTallyMonthPicker"
+                class="col-sm-2 col-form-label"
+                >Month:</label
+              >
+              <div class="col-sm-10">
+                <select
+                  name="month"
+                  class="form-select"
+                  id="checkupTallyMonthPicker"
+                >
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="row">
+              <label
+                for="checkupTallyYearPicker"
+                class="col-sm-2 col-form-label"
+                >Year:</label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control datepicker yearPicker"
+                  id="checkupTallyYearPicker"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4 d-flex justify-content-end">
+            <button class="btn btn-danger d-flex align-items-center">
+              Generate PDF
+              <i class="fa-sm ms-1 bi bi-file-pdf"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="graphs" id="monthlyCheckUpTallyCtr">
+        <canvas id="monthlyCheckUpTally" height="350"></canvas>
+      </div>
+
+      <div class="report mt-4">
+        <h4>Montly Attendance Tally</h4>
+        <div class="row align-items-center">
+          <div class="col-12 col-md-4">
+            <div class="row">
+              <label
+                for="attendanceTallyMonthPicker"
+                class="col-sm-2 col-form-label"
+                >Month:</label
+              >
+              <div class="col-sm-10">
+                <select
+                  name="month"
+                  class="form-select"
+                  id="attendanceTallyMonthPicker"
+                >
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="row">
+              <label
+                for="attendanceTallyYearPicker"
+                class="col-sm-2 col-form-label"
+                >Year:</label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control datepicker yearPicker"
+                  id="attendanceTallyYearPicker"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4 d-flex justify-content-end">
+            <button class="btn btn-danger d-flex align-items-center">
+              Generate PDF
+              <i class="fa-sm ms-1 bi bi-file-pdf"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="graphs" id="attendanceTallyCtr">
+        <canvas id="attendanceTally" height="350"></canvas>
       </div>
     </div>
   </div>
 </div>
 
 <script src="{{url_for('admin.static', filename='/js/requestHelper.js')}}"></script>
-<script src="{{url_for('admin.static', filename='/js/reports/patient.js')}}"></script>
+<script src="{{url_for('admin.static', filename='/js/reports/reports.js')}}"></script>

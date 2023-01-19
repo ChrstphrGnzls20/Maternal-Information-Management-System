@@ -1,23 +1,14 @@
 $(function () {
   class ChartLoader {
-    loadCheckupTallyReport(labels, values) {
+    loadCheckupTallyReport(labels, values, year, month) {
       const weeklyCheckUpCount = document.getElementById("weeklyCheckUpTally");
       new Chart(weeklyCheckUpCount, {
         type: "bar",
-        scales: {
-          y: {
-            callback: function (value) {
-              if (value % 1 === 0) {
-                return value;
-              }
-            },
-          },
-        },
         data: {
           labels,
           datasets: [
             {
-              label: "Weekly Check-Up Tally",
+              label: `Number of checkups in the month of ${month} ${year}`,
               data: values,
               borderWidth: 1,
             },
@@ -27,14 +18,21 @@ $(function () {
           maintainAspectRatio: false,
           scales: {
             y: {
-              beginAtZero: true,
+              ticks: {
+                beginAtZero: true,
+                callback: function (value) {
+                  if (value % 1 === 0) {
+                    return value;
+                  }
+                },
+              },
             },
           },
         },
       });
     }
 
-    loadWeeklyServiceReport(labels, values) {
+    loadWeeklyServiceReport(labels, values, year, month) {
       const weeklyServiceReport = document.getElementById(
         "weeklyServiceReport"
       );
@@ -44,7 +42,7 @@ $(function () {
           labels: labels,
           datasets: [
             {
-              label: "Weekly Service Use",
+              label: `Number of checkups in the month of ${month} ${year}`,
               data: values,
               borderWidth: 1,
             },
@@ -54,11 +52,85 @@ $(function () {
           maintainAspectRatio: false,
           scales: {
             y: {
-              beginAtZero: true,
+              ticks: {
+                beginAtZero: true,
+                callback: function (value) {
+                  if (value % 1 === 0) {
+                    return value;
+                  }
+                },
+              },
             },
           },
         },
       });
+    }
+
+    loadAttendanceTallyReport(year, month) {
+      fetchAttendanceTally(year, month)
+        .then(function (response) {
+          const data = response;
+
+          let checkInChartData = {
+            labels: [],
+            datasets: [],
+          };
+
+          let onTimeDataset = {
+            label: "On-Time",
+            data: [],
+            borderWidth: 1,
+          };
+          let lateDataSet = {
+            label: "Late",
+            data: [],
+            borderWidth: 1,
+          };
+          let absentDataSet = {
+            label: "Absent",
+            data: [],
+            borderWidth: 1,
+          };
+
+          data.forEach(function (item) {
+            checkInChartData.labels.push(item["doctorName"]);
+            const attendanceCount = item["attendance"];
+            absentDataSet.data.push(attendanceCount["absent"]);
+            lateDataSet.data.push(attendanceCount["late"]);
+            onTimeDataset.data.push(attendanceCount["onTime"]);
+          });
+
+          checkInChartData.datasets = [
+            onTimeDataset,
+            lateDataSet,
+            absentDataSet,
+          ];
+
+          const attendanceTallyReport =
+            document.getElementById("monthlyTimeIn");
+          new Chart(attendanceTallyReport, {
+            type: "bar",
+            data: checkInChartData,
+            options: {
+              maintainAspectRatio: false,
+              scales: {
+                y: {
+                  ticks: {
+                    beginAtZero: true,
+                    callback: function (value) {
+                      if (value % 1 === 0) {
+                        return value;
+                      }
+                    },
+                  },
+                },
+              },
+            },
+          });
+        })
+        .catch(function (xhr) {
+          console.log(xhr);
+        });
     }
 
     loadWeeklyCheckinReports(data) {
@@ -70,7 +142,14 @@ $(function () {
           maintainAspectRatio: false,
           scales: {
             y: {
-              beginAtZero: true,
+              ticks: {
+                beginAtZero: true,
+                callback: function (value) {
+                  if (value % 1 === 0) {
+                    return value;
+                  }
+                },
+              },
             },
           },
         },
@@ -78,16 +157,13 @@ $(function () {
     }
   }
 
-  $("#dateRangePicker").datepicker({
-    autoclose: true,
-    // changeMonth: true,
-    // changeYear: true,
-    format: "mm/dd/yyyy",
-    forceParse: false,
-    endDate: "+0d",
+  const chartLoaderObj = new ChartLoader();
+  const CURRENTYEAR = new Date().getFullYear();
+  const CURRENTMONTH = new Date().toLocaleDateString("default", {
+    month: "long",
   });
 
-  const chartLoaderObj = new ChartLoader();
+  console.log(CURRENTYEAR, CURRENTMONTH);
 
   //Get the value of Start and End of Week
   $("#dateRangePicker").on("changeDate", function (e) {
@@ -99,7 +175,7 @@ $(function () {
     $("#dateRangePicker").val(`${firstDate}  -  ${lastDate}`);
   });
 
-  fetchDoctorsTally()
+  fetchDoctorsTally(CURRENTYEAR, CURRENTMONTH)
     .then(function (response) {
       console.log(response);
       if (response) {
@@ -107,8 +183,6 @@ $(function () {
         console.log(data);
         let checkUpLabels = [];
         let checkUpValues = [];
-        let checkInLabels = [];
-        let checkInValues = [];
 
         let checkInChartData = {
           labels: [],
@@ -136,25 +210,32 @@ $(function () {
           checkUpValues.push(item["checkUpNum"]);
 
           // CHECK IN DATA
-          checkInChartData.labels.push(item["doctorName"]);
-          const attendanceCount = item["attendance"];
-          absentDataSet.data.push(attendanceCount["absent"]);
-          lateDataSet.data.push(attendanceCount["late"]);
-          onTimeDataset.data.push(attendanceCount["onTime"]);
+          // checkInChartData.labels.push(item["doctorName"]);
+          // const attendanceCount = item["attendance"];
+          // absentDataSet.data.push(attendanceCount["absent"]);
+          // lateDataSet.data.push(attendanceCount["late"]);
+          // onTimeDataset.data.push(attendanceCount["onTime"]);
         });
 
-        checkInChartData.datasets = [onTimeDataset, lateDataSet, absentDataSet];
+        // checkInChartData.datasets = [onTimeDataset, lateDataSet, absentDataSet];
 
-        chartLoaderObj.loadWeeklyCheckinReports(checkInChartData);
+        // chartLoaderObj.loadWeeklyCheckinReports(checkInChartData);
 
-        chartLoaderObj.loadCheckupTallyReport(checkUpLabels, checkUpValues);
+        chartLoaderObj.loadCheckupTallyReport(
+          checkUpLabels,
+          checkUpValues,
+          CURRENTYEAR,
+          CURRENTMONTH
+        );
       }
     })
     .catch(function (xhr) {
       console.log(xhr);
     });
 
-  fetchClinicServicesTally()
+  chartLoaderObj.loadAttendanceTallyReport(CURRENTYEAR, CURRENTMONTH);
+
+  fetchClinicServicesTally(CURRENTYEAR, CURRENTMONTH)
     .then(function (response) {
       if (response) {
         let data = response;
@@ -165,7 +246,12 @@ $(function () {
           labels.push(item["name"]);
           values.push(count);
         });
-        chartLoaderObj.loadWeeklyServiceReport(labels, values);
+        chartLoaderObj.loadWeeklyServiceReport(
+          labels,
+          values,
+          CURRENTYEAR,
+          CURRENTMONTH
+        );
       }
     })
     .catch(function (xhr) {
