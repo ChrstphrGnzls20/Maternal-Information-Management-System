@@ -57,6 +57,44 @@ function generateAppointmentTrs(appointment) {
     </tr>`;
 }
 
+function generateExpectedPatientTr(patient) {
+  let { name, lastVisitDate, mobile, monitoringStatus } = patient;
+
+  let statusType = "";
+  if (monitoringStatus) {
+    if (monitoringStatus.toLowerCase() === "regular checkup") {
+      statusType = "status-span status-1";
+    } else if (monitoringStatus.toLowerCase() === "follow-up") {
+      statusType = "status-span status -2";
+    } else if (monitoringStatus.toLowerCase() === "close monitoring") {
+      statusType = "status-span status-3";
+    }
+  }
+
+  // return `
+  // <tr>
+  //   <td>${name}</td>
+  //   <td>${lastVisitDate ? lastVisitDate : "No recent visits"}</td>
+  //   <td>${mobile}</td>
+  //   <td>
+  //       <span class="${statusType}">${
+  //   monitoringStatus ? monitoringStatus : "No monitoring status yet"
+  // }</span>
+  //     </td>
+  // </tr>`;
+
+  return ` <tr >
+        <td scope="row" class="text-center">${name}</td>
+        <td class="text-center">${lastVisitDate}</td>
+        <td class="text-center">${mobile}</td>
+        <td>
+        <span class="${statusType}">${
+    monitoringStatus ? monitoringStatus : "No monitoring status yet"
+  }</span>
+      </td>
+    </tr>`;
+}
+
 function generatePatientTr(patient) {
   let { _id, name, lastVisitDate, trimester, mobile, monitoringStatus } =
     patient;
@@ -76,7 +114,7 @@ function generatePatientTr(patient) {
       <tr >
       <td>${name}</td>
       <td>${lastVisitDate ? lastVisitDate : "No recent visits"}</td>
-      <td>${trimester}</td>
+      <td>${trimester ? trimester : "N/A"}</td>
       <td>${mobile}</td>
       <td>
         <span class="${statusType}">${

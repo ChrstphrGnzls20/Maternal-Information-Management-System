@@ -22,6 +22,8 @@ def addOrRetrievePatient(patientID=None):
             {"_id": patientID}, limit=limit, pageNumber=pageNumber)
         if result:
             return make_response(jsonify(result), 201)
+        else:
+            return make_response(jsonify({}), 404)
 
     # FOR ADDING NEW PATIENT UPON REGISTRATION
     elif request.method == "POST":

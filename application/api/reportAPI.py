@@ -210,7 +210,7 @@ def patientCheckupTally():
             for idx, day in enumerate(weeks):
 
                 if day != 0 and idx <= 5:
-                    daysDictionary[f'{startingMonthInt}/{day}'] = 0
+                    daysDictionary[f'{startingMonthInt}/{day}/{startingYear}'] = 0
                     continue
 
         # filter out dates based on the given month
@@ -222,7 +222,7 @@ def patientCheckupTally():
             checkupDay = datetime.datetime.fromisoformat(
                 checkup['completedDate']).day
             if checkupMonth == startingMonthInt and checkupYear == startingYear:
-                daysDictionary[f'{startingMonthInt}/{checkupDay}'] += 1
+                daysDictionary[f'{startingMonthInt}/{checkupDay}/{startingYear}'] += 1
                 # resultArray.append(checkup)
 
         return make_response(jsonify(daysDictionary), 200)

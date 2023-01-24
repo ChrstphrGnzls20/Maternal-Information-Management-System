@@ -6,6 +6,7 @@ ATLAS PWD: Maternityclinic123
 
 
 class Settings:
+    DEBUG = True
     # FOR PRODUCTION USE BELOW CONNECTION TO MONGO ATLAS
     # MONGO_URI = 'mongodb://localhost:27017/MCIMS'
     # username = urllib.parse.quote_plus('cbgonzales')
@@ -13,7 +14,6 @@ class Settings:
     MONGO_URI = 'mongodb+srv://cgonzales:maternityclinic@mcims.o6iroqu.mongodb.net/?retryWrites=true&w=majority'
     # MONGO_URI = "mongodb+srv://cbgonzales:passwordpassword@cluster0.fndpseh.mongodb.net/?retryWrites=true&w=majority"
     MONGO_CONNECT = True
-    DEBUG = True
     SESSION_PERMANENT = False
     SESSION_TYPE = "filesystem"
 

@@ -76,7 +76,7 @@ def generatePrescription(prescriptionData: dict, patientInfo: dict, doctorInfo: 
     patientInfo['address'] = addressStr
     diagnosis = prescriptionData['assessment']['diagnosis']
     rendered = render_template(
-        "prescription-pdf.html", date=date, patient=patientInfo, diagnosis=diagnosis, doctor=doctorInfo, prescription=resultForPrescription)
+        "PDF/prescription.html", date=date, patient=patientInfo, diagnosis=diagnosis, doctor=doctorInfo, prescription=resultForPrescription)
 
     pdf = pdfkit.from_string(rendered, False)
     response = make_response(pdf)
@@ -107,7 +107,7 @@ def generateChargingForm(clinicServices: list, patientInfo: dict, doctorInfo: di
 
     print(newClinicServiceInfo)
     rendered = render_template(
-        "chargingForm.html", patientInfo=patientInfo, doctorInfo=doctorInfo, date=date, clinicServices=newClinicServiceInfo)
+        "PDF/chargingForm.html", patientInfo=patientInfo, doctorInfo=doctorInfo, date=date, clinicServices=newClinicServiceInfo)
 
     pdf = pdfkit.from_string(rendered, False)
     response = make_response(pdf)
@@ -381,7 +381,7 @@ class SOAPParser(object):
         plan = self.__interpretPlan()
 
         rendered = render_template(
-            "SOAP.html", headers=headers, vitals=vitals, subjective=subjective, objective=objective, assessment=assessment, plan=plan)
+            "PDF/SOAP.html", headers=headers, vitals=vitals, subjective=subjective, objective=objective, assessment=assessment, plan=plan)
         pdf = pdfkit.from_string(rendered, False)
         response = make_response(pdf)
         filename = f'{datetime.date(datetime.now())} - SOAP - {headers["patient"]}.pdf'

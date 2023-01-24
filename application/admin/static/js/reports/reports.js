@@ -372,4 +372,12 @@ $(function () {
       chartLoaderObj.loadAttendanceTallyReport(PICKEDYEAR, PICKEDMONTH);
     }
   );
+
+  // PDF GENERATION STARTS HERE
+  function generateReport(typeOfReport) {
+    if (typeOfReport === "patientVisit") {
+      const MONTHSELECTED = $("#visitMonthPicker").val();
+      const YEARSELECTED = $("#visitYearPicker").val();
+    }
+  }
 });

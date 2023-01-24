@@ -40,7 +40,9 @@ table tr {
 .appointments-table th,
 .appointments-table td,
 .patient-summary-table th,
-.patient-summary-table td {
+.patient-summary-table td,
+.expected-patient-summary-table th,
+.expected-patient-summary-table td {
   text-align: center;
 }
 

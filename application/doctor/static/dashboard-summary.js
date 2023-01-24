@@ -7,6 +7,57 @@ $(function () {
   }); // TO SORT THE TABLE BY LATEST CREATED DATE
   let appointments = [];
 
+  function computeEDDFromLMP(_id, LMP) {
+    LMP = moment(LMP, "MM/DD/YYYY");
+
+    let EDD;
+    let clonedLMP = LMP.clone();
+    EDD = clonedLMP.add(7, "days");
+    EDD = EDD.subtract(3, "months");
+    EDD = EDD.add(1, "years");
+
+    // console.log(_id, LMP.format("MM/DD/YYYY"), EDD.format("MM/DD/YYYY"));
+    return EDD;
+  }
+
+  // EDD SHOULD BE TYPE OF MOMENT; RETURNS THE NUMBER OF TRIMESTER
+  function computeTrimesterFromEDD(EDD) {
+    let thirdTrimester = EDD.clone().subtract(13, "weeks");
+    let secondTrimester = thirdTrimester.clone().subtract(13, "weeks");
+    let firstTrimester = secondTrimester.clone().subtract(13, "weeks");
+
+    console.log(
+      EDD.format("MM/DD/YYYY"),
+      firstTrimester.format("MM/DD/YYYY"),
+      secondTrimester.format("MM/DD/YYYY"),
+      thirdTrimester.format("MM/DD/YYYY")
+    );
+
+    // if (thirdTrimester.isSameOrAfter(moment())) {
+    //   return 3;
+    // } else if (secondTrimester.isSameOrAfter(moment())) {
+    //   return 2;
+    // } else if (firstTrimester.isSameOrAfter(moment())) {
+    //   return 1;
+    // } else {
+    //   return null;
+    // }
+
+    if (
+      moment().isBetween(firstTrimester, secondTrimester.clone().add(1, "days"))
+    ) {
+      return 1;
+    } else if (
+      moment().isBetween(secondTrimester, thirdTrimester.clone().add(1, "days"))
+    ) {
+      return 2;
+    } else if (thirdTrimester.isSameOrBefore(moment())) {
+      return 3;
+    } else {
+      return null;
+    }
+  }
+
   fetchDoctorAppointments(doctorID, searchParams)
     .then(function (response) {
       let data = response;
@@ -43,19 +94,38 @@ $(function () {
     .then(function (response) {
       console.log(response);
       let data = response;
-
       data.forEach(function (item) {
-        let lastVisitDate = null;
-        let monitoringStatus = null;
-        let trimester = 1;
         let patient = {
           _id: item._id,
           name: item.basicInformation.name,
-          lastVisitDate,
-          trimester,
+          lastVisitDate: item.recentVisit,
           mobile: item.basicInformation.mobile,
-          monitoringStatus,
+          monitoringStatus: item.status,
         };
+
+        if (item["LMP"] !== undefined) {
+          let EDD = computeEDDFromLMP(item._id, item["LMP"]);
+          patient["trimester"] = computeTrimesterFromEDD(EDD.clone());
+          monthToday = new Date().getMonth();
+          monthOfEDD = EDD.month();
+
+          let expectedPatient = {
+            name: item.basicInformation.name,
+            lastVisitDate: item.recentVisit,
+            mobile: item.basicInformation.mobile,
+            monitoringStatus: item.status,
+          };
+
+          if (parseInt(monthToday) === parseInt(monthOfEDD)) {
+            let tr = generateExpectedPatientTr(expectedPatient);
+
+            let expectedPatientTableBody = $(
+              ".expected-patient-summary-table tbody"
+            );
+
+            expectedPatientTableBody.append(tr);
+          }
+        }
 
         let tr = generatePatientTr(patient);
 
