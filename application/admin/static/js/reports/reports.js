@@ -293,6 +293,20 @@ $(function () {
     }
   }
 
+  // PDF GENERATION STARTS HERE
+  function generateReport(reportName) {
+    let YEARSELECTED;
+    let MONTHSELECTED;
+    if (reportName === "patientVisit") {
+      MONTHSELECTED = $("#visitMonthPicker").val();
+      YEARSELECTED = $("#visitYearPicker").val();
+    } else if (reportName == "clinicServicesTally") {
+      MONTHSELECTED = $("#serviceTallyMonthPicker").val();
+      YEARSELECTED = $("#serviceTallyYearPicker").val();
+    }
+    fetchReport(reportName, YEARSELECTED, MONTHSELECTED);
+  }
+
   $(".yearPicker").datepicker({
     autoclose: true,
     // changeMonth: true,
@@ -373,11 +387,9 @@ $(function () {
     }
   );
 
-  // PDF GENERATION STARTS HERE
-  function generateReport(typeOfReport) {
-    if (typeOfReport === "patientVisit") {
-      const MONTHSELECTED = $("#visitMonthPicker").val();
-      const YEARSELECTED = $("#visitYearPicker").val();
-    }
-  }
+  $(".generate-pdf-btn").on("click", function () {
+    let reportName = $(this).data("report-name");
+    console.log(reportName);
+    generateReport(reportName);
+  });
 });

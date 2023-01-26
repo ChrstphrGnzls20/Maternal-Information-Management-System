@@ -1,0 +1,14 @@
+[
+    {
+        name: Prenatal checkup with papsmear,
+        tally: [
+            {1: 1, 2: 1, ...},
+            {....},
+            {....},
+            {....}
+            // key is the day in the week     (ex.    Monday, Tuesday, etc.) while the value is the count
+            // the length of objects in tally should always be 4
+        ]
+    },
+    ...
+]

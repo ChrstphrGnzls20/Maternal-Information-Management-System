@@ -78,3 +78,27 @@ function fetchCheckupTally(year, month = null) {
     dataType: "json",
   });
 }
+
+// REPORTS REQUEST HANDLERS
+function fetchReport(reportName, year, month = null) {
+  let searchParam;
+  if (month === null) {
+    searchParam = $.param({
+      year,
+    });
+  } else {
+    searchParam = $.param({
+      year,
+      month,
+    });
+  }
+
+  window.open(`/admin/${reportName}?${searchParam}`, "_blank");
+
+  // return $.ajax({
+  //   method: "GET",
+  //   url: `${ABSOLUTE_BASE_URL}/admin/${reportName}?${searchParam}`,
+  //   contentType: "application/json",
+  //   dataType: "json",
+  // });
+}

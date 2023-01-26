@@ -1,9 +1,11 @@
 from flask import Blueprint, jsonify, make_response, render_template, request, session, redirect
 
 import json
+import copy
 import datetime
 # helpers for report
-from ..api.reportAPI import patientCheckupTally
+from ..api.reportAPI import patientCheckupTally, clinicServiceTallyWithDates, attendanceTallyForDoctors, doctorsCheckupTallyWithDates
+import pdfkit
 
 # models
 from ..models.Mdl_employee import Employee
@@ -80,7 +82,7 @@ def generatePatientVisitReport():
     datesArray = []
     headers = []
     tempObj = {}
-    firstDate = list(result.keys())[0]
+    firstDate = dateKeys[0]
     startingDay = firstDate.split("/")[1]
     idx = 0
     grandTotal = 0
@@ -111,10 +113,58 @@ def generatePatientVisitReport():
             f''' {reportingMonth} {startingDay} - {date.split("/")[1]}, {reportingYear} ''')
         startingDay = dateKeys[-1].split("/")[1]
 
-    print(json.dumps(datesArray, indent=2))
-
-    renderedPDFTemplate = render_template(
+    rendered = render_template(
         'PDF/patientVisitReport.html', month=reportingMonth, year=reportingYear,
         data={'dateRange': headers, 'dates': datesArray, 'grandTotal': grandTotal})
+    options = {'enable-local-file-access': None}
+    pdf = pdfkit.from_string(rendered, False, options=options)
+    response = make_response(pdf)
+    response.headers['content-Type'] = 'application/pdf'
+    filename = f'report-patientVisit-{reportingMonth}-{reportingYear}.pdf'
+    response.headers[
+        'content-Disposition'] = 'inline; filename="{}"'.format(filename)
+    return response
 
-    return renderedPDFTemplate
+
+@admin.route("/clinicServicesTally")
+def generateClinicServiceTally():
+    reportingMonth = request.args.get("month", None)
+    reportingYear = request.args.get("year", None)
+
+    result = clinicServiceTallyWithDates().get_json()
+    if not reportingMonth or not reportingYear or not len(result) > 0:
+        return make_response(jsonify({}), 404)
+
+    rendered = render_template(
+        'PDF/clinicServiceTallyReport.html', month=reportingMonth, year=reportingYear, clinicServices=result['clinicServices'], headers=result['headers'], servicesNameList=result['servicesList'])
+    options = {'enable-local-file-access': None}
+    pdf = pdfkit.from_string(rendered, False, options=options)
+    response = make_response(pdf)
+    response.headers['content-Type'] = 'application/pdf'
+    filename = f'report-patientVisit-{reportingMonth}-{reportingYear}.pdf'
+    response.headers[
+        'content-Disposition'] = 'inline; filename="{}"'.format(filename)
+    return response
+
+
+@admin.route("/doctorsCheckupTally")
+def generateDoctorsCheckupTally():
+    reportingMonth = request.args.get("month", None)
+    reportingYear = request.args.get("year", None)
+
+    result = doctorsCheckupTallyWithDates().get_json()
+    if not reportingMonth or not reportingYear or not len(result) > 0:
+        return make_response(jsonify({}), 404)
+
+    rendered = render_template(
+        'PDF/doctorsCheckupTallyReport.html', month=reportingMonth, year=reportingYear, doctors=result['doctors'], headers=result['headers'], doctorsNameList=result['doctorsList'])
+    # options = {'enable-local-file-access': None}
+    # pdf = pdfkit.from_string(rendered, False, options=options)
+    # response = make_response(pdf)
+    # response.headers['content-Type'] = 'application/pdf'
+    # filename = f'report-patientVisit-{reportingMonth}-{reportingYear}.pdf'
+    # response.headers[
+    #     'content-Disposition'] = 'inline; filename="{}"'.format(filename)
+    # return response
+
+    return rendered

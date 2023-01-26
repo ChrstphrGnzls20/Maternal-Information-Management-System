@@ -1,0 +1,40 @@
+{% extends "PDFTemplate.html" %} {% block content %}
+
+<h1 class="text-center mt-5">Monthly Doctor Checkup Report</h1>
+<h3 class="text-center">for the month of {{month}} {{year}}</h3>
+
+<table class="table table-bordered mt-5">
+  <thead>
+    <tr>
+      <th scope="col">Date range</th>
+      {% for doctorName in doctorsNameList %}
+      <th scope="col">{{doctorName}}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% set keys = doctors.keys() | list %} {% for header in headers %}
+    <!-- prettier-ignore  -->
+    {% set countPerWeek = doctors[keys[loop.index0]] | list %}
+    {% set idx = countPerWeek[0] | string %}
+    {% set outLoopIdx = loop.index0 %}
+
+    <tr>
+      <td scope="row">{{header}}</td>
+      {% set totalPerWeek = 0 %} {% for k, v in doctors.items() %}
+      <td>{{v.countPerWeek[outLoopIdx]}}</td>
+      {{totalPerWeek = totalPerWeek + v.countPerWeek[outLoopIdx]}} {% endfor %}
+      <td>{{totalPerWeek}}</td>
+    </tr>
+    {% endfor %}
+
+    <tr>
+      <th scope="row">Monthly Totals</th>
+      {% for k, v in doctors.items() %}
+      <td>{{v.tally['total']}}</td>
+      {% endfor %}
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Report</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('emr.static', filename='css/pdf.css', _external=True)}}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="d-flex custom-bg justify-content-center p-2 bd-highlight">
+      <div
+        class="container-md form-container bg-white m-2 p-2"
+        id="printContent"
+      >
+        <div class="text-center">
+          <img
+            src="file:///C:/Users/Christopher/Desktop/Caps 1 System/application/static/images/weCareLogo.png"
+            height="100px"
+            width="100px"
+            class="rounded-circle"
+          />
+
+          <div class="ml-4">
+            <h1>We Care Polyclinic and Lying In</h1>
+            <h5>Blue Mansions Building, 613 Boni Avenue, Mandaluyong City</h5>
+            <h5>Telephone #: 84776189</h5>
+          </div>
+        </div>
+
+        <div class="content">{% block content %} {% endblock %}</div>
+      </div>
+    </div>
+  </body>
+</html>
