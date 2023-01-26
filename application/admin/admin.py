@@ -4,7 +4,7 @@ import json
 import copy
 import datetime
 # helpers for report
-from ..api.reportAPI import patientCheckupTally, clinicServiceTallyWithDates, attendanceTallyForDoctors, doctorsCheckupTallyWithDates
+from ..api.reportAPI import patientCheckupTally, clinicServiceTallyWithDates, doctorsCheckupTallyWithDates, doctorsAttendanceWithDates
 import pdfkit
 
 # models
@@ -141,7 +141,7 @@ def generateClinicServiceTally():
     pdf = pdfkit.from_string(rendered, False, options=options)
     response = make_response(pdf)
     response.headers['content-Type'] = 'application/pdf'
-    filename = f'report-patientVisit-{reportingMonth}-{reportingYear}.pdf'
+    filename = f'report-clinicService-{reportingMonth}-{reportingYear}.pdf'
     response.headers[
         'content-Disposition'] = 'inline; filename="{}"'.format(filename)
     return response
@@ -158,13 +158,34 @@ def generateDoctorsCheckupTally():
 
     rendered = render_template(
         'PDF/doctorsCheckupTallyReport.html', month=reportingMonth, year=reportingYear, doctors=result['doctors'], headers=result['headers'], doctorsNameList=result['doctorsList'])
-    # options = {'enable-local-file-access': None}
-    # pdf = pdfkit.from_string(rendered, False, options=options)
-    # response = make_response(pdf)
-    # response.headers['content-Type'] = 'application/pdf'
-    # filename = f'report-patientVisit-{reportingMonth}-{reportingYear}.pdf'
-    # response.headers[
-    #     'content-Disposition'] = 'inline; filename="{}"'.format(filename)
-    # return response
+    options = {'enable-local-file-access': None}
+    pdf = pdfkit.from_string(rendered, False, options=options)
+    response = make_response(pdf)
+    response.headers['content-Type'] = 'application/pdf'
+    filename = f'report-doctorCheckups-{reportingMonth}-{reportingYear}.pdf'
+    response.headers[
+        'content-Disposition'] = 'inline; filename="{}"'.format(filename)
+    return response
 
     return rendered
+
+@admin.route("/doctorsAttendanceReport")
+def generateDoctorsAttendanceReport():
+    reportingMonth = request.args.get("month", None)
+    reportingYear = request.args.get("year", None)
+
+    result = doctorsAttendanceWithDates().get_json()
+    if not reportingMonth or not reportingYear or not len(result) > 0:
+        return make_response(jsonify({}), 404)
+    
+    # print(json.dumps(result, indent=2))
+    rendered = render_template("/PDF/doctorsAttendanceReport.html", doctors=result['doctors'], headers=result['headers'], doctorsNameList=result['doctorsNamesList'], month=reportingMonth, year=reportingYear)
+    options = {'enable-local-file-access': None}
+    pdf = pdfkit.from_string(rendered, False, options=options)
+    response = make_response(pdf)
+    response.headers['content-Type'] = 'application/pdf'
+    filename = f'report-dutyArrival-{reportingMonth}-{reportingYear}.pdf'
+    response.headers[
+        'content-Disposition'] = 'inline; filename="{}"'.format(filename)
+    return response
+

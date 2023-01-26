@@ -13,26 +13,36 @@
     </tr>
   </thead>
   <tbody>
-    {% set keys = doctors.keys() | list %} {% for header in headers %}
+    {% set keys = doctors.keys() | list %}
+
     <!-- prettier-ignore  -->
-    {% set countPerWeek = doctors[keys[loop.index0]] | list %}
-    {% set idx = countPerWeek[0] | string %}
-    {% set outLoopIdx = loop.index0 %}
+    {% for header in headers %}
+      {% set subTotal = [0] %}
+      {% set countPerWeek = doctors[keys[loop.index0]] | list %}
+      {% set idx = countPerWeek[0] | string %}
+      {% set outLoopIdx = loop.index0 %}
 
     <tr>
       <td scope="row">{{header}}</td>
-      {% set totalPerWeek = 0 %} {% for k, v in doctors.items() %}
-      <td>{{v.countPerWeek[outLoopIdx]}}</td>
-      {{totalPerWeek = totalPerWeek + v.countPerWeek[outLoopIdx]}} {% endfor %}
-      <td>{{totalPerWeek}}</td>
+      {% set totalPerWeek = 0 %}
+      <!-- prettier-ignore -->
+      {% for k, v in doctors.items() %}
+      <td>
+        {{v.countPerWeek[outLoopIdx]}} {% set _ = subTotal.append(subTotal.pop()
+        + v.countPerWeek[outLoopIdx]|int)%}
+      </td>
+      {% endfor %}
+      <td>{{subTotal[0]}}</td>
     </tr>
     {% endfor %}
 
     <tr>
       <th scope="row">Monthly Totals</th>
-      {% for k, v in doctors.items() %}
+      {% set subTotal = [0] %} {% for k, v in doctors.items() %}
       <td>{{v.tally['total']}}</td>
-      {% endfor %}
+      {% set _ = subTotal.append(subTotal.pop() + v.tally['total']|int)%} {%
+      endfor %}
+      <td>{{subTotal[0]}}</td>
     </tr>
   </tbody>
 </table>

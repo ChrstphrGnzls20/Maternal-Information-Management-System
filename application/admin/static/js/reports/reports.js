@@ -303,6 +303,12 @@ $(function () {
     } else if (reportName == "clinicServicesTally") {
       MONTHSELECTED = $("#serviceTallyMonthPicker").val();
       YEARSELECTED = $("#serviceTallyYearPicker").val();
+    } else if (reportName == "doctorsCheckupTally") {
+      MONTHSELECTED = $("#checkupTallyMonthPicker").val();
+      YEARSELECTED = $("#checkupTallyYearPicker").val();
+    } else if (reportName === "doctorsAttendanceReport") {
+      MONTHSELECTED = $("#attendanceTallyMonthPicker").val();
+      YEARSELECTED = $("#attendanceTallyYearPicker").val();
     }
     fetchReport(reportName, YEARSELECTED, MONTHSELECTED);
   }

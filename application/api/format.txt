@@ -12,3 +12,29 @@
     },
     ...
 ]
+
+
+    "_id" :{
+        name: doctorName,
+        weeklyAttendance: {
+            onTime: [0,1,1,1,1],
+            late: [0,1,1,1,1],
+            absent: [0,1,1,1,1],
+        }
+        tally: [
+            {'01/26/2023': 
+                {
+                    late: 1, onTime: 1, absent: 1
+                },
+                ...
+            'total': 
+                {
+                    late: 5, onTime: 7, absent: 10,
+                }
+            }
+            
+            // key is the day in the week     (ex.    Monday, Tuesday, etc.) while the value is the count
+            // the length of objects in tally should always be 4
+        ]
+    },
+    ...

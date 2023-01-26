@@ -1,8 +1,10 @@
-from flask import Flask, Blueprint, make_response, jsonify, request
+from flask import  Blueprint, make_response, jsonify, request
 import datetime
 import calendar
 import json
 import copy
+from collections import OrderedDict
+from operator import getitem
 
 # MODELS
 from ..models.Mdl_employee import Employee
@@ -341,6 +343,7 @@ def doctorsCheckupTallyWithDates():
             doctorsList.append(doctor['name'])
             newDoctorDict[doctor['_id']] = doctor
             doctor['tally'] = []
+            del doctor["_id"]
             for weeks in daysArray:
                 for idx, day in enumerate(weeks):
                     if day != 0 and idx <= 5:
@@ -406,3 +409,86 @@ def doctorsCheckupTallyWithDates():
         doctorsList.append("Weekly Total Checkup")
 
     return make_response(jsonify({'doctors': newDoctorDict, 'doctorsList': doctorsList, 'headers': headers}), 201)
+
+@reportAPI.route("/doctors-attendance-v2")
+def doctorsAttendanceWithDates():
+    startingMonth = request.args.get("month", None)
+    startingYear = int(request.args.get("year", None))
+
+    if startingMonth and startingYear:
+        startingMonthInt = datetime.datetime.strptime(
+            startingMonth, "%B").month
+        doctors = doctorObj.retrieveEmployees(
+            filter={"role": "doctor", "status": "active"}, returnFields={"name": 1})
+
+        resultArray = []
+
+        daysArray = calendar.monthcalendar(startingYear, startingMonthInt)
+
+        doctorsList = {}
+        daysDictionary = {}
+        newDoctorDict = {}
+        grandTotal = 0
+        weekDictionary = calendar.Calendar(firstweekday=6).monthdayscalendar(startingYear, startingMonthInt)
+        weekCount = len(weekDictionary)
+        for doctor in doctors:
+            doctorsList[doctor['_id']] = doctor['name']
+            newDoctorDict[doctor['_id']] = doctor
+            doctor['tally'] = {'absent': {}, 'late': {}, "onTime": {}}
+            doctor['countPerWeek'] = {'absent': [0 for _ in range(weekCount)], 'late': [0 for _ in range(weekCount)], 'onTime': [0 for _ in range(weekCount)]}
+            for weeks in daysArray:
+                for idx, day in enumerate(weeks):
+                    if day != 0 and idx <= 5:
+                        daysDictionary[f'{startingMonthInt}/{day}/{startingYear}'] = 0
+                        continue
+                doctor['tally']['absent'] = copy.copy(daysDictionary)
+                doctor['tally']['late'] = copy.copy(daysDictionary)
+                doctor['tally']['onTime'] = copy.copy(daysDictionary)
+                doctor['tally']['absent'] = dict(
+                    sorted(doctor['tally']['absent'].items(), key=lambda item: int(item[0].split("/")[1])))
+                doctor['tally']['late'] = dict(
+                    sorted(doctor['tally']['late'].items(), key=lambda item: int(item[0].split("/")[1])))
+                doctor['tally']['onTime'] = dict(
+                    sorted(doctor['tally']['onTime'].items(), key=lambda item: int(item[0].split("/")[1])))
+                doctor['tally']['absent'].update({'total': 0})
+                doctor['tally']['late'].update({'total': 0})
+                doctor['tally']['onTime'].update({'total': 0})
+            listOfSchedule = scheduleObj.findSchedule(
+                filter={"doctorID": doctor["_id"]})
+
+            
+            
+            for schedule in listOfSchedule:
+                currentDoctorId = schedule['doctorID']
+                startSchedMonth = datetime.datetime.fromisoformat(
+                    schedule['start']).month
+                startSchedYear = datetime.datetime.fromisoformat(
+                    schedule['start']).year
+                startSchedDay = datetime.datetime.fromisoformat(
+                    schedule['start']).day
+
+                
+                if startSchedMonth == startingMonthInt and startSchedYear == startingYear:
+                    newDoctorDict[currentDoctorId]['tally'][schedule['arrivalStatus']][f'{startingMonthInt}/{startSchedDay}/{startingYear}'] += 1
+                    newDoctorDict[currentDoctorId]['tally'][schedule['arrivalStatus']]['total'] += 1
+                    weekIdx = -1
+                    for idx, week in enumerate(weekDictionary):
+                        try:
+                            weekIdx = week.index(int(startSchedDay))
+                            if weekIdx >= 0:
+                                newDoctorDict[currentDoctorId]['countPerWeek'][schedule['arrivalStatus']][idx] += 1
+                                break
+                        except ValueError:
+                            continue
+            headers = []
+            for week in weekDictionary:
+                listWithoutDuplicate = list(dict.fromkeys(week))
+                if listWithoutDuplicate[-1] == 0:
+                    listWithoutDuplicate.pop()
+                
+                print(listWithoutDuplicate)
+                headers.append(f'''{startingMonth} {week[1]} - {listWithoutDuplicate[-1]}, {startingYear}''')
+    
+
+        return make_response(jsonify({'doctors': newDoctorDict, 'headers': headers, 'doctorsNamesList': doctorsList}), 200)
+    return make_response(jsonify({}), 500)

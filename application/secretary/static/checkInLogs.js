@@ -7,9 +7,12 @@ $(function () {
     currentArrivalStatus
   ) {
     let statusClass = "text-danger";
-    if (currentArrivalStatus.toLowerCase() === "on time") {
+    if (currentArrivalStatus === "onTime") {
       statusClass = "text-success";
     }
+
+    const camelToCapitalized = (text) =>
+      `${text[0].toUpperCase()}${text.replace(/([A-Z])/g, " $1").slice(1)}`;
     return `
        <tr>
           <td>${doctorName}</td>
@@ -17,7 +20,7 @@ $(function () {
           <td>${startTimeOfShift}</td>
           <td>${arrivalTime}</td>
           <td class="">
-              <span class='fw-bold ${statusClass}'>${currentArrivalStatus}</span>
+              <span class='fw-bold ${statusClass}'>${camelToCapitalized(currentArrivalStatus)}</span>
           </td>  
         </tr>`;
     /*
@@ -49,10 +52,12 @@ $(function () {
 
   fetchSchedules()
     .then(function (response) {
+      console.log(response);
       let data = response;
 
       if (data.length) {
         data.forEach(function (schedule) {
+          console.log(schedule);
           let startDate = moment(schedule["start"]).format("MM/DD/YYYY");
           if (startDate === moment().format("MM/DD/YYYY")) {
             if (schedule.arrivalStatus) {
@@ -134,35 +139,30 @@ $(function () {
           text: "Select option",
         }),
       ];
-      /*
-        <option value="" selected>Select option</option>
-        <option value="On Time">On-Time</option>
-        <option value="Late">Late</option>
-        <option value="Absent">Absent</option>
-        */
       console.log(moment().isSameOrBefore(startTime));
       if (moment().isSameOrBefore(startTime)) {
         arrivalStatusOptions.push(
           $("<option>", {
-            value: "On Time",
+            value: "onTime",
             text: "On-Time",
           })
         );
       } else {
         arrivalStatusOptions.push(
           $("<option>", {
-            value: "Late",
+            value: "late",
             text: "Late",
           })
         );
       }
       arrivalStatusOptions.push(
         $("<option>", {
-          value: "Absent",
+          value: "absent",
           text: "Absent",
         })
       );
 
+      $("#arrivalStatus").empty();
       arrivalStatusOptions.forEach(function (item) {
         console.log(item);
         $("#arrivalStatus").append(item);
