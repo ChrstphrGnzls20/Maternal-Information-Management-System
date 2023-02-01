@@ -53,75 +53,168 @@ $(function () {
 
   // calendar.render();
 
-  // timepicker
-  //TODO: up for changes based on client's time
-  $("#time").timepicker({
-    step: 30,
-    minTime: "8am",
-    maxTime: "5pm",
-    defaultTime: "08",
-    forceRoundTime: true,
-    timeFormat: "h:i A",
-    // disableTimeRanges: [["11:00", "12:00"], []],
-    scrollbar: false,
-  });
+  let schedules = [];
+  function getEvents(start, end, selectedPractitioner) {
+    let searchParams = $.param({
+      start,
+      end,
+    });
+    return $.ajax({
+      method: "GET",
+      dataType: "json",
+      contentType: "application/json",
+      url: `${API_BASE_URL}/doctors/schedules/${selectedPractitioner}?${searchParams}`,
+    });
+    // start=2023-02-01T00%3A00%3A00+08%3A00&end=2023-03-11T00%3A00%3A00+08%3A00
+    // start=2023-01-31T16%3A00%3A00.000Z&end=2023-03-10T16%3A00%3A00.000Z
+  }
 
   $("#time").on("keydown", function (e) {
     e.preventDefault();
   });
 
+  function eventOrDateClick(calendar, info) {
+    selectedPractitioner = pracSelect.val();
+    let selectedPractitionerName = $(
+      `#prac-select option[value=${selectedPractitioner}]`
+    ).text();
+    selectedDate = info.date;
+
+    practInput.val(selectedPractitionerName);
+    let dateToDisplay = moment(info.date).format("MMMM DD, YYYY");
+    dateInput.val(dateToDisplay);
+
+    let toSearch = moment(info.date).format("YYYY-MM-DD");
+    // let searchParam = $.param({
+    //   appointmentDate: toSearch,
+    //   status: "accepted",
+    // });
+    let searchParam = $.param({
+      date: toSearch,
+    });
+    $.ajax({
+      method: "GET",
+      dataType: "json",
+      contentType: "application/json",
+      url: `${API_BASE_URL}/doctors/schedules/${selectedPractitioner}?${searchParam}`,
+    })
+      .then(function (response) {
+        let data = response;
+        if (data.length > 0) {
+          createApptModal.modal("show");
+          calendar.unselect();
+        }
+      })
+      .catch(function (xhr) {
+        console.log(xhr);
+      });
+
+    searchParam = $.param({
+      appointmentDate: toSearch,
+      status: "accepted",
+    });
+
+    $.ajax({
+      method: "GET",
+      dataType: "json",
+      contentType: "application/json",
+      url: `${API_BASE_URL}/appointments/doctor/${selectedPractitioner}?${searchParam}`,
+    })
+      .then(function (response) {
+        let data = response;
+
+        let toDisableTime = [];
+        data.forEach(function (item) {
+          let start = moment(item.appointmentDate).clone().format("hh:mm A");
+          let end = moment(item.appointmentDate)
+            .add(29, "minutes")
+            .format("hh:mm A");
+
+          let temp = [];
+          temp.push(start);
+          temp.push(end);
+          toDisableTime.push(temp);
+        });
+
+        console.log(toDisableTime);
+        //TODO: up for changes based on client's time
+        $("#time").timepicker({
+          step: 30,
+          minTime: "8am",
+          maxTime: "5pm",
+          defaultTime: "08",
+          forceRoundTime: true,
+          timeFormat: "h:i A",
+          disableTimeRanges: toDisableTime,
+          scrollbar: false,
+        });
+      })
+      .catch(function (xhr) {
+        console.log(xhr);
+      });
+  }
+
   // listen when practitioner changes
   $("#prac-select").on("change", function () {
     let doctorID = $(this).val();
     console.log($(this).val());
-    // if ($(this).val()) {
-    //   $("#calendar").removeClass("invisible");
-    //   return;
-    // }
-    // $("#calendar").addClass("invisible");
+    let availableDates;
     if (doctorID) {
-      let calendar = new FullCalendar.Calendar(
-        document.getElementById("calendar"),
-        {
-          initialView: "dayGridMonth",
-          headerToolbar: {
-            left: "prev,next today",
-            center: "title",
-            right: "dayGridMonth",
-          },
-          validRange: {
-            start: new Date(moment().add(1, "days")),
-          },
-          weekends: false,
-          //better support for comp and mobile
-          dateClick: function (info) {
-            // set the values
-            selectedPractitioner = pracSelect.val();
-            let selectedPractitionerName = $(
-              `#prac-select option[value=${selectedPractitioner}]`
-            ).text();
-            selectedDate = info.date;
+      let calendarEl = document.getElementById("calendar");
+      let calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        headerToolbar: {
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth",
+        },
+        validRange: {
+          start: new Date(moment().add(1, "days")),
+        },
+        hiddenDays: [0],
+        datesSet: function (evt) {
+          console.log(evt);
+          let startDatesRange = moment(calendar.view.activeStart).format();
+          let endDatesRange = moment(calendar.view.activeEnd).format();
 
-            practInput.val(selectedPractitionerName);
-            let dateToDisplay = moment(info.date).format("MMMM DD, YYYY");
-            dateInput.val(dateToDisplay);
-            createApptModal.modal("show");
-            calendar.unselect();
-          },
-          selectAllow: function (selectInfo) {
-            console.log(selectInfo);
-            return false;
-          },
-          eventSources: {
-            url: `${API_BASE_URL}/doctors/schedules/${doctorID}`,
-            type: "get",
-            success: function (response, param1) {
-              console.log(response);
-              console.log(param1);
-            },
-          },
-        }
-      );
+          getEvents(startDatesRange, endDatesRange, doctorID)
+            .then(function (response) {
+              let data = response;
+
+              $("#calendar td").each(function () {
+                $(this).addClass("fc-day-disabled");
+              });
+              data.forEach(function (item) {
+                let startDate = moment(item.start).format("YYYY-MM-DD");
+                console.log(startDate);
+                console.log();
+                $(`#calendar td[data-date=${startDate}]`).removeClass(
+                  "fc-day-disabled"
+                );
+                $(`#calendar td[data-date=${startDate}]`).css(
+                  "backgroundColor",
+                  "white"
+                );
+              });
+            })
+            .catch(function (xhr) {
+              console.log(xhr);
+            });
+        },
+        //better support for comp and mobile
+        dateClick: function (info) {
+          // set the values
+          eventOrDateClick(this, info);
+        },
+        selectAllow: function (selectInfo) {
+          console.log(selectInfo);
+          return false;
+        },
+        eventSources: {
+          url: `${API_BASE_URL}/doctors/schedules/${doctorID}`,
+          type: "get",
+        },
+      });
 
       // calendar.addEventSource()
 

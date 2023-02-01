@@ -120,12 +120,23 @@ $(function () {
     let duplicateStartDate = startDate.clone();
     let duplicateEndDate = endDate.clone();
     while (duplicateStartDate <= moment(duplicateEndDate)) {
+      let tempStartDate = duplicateStartDate.clone();
+      let tempEndDate = duplicateStartDate.clone();
+      tempEndDate = tempEndDate.startOf("day");
+      tempEndDate = tempEndDate.add(endHour, "hours");
+      tempEndDate = tempEndDate.add(endMin, "minutes");
+
       let selectedSchedule = {
         doctorID,
         // start: duplicateStartDate.utc().toISOString(),
-        start: duplicateStartDate.format("YYYY-MM-DDTHH:mm:ssZ"),
-        end: duplicateEndDate.format("YYYY-MM-DDTHH:mm:ssZ"),
+        start: tempStartDate.format("YYYY-MM-DDTHH:mm:ssZ"),
+        end: tempEndDate.format("YYYY-MM-DDTHH:mm:ssZ"),
       };
+
+      console.log(
+        tempStartDate.format("YYYY-MM-DDTHH:mm:ssZ"),
+        tempEndDate.format("YYYY-MM-DDTHH:mm:ssZ")
+      );
 
       listOfSchedule.push(selectedSchedule);
       duplicateStartDate = moment(duplicateStartDate).add(1, "days");

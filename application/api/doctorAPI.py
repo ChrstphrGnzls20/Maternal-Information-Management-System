@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, make_response, jsonify, request
 import json
 import datetime
+import copy
 
 # MODELS
 from ..models.Mdl_doctor import Doctor
@@ -55,15 +56,29 @@ def addOrRetrieveSchedules(id: str = None):
         if id:
             results = schedObj.findSchedule(filter={"doctorID": id})
             args = request.args
-            if args:
+            date = request.args.get('date', None)
+            newResult = []
+            if date:
+                for result in results:
+                    resultStartDate = datetime.datetime.fromisoformat(
+                        result['start'])
+                    resultStartDateWithoutTime = copy.copy(resultStartDate.strftime("%Y-%m-%d"))
+                    if resultStartDateWithoutTime == args['date']:
+                        # result['title'] = "On duty"
+                        # result['allDay'] = True
+                        newResult.append(result)
+                results = newResult
+
+            # FOR FULLCALENDAR EVENT SOURCE HANDLER
+            elif args:
                 # startDate = datetime.datetime.strptime(
                 #     args['start'], "%Y-%m-%d")
                 startDate = args['start']
+                print(startDate)
                 parsedStartDate = datetime.datetime.fromisoformat(startDate)
                 endDate = args['end']
                 parsedEndDate = datetime.datetime.fromisoformat(endDate)
                 print(parsedStartDate, parsedEndDate)
-                newResult = []
                 for result in results:
                     resultStartDate = datetime.datetime.fromisoformat(
                         result['start'])

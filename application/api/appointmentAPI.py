@@ -12,13 +12,21 @@ appointmentAPI = Blueprint('appointmentAPI', __name__)
 
 # @appointmentAPI.route("/<string:entity>/<string:userID>/<string:appointmentID>", methods=["GET"])
 @appointmentAPI.route("/<string:entity>/<string:userID>", methods=["GET"])
-def getAppointments(entity: str, userID: str, appointmentID: str = None):
+def getAppointments(entity: str, userID: str):
     # IF USER IS NOT PATIENT NOR DOCTOR, THROWS A 401(UNAUTHORIZED) HTTP ERROR
     filters: dict = {}
     if entity not in ["patient", "doctor"]:
         return make_response(jsonify([]), 401)
     filterKey: str = f"{entity}_id"
     filters[filterKey] = userID
+
+    # GET NEEDED ARGS
+    appointmentID = request.args.get("search_id", None)
+    appointmentDate = request.args.get('appointmentDate', None)
+    limit = int(request.args.get("limit", 0))
+    pageNumber = int(request.args.get("page", 0))
+    sortKey = request.args.get("sortKey", None)
+    sortDir = int(request.args.get("sortDirection", 1))  # ASCENDING IN DEFAULT
 
     # CHECK IF STATUS IS SPECIFIED
     status = request.args.get("status", None)
@@ -30,13 +38,6 @@ def getAppointments(entity: str, userID: str, appointmentID: str = None):
         else:
             filters['status'] = status
 
-    # CHECK FOR APPOINTMENT ID
-    appointmentID = request.args.get("search_id", None)
-    limit = int(request.args.get("limit", 0))
-    pageNumber = int(request.args.get("page", 0))
-    sortKey = request.args.get("sortKey", None)
-    sortDir = int(request.args.get("sortDirection", 1))  # ASCENDING IN DEFAULT
-
     # CHECK IF SORT IS VALID
     validSort = (sortKey, sortDir) if sortKey in ['_id', 'appointmentDate', 'createdDate',
                                                   'doctor_id', 'doctor_name', 'patient_id', 'patient_name', 'status'] else None
@@ -47,9 +48,17 @@ def getAppointments(entity: str, userID: str, appointmentID: str = None):
             # IF THERE IS A VALID SORT IN THE SEARCH PARAMS
             if validSort:
                 return make_response(appointmentObj.retrieveAppointments(filter=filters, limit=limit, pageNumber=pageNumber, sort=validSort), 201)
+
+            elif appointmentDate:
+                filters['appointmentDate'] = {"$regex": appointmentDate}
+
             return make_response(appointmentObj.retrieveAppointments(filter=filters, limit=limit, pageNumber=pageNumber), 201)
+
+
+        return make_response(appointmentObj.retrieveAppointments(filter=filters))
         # FOR RETRIEVING SPECIFIC APPOINTMENT THAT BELONGS TO A SPECIFIC USER
         return make_response(appointmentObj.retrieveAppointments(filter={filterKey: userID, "_id": appointmentID}), 201)
+    
 
 
 @appointmentAPI.route("/", methods=["POST"])

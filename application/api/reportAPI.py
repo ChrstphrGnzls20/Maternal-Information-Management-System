@@ -52,39 +52,9 @@ def doctorsCheckupTally():
                 if checkupMonth == startingMonthInt and checkupYear == startingYear:
                     numberOfCheckups += 1
 
-            # print(json.dumps(listOfSchedule, indent=2))
-            # onTime = 0
-            # late = 0
-            # absent = 0
-
-            # for schedule in listOfSchedule:
-            #     try:
-            #         arrivalStatus = schedule['arrivalStatus'].lower()
-            #         if arrivalStatus == "on time":
-            #             onTime += 1
-            #         elif arrivalStatus == "late":
-            #             late += 1
-            #         else:
-            #             absent += 1
-            #     except:
-            #         continue
-
             tempObj['doctorID'] = doctor["_id"]
             tempObj['doctorName'] = doctor['name']
             tempObj['checkUpNum'] = numberOfCheckups
-            # # ATTACH CLINIC ATTENDANCE
-            # tempObj['attendance'] = {
-            #     'absent': absent,
-            #     'late': late,
-            #     'onTime': onTime
-            # }
-            # tempObj['absent'] = absent
-            # tempObj['late'] = late
-            # tempObj['onTime'] = onTime
-
-            # del tempObj['absent']
-            # del tempObj['late']
-            # del tempObj['onTime']
 
             resultArray.append(tempObj)
 
