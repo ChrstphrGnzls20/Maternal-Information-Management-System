@@ -16,7 +16,7 @@ class Settings:
     MONGO_CONNECT = True
     SESSION_PERMANENT = False
     SESSION_TYPE = "filesystem"
-
+    # dummy
     # GMAIL
     MAIL_SERVER = "smtp.gmail.com"
     MAIL_PORT = 587
