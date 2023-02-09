@@ -121,3 +121,16 @@ def addCarePlan():
         if result:
             return make_response(jsonify(result), 200)
         return make_response(500)
+
+# # FOR TESTING
+# @emrAPI.route("/editCheckups")
+# def editCheckups():
+#     emrObj.editInitialCheckups()
+
+#     return make_response(jsonify("SUCCESS"), 200)
+
+# @emrAPI.route("/editPrescription")
+# def editPrescription():
+#     emrObj.editPrescription()
+
+#     return make_response(jsonify("SUCCESS"), 200)

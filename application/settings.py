@@ -21,7 +21,7 @@ class Settings:
     MAIL_SERVER = "smtp.gmail.com"
     MAIL_PORT = 587
     MAIL_USERNAME = "maternityclinicis@gmail.com"
-    MAIL_PASSWORD = "tpjyiprychvuuafv"
+    MAIL_PASSWORD = "qyiwyzjbckoipzgf"
     MAIL_DEFAULT_SENDER = "maternityclinicis@gmail.com"
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False

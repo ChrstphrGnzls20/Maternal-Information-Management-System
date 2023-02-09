@@ -443,6 +443,37 @@ class EMR(object):
         except Exception:
             return {}
 
+    # FOR TESTING 
+    def editInitialCheckups(self) -> None:
+        checkups = collection.find()
+
+        for checkup in checkups:
+            _id = checkup['_id']
+            if checkup['HPI']['checkupType'] == "initial":
+                collection.find_one_and_update({"_id": _id}, {"$set" : {"assessment.diagnosis": "delayed menstruation", "assessment.additionalDiagnosisNotes": ""}})
+            else: 
+                collection.find_one_and_update({"_id": _id}, {"$set" : {"assessment.diagnosis": "follow-up checkup", "assessment.additionalDiagnosisNotes": ""}})
+
+    def editPrescription(self) -> None:
+        checkups = collection.find()
+
+        for checkup in checkups:
+            _id = checkup['_id']
+            try:
+                plan = checkup.get("plan", None)
+                prescription = plan.get("prescription", None)
+
+                if prescription: 
+                    newPrescription = []
+                    for item in prescription: 
+                        item['medicineInstructions'] = "Drink after meals"
+                        newPrescription.append(item)
+
+                    collection.find_one_and_update({"_id": _id}, {"$set": {'plan.prescription': newPrescription}})
+
+            except Exception:
+                pass
+            
 
 carePlanCollection = mongo['careplan']
 
