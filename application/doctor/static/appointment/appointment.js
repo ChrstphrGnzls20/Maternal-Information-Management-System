@@ -1,6 +1,7 @@
 $(function () {
   let doctorID = localStorage.getItem("id");
   let appointments = [];
+  let patients = [];
   let searchParams = $.param({
     sortKey: "createdDate",
     sortDirection: -1,
@@ -20,7 +21,7 @@ $(function () {
       let accepted = 0;
       let completed = 0;
       data.forEach(function (item) {
-        item["patient_id"] = doctorID;
+        // item["patient_id"] = doctorID;
         appointments.push(item);
         // TO SHOW APPOINTMENTS WITH STATUS OF PENDING
         if (item["status"] === "pending") {
@@ -41,6 +42,25 @@ $(function () {
       console.log(xhr);
     });
 
+  fetchPatients(doctorID)
+    .then(function (response) {
+      console.log(response);
+      let data = response;
+      data.forEach(function (item) {
+        let patient = {
+          _id: item._id,
+          name: item.basicInformation.name,
+          lastVisitDate: item.recentVisit,
+          mobile: item.basicInformation.mobile,
+          monitoringStatus: item.status,
+        };
+        patients.push(patient);
+      });
+    })
+    .catch(function (xhr) {
+      console.log(xhr);
+    });
+
   $(".appointments-table").on(
     "click",
     "#reject-appointment-btn, #accept-appointment-btn, #cancel-appointment-btn",
@@ -54,10 +74,28 @@ $(function () {
   $("#confirm-accept-appointment-btn").on("click", function () {
     console.log("accepted!!!");
 
+    let selectedAppointment = appointments.filter(
+      (appt) => appt._id == selectedAppointmentID
+    )[0];
+
     editAppointment(selectedAppointmentID, {
       status: "accepted",
       additionalInfo: {},
     });
+
+    queueSMS(
+      selectedAppointment._id,
+      selectedAppointment.doctor_id,
+      selectedAppointment.patient_id,
+      selectedAppointment.patient_name,
+      selectedAppointment.appointmentDate
+    )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (xhr) {
+        console.log(xhr);
+      });
   });
 
   // WHEN THE USER REJECTS THE APPOINTMENT
@@ -78,10 +116,10 @@ $(function () {
 
   // WHEN THE USER CANCELS THE APPOINTMENT
   $("#confirm-cancel-appointment-btn").on("click", function () {
-    console.log("rejected!!!");
+    console.log("cancelled!!!");
 
     let note = $("#cancelReason").val();
-    // editAppointment(selectedAppointmentID, { status: "rejected", note: note });
+    editAppointment(selectedAppointmentID, { status: "cancelled", note: note });
 
     editAppointment(selectedAppointmentID, {
       status: "canceled",

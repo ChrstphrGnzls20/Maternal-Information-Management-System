@@ -40,29 +40,28 @@ def verifyOTP(otp):
 
 @authAPI.route("/login/<string:entity>", methods=["POST"])
 def loginAttempt(entity: str):
-    print(session)
     # FOR VERIFYING LOGIN CREDENTIALS
     if request.method == "POST":
         dbName = entity
         loginCred = json.loads(request.data)
-        print(loginCred)
-        if dbName != 'patient':
+        if entity == 'secretary' or entity == 'doctor':
             dbName = 'employee'
         loginObj = Login(entity=dbName)
         result = loginObj.login(loginCred=loginCred)
+        print(result)
         # IF THE LOGIN CREDENTIAL IS CORRECT
         if result:
             loginData = result[0]
-            print(loginData)
-            # SAVE SESSION
+            # SAVE SESSION IF NOT ADMIN
             session['id'] = loginData['_id']
+                
             if dbName == 'patient':
                 session['name'] = loginData['basicInformation']['name']
-            else:
+            elif dbName == 'employee':
                 session['name'] = loginData['name']
-            if entity == "patient":
-                session['entity'] = 'patient'
-            else:
-                session['entity'] = entity
+
+            session['entity'] = entity
+            session['loggedIn'] = True
+            print(result)
             return make_response(jsonify(result), 201)
         return make_response(jsonify(result), 401)

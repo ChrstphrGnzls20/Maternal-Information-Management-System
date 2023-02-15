@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, make_response, render_template, request
 
 import json
 
+from ..extensions import login_required
 
 # models
 from ..models.Mdl_emr import EMR, SOAPParser, generatePrescription, generateChargingForm
@@ -15,11 +16,13 @@ emrObj = EMR()
 
 
 @emr.route("/<string:id>")
+@login_required
 def dashboard(id):
     return render_template("emr.html")
 
 
 @emr.route("/template/<htmlFileName>", methods=["GET"])
+@login_required
 def serve_html(htmlFileName):
     try:
         toServe = render_template(f"{htmlFileName}.html")
@@ -29,6 +32,7 @@ def serve_html(htmlFileName):
 
 
 @emr.route("/add", methods=["POST"])
+@login_required
 def save():
     pass
     '''
@@ -53,6 +57,7 @@ def save():
 
 
 @emr.route("/getTemplates", methods=["POST"])
+@login_required
 def getTemplates():
     if request.method == "POST":
         request_data = json.loads(request.data)
@@ -64,6 +69,7 @@ def getTemplates():
 
 
 @emr.route("/SOAP/<string:checkupID>")
+@login_required
 def SOAP(checkupID: str):
     if request.method == "GET":
         data: list = emrObj.retrieveCheckup(filter={"_id": checkupID})
@@ -86,6 +92,7 @@ def SOAP(checkupID: str):
 
 
 @emr.route("/prescription/<string:checkupID>")
+@login_required
 def issuePrescription(checkupID):
     if request.method == "GET":
         data: list[dict] = emrObj.retrieveCheckup(filter={"_id": checkupID}, returnFields={
@@ -125,6 +132,7 @@ def issuePrescription(checkupID):
 
 
 @emr.route("/chargingForm/<string:checkupID>")
+@login_required
 def issueChargingForm(checkupID):
     if request.method == "GET":
         data: list[dict] = emrObj.retrieveCheckup(filter={"_id": checkupID}, returnFields={

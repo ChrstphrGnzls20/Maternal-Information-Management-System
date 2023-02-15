@@ -155,6 +155,25 @@ function editAppointment(selectedAppointmentID, payload) {
     });
 }
 
+// FOR SMS
+function queueSMS(appointmentID, doctorID, patientID, patientName, date) {
+  let payload = {
+    appointmentID,
+    doctorID,
+    patientID,
+    patientName,
+    date,
+  };
+  console.log(payload);
+  return $.ajax({
+    method: "POST",
+    url: `${API_BASE_URL}/sms/queue`,
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(payload),
+  });
+}
+
 let fetchDoctorAppointments = (doctorID, searchParams) => {
   return $.ajax({
     method: "GET",

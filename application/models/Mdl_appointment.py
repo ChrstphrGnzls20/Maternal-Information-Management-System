@@ -8,10 +8,12 @@ import pytz
 # DOCTOR MODEL FOR RETRIEVING DOCTOR'S INFORMATION
 from .Mdl_patient import Patient
 from .Mdl_employee import Employee
+from .Mdl_sms import SMS
 
 # INSTANTIATE MODEL
 doctorObj = Employee()
 patientObj = Patient()
+smsObj = SMS()
 
 collection = mongo['appointment']
 
@@ -92,16 +94,6 @@ class Appointment(object):
             result = {}
         finally:
             return result
-
-    # def cancelAppointment(self, appointmentID: str) -> dict:
-    #     collection = mongo.db[self.dbName]
-    #     try:
-    #         result = collection.find_one_and_update(
-    #             {"_id": appointmentID}, {"$set": {"status": "cancelled"}}, return_document=ReturnDocument.AFTER)
-    #     except Exception:
-    #         result = {}
-    #     finally:
-    #         return result
 
 
 '''

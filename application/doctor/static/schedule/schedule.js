@@ -165,6 +165,9 @@ $(function () {
   });
 
   $("#add-schedule-btn").on("click", function () {
+    let originalBtn = $(this).clone();
+    // set button to loading
+    replaceButtonWithSpinner($(this));
     // SEND TO BACKEND USING AJAX
     addClinicSchedule(listOfSchedule)
       .then(function (response) {
@@ -177,5 +180,9 @@ $(function () {
         console.log(xhr);
         console.log(listOfSchedule);
       });
+
+    setTimeout(() => {
+      revertToOriginalButton($(this), originalBtn);
+    }, 200);
   });
 });

@@ -57,6 +57,7 @@ $(function () {
       })
         .done(function (response) {
           let data = response[0];
+          console.log(response);
           let id = data._id;
           let email = data.email;
 

@@ -1,10 +1,12 @@
 from application import init_app
 
-
-app = init_app()
+def appEntryPoint(environment="development"):
+    app = init_app(environment)
+    app.run()
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    appEntryPoint()
+    
 
 # TO RUN THE APPLICATION UNDER VIRTUALENV RUN 
 # source "c:/Users/Christopher/Desktop/Caps 1 System/env/Scripts/activate"

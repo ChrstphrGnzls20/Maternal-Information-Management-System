@@ -1,5 +1,6 @@
 $(function () {
   let doctorID = localStorage.getItem("id");
+  let patients = [];
   let searchParams = $.param({
     sortKey: "createdDate",
     sortDirection: -1,
@@ -25,13 +26,6 @@ $(function () {
     let thirdTrimester = EDD.clone().subtract(13, "weeks");
     let secondTrimester = thirdTrimester.clone().subtract(13, "weeks");
     let firstTrimester = secondTrimester.clone().subtract(13, "weeks");
-
-    console.log(
-      EDD.format("MM/DD/YYYY"),
-      firstTrimester.format("MM/DD/YYYY"),
-      secondTrimester.format("MM/DD/YYYY"),
-      thirdTrimester.format("MM/DD/YYYY")
-    );
 
     // if (thirdTrimester.isSameOrAfter(moment())) {
     //   return 3;
@@ -70,7 +64,7 @@ $(function () {
       let completed = 0;
       data.forEach(function (item) {
         appointments.push(item);
-        item["patient_id"] = doctorID;
+        // item["patient_id"] = doctorID;
         // TO SHOW APPOINTMENTS WITH STATUS OF PENDING
         if (item["status"] === "pending") {
           pending++;
@@ -102,6 +96,7 @@ $(function () {
           mobile: item.basicInformation.mobile,
           monitoringStatus: item.status,
         };
+        patients.push(patient);
 
         if (item["LMP"] !== undefined) {
           let EDD = computeEDDFromLMP(item._id, item["LMP"]);
@@ -149,11 +144,29 @@ $(function () {
   // WHEN THE USER ACCEPTS THE APPOINTMENT
   $("#confirm-accept-appointment-btn").on("click", function () {
     console.log("accepted!!!");
-
+    // TODO:
     editAppointment(selectedAppointmentID, {
       status: "accepted",
       additionalInfo: {},
     });
+
+    let selectedAppointment = appointments.filter(
+      (appt) => appt._id == selectedAppointmentID
+    )[0];
+
+    queueSMS(
+      selectedAppointment._id,
+      selectedAppointment.doctor_id,
+      selectedAppointment.patient_id,
+      selectedAppointment.patient_name,
+      selectedAppointment.appointmentDate
+    )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (xhr) {
+        console.log(xhr);
+      });
   });
 
   // WHEN THE USER REJECTS THE APPOINTMENT

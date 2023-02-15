@@ -1,30 +1,37 @@
-'''
-ATLAS Email: cgonzalesmain@gmail.com
-ATLAS PWD: Maternityclinic123
-
-'''
 
 
-class Settings:
-    DEBUG = True
-    # FOR PRODUCTION USE BELOW CONNECTION TO MONGO ATLAS
-    # MONGO_URI = 'mongodb://localhost:27017/MCIMS'
-    # username = urllib.parse.quote_plus('cbgonzales')
-    # password = urllib.parse.quote_plus("Maternityclinic123")
-    MONGO_URI = 'mongodb+srv://cgonzales:maternityclinic@mcims.o6iroqu.mongodb.net/?retryWrites=true&w=majority'
-    # MONGO_URI = "mongodb+srv://cbgonzales:passwordpassword@cluster0.fndpseh.mongodb.net/?retryWrites=true&w=majority"
-    MONGO_CONNECT = True
+from os import environ, path
+from dotenv import load_dotenv
+
+basedir = path.abspath(path.dirname(__file__))
+load_dotenv(path.join(basedir, '.env'))
+
+class Settings(object):
+    MONGO_URI = environ.get("MONGO_URI")
+    MONGO_CONNECT = False
     SESSION_PERMANENT = False
     SESSION_TYPE = "filesystem"
-    # dummy
-    # GMAIL
+
+    # FLASK MAIL USING GMAIL SMTP
     MAIL_SERVER = "smtp.gmail.com"
     MAIL_PORT = 587
-    MAIL_USERNAME = "maternityclinicis@gmail.com"
-    MAIL_PASSWORD = "qyiwyzjbckoipzgf"
-    MAIL_DEFAULT_SENDER = "maternityclinicis@gmail.com"
+    MAIL_USERNAME = environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD = environ.get("MAIL_PASSWORD")
+    MAIL_DEFAULT_SENDER = environ.get("MAIL_DEFAULT_SENDER")
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
-    # turn off when testing
-    MAIL_SUPPRESS_SEND = False
+
+    # SECRET KEY
+    SECRET_KEY = environ.get("SECRET_KEY")
+
+class DEVELOPMENT(Settings):
+    ENV = "development"
+    DEBUG = True
+    MAIL_SUPPRESS_SEND = True
+    TESTING = False 
+
+class DEPLOYMENT(Settings):
+    ENV = "production"
+    DEBUG = False
+    MAIL_SUPRESS_SEND = False
     TESTING = False

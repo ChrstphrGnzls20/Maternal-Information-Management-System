@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, make_response, render_template, request, session, redirect
-
+from ..extensions import login_required
 import json
 import copy
 import datetime
@@ -10,12 +10,14 @@ import pdfkit
 # models
 from ..models.Mdl_employee import Employee
 from ..models.Mdl_clinicService import ClinicService
+from ..models.Mdl_admin import Admin
 
 admin = Blueprint('admin', __name__, template_folder="templates",
                   static_folder="static")
 
 employeeObj = Employee()
 serviceObj = ClinicService()
+adminObj = Admin()
 
 sidebarItems = [
     {
@@ -40,13 +42,30 @@ sidebarItems = [
     },
 ]
 
+# FOR TESTING
+# @admin.route("/test/add", methods=['POST'])
+# @login_required
+# def addAdmin():
+#     if request.method != "POST":
+#         return make_response(jsonify({"errorMsg: 'BAD REQUEST'"}, 400))
+#     loginCred = json.loads(request.data)
+
+#     isInserted = adminObj.addAdmin(loginCred)
+
+#     if isInserted:
+#         return make_response(jsonify("SUCCESS"), 200)
+#     else: 
+#         return make_response(jsonify("FAILED"), 401)
+
 
 @admin.route("/")
+@login_required
 def adminDashboard():
     return render_template("dashboard.html", contentTemplate="/adminDashboard.html", sidebarItems=sidebarItems, activeSidebar="DASHBOARD", employees=employeeObj.retrieveEmployees())
 
 
 @admin.route("/employees")
+@login_required
 def employees():
     # if not session.get('_id') and not session.get("role") == "admin":
     #     return redirect("/admin/login")
@@ -54,6 +73,7 @@ def employees():
 
 
 @admin.route("/clinic-rates")
+@login_required
 def clinicRatesDashboard():
     # if not session.get('_id') and not session.get("role") == "admin":
     #     return redirect("/admin/login")
@@ -61,11 +81,13 @@ def clinicRatesDashboard():
 
 
 @admin.route("/reports")
+@login_required
 def clinicReportsDashboard():
     return render_template("dashboard.html", contentTemplate="/clinic-reports.html",  sidebarItems=sidebarItems, activeSidebar="CLINIC REPORTS")
 
 
 @admin.route('/patientVisit')
+@login_required
 def generatePatientVisitReport():
     reportingMonth = request.args.get("month", None)
     reportingYear = request.args.get("year", None)
@@ -127,6 +149,7 @@ def generatePatientVisitReport():
 
 
 @admin.route("/clinicServicesTally")
+@login_required
 def generateClinicServiceTally():
     reportingMonth = request.args.get("month", None)
     reportingYear = request.args.get("year", None)
@@ -148,6 +171,7 @@ def generateClinicServiceTally():
 
 
 @admin.route("/doctorsCheckupTally")
+@login_required
 def generateDoctorsCheckupTally():
     reportingMonth = request.args.get("month", None)
     reportingYear = request.args.get("year", None)
@@ -170,6 +194,7 @@ def generateDoctorsCheckupTally():
     return rendered
 
 @admin.route("/doctorsAttendanceReport")
+@login_required
 def generateDoctorsAttendanceReport():
     reportingMonth = request.args.get("month", None)
     reportingYear = request.args.get("year", None)

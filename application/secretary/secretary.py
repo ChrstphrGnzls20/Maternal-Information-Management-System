@@ -1,5 +1,7 @@
 from flask import Flask, Blueprint, render_template, session
 
+from ..extensions import login_required
+
 secretary = Blueprint("secretary", __name__,
                       template_folder='templates', static_folder='static')
 
@@ -18,6 +20,7 @@ sidebarItems = [
 
 
 @secretary.route("/")
+@login_required
 def secretaryDashboard():
     return render_template("dashboard.html", contentTemplate="/secretaryHome.html", sidebarItems=sidebarItems, activeSidebar="DASHBOARD")
 
