@@ -78,6 +78,10 @@ def init_app(environment):
                 o = repo.remotes.origin
                 repo.heads.master.set_tracking_branch(o.refs.master)
                 repo.heads.master.checkout()
+                # blast any changes there (only if it wasn't checked out)
+                repo.git.reset('--hard')
+                # remove any extra non-tracked files (.pyc, etc)
+                repo.git.clean('-xdf')
                 o.pull()
                 return '', 200
             else:
