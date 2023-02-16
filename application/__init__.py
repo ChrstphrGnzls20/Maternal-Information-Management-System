@@ -69,18 +69,28 @@ def init_app(environment):
     
     
     # FOR AUTOMATIC DEPLOYMENT
-    @app.route("/git_update", methods=["POST"])
-    def updateProject():
+    @app.route('/update_server', methods=['POST'])
+    def webhook():
         import git, os
-        if request.method == "POST":
-            print(os.getcwd())
-            repo = git.Repo('./Maternal-Information-Management-System', search_parent_directories=True)
-            # print(repo.working_tree_dir)
+        if request.method == 'POST':
+            repo = git.Repo('./Maternal-Information-Management-System')
             origin = repo.remotes.origin
-            # print(repo.remotes)
-            repo.create_head('master', origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
             origin.pull()
-            return '', 200
+            return 'Updated PythonAnywhere successfully', 200
+        else:
+            return 'Wrong event type', 400
+    # @app.route("/git_update", methods=["POST"])
+    # def updateProject():
+    #     import git, os
+    #     if request.method == "POST":
+    #         print(os.getcwd())
+    #         repo = git.Repo('./Maternal-Information-Management-System', search_parent_directories=True)
+    #         # print(repo.working_tree_dir)
+    #         origin = repo.remotes.origin
+    #         # print(repo.remotes)
+    #         repo.create_head('master', origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
+    #         origin.pull()
+    #         return '', 200
 
 
     return app
