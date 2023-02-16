@@ -34,7 +34,7 @@ def init_app(environment):
         app.config.from_object(DEVELOPMENT)
 
     import os
-    print(os.environ.get("MONGO_URI"))
+    print(app.config.get("MONGO_URI"))
     """Initialize Session"""
     Session(app)
 
