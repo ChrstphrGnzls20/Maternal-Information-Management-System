@@ -86,6 +86,7 @@ def init_app(environment):
                 return '', 200
             else:
                 return '', 400
+            #test
     # @app.route("/git_update", methods=["POST"])
     # def updateProject():
     #     import git, os
