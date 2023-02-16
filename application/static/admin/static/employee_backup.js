@@ -1,9 +1,3 @@
-// TODO: fix bugs
-// TODO: check employee ID before updating to avoid duplication
-// TODO: custom validation for license ID if existing
-// TODO: input validation (alphanumeric only)
-// TODO: Decide whether to create a two seperate modals (add/edit) and decide whether to reload page on every add/edit or use jquery to manipulate DOM dynamically for better accessibility and responsiveness
-
 // alert HTML
 alert = function (alertText) {
   return `
@@ -40,7 +34,6 @@ let clearTable = function (table) {
 };
 
 let employeeRow = function (employee) {
-  //TODO: change this
   return `
   <tr>
     <td class="text-center emp-id">${employee.licenseID}</td>
@@ -296,8 +289,6 @@ $(function () {
     console.log("HIDDEN");
   });
 
-  //NOTE: edit modal functionality
-  // TODO: use same modal to edit employee
   $(".employees-table").on("click", "button.edit-emp-btn", function () {
     let empId = $(this).parent().siblings(".emp-id").text();
     console.log(empId);
@@ -413,7 +404,6 @@ $(function () {
     });
   });
 
-  //TODO: for testing
   let dummyValues = {
     _id: "12345678",
     fName: "Wayne",
@@ -431,5 +421,3 @@ $(function () {
     $(this).val(dummyValues[$(this).attr("name")]);
   });
 });
-
-// TODO: editing of employee information

@@ -1,4 +1,3 @@
-<!-- TODO: responsiveness of site when in md size -->
 <form class="papTest" data-form-target="EMR">
   <div class="row">
     <h3 class="default-label">Pap Smear</h3>
@@ -145,20 +144,17 @@
     />
   </div>
 
- <script>
-              
-    $(".papTest").on("submit", function(){
-      let PapSmear = { }
+  <script>
+    $(".papTest").on("submit", function () {
+      let PapSmear = {};
 
       let iePapSmear = $("input[name='papSmear']:checked");
       let iePapSmearNotes = $("#papSmearGenNotes");
 
-      PapSmear[iePapSmear.attr("name")] = (iePapSmear.val());
-      PapSmear[iePapSmearNotes.attr("name")] = (iePapSmearNotes.val());
-      
+      PapSmear[iePapSmear.attr("name")] = iePapSmear.val();
+      PapSmear[iePapSmearNotes.attr("name")] = iePapSmearNotes.val();
 
       console.log(PapSmear);
     });
   </script>
-
 </form>

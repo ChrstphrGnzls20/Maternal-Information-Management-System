@@ -82,7 +82,6 @@ def addAppointment():
         if result:
             return make_response(jsonify(result))
 
-# TODO: CANCEL APPOINTMENT
 
 # @appointmentAPI.route("/<string:appointmentID>/cancel", methods=["PATCH"])
 

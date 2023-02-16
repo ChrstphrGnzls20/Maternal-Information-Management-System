@@ -18,7 +18,6 @@ function generateAppointmentTrs(appointment) {
           </ul>
         </div>`;
   } else if (appointment.status === "accepted") {
-    // TODO: implement cancel for doctor
     statusEl = `
     <div class="btn-group position-static">
       <span type="button" class="border-0 p-0 fw-bold btn btn-white dropdown-toggle text-capitalize text-success" data-bs-toggle="dropdown" aria-expanded="false">

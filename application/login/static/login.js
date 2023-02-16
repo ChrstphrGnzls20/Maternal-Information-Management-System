@@ -61,9 +61,6 @@ $(function () {
           let id = data._id;
           let email = data.email;
 
-          // location.href = `/${currentEntity}/dashboard/`;
-          // NOTE: use above, below is for testing
-
           // SAVE ID TO LOCALSTORAGE FOR FURTHER USE
           localStorage.setItem("entity", currentEntity);
           localStorage.setItem("id", id);

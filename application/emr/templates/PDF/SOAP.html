@@ -1,277 +1,223 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SOAP</title>
-    <link
-      rel="stylesheet"
-      href="{{url_for('emr.static', filename='css/pdf.css', _external=True)}}"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body>
-    <div class="d-flex custom-bg justify-content-center p-2 bd-highlight">
-      <div
-        class="container-md form-container bg-white m-2 p-2"
-        id="printContent"
-      >
+{% extends "PDFTemplate.html" %} {% block content %}
+<div class="d-flex custom-bg justify-content-center p-2 bd-highlight mt-4">
+  <div class="container-md form-container bg-white m-2 p-2" id="printContent">
+    <div>
+      <p class="date position-relative">
+        <b>Date:</b> <span class="tab-1">{{headers.date}}</span>
+      </p>
+      <p class="time position-relative">
+        <b>Time:</b> <span class="tab-1">{{headers.time}}</span>
+      </p>
+      <p class="doctor position-relative">
+        <b>Provider:</b> <span class="tab-1">{{headers.provider}}</span>
+      </p>
+      <p class="patient position-relative">
+        <b>Patient:</b> <span class="tab-1">{{headers.patient}}</span>
+      </p>
+      <p class=""><b>Vital Signs:</b></p>
+      <div class="row">
+        <p class="col"><b>Height:</b> {{vitals.height}} cm</p>
+        <p class="col"><b>Weight:</b> {{vitals.weight}} kg</p>
+        <p class="col">
+          <b>Temp:</b>
+          {{vitals.temperature}}&#8451;
+        </p>
+        <p class="col"><b>B/P:</b> {{vitals.bloodPressure}}</p>
+        <p class="col"><b>Heart Rate:</b> {{vitals.heartRate}}bpm</p>
+      </div>
+
+      <!-- HPI -->
+      <div>
+        <h1 class="">S:</h1>
+        {% if subjective %} {% set HPI = subjective['HPI'] %}
+        <p class="">
+          This <b>{{headers.age}} yr old </b> female presents for
+          <b>{{HPI['chief complaint']}}</b> which started on
+          <b>{{HPI['start date']}}</b>
+        </p>
+        <p><b>History of Present Illness symptoms:</b></p>
+        {% set GTPAL = subjective['pregnancyHistory'] %}
+        <p>
+          <b>Pregnancy History:</b>
+          {% if GTPAL %}
+          <b
+            ><em
+              >G:{{GTPAL['G']}}, T:{{GTPAL['T']}}, P:{{GTPAL['P']}},
+              A:{{GTPAL['A']}}, L:{{GTPAL['L']}}</em
+            ></b
+          >
+        </p>
+        {% else %}
+        <b><em>No data available.</em></b>
+        {% endif %}
+        <!-- ROS -->
         <div>
-          <p class="date position-relative">
-            <b>Date:</b> <span class="tab-1">{{headers.date}}</span>
-          </p>
-          <p class="time position-relative">
-            <b>Time:</b> <span class="tab-1">{{headers.time}}</span>
-          </p>
-          <p class="doctor position-relative">
-            <b>Provider:</b> <span class="tab-1">{{headers.provider}}</span>
-          </p>
-          <p class="patient position-relative">
-            <b>Patient:</b> <span class="tab-1">{{headers.patient}}</span>
-          </p>
-          <p class=""><b>Vital Signs:</b></p>
-          <div class="row">
-            <p class="col"><b>Height:</b> {{vitals.height}} cm</p>
-            <p class="col"><b>Weight:</b> {{vitals.weight}} kg</p>
-            <p class="col">
-              <b>Temp:</b>
-              {{vitals.temperature}}&#8451;
-            </p>
-            <p class="col"><b>B/P:</b> {{vitals.bloodPressure}}</p>
-            <p class="col">
-              <b>Heart Rate:</b> {{vitals.heartRate}}bpm
-            </p>
-          </div>
-
-          
-          <!-- HPI -->
+          <p><b>Review of Symptoms/Systems:</b></p>
+          {% set ROS = subjective['ROS'] %} {% if ROS %}
           <div>
-            <h1 class="">S:</h1>
-            {% if subjective %} 
-            {% set HPI = subjective['HPI'] %} 
-            <p class="">
-              This <b>{{headers.age}} yr old </b> female presents for
-              <b>{{HPI['chief complaint']}}</b> which started on
-              <b>{{HPI['start date']}}</b>
-            </p>
-            <p><b>History of Present Illness symptoms:</b></p>
-            {% set GTPAL = subjective['pregnancyHistory'] %}
-            <p><b>Pregnancy History:</b> 
-            {% if GTPAL %}
-              <b><em>G:{{GTPAL['G']}}, T:{{GTPAL['T']}}, P:{{GTPAL['P']}}, A:{{GTPAL['A']}}, L:{{GTPAL['L']}}</em></b> </p>
-            {% else %}
-            <b><em>No data available.</em></b>
-            {% endif %}
-            <!-- ROS -->
-            <div>
-              <p><b>Review of Symptoms/Systems:</b></p>
-              {% set ROS = subjective['ROS'] %}
-
-              {% if ROS %}
-                <div>
-                  {% for category, items in ROS.items() %}
-                  <div class="mb-3">
-                    <h6>
-                      <b class="ros-cat">{{category}}:</b>
-                    </h6>
-                    {% if items['positives'] and items['negatives'] %} 
-                      {% for key, value in items.items() %} 
-                        {% if key == "negatives" and value %}
-                          <p class="indent-1 ros-{{category}}-negatives mb-1">
-                            <b>denies:</b> {{value}}
-                          </p>
-                        {% elif key == "positives" and value %}
-                          <p class="indent-1 ros-{{category}}-positives mb-1">
-                            <b>reported:</b> {{value}}
-                          </p>
-                        {% endif %} 
-                      {% endfor %} 
-                    {% else %}
-                      <p>No data availble</p>
-                    {% endif %}
-                  </div>
-                  {% endfor %}
-                </div>
-              {% else %}
-                <p><b>No Data Available</b></p>
+            {% for category, items in ROS.items() %}
+            <div class="mb-3">
+              <h6>
+                <b class="ros-cat">{{category}}:</b>
+              </h6>
+              {% if items['positives'] and items['negatives'] %} {% for key,
+              value in items.items() %} {% if key == "negatives" and value %}
+              <p class="indent-1 ros-{{category}}-negatives mb-1">
+                <b>denies:</b> {{value}}
+              </p>
+              {% elif key == "positives" and value %}
+              <p class="indent-1 ros-{{category}}-positives mb-1">
+                <b>reported:</b> {{value}}
+              </p>
+              {% endif %} {% endfor %} {% else %}
+              <p>No data availble</p>
               {% endif %}
             </div>
+            {% endfor %}
           </div>
+          {% else %}
+          <p><b>No Data Available</b></p>
           {% endif %}
+        </div>
+      </div>
+      {% endif %}
 
-          <div>
-            <h1 class="">O:</h1>
-            {% if objective %} 
-            {% set generalPE = objective['general PE'] %} 
-              {% if generalPE %}
-                <div>
-                  {% for item in generalPE %} 
-                    {% for key, value in item.items() %}
-                    <div class="gen-PE-item mb-3">
-                      {% if 'notes' not in key %}
-                        <h6 class="gen-PE-cat"><b>{{key}}</b></h6>
-                        <p class="mb-1 indent-1"><b>remarks:</b> {{value}}</p>
-                      {% elif 'notes' in key and value and key != 'additional notes' %}
-                        <p class="mb-1 indent-1"><b>notes:</b> {{value}}</p>
-                      {% elif key == 'additional notes' %}
-                        <p class="mb-1 mt-3"><b>Additional Notes:</b> {{value}}</p>
-                      {% endif %} 
-                      {% endfor %}
-                    </div>
-                  {% endfor %}
-                </div>
-              {% endif %}
-            {% else %}
-            <h5>No data recorded</h5> 
-            {% endif %} 
-            
-            <!-- ASSESSMENT -->
-            <div>
-              <h1 class="">A:</h1>
-              {% if assessment %}
-                <p class="mb-1">
-                  <b class="cat">Assessment:</b>
-                  {{assessment.diagnosis}}
-                </p>
+      <div>
+        <h1 class="">O:</h1>
+        {% if objective %} {% set generalPE = objective['general PE'] %} {% if
+        generalPE %}
+        <div>
+          {% for item in generalPE %} {% for key, value in item.items() %}
+          <div class="gen-PE-item mb-3">
+            {% if 'notes' not in key %}
+            <h6 class="gen-PE-cat"><b>{{key}}</b></h6>
+            <p class="mb-1 indent-1"><b>remarks:</b> {{value}}</p>
+            {% elif 'notes' in key and value and key != 'additional notes' %}
+            <p class="mb-1 indent-1"><b>notes:</b> {{value}}</p>
+            {% elif key == 'additional notes' %}
+            <p class="mb-1 mt-3"><b>Additional Notes:</b> {{value}}</p>
+            {% endif %} {% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %} {% else %}
+        <h5>No data recorded</h5>
+        {% endif %}
 
-                {% if assessment['additional diagnosis notes'] %}
-                <p class="mb-1">
-                  <b>Additional remarks:</b>
-                  <br />
-                  {{assessment['differential diagnosis']}}
-                </p>
-                {% endif %} 
-                
-                {% if assessment['differential diagnosis'] %}
-                <p class="mb-1">
-                  <!-- prettier ignore -->
-                  <b>Differential Diagnosis:</b>
-                  {{assessment['differential diagnosis']}}
-                </p>
-                {% endif %} 
-                
-                {% if assessment['additional differential diagnosis notes'] %}
-                  <p class="mb-1">
-                    <b>Additional remarks:</b>
-                    <br />
-                    {{assessment['differential diagnosis']}}
-                  </p>
-                {% endif %}
-              </div>
-              {% else %}
-              <h5>No data recorded</h5>
-            {% endif %}
-            
+        <!-- ASSESSMENT -->
+        <div>
+          <h1 class="">A:</h1>
+          {% if assessment %}
+          <p class="mb-1">
+            <b class="cat">Assessment:</b>
+            {{assessment.diagnosis}}
+          </p>
 
-            <!-- PLAN -->
-            <div>
-              <h1>P:</h1>
-              {% if plan %}
-                <!-- LABORATORY -->
-                <div class="laboratory">
-                  <p><b>Laboratory Tests:</b></p>
-                  {% set laboratory = plan['laboratory'] %} 
+          {% if assessment['additional diagnosis notes'] %}
+          <p class="mb-1">
+            <b>Additional remarks:</b>
+            <br />
+            {{assessment['differential diagnosis']}}
+          </p>
+          {% endif %} {% if assessment['differential diagnosis'] %}
+          <p class="mb-1">
+            <!-- prettier ignore -->
+            <b>Differential Diagnosis:</b>
+            {{assessment['differential diagnosis']}}
+          </p>
+          {% endif %} {% if assessment['additional differential diagnosis
+          notes'] %}
+          <p class="mb-1">
+            <b>Additional remarks:</b>
+            <br />
+            {{assessment['differential diagnosis']}}
+          </p>
+          {% endif %}
+        </div>
+        {% else %}
+        <h5>No data recorded</h5>
+        {% endif %}
 
-                  {% if laboratory %}
-                    {% if laboratory['tests'] %}
-                    <div class="indent-1">
-                      <p><b>Referral reason:</b> {{laboratory.referralReason}}</p>
-                      <p><b>Tests:</b> {{laboratory.tests}}</p>
-                    </div>
-                    {% else %}
-                    <p>No tests administered.</p>
-                    {% endif %}
-                  {% else %}
-                  <p>No tests administered.</p>
-                  {% endif %}
-                </div>
-
-              <!-- PRESCRIPTION -->
-              <div>
-                <p><b>Medicine Administered:</b></p>
-                {% set medicines = plan['prescription'] %} 
-
-                {% if medicines%}
-                <table class="table table-bordered">
-                  <thead align="middle">
-                    <th>Item no.</th>
-                    <th>Description</th>
-                    <th>Dosage</th>
-                    <th>Amount</th>
-                    <th>Frequency of Dosage</th>
-                    <th>Duration</th>
-                    <th>Instruction</th>
-                  </thead>
-
-                  <tbody>
-                    {% for medicine in medicines %}
-                    <tr align="middle">
-                      <td>{{loop.index}}</td>
-                      <td>{{medicine.medicineName}}</td>
-                      <td>
-                        {{medicine.medicineDosage}}/{{medicine.medicineMeasurement}}
-                      </td>
-                      <td>{{medicine.medicineAmount}}</td>
-                      <td>{{medicine.medicineFrequency}} x a day</td>
-                      <td>{{medicine.medicinePeriod}}</td>
-                      <td>{{medicine.medicineInstructions}}</td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-                {% endif %}
-              </div>
-
-              {% set carePlan = plan['carePlan'] %}
-              <div class="care-plan">
-                <p><b>Care Plan:</b></p>
-                {% if carePlan %}
-                <div class="indent-1">
-                  <p>
-                    <b>Follow-up Checkup Date:</b>
-                    {% if carePlan['follow up date'] %}
-                    {{carePlan['follow up date']['date']}} at 
-                      {{carePlan['follow up date']['time']}}
-                    {% else %}
-                      Not specified
-                    {% endif %}
-                  </p>
-                  <p><b>Patient Status:</b> {{carePlan['patient status']}}</p>
-                  <p>
-                    <b>Patient Education:</b>
-                    <br />
-                    {{carePlan['care plan notes']}}
-                  </p>
-                </div>
-                {% endif %}
-              </div>
+        <!-- PLAN -->
+        <div>
+          <h1>P:</h1>
+          {% if plan %}
+          <!-- LABORATORY -->
+          <div class="laboratory">
+            <p><b>Laboratory Tests:</b></p>
+            {% set laboratory = plan['laboratory'] %} {% if laboratory %} {% if
+            laboratory['tests'] %}
+            <div class="indent-1">
+              <p><b>Referral reason:</b> {{laboratory.referralReason}}</p>
+              <p><b>Tests:</b> {{laboratory.tests}}</p>
             </div>
             {% else %}
-              <h5>No data recorded</h5>
+            <p>No tests administered.</p>
+            {% endif %} {% else %}
+            <p>No tests administered.</p>
+            {% endif %}
+          </div>
+
+          <!-- PRESCRIPTION -->
+          <div>
+            <p><b>Medicine Administered:</b></p>
+            {% set medicines = plan['prescription'] %} {% if medicines%}
+            <table class="table table-bordered">
+              <thead align="middle">
+                <th>Item no.</th>
+                <th>Description</th>
+                <th>Dosage</th>
+                <th>Amount</th>
+                <th>Frequency of Dosage</th>
+                <th>Duration</th>
+                <th>Instruction</th>
+              </thead>
+
+              <tbody>
+                {% for medicine in medicines %}
+                <tr align="middle">
+                  <td>{{loop.index}}</td>
+                  <td>{{medicine.medicineName}}</td>
+                  <td>
+                    {{medicine.medicineDosage}}/{{medicine.medicineMeasurement}}
+                  </td>
+                  <td>{{medicine.medicineAmount}}</td>
+                  <td>{{medicine.medicineFrequency}} x a day</td>
+                  <td>{{medicine.medicinePeriod}}</td>
+                  <td>{{medicine.medicineInstructions}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% endif %}
+          </div>
+
+          {% set carePlan = plan['carePlan'] %}
+          <div class="care-plan">
+            <p><b>Care Plan:</b></p>
+            {% if carePlan %}
+            <div class="indent-1">
+              <p>
+                <b>Follow-up Checkup Date:</b>
+                {% if carePlan['follow up date'] %} {{carePlan['follow up
+                date']['date']}} at {{carePlan['follow up date']['time']}} {%
+                else %} Not specified {% endif %}
+              </p>
+              <p><b>Patient Status:</b> {{carePlan['patient status']}}</p>
+              <p>
+                <b>Patient Education:</b>
+                <br />
+                {{carePlan['care plan notes']}}
+              </p>
+            </div>
             {% endif %}
           </div>
         </div>
+        {% else %}
+        <h5>No data recorded</h5>
+        {% endif %}
       </div>
     </div>
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
+  </div>
+</div>
+{% endblock %}

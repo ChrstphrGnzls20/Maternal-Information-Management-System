@@ -144,7 +144,6 @@ $(function () {
   // WHEN THE USER ACCEPTS THE APPOINTMENT
   $("#confirm-accept-appointment-btn").on("click", function () {
     console.log("accepted!!!");
-    // TODO:
     editAppointment(selectedAppointmentID, {
       status: "accepted",
       additionalInfo: {},

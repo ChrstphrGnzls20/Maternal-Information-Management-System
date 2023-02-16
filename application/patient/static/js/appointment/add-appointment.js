@@ -46,7 +46,6 @@ $(function () {
   //     },
 
   //     //events for testing
-  //     //TODO: fetch all dates that have events from the selected practitioner and disable it
   //     events: [],
   //   }
   // );
@@ -137,7 +136,6 @@ $(function () {
         });
 
         console.log(toDisableTime);
-        //TODO: up for changes based on client's time
         $("#time").timepicker({
           step: 30,
           minTime: "8am",

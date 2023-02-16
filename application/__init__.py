@@ -25,7 +25,7 @@ from .settings import DEPLOYMENT, DEVELOPMENT
 def init_app(environment):
     """Initialize the core application."""
 
-    app = Flask(__name__)
+    app = Flask(__name__,)
 
     """Set application configuration using Settings object"""
     if environment == 'deployment':
