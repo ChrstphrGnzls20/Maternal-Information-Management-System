@@ -47,4 +47,5 @@ def sendSMS():
 # TEST
 @SMSAPI.route("/test")
 def test():
-    return make_response(jsonify(smsObj.checkQueue()),200)
+    result = smsObj.checkQueue()
+    return make_response(jsonify(result),200)

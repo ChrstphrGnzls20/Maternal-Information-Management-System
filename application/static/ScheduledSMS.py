@@ -1,16 +1,4 @@
-# FOR DAILY TASK
-from ..extensions import mongo
-from ..models.Mdl_sms import SMS
+import requests, os
 
-smsObj = SMS()
-
-collection = mongo['scheduledSMS']
-
-def checkQueue():
-    queue = smsObj.retrieveSMS()
-
-    for item in queue:
-        print(item)
-
-if __name__ == "main":
-    checkQueue()
+r = requests.get("https://mcims.pythonanywhere.com/api/sms/test")
+print(r)
