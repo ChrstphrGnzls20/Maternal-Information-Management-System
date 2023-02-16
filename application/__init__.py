@@ -68,7 +68,7 @@ def init_app(environment):
         return redirect("/")
     
     
-    # FOR AUTOMATIC DEPLOYMENT
+    # FOR AUTOMATIC DEPLOYMENT eksdi
     @app.route('/update_server', methods=['POST'])
     def webhook():
         import git, os
