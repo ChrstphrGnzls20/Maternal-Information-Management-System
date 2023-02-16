@@ -74,7 +74,7 @@ def init_app(environment):
         import git, os
         if request.method == "POST":
             print(os.getcwd())
-            repo = git.Repo('.', search_parent_directories=True)
+            repo = git.Repo('./Maternal-Information-Management-System', search_parent_directories=True)
             # print(repo.working_tree_dir)
             origin = repo.remotes.master
             # print(repo.remotes)
