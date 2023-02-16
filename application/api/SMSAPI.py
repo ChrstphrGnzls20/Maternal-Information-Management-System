@@ -36,8 +36,9 @@ def insertSMSToQueue():
 @SMSAPI.route("/sendSMS", methods=["POST"])
 def sendSMS():
     if request.method == "POST":
-        number = request.args.get("number")
-        message = request.args.get("message")
+        payload = json.loads(request.data)
+        number = payload["number"]
+        message = payload["message"]
 
         result = smsObj.sendSMS(number, message)
         print(result)

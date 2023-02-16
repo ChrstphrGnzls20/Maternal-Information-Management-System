@@ -1,0 +1,6 @@
+ALWAYS CHANGE WHEN DEPLOYING: 
+- way of loading environment variables in settings.py
+    basedir = path.abspath(path.dirname(__file__))
+    to 
+    basedir = path.expanduser('~/Maternal-Information-Management-System')
+    load_dotenv(path.join(basedir, '.env'))

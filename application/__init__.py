@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session
+from flask import Flask, render_template, redirect, session, request
 
 # session
 from flask_session import Session
@@ -18,7 +18,7 @@ from application.secretary.secretary import secretary
 from .extensions import mail, login_required
 
 # settings
-from .settings import Settings
+from .settings import DEPLOYMENT, DEVELOPMENT
 
 
 
@@ -29,11 +29,12 @@ def init_app(environment):
 
     """Set application configuration using Settings object"""
     if environment == 'deployment':
-        app.config.from_object(settings.DEPLOYMENT)
+        app.config.from_object(DEPLOYMENT)
     else:
-        app.config.from_object(settings.DEVELOPMENT)
+        app.config.from_object(DEVELOPMENT)
 
-
+    import os
+    print(os.environ.get("MONGO_URI"))
     """Initialize Session"""
     Session(app)
 
@@ -68,17 +69,18 @@ def init_app(environment):
     
     
     # FOR AUTOMATIC DEPLOYMENT
-    @app.route("/git-update")
+    @app.route("/git-update", methods=["POST"])
     def updateProject():
         import git, os
-        print(os.getcwd())
-        repo = git.Repo('.', search_parent_directories=True)
-        # print(repo.working_tree_dir)
-        origin = repo.remotes.master
-        # print(repo.remotes)
-        repo.create_head('master', origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
-        origin.pull()
-        return '', 200
+        if request.method == "POST":
+            print(os.getcwd())
+            repo = git.Repo('.', search_parent_directories=True)
+            # print(repo.working_tree_dir)
+            origin = repo.remotes.master
+            # print(repo.remotes)
+            repo.create_head('master', origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
+            origin.pull()
+            return '', 200
 
 
     return app

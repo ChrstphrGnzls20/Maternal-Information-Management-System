@@ -2,10 +2,11 @@
 from flask_mail import Mail
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
+from os import environ
 
 # mongo = PyMongo()
 mongo = MongoClient(
-    'mongodb+srv://cgonzales:maternityclinic@mcims.o6iroqu.mongodb.net/?retryWrites=true&w=majority')
+    environ.get("MONGO_URI"), connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1)
 
 # mongo = mongo.MCIMS
 mongo = mongo['MCIMS']
@@ -15,7 +16,7 @@ mail = Mail()
 
 #custom decorator for validating login credential
 from functools import wraps
-from flask import redirect, session, url_for, request
+from flask import redirect, session, request
 
 def login_required(f):
     @wraps(f)
