@@ -69,7 +69,7 @@ def init_app(environment):
     
     
     # FOR AUTOMATIC DEPLOYMENT
-    @app.route("/git-update", methods=["POST"])
+    @app.route("/git_update", methods=["POST"])
     def updateProject():
         import git, os
         if request.method == "POST":
