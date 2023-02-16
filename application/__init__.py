@@ -76,7 +76,7 @@ def init_app(environment):
             print(os.getcwd())
             repo = git.Repo('./Maternal-Information-Management-System', search_parent_directories=True)
             # print(repo.working_tree_dir)
-            origin = repo.remotes.master
+            origin = repo.remotes.origin
             # print(repo.remotes)
             repo.create_head('master', origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
             origin.pull()
