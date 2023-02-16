@@ -1,6 +1,6 @@
 # FOR DAILY TASK
-from .extensions import mongo
-from .models.Mdl_sms import SMS
+from ..extensions import mongo
+from ..models.Mdl_sms import SMS
 
 smsObj = SMS()
 
