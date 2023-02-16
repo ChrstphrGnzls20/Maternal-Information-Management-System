@@ -1,10 +1,10 @@
 # FOR DAILY TASK
-import extensions as ex
+from .extensions import mongo
 import models.Mdl_sms as sms
 
 smsObj = sms.SMS()
 
-collection = ex.mongo['scheduledSMS']
+collection = mongo['scheduledSMS']
 
 def checkQueue():
     queue = smsObj.retrieveSMS()

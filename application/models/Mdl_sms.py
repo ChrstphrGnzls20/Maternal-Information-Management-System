@@ -1,4 +1,4 @@
-import extensions as ex 
+from ..extensions import mongo
 import json, requests, shortuuid
 from requests import exceptions
 from os import environ
@@ -6,7 +6,7 @@ from os import environ
 from .Mdl_patient import Patient
 
 
-collection = ex.mongo['scheduledSMS']
+collection = mongo['scheduledSMS']
 API_KEY = environ.get("SEMAPHORE_API_KEY")
 class SMS(object):
     def __init__(self) -> None:
