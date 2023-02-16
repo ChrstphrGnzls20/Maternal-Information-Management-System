@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 basedir = path.abspath(path.dirname(__file__))
 load_dotenv(path.join(basedir, '.env'))
 
+print(environ.get("MONGO_URI"))
+
 class Settings(object):
     MONGO_URI = environ.get("MONGO_URI")
     MONGO_CONNECT = False
