@@ -74,7 +74,7 @@ def init_app(environment):
         import git, os
         if request.method == 'POST':
             if request.method == 'POST':
-                repo = git.Repo('./myproject')
+                repo = git.Repo('./Maternal-Information-Management-System')
                 origin = repo.remotes.origin
                 repo.create_head('master', origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
                 origin.pull()
