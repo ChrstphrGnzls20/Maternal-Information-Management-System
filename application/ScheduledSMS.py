@@ -1,8 +1,8 @@
 # FOR DAILY TASK
 import extensions as ex
-from .models.Mdl_sms import SMS
+import models.Mdl_sms as sms
 
-smsObj = SMS()
+smsObj = sms.SMS()
 
 collection = ex.mongo['scheduledSMS']
 
