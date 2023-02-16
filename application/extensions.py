@@ -7,10 +7,10 @@ from os import environ
 # mongo = PyMongo()
 mongo = MongoClient(
     environ.get("MONGO_URI"), connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1)
+print(mongo.server_info())
 
 # mongo = mongo.MCIMS
 mongo = mongo['MCIMS']
-#HELLO!
 # flask_mail
 mail = Mail()
 

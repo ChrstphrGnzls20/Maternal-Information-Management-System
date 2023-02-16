@@ -1,7 +1,7 @@
-const API_BASE_URL = `https://${location.origin}/api`;
-const ABSOLUTE_BASE_URL = `https://${location.origin}`;
+const API_BASE_URL = `${location.origin}/api`;
+const ABSOLUTE_BASE_URL = `${location.origin}`;
 
-print(API_BASE_URL, ABSOLUTE_BASE_URL);
+console.log(API_BASE_URL, ABSOLUTE_BASE_URL);
 
 // SPINNERS
 const buttonWithSpinner = (className, innerText) => `
