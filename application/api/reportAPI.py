@@ -313,7 +313,7 @@ def doctorsCheckupTallyWithDates():
             doctorsList.append(doctor['name'])
             newDoctorDict[doctor['_id']] = doctor
             doctor['tally'] = []
-            del doctor["_id"]
+            # del doctor["_id"]
             for weeks in daysArray:
                 for idx, day in enumerate(weeks):
                     if day != 0 and idx <= 5:
@@ -326,6 +326,7 @@ def doctorsCheckupTallyWithDates():
 
             listOfCheckups = emrObj.retrieveCheckup(
                 filter={"doctorID": doctor['_id']})
+            print(doctor)
             for checkup in listOfCheckups:
                 checkupYear = datetime.datetime.fromisoformat(
                     checkup['completedDate']).year

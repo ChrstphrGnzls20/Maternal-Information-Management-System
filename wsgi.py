@@ -9,4 +9,4 @@ if __name__ == "__main__":
     
 
 # TO RUN THE APPLICATION UNDER VIRTUALENV RUN 
-# source "c:/Users/Christopher/Desktop/Caps 1 System/env/Scripts/activate"
+# source "c:/Users/Christopher/Desktop/Caps_1_System/env/Scripts/activate"

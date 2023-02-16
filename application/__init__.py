@@ -22,7 +22,6 @@ from .settings import Settings
 
 
 
-
 def init_app(environment):
     """Initialize the core application."""
 
@@ -66,6 +65,23 @@ def init_app(environment):
         session.clear()
 
         return redirect("/")
+    
+    
+    # FOR AUTOMATIC DEPLOYMENT
+    @app.route("/git-update")
+    def updateProject():
+        import git, os
+        print(os.getcwd())
+        repo = git.Repo('.', search_parent_directories=True)
+        # print(repo.working_tree_dir)
+        origin = repo.remotes.origin
+        # print(repo.remotes)
+        repo.create_head('master', origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
+        origin.pull()
+        return '', 200
+
 
     return app
+
+    
 

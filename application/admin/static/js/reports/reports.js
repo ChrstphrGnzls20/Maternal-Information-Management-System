@@ -36,15 +36,6 @@ $(function () {
           const patientVisits = document.getElementById("monthlyPatientVisits");
           new Chart(patientVisits, {
             type: "line",
-            scales: {
-              y: {
-                callback: function (value) {
-                  if (value % 1 === 0) {
-                    return value;
-                  }
-                },
-              },
-            },
             data: {
               datasets: [
                 {
@@ -57,8 +48,8 @@ $(function () {
               maintainAspectRatio: false,
               scales: {
                 y: {
+                  beginAtZero: true,
                   ticks: {
-                    beginAtZero: true,
                     callback: function (value) {
                       if (value % 1 === 0) {
                         return value;
@@ -107,8 +98,8 @@ $(function () {
                 maintainAspectRatio: false,
                 scales: {
                   y: {
+                    beginAtZero: true,
                     ticks: {
-                      beginAtZero: true,
                       callback: function (value) {
                         if (value % 1 === 0) {
                           return value;
@@ -206,8 +197,8 @@ $(function () {
                 maintainAspectRatio: false,
                 scales: {
                   y: {
+                    beginAtZero: true,
                     ticks: {
-                      beginAtZero: true,
                       callback: function (value) {
                         if (value % 1 === 0) {
                           return value;
