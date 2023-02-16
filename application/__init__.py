@@ -76,6 +76,10 @@ def init_app(environment):
             if request.method == 'POST':
                 repo = git.Repo('./Maternal-Information-Management-System')
                 origin = repo.remotes.origin
+                # blast any changes there (only if it wasn't checked out)
+                repo.git.reset('--hard')
+                # remove any extra non-tracked files (.pyc, etc)
+                repo.git.clean('-xdf')
                 repo.create_head('master', origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
                 origin.pull()
                 return '', 200
