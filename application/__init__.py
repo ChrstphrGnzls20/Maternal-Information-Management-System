@@ -73,12 +73,14 @@ def init_app(environment):
     def webhook():
         import git, os
         if request.method == 'POST':
-            repo = git.Repo('./Maternal-Information-Management-System')
-            origin = repo.remotes.origin
-            origin.pull()
-            return 'Updated PythonAnywhere successfully', 200
-        else:
-            return 'Wrong event type', 400
+            if request.method == 'POST':
+                repo = git.Repo('./myproject')
+                origin = repo.remotes.origin
+                repo.create_head('master', origin.refs.master).set_tracking_branch(origin.refs.master).checkout()
+                origin.pull()
+                return '', 200
+            else:
+                return '', 400
     # @app.route("/git_update", methods=["POST"])
     # def updateProject():
     #     import git, os
