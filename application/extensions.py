@@ -6,7 +6,7 @@ from os import environ
 
 # mongo = PyMongo()
 mongo = MongoClient(
-    environ.get("MONGO_URI"), connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1)
+    environ.get("MONGO_URI"), connectTimeoutMS=30000, socketTimeoutMS=None, connect=False, maxPoolsize=1, tls=True)
 print(mongo.server_info())
 
 # mongo = mongo.MCIMS
