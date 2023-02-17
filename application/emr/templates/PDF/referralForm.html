@@ -1,0 +1,117 @@
+{% extends "PDFTemplate.html" %} {% block content %}
+<div class="d-flex custom-bg justify-content-center p-2 bd-highlight">
+  <div class="container-md form-container bg-white p-2" id="printContent">
+    <h1 class="mt-3 text-center">Doctor Referral Form</h1>
+    <div class="divContainer">
+      <h3 class="mt-3">Patient Details:</h3>
+
+      <table class="header-table table-borderless mb-3">
+        <tbody>
+          <tr>
+            <td>
+              <label for="pName" class="form-label labelItem"
+                >Patient Name:
+              </label>
+            </td>
+            <td><p class="labelAnswer">{{patientInfo.name}}</p></td>
+            <td>
+              <label for="pName" class="form-label labelItem">Date:</label>
+            </td>
+            <td><p class="labelAnswer">{{date}}</p></td>
+          </tr>
+          <tr>
+            <td>
+              <label for="pName" class="form-label labelItem">Phone #:</label>
+            </td>
+
+            <td><p class="labelAnswer">{{patientInfo.mobile}}</p></td>
+            <td>
+              <label for="pName" class="form-label labelItem"
+                >E-Mail Add:</label
+              >
+            </td>
+
+            <td><p class="labelAnswer">{{patientInfo.email}}</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 class="mt-5">Referral Source:</h3>
+      <table class="header-table table-borderless mb-3">
+        <tbody>
+          <tr>
+            <td>
+              <label for="pName" class="form-label labelItem"
+                >Prescriber Name:</label
+              >
+            </td>
+            <td><p class="labelAnswer">{{doctorInfo.name}}</p></td>
+            <td>
+              <label for="pName" class="form-label labelItem">License #:</label>
+            </td>
+            <td><p class="labelAnswer">{{doctorInfo._id}}</p></td>
+          </tr>
+          <tr>
+            <td>
+              <label for="pName" class="form-label labelItem">Contact #:</label>
+            </td>
+
+            <td><p class="labelAnswer">{{doctorInfo.mobile}}</p></td>
+            <td>
+              <label for="pName" class="form-label labelItem"
+                >E-Mail Address:</label
+              >
+            </td>
+
+            <td><p class="labelAnswer">{{doctorInfo.email}}</p></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table table-bordered table-xl mt-5">
+        <thead>
+          <tr>
+            <th scope="col" colspan="8">Referral Details</th>
+          </tr>
+          <tr>
+            <th scope="col" colspan="1">Referred To:</th>
+            <th scope="col" colspan="1">{{laboratory.referralDoctor}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="col" colspan="2">Referral Reason:</th>
+          </tr>
+          <tr>
+            <td scope="col" colspan="2">{{laboratory.referralReason}}</td>
+          </tr>
+          <tr>
+            <th scope="col" colspan="1">Previous History and Investigation:</th>
+            <th scope="col" colspan="1">Recent Medication</th>
+          </tr>
+          <tr>
+            <td scope="col" colspan="1">{{laboratory.pastMedicalHistory}}</td>
+            <td scope="col" colspan="1">{{laboratory.recentMedication}}</td>
+          </tr>
+          <tr>
+            <th scope="col" colspan="2">Special Services and Notes:</th>
+          </tr>
+          <tr>
+            <td scope="col" colspan="2">
+              {% for test in laboratory.tests %} {{test}} {% endfor %}
+              <br />
+              <br />
+              <b>Additional Notes: </b>{{laboratory.referralNotes}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div>
+  <h5><b>Prescribed By:</b> {{doctorInfo.name}}</h5>
+  <h5><b>License #:</b> {{doctorInfo._id}}</h5>
+  <h5><b>PTR #:</b></h5>
+</div>
+{% endblock %}
