@@ -63,6 +63,7 @@ Not specified</textarea
                 <h3 class="mb-0">Prescription</h3>
                 <button
                   class="btn btn-danger d-flex align-items-center generate-pdf-btn ms-3"
+                  data-pdf-link="{{checkup._id}}"
                 >
                   Generate PDF
                   <i class="fa-sm ms-1 bi bi-file-pdf"></i>
@@ -118,3 +119,5 @@ Not specified</textarea
     {% endfor %}
   </div>
 </div>
+
+<script src="{{ url_for('patient.static', filename='js/consultation/consultation.js') }}"></script>

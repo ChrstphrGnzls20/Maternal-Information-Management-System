@@ -123,8 +123,6 @@ def issuePrescription(checkupID):
 
         doctorInformation = doctorInformation[0]
 
-        # FIXME:
-        # return generatePrescription(data, patientBasicInformation[])
         prescription = generatePrescription(
             data, patientBasicInformation, doctorInformation, dateCreated)
 
