@@ -9,44 +9,10 @@
     </p>
   </div>
 
-  <!-- <div class="row row-cols-1 row-cols-md-2 gx-4 gy-2">
-    <div class="form-group">
-      <label for="medicineName" class="form-label">Lab Test</label>
-      <input
-        type="text"
-        class="form-control col-md-4"
-        id="medicineName"
-        name="LabTest"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="medicineName" class="form-label">Referral Reason</label>
-      <input
-        type="text"
-        class="form-control col-md-4"
-        id="medicineName"
-        name="ReasonforReferral"
-      />
-    </div>
-  </div> -->
   <div class="row row-cols-1">
-    <!-- <div class="form-group">
-        <label for="medicineName" class="form-label required"
-          >Laboratory Clinic Name</label
-        >
-        <input
-          type="text"
-          class="form-control"
-          id="labClinicName"
-          name="labClinicName"
-          required
-        />
-      </div> -->
-
     <div class="form-group">
       <label for="referralReason" class="form-label required"
-        >Referral Reason</label
+        >Reason/s for Referral:</label
       >
       <!-- NOTE: autocomplete functionality -->
       <input
@@ -56,6 +22,75 @@
         name="referralReason"
         required
       />
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group">
+      <label for="referralDoctor" class="form-label required"
+        >Doctor Being Referred To:</label
+      >
+      <input
+        type="text"
+        class="form-control form-control"
+        id="referralDoctor"
+        name="referralDoctor"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group">
+      <label
+        for="pastMedicalHistory"
+        class="form-label required"
+        id="pastMedicalHistoryLabel"
+        >Past Medical History:</label
+      >
+      <textarea
+        class="form-control"
+        id="pastMedicalHistory"
+        name="pastMedicalHistory"
+        rows="5"
+        required
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group">
+      <label
+        for="recentMedication"
+        class="form-label required"
+        id="recentMedicationLabel"
+        >Recent Medication:</label
+      >
+      <textarea
+        class="form-control"
+        id="recentMedication"
+        name="recentMedication"
+        rows="5"
+        required
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="form-group">
+      <label
+        for="referralNotes"
+        class="form-label required"
+        id="referralNotesLabel"
+        >Special services and notes:</label
+      >
+      <textarea
+        class="form-control"
+        id="referralNotes"
+        name="referralNotes"
+        rows="5"
+        required
+      ></textarea>
     </div>
   </div>
 
@@ -211,16 +246,6 @@
     />
   </div>
 </form>
-<!-- <script>
-  let labdetailVal = {};
-  $(".referralDetails :input").change(function () {
-    let referDetName = $(this).attr("name");
-    labdetailVal[referDetName] = $(this).val();
-    console.log(labdetailVal);
-  });
-
-  $("#date-value").text(moment(StartDate).format("MM-YYYY"));
-</script> -->
 
 <script>
   $(function () {
@@ -259,28 +284,34 @@
               return;
             }
           });
-        } else if (key === "riskFactors") {
-          if (Array.isArray(value)) {
-            $(inputEl).each(function () {
-              console.log(value.includes($(this).prop("value")));
-              if (value.includes($(this).prop("value"))) {
-                $(this).prop("checked", true);
-                return;
-              }
-            });
-          } else {
-            $(inputEl).each(function () {
-              if ($(this).prop("value") === value) {
-                $(this).prop("checked", true);
-                return;
-              }
-            });
-          }
+          // } else if (key === "riskFactors") {
+          //   if (Array.isArray(value)) {
+          //     $(inputEl).each(function () {
+          //       console.log(value.includes($(this).prop("value")));
+          //       if (value.includes($(this).prop("value"))) {
+          //         $(this).prop("checked", true);
+          //         return;
+          //       }
+          //     });
+          //   } else {
+          //     $(inputEl).each(function () {
+          //       if ($(this).prop("value") === value) {
+          //         $(this).prop("checked", true);
+          //         return;
+          //       }
+          //     });
+          //   }
+          //
         } else {
           inputEl.val(value);
         }
       });
     }
+
+    $("input[type='checkbox']").on("change", function () {
+      console.log("hello");
+      $(".referralModal").modal("show");
+    });
 
     $("#referralDetails").on("submit", function () {
       let cleanedData = cleanData($(this).serializeArray());
@@ -289,12 +320,3 @@
     });
   });
 </script>
-
-<!-- jquery Autocomplete -->
-
-<!-- <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js"
-    integrity="sha512-TToQDr91fBeG4RE5RjMl/tqNAo35hSRR4cbIFasiV2AAMQ6yKXXYhdSdEpUcRE6bqsTiB+FPLPls4ZAFMoK5WA=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  ></script> -->

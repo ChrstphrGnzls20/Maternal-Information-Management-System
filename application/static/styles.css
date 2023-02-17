@@ -428,3 +428,5 @@ textarea[disabled] {
 input[type="radio"]:disabled {
   cursor: default;
 }
+
+/* PDF */

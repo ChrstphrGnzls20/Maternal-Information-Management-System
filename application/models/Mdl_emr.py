@@ -117,6 +117,20 @@ def generateChargingForm(clinicServices: list, patientInfo: dict, doctorInfo: di
         'content-Disposition'] = 'inline; filename="{}"'.format(filename)
     return response
 
+def generateReferralForm(patientInfo: dict, doctorInfo: dict, laboratory:dict, dateCreated: str) -> None:
+    print(laboratory)
+    date = datetime.fromisoformat(
+        dateCreated).date().strftime(format="%B %d, %Y")
+
+    r = render_template(
+        "PDF/referralForm.html", patientInfo=patientInfo, doctorInfo=doctorInfo, date=date, laboratory=laboratory)
+    pdf = pdfkit.from_string(r, False)
+    response = make_response(pdf)
+    response.headers['content-Type'] = 'application/pdf'
+    filename = f'{datetime.date(datetime.now())} - referralForm - {patientInfo["name"]}.pdf'
+    response.headers[
+        'content-Disposition'] = 'inline; filename="{}"'.format(filename)
+    return response
 
 class SOAPParser(object):
     def __init__(self, data: list) -> None:

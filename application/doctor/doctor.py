@@ -75,7 +75,7 @@ def facesheet(patientID):
         emrObj = EMR()
         doctorObj = Employee()
         checkUps = emrObj.retrieveCheckup(
-            filter={"patientID": patientID}, returnFields={"doctorID": 1, "assessment.diagnosis": 1, "plan.prescription": 1, "completedDate": 1})
+            filter={"patientID": patientID}, returnFields={"doctorID": 1, "assessment.diagnosis": 1, "laboratory": 1, "plan.prescription": 1, "completedDate": 1})
         parsedDateCheckups = []
         for checkup in checkUps:
             checkup['completedDate'] = datetime.datetime.fromisoformat(

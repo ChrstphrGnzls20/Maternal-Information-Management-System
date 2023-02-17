@@ -54,6 +54,7 @@
             <th scope="col">Doctor in charge</th>
             <th scope="col">Diagnosis</th>
             <th scope="col">Prescription</th>
+            <th>Referral Form</th>
           </tr>
         </thead>
         <tbody>
@@ -78,6 +79,16 @@
             </td>
             {% else %}
             <td>No prescription</td>
+            {% endif %} {% if checkup.laboratory %}
+            <td>
+              {{checkup.laboratory}}
+              <!-- TODO: link referral form -->
+              <!-- <a href="/emr/prescription/{{checkup._id}}" target="_blank"
+                >Check prescription here</a
+              > -->
+            </td>
+            {% else %}
+            <td>No referral issued</td>
             {% endif %}
           </tr>
           {% endfor %}
