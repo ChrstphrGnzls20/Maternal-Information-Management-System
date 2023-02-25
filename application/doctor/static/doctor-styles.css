@@ -68,3 +68,7 @@ table tr {
 .form-container {
   max-width: 1500px !important;
 }
+
+.ui-timepicker-wrapper {
+  z-index: 99999;
+}

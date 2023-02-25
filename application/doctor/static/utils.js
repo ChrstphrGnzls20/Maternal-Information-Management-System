@@ -70,18 +70,6 @@ function generateExpectedPatientTr(patient) {
     }
   }
 
-  // return `
-  // <tr>
-  //   <td>${name}</td>
-  //   <td>${lastVisitDate ? lastVisitDate : "No recent visits"}</td>
-  //   <td>${mobile}</td>
-  //   <td>
-  //       <span class="${statusType}">${
-  //   monitoringStatus ? monitoringStatus : "No monitoring status yet"
-  // }</span>
-  //     </td>
-  // </tr>`;
-
   return ` <tr >
         <td scope="row" class="text-center">${name}</td>
         <td class="text-center">${lastVisitDate}</td>
@@ -130,8 +118,6 @@ function generatePatientTr(patient) {
         </a>
       </td>
     </tr>`;
-
-  ('<i class="fa-solid fa-folder-open"></i>');
 }
 
 function editAppointment(selectedAppointmentID, payload) {
@@ -270,4 +256,25 @@ function viewAppointmentSummaryModal(appointment, status) {
   // APPEND FORMATTED CONTENT TO MODAL
   modalBody.empty();
   modalBody.append(content);
+}
+
+// FOR FOLLOW-UP APPOINTMENTS
+function preApproveAppointment(appointmentID, payload) {
+  return $.ajax({
+    method: "PATCH",
+    url: `${API_BASE_URL}/appointments/${appointmentID}`,
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(payload),
+  });
+}
+
+function createFollowUpAppointment(data) {
+  return $.ajax({
+    method: "POST",
+    url: `${API_BASE_URL}/appointments`,
+    data: JSON.stringify(data),
+    dataType: "json",
+    contentType: "application/json",
+  });
 }

@@ -1,6 +1,6 @@
 from application import init_app
 
-app = init_app("deployment")
+app = init_app("development")
     
 
 if __name__ == "__main__":

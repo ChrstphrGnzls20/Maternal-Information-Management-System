@@ -1,4 +1,3 @@
 // TODO:
-- activate "GENERATE PDF BUTTON" in patient consultation's tab
 - add loading state on buttons in EMR module
 - add loaders on ajax calls

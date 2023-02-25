@@ -1,3 +1,8 @@
+<!-- timepicker -->
+<link
+  href="https://cdn.jsdelivr.net/npm/timepicker@1.14.0/jquery.timepicker.css"
+  rel="stylesheet"
+/>
 <link
   rel="stylesheet"
   href="{{url_for('doctor.static', filename='doctor-styles.css')}}"
@@ -103,6 +108,28 @@
             cols="30"
             rows="5"
           ></textarea>
+        </div>
+
+        <div class="col form-group d-flex flex-column mt-3">
+          <div>
+            <label for="follow-up-datepicker" class="form-label"
+              >Follow-up Date and Time</label
+            >
+            <div class="d-flex flex-row">
+              <input
+                type="text"
+                class="me-2 form-control datepicker"
+                id="follow-up-datepicker"
+                placeholder="Date"
+              />
+              <input
+                type="text"
+                class="form-control timepicker"
+                id="follow-up-time"
+                disabled
+              />
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
@@ -254,3 +281,12 @@
 
 <script src="{{url_for('doctor.static', filename='/utils.js')}}"></script>
 <script src="{{url_for('doctor.static', filename='/appointment/appointment.js')}}"></script>
+
+<!-- TIMEPICKER -->
+<script
+  src="https://cdn.jsdelivr.net/npm/timepicker@1.14.0/jquery.timepicker.min.js"
+  defer
+></script>
+
+<!-- Moment js -->
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>

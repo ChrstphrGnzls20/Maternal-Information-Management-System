@@ -200,6 +200,8 @@ def issueReferralForm(checkupID):
 
         doctorInformation = doctorInformation[0]
 
+        print(data)
+
         # FIXME:
         # return generatePrescription(data, patientBasicInformation[])
         referral = data
